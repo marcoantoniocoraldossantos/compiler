@@ -34,31 +34,24 @@ void deallocate_buffer(buffer_t *buffer)
     buffer->line = 0;
 }
 
-void fill_buffer(FILE *file, buffer_t *buffer)
+int fill_buffer(FILE *file, buffer_t *buffer) 
 {
     memset(buffer->data, '\0', buffer->size);
     buffer->position = 0;
 
-    if (fgets(buffer->data, buffer->size, file) == NULL)
+    if (fgets(buffer->data, buffer->size, file) == NULL) 
     {
         buffer->data[0] = '\0';
-        return;
-    }
-    else
+        return 0;
+    } 
+    else 
     {
         replace_newline(buffer->data);
 
         buffer->line++;
 
-        if (strlen(buffer->data) == 0)
-        {
-            //fill_buffer(file, buffer);
-        }
-
-        return;
+        return 1;  
     }
-
-    return;
 }
 
 void print_buffer(buffer_t *buffer)

@@ -9,35 +9,26 @@
 #include "lexer.h"
 #include "error.h"
 
-token_list_t* lexical_analyzer(FILE *source_code_file) 
-{
+token_list_t* lexical_analyzer(FILE *source_code_file) {
     token_list_t *token_list = initialize_token_list();
     buffer_t buffer = allocate_buffer(256);
 
-    while(!feof(source_code_file))
+    // Loop to read characters from the source code and tokenize
+    while (fill_buffer(source_code_file, &buffer)) 
     {
-        fill_buffer(source_code_file, &buffer);
+        // Tokenize characters in the buffer and add tokens to the token list
+        // ...
+        
+        // Print the buffer for debugging or informational purposes
         print_buffer(&buffer);
-        // while(buffer.data[buffer.position] != '\0')
-        // {
-        //     char currentChar = get_next_char(&buffer);
-        //     printf("%c", currentChar);
-        // }
     }
 
-    // Perform lexical analysis using the lexer
-    // The lexer should generate tokens using the lexProcessSourceCode function
+    // Cleanup
+    //free_buffer(&buffer);
 
-    // // Example: Add a sample token to the list
-    // token_t sampleToken;
-    // sampleToken.type = RESERVED_WORD;
-    // sampleToken.line = 1;
-    // sampleToken.lexeme = "example";
-    // add_token_to_list(token_list, &sampleToken);
-
-    //print_token_list(token_list);
     return token_list;
 }
+
 
 
 /*
