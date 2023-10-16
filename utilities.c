@@ -17,3 +17,19 @@ void verify_arguments(int argc, char *argv[])
         argument_error(argv[0]); 
     }
 }
+
+FILE *open_file(char *filename, char *mode) 
+{
+    FILE *file = fopen(filename, mode);
+    if (file == NULL) 
+    {
+        file_open_error(filename);
+    }
+
+    return file;
+}
+
+void close_file(FILE *file) 
+{
+    fclose(file);
+}
