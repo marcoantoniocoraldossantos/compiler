@@ -38,10 +38,8 @@ void free_token_list(token_list_t *list);
 
 #endif
 
-
-
-
-// typedef enum {
+// typedef enum 
+//{
 //     // Reserved words
 //     ELSE,
 //     IF,
@@ -78,9 +76,4 @@ void free_token_list(token_list_t *list);
 //     NUM,
 
 //     // Add more tokens as needed for your language
-// } TokenType;
-
-// typedef struct {
-//     TokenType type;
-//     char* lexeme; // Actual text of the token
-// } Token;
+//} TokenType;

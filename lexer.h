@@ -5,33 +5,48 @@
 #include <stdio.h>
 #include "token.h"
 
+#define NUM_CHAR_CLASSES 20
+#define NUM_STATES 26
+
+typedef enum {
+    CHAR_SPACE, CHAR_LETTER, CHAR_DIGIT, // isspace isalpha isdigit
+    CHAR_PLUS, CHAR_MINUS, CHAR_ASTERISK, CHAR_SLASH, // + - * /
+    CHAR_EQUALS, CHAR_LESS_THAN, CHAR_GREATER_THAN, CHAR_EXCLAMATION, // = < > !
+    CHAR_SEMICOLON, CHAR_COMMA, // ; ,
+    CHAR_LPAREN, CHAR_RPAREN, CHAR_LBRACKET, CHAR_RBRACKET, CHAR_LBRACE, CHAR_RBRACE, // ( ) [ ] { }
+    CHAR_OTHER // anything else
+} char_t;
+
+typedef enum 
+{
+    ST_SRT, // start state
+    ST_ID, // identifier
+    ST_NUM, // number
+    ST_ADD, // +
+    ST_SUB, // -
+    ST_MUL, // *
+    ST_LT, // <
+    ST_GT, // > 
+    ST_LE, // <=
+    ST_GE, // >=
+    ST_EQ, // ==
+    ST_ASG, // =
+    ST_NE, // !=
+    ST_SEM, // ;
+    ST_COM, // ,
+    ST_LPA, // (
+    ST_RPA, // )
+    ST_LBK, // [
+    ST_RBK, // ]
+    ST_LBC, // {
+    ST_RBC, // }
+    ST_ENC, // /*
+    ST_INC, // /* ... */
+    ST_EXC, // */
+    ST_ERR, // error state
+    ST_END // end state
+} state_t;
+
 token_list_t* lexical_analyzer(FILE *source_code_file);
 
 #endif
-
-
-
-/*
-typedef struct {
-    int transitionTable[NUM_STATES][NUM_CHAR_CLASSES];
-    int acceptanceTable[NUM_STATES];
-    // ... other necessary structures and types
-} LexerDFA;
-
-
-typedef enum {
-    START_STATE,
-    // Add more states as needed for your DFA
-    STATE1,
-    STATE2,
-    // ...
-    FINAL_STATE,
-    ERROR_STATE
-} DFState;
-
-
-void initializeLexerDFA(LexerDFA *dfa);
-int getNextState(LexerDFA *dfa, int currentState, int charClass);
-int isCharUsed(int charClass);
-int isAcceptanceState(LexerDFA *dfa, int state);
-*/

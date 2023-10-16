@@ -46,8 +46,8 @@ int fill_buffer(FILE *file, buffer_t *buffer)
     } 
     else 
     {
-        replace_newline(buffer->data);
-
+        //replace_newline(buffer->data);
+        
         buffer->line++;
 
         return 1;  
@@ -58,20 +58,9 @@ void print_buffer(buffer_t *buffer)
 {
     printf("line %d: \'%s\'\n", buffer->line, buffer->data);
 }
-/*
 
-// buffer.c
-#include "buffer.h"
-
-void fillBuffer(FILE *inputFile, Buffer *buffer) 
+void advance_input_buffer(buffer_t *buffer)
 {
-    if (fgets(buffer->data, BUFFER_SIZE, inputFile) == NULL) 
-    {
-        // Handle EOF or error
-        buffer->data[0] = '\0';  // Set an empty buffer
-        return;
-    }
-    buffer->line++;
-    buffer->position = 0;
+    char c = buffer->data[buffer->position];
+    buffer->position++;
 }
-*/
