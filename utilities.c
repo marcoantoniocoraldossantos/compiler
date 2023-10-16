@@ -33,3 +33,12 @@ void close_file(FILE *file)
 {
     fclose(file);
 }
+
+void replace_newline(char *string) 
+{
+    size_t length = strlen(string);
+    if (string[length - 1] == '\n') 
+    {
+        string[length - 1] = '\0';
+    }
+}
