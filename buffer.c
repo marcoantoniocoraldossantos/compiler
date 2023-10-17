@@ -46,10 +46,14 @@ int fill_buffer(FILE *file, buffer_t *buffer)
     } 
     else 
     {
-        replace_newline(buffer->data);
+        // Find the position of newline or null character
+        int pos = strcspn(buffer->data, "\n\0");
         
-        buffer->line++;
+        // Replace the newline character (if present) with null character
+        if (buffer->data[pos] == '\n')
+            buffer->data[pos] = '\0';
 
+        buffer->line++;
         return 1;  
     }
 }

@@ -95,6 +95,7 @@ token_list_t* lexical_analyzer(FILE *source_code_file)
 
     while (fill_buffer(source_code_file, &buffer)) 
     {   
+        //print_buffer(&buffer);
         do
         {   
             current_state = ST_SRT;
@@ -107,7 +108,7 @@ token_list_t* lexical_analyzer(FILE *source_code_file)
             while (!accept_table[current_state])
             {
                 new_state = transition_table[current_state][get_char_type(current_char)];
-                
+
                 if (advance_table[current_state][get_char_type(current_char)])
                 {
                     if (!isspace(current_char))
@@ -117,6 +118,10 @@ token_list_t* lexical_analyzer(FILE *source_code_file)
                     }
 
                     advance_input_buffer(&buffer);
+                    if(buffer.position == buffer.size)
+                    {
+                        fill_buffer(source_code_file, &buffer);
+                    }
                     current_char = buffer.data[buffer.position];
                 }
                 current_state = new_state;
@@ -124,6 +129,7 @@ token_list_t* lexical_analyzer(FILE *source_code_file)
                 {
                     break;
                 }
+               
             }
             if (accept_table[current_state])
             {
