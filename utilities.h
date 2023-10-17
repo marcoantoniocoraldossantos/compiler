@@ -17,4 +17,6 @@ void close_file(FILE *file);
 // 
 void replace_newline(char *string);
 
+bool is_number(char *string);
+
 #endif

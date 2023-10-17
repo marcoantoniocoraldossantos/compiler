@@ -17,6 +17,8 @@ int main(int argc, char *argv[])
 
     token_list_t *token_list = lexical_analyzer(input_file);
 
+    print_token_list(token_list);
+
     free_token_list(token_list);
     close_file(input_file);
 

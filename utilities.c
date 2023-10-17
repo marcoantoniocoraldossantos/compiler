@@ -44,3 +44,16 @@ void replace_newline(char *string)
         string[length - 1] = '\0';
     }
 }
+
+bool is_number(char *string) 
+{
+    int length = strlen(string);
+    for (int i = 0; i < length; i++) 
+    {
+        if (!isdigit(string[i])) 
+        {
+            return false;
+        }
+    }
+    return true;
+}

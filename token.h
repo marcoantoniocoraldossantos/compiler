@@ -8,6 +8,8 @@
 #include <string.h>
 #include <ctype.h>
 
+#define HASH_TABLE_SIZE 27
+
 typedef enum 
 {
     // reserved words
@@ -66,6 +68,15 @@ typedef struct
     int count;
 } token_list_t;
 
+typedef struct 
+{
+    char lexeme[64];
+    token_type_t type;
+    struct token_lookup_t *next;
+} token_lookup_t;
+
+extern token_lookup_t hash_table[HASH_TABLE_SIZE];
+
 // token functions
 token_t* initialize_token();
 token_list_t* initialize_token_list();
@@ -75,6 +86,13 @@ void free_token_list(token_list_t *list);
 void print_token(token_t *token);
 void free_token(token_t *token);
 char *token_type_to_string(token_type_t type);
+void initialize_hash_table();
+token_type_t identify_lexeme(char *lexeme);
+token_type_t get_token_type(char *lexeme);
+unsigned int hash(char *lexeme);
+char *token_type_to_string(token_type_t type);
+
+
 
 
 #endif

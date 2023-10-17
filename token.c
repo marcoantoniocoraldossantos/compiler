@@ -34,7 +34,6 @@ token_t *initialize_token()
     return token;
 }
 
-
 void print_token(token_t *token) 
 {
     if (token == NULL) 
@@ -119,7 +118,7 @@ void print_token_list(token_list_t *list)
     {
         token_t token = current->token;
 
-        printf("Type: %d, Line: %d, Lexeme: %s\n", token.type, token.line, token.lexeme);
+        printf("line: %d token: %s lexeme: '%s'\n", token.line, token_type_to_string(token.type), token.lexeme);
 
         current = current->next;
     }
@@ -137,6 +136,172 @@ void free_token_list(token_list_t *list)
     free(list);  
 }
 
+token_type_t get_token_type(char *lexeme)
+{
+    unsigned int index = hash(lexeme) % HASH_TABLE_SIZE;
+    //printf("lexem %s hash %d cmp %s\n", lexeme, index, hash_table[index].lexeme);
+    if(hash_table[index].lexeme != NULL && strcmp(hash_table[index].lexeme, lexeme) == 0)
+    {
+        //printf("returning hash %s\n", token_type_to_string(hash_table[index].type));
+        return hash_table[index].type;
+    }
+    else
+    {
+        return ID;
+    }
+}
+
+token_type_t identify_lexeme(char *lexeme)
+{
+    if(is_number(lexeme))
+    {
+        return NUM;
+    }
+    else
+    {
+        return get_token_type(lexeme);
+    }
+}
+
+unsigned int hash(char *lexeme) 
+{
+    unsigned int hash_val = 0;
+    for (int i = 0; lexeme[i] != '\0'; i++) 
+    {
+        hash_val = (hash_val << 5) + lexeme[i];
+    }
+    return hash_val % HASH_TABLE_SIZE;
+}
+
+void initialize_hash_table()
+{   
+    memset(hash_table, 0, sizeof(hash_table));
+
+    // Operators and special symbols
+    hash_table[hash("+") % HASH_TABLE_SIZE] = (token_lookup_t) {"+", PLUS};
+    hash_table[hash("-") % HASH_TABLE_SIZE] = (token_lookup_t) {"-", MINUS};
+    hash_table[hash("*") % HASH_TABLE_SIZE] = (token_lookup_t) {"*", MULTIPLY};
+    hash_table[hash("/") % HASH_TABLE_SIZE] = (token_lookup_t) {"/", DIVIDE};
+    hash_table[hash("<") % HASH_TABLE_SIZE] = (token_lookup_t) {"<", LESS_THAN};
+    hash_table[hash("<=") % HASH_TABLE_SIZE] = (token_lookup_t) {"<=", LESS_THAN_EQUAL};
+    hash_table[hash(">") % HASH_TABLE_SIZE] = (token_lookup_t) {">", GREATER_THAN};
+    hash_table[hash(">=") % HASH_TABLE_SIZE] = (token_lookup_t) {">=", GREATER_THAN_EQUAL};
+    hash_table[hash("=") % HASH_TABLE_SIZE] = (token_lookup_t) {"=", ASSIGN};
+    hash_table[hash("==") % HASH_TABLE_SIZE] = (token_lookup_t) {"==", EQUAL};
+    hash_table[hash("!=") % HASH_TABLE_SIZE] = (token_lookup_t) {"!=", NOT_EQUAL};
+    hash_table[hash("(") % HASH_TABLE_SIZE] = (token_lookup_t) {"(", LEFT_PAREN};
+    hash_table[hash(")") % HASH_TABLE_SIZE] = (token_lookup_t) {")", RIGHT_PAREN};
+    hash_table[hash("[") % HASH_TABLE_SIZE] = (token_lookup_t) {"[", LEFT_BRACKET};
+    hash_table[hash("]") % HASH_TABLE_SIZE] = (token_lookup_t) {"]", RIGHT_BRACKET};
+    hash_table[hash("{") % HASH_TABLE_SIZE] = (token_lookup_t) {"{", LEFT_BRACE};
+    hash_table[hash("}") % HASH_TABLE_SIZE] = (token_lookup_t) {"}", RIGHT_BRACE};
+    hash_table[hash(";") % HASH_TABLE_SIZE] = (token_lookup_t) {";", SEMICOLON};
+    hash_table[hash(",") % HASH_TABLE_SIZE] = (token_lookup_t) {",", COMMA};
+
+    // Reserved words
+    hash_table[hash("else") % HASH_TABLE_SIZE] = (token_lookup_t) {"else", ELSE};
+    hash_table[hash("if") % HASH_TABLE_SIZE] = (token_lookup_t) {"if", IF};
+    hash_table[hash("int") % HASH_TABLE_SIZE] = (token_lookup_t) {"int", INT};
+    hash_table[hash("return") % HASH_TABLE_SIZE] = (token_lookup_t) {"return", RETURN};
+    hash_table[hash("void") % HASH_TABLE_SIZE] = (token_lookup_t) {"void", VOID};
+    hash_table[hash("while") % HASH_TABLE_SIZE] = (token_lookup_t) {"while", WHILE};
+
+    // Comments
+    hash_table[hash("/*") % HASH_TABLE_SIZE] = (token_lookup_t) {"/*", COMMENT_START};
+    hash_table[hash("*/") % HASH_TABLE_SIZE] = (token_lookup_t) {"*/", COMMENT_END};
+
+    printf("\'%s\'\n", hash_table[hash("else") % HASH_TABLE_SIZE].lexeme);
+    printf("\'%s\'\n", hash_table[hash("if") % HASH_TABLE_SIZE].lexeme);
+    printf("\'%s\'\n", hash_table[hash("int") % HASH_TABLE_SIZE].lexeme);
+    printf("\'%s\'\n", hash_table[hash("return") % HASH_TABLE_SIZE].lexeme);
+    printf("\'%s\'\n", hash_table[hash("void") % HASH_TABLE_SIZE].lexeme);
+    printf("\'%s\'\n", hash_table[hash("while") % HASH_TABLE_SIZE].lexeme);
+    printf("\'%s\'\n", hash_table[hash("+") % HASH_TABLE_SIZE].lexeme);
+    printf("\'%s\'\n", hash_table[hash("-") % HASH_TABLE_SIZE].lexeme);
+    printf("\'%s\'\n", hash_table[hash("*") % HASH_TABLE_SIZE].lexeme);
+    printf("\'%s\'\n", hash_table[hash("/") % HASH_TABLE_SIZE].lexeme);
+    printf("\'%s\'\n", hash_table[hash("<") % HASH_TABLE_SIZE].lexeme);
+    printf("\'%s\'\n", hash_table[hash("<=") % HASH_TABLE_SIZE].lexeme);
+    printf("\'%s\'\n", hash_table[hash(">") % HASH_TABLE_SIZE].lexeme);
+    printf("\'%s\'\n", hash_table[hash(">=") % HASH_TABLE_SIZE].lexeme);
+    printf("\'%s\'\n", hash_table[hash("==") % HASH_TABLE_SIZE].lexeme);
+    printf("\'%s\'\n", hash_table[hash("!=") % HASH_TABLE_SIZE].lexeme);
+    printf("\'%s\'\n", hash_table[hash("=") % HASH_TABLE_SIZE].lexeme);
+    printf("\'%s\'\n", hash_table[hash(";") % HASH_TABLE_SIZE].lexeme);
+    printf("\'%s\'\n", hash_table[hash(",") % HASH_TABLE_SIZE].lexeme);
+    printf("\'%s\'\n", hash_table[hash("(") % HASH_TABLE_SIZE].lexeme);
+    printf("\'%s\'\n", hash_table[hash(")") % HASH_TABLE_SIZE].lexeme);
+    printf("\'%s\'\n", hash_table[hash("[") % HASH_TABLE_SIZE].lexeme);
+    printf("\'%s\'\n", hash_table[hash("]") % HASH_TABLE_SIZE].lexeme);
+    printf("\'%s\'\n", hash_table[hash("{") % HASH_TABLE_SIZE].lexeme);
+    printf("\'%s\'\n", hash_table[hash("}") % HASH_TABLE_SIZE].lexeme);
+    printf("\'%s\'\n", hash_table[hash("/*") % HASH_TABLE_SIZE].lexeme);
+    printf("\'%s\'\n", hash_table[hash("*/") % HASH_TABLE_SIZE].lexeme);
+}
+
 char *token_type_to_string(token_type_t type)
 {
+    switch (type)
+    {
+        case ELSE:
+            return "ELSE";
+        case IF:
+            return "IF";
+        case INT:
+            return "INT";
+        case RETURN:
+            return "RETURN";
+        case VOID:
+            return "VOID";
+        case WHILE:
+            return "WHILE";
+        case PLUS:
+            return "PLUS";
+        case MINUS:
+            return "MINUS";
+        case MULTIPLY:
+            return "MULTIPLY";
+        case DIVIDE:
+            return "DIVIDE";
+        case LESS_THAN:
+            return "LESS_THAN";
+        case LESS_THAN_EQUAL:
+            return "LESS_THAN_EQUAL";
+        case GREATER_THAN:
+            return "GREATER_THAN";
+        case GREATER_THAN_EQUAL:
+            return "GREATER_THAN_EQUAL";
+        case EQUAL:
+            return "EQUAL";
+        case NOT_EQUAL:
+            return "NOT_EQUAL";
+        case ASSIGN:
+            return "ASSIGN";
+        case SEMICOLON:
+            return "SEMICOLON";
+        case COMMA:
+            return "COMMA";
+        case LEFT_PAREN:
+            return "LEFT_PAREN";
+        case RIGHT_PAREN:
+            return "RIGHT_PAREN";
+        case LEFT_BRACKET:
+            return "LEFT_BRACKET";
+        case RIGHT_BRACKET:
+            return "RIGHT_BRACKET";
+        case LEFT_BRACE:
+            return "LEFT_BRACE";
+        case RIGHT_BRACE:
+            return "RIGHT_BRACE";
+        case COMMENT_START:
+            return "COMMENT_START";
+        case COMMENT_END:
+            return "COMMENT_END";
+        case ID:
+            return "ID";
+        case NUM:
+            return "NUM";
+        default:
+            return "UNKNOWN";
+    }
 }

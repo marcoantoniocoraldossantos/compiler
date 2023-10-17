@@ -14,7 +14,7 @@
 typedef enum {
     CHAR_SPACE, CHAR_LETTER, CHAR_DIGIT, // isspace isalpha isdigit
     CHAR_PLUS, CHAR_MINUS, CHAR_ASTERISK, CHAR_SLASH, // + - * /
-    CHAR_EQUALS, CHAR_LESS_THAN, CHAR_GREATER_THAN, CHAR_EXCLAMATION, // = < > !
+    CHAR_LESS_THAN, CHAR_GREATER_THAN, CHAR_EQUALS, CHAR_EXCLAMATION, // = < > !
     CHAR_SEMICOLON, CHAR_COMMA, // ; ,
     CHAR_LPAREN, CHAR_RPAREN, CHAR_LBRACKET, CHAR_RBRACKET, CHAR_LBRACE, CHAR_RBRACE, // ( ) [ ] { }
     CHAR_OTHER // anything else
@@ -52,5 +52,8 @@ typedef enum
 
 token_list_t* lexical_analyzer(FILE *source_code_file);
 char_t get_char_type(char c);
+char *state_to_string(state_t state);
+
+
 
 #endif

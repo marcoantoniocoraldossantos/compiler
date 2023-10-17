@@ -12,6 +12,8 @@
 #include "lexer.h"
 #include "error.h"
 
+token_lookup_t hash_table[HASH_TABLE_SIZE];
+
 // state_t table to indicate the next state given the current state and the current character class
 state_t transition_table[NUM_STATES][NUM_CHAR_CLASSES] = 
 {   //space, letter,  digit,      +,      -,      *,      /,      <,      >,      =,      !,      ;,      ,,      (,      ),      [,      ],      {,      },  other
@@ -54,8 +56,8 @@ bool advance_table[NUM_STATES][NUM_CHAR_CLASSES] =
     {false, false , false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false}, // ST_MUL
     {false, false , false, false, false, false, false, false, false, true , false, false, false, false, false, false, false, false, false, false}, // ST_LT
     {false, false , false, false, false, false, false, false, false, true , false, false, false, false, false, false, false, false, false, false}, // ST_GT
-    {false, false , false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false}, // ST_LE
-    {false, false , false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false}, // ST_GE
+    {false, false , false, false, false, false, false, false, false, true , false, false, false, false, false, false, false, false, false, false}, // ST_LE
+    {false, false , false, false, false, false, false, false, false, true , false, false, false, false, false, false, false, false, false, false}, // ST_GE
     {false, false , false, false, false, false, false, false, false, true , false, false, false, false, false, false, false, false, false, false}, // ST_EQ
     {false, false , false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false}, // ST_ASG
     {false, false , false, false, false, false, false, false, false, true , false, false, false, false, false, false, false, false, false, false}, // ST_NE
@@ -86,6 +88,7 @@ token_list_t* lexical_analyzer(FILE *source_code_file)
 {
     token_list_t *token_list = initialize_token_list();
     buffer_t buffer = allocate_buffer(256);
+    initialize_hash_table();
 
     //variables used
     char current_char;
@@ -108,6 +111,8 @@ token_list_t* lexical_analyzer(FILE *source_code_file)
             while (!accept_table[current_state])
             {
                 new_state = transition_table[current_state][get_char_type(current_char)];
+
+                //printf("char \'%c\' st \'%s\' nw \'%s\'\n", current_char, state_to_string(current_state), state_to_string(new_state));
 
                 if (advance_table[current_state][get_char_type(current_char)])
                 {
@@ -133,10 +138,13 @@ token_list_t* lexical_analyzer(FILE *source_code_file)
             }
             if (accept_table[current_state])
             {
-                printf("line: %d, token: , lexeme: \'%s\'\n", current_token->line, current_token->lexeme);
+                //printf("line: %d, token: , lexeme: \'%s\'\n", current_token->line, current_token->lexeme);
                 
-                //current_token->type = get_token_type(current_token->lexeme);
-                //add_token(token_list, current_token);
+                current_token->type = identify_lexeme(current_token->lexeme);
+                //printf("lexeme: %s, token_type: %s\n", current_token->lexeme, token_type_to_string(current_token->type));
+                add_token_to_list(token_list, current_token);
+
+                //print_token(current_token);
                 
                 lexeme_count = 0;
                 free_token(current_token);
@@ -150,6 +158,126 @@ token_list_t* lexical_analyzer(FILE *source_code_file)
     deallocate_buffer(&buffer);
 
     return token_list;
+}
+
+char *state_to_string(state_t state)
+{
+    if(state == ST_SRT)
+    {
+        return "ST_SRT";
+    }
+    else if(state == ST_ID)
+    {
+        return "ST_ID";
+    }
+    else if(state == ST_NUM)
+    {
+        return "ST_NUM";
+    }
+    else if(state == ST_ADD)
+    {
+        return "ST_ADD";
+    }
+    else if(state == ST_SUB)
+    {
+        return "ST_SUB";
+    }
+    else if(state == ST_MUL)
+    {
+        return "ST_MUL";
+    }
+    else if(state == ST_LT)
+    {
+        return "ST_LT";
+    }
+    else if(state == ST_GT)
+    {
+        return "ST_GT";
+    }
+    else if(state == ST_LE)
+    {
+        return "ST_LE";
+    }
+    else if(state == ST_GE)
+    {
+        return "ST_GE";
+    }
+    else if(state == ST_EQ)
+    {
+        return "ST_EQ";
+    }
+    else if(state == ST_LE)
+    {
+        return "ST_LE";
+    }
+    else if(state == ST_GE)
+    {
+        return "ST_GE";
+    }
+    else if(state == ST_EQ)
+    {
+        return "ST_EQ";
+    }
+    else if(state == ST_ASG)
+    {
+        return "ST_ASG";
+    }
+    else if(state == ST_NE)
+    {
+        return "ST_NE";
+    }
+    else if(state == ST_SEM)
+    {
+        return "ST_SEM";
+    }
+    else if(state == ST_COM)
+    {
+        return "ST_COM";
+    }
+    else if(state == ST_LPA)
+    {
+        return "ST_LPA";
+    }
+    else if(state == ST_RPA)
+    {
+        return "ST_RPA";
+    }
+    else if(state == ST_LBK)
+    {
+        return "ST_LBK";
+    }
+    else if(state == ST_RBK)
+    {
+        return "ST_RBK";
+    }
+    else if(state == ST_LBC)
+    {
+        return "ST_LBC";
+    }
+    else if(state == ST_RBC)
+    {
+        return "ST_RBC";
+    }
+    else if(state == ST_ENC)
+    {
+        return "ST_ENC";
+    }
+    else if(state == ST_INC)
+    {
+        return "ST_INC";
+    }
+    else if(state == ST_EXC)
+    {
+        return "ST_EXC";
+    }
+    else if(state == ST_ERR)
+    {
+        return "ST_ERR";
+    }
+    else if(state == ST_END)
+    {
+        return "ST_END";
+    }
 }
 
 char_t get_char_type(char c) 
