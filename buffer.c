@@ -56,11 +56,10 @@ int fill_buffer(FILE *file, buffer_t *buffer)
 
 void print_buffer(buffer_t *buffer)
 {
-    printf("line %d: \'%s\'\n", buffer->line, buffer->data);
+    printf("BUFFER: \tline %d: \'%s\'\n", buffer->line, buffer->data);
 }
 
 void advance_input_buffer(buffer_t *buffer)
 {
-    char c = buffer->data[buffer->position];
     buffer->position++;
 }

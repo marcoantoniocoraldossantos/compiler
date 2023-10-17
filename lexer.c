@@ -12,14 +12,10 @@
 #include "lexer.h"
 #include "error.h"
 
-void print_non_printable(char c) {
-    printf("Non-printable character detected: ASCII value = %d (0x%02X)\n", c, c);
-}
-
 // state_t table to indicate the next state given the current state and the current character class
 state_t transition_table[NUM_STATES][NUM_CHAR_CLASSES] = 
 {   //space, letter,  digit,      +,      -,      *,      /,      <,      >,      =,      !,      ;,      ,,      (,      ),      [,      ],      {,      },  other
-    {ST_SRT, ST_ID , ST_NUM, ST_ADD, ST_SUB, ST_MUL, ST_ENC,  ST_LT,  ST_GT,  ST_EQ,  ST_NE, ST_SEM, ST_COM, ST_LPA, ST_RPA, ST_LBK, ST_RBK, ST_LBC, ST_RBC, ST_ERR}, // ST_SRT
+    {ST_SRT, ST_ID , ST_NUM, ST_ADD, ST_SUB, ST_MUL, ST_ENC,  ST_LT,  ST_GT,  ST_EQ,  ST_NE, ST_SEM, ST_COM, ST_LPA, ST_RPA, ST_LBK, ST_RBK, ST_LBC, ST_RBC, ST_END}, // ST_SRT
     {ST_END, ST_ID , ST_END, ST_END, ST_END, ST_END, ST_END, ST_END, ST_END, ST_END, ST_END, ST_END, ST_END, ST_END, ST_END, ST_END, ST_END, ST_END, ST_END, ST_END}, // ST_ID
     {ST_END, ST_END, ST_NUM, ST_END, ST_END, ST_END, ST_END, ST_END, ST_END, ST_END, ST_END, ST_END, ST_END, ST_END, ST_END, ST_END, ST_END, ST_END, ST_END, ST_END}, // ST_NUM
     {ST_END, ST_END, ST_END, ST_END, ST_END, ST_END, ST_END, ST_END, ST_END, ST_END, ST_END, ST_END, ST_END, ST_END, ST_END, ST_END, ST_END, ST_END, ST_END, ST_END}, // ST_ADD
@@ -103,19 +99,15 @@ token_list_t* lexical_analyzer(FILE *source_code_file)
         {   
             current_state = ST_SRT;
             current_token = initialize_token();
+
             current_char = buffer.data[buffer.position];
 
             current_token->line = buffer.line;
-            //printf("begin with state: %d and char \'%c\'\n", current_state, current_char);
+
             while (!accept_table[current_state])
             {
                 new_state = transition_table[current_state][get_char_type(current_char)];
-
-                if (!isprint(current_char)) {
-                    //print_non_printable(current_char);
-                }
-                //printf("char \'%c\', state %d new state: %d\n", current_char, current_state, new_state);
-            
+                
                 if (advance_table[current_state][get_char_type(current_char)])
                 {
                     if (!isspace(current_char))
@@ -126,25 +118,22 @@ token_list_t* lexical_analyzer(FILE *source_code_file)
 
                     advance_input_buffer(&buffer);
                     current_char = buffer.data[buffer.position];
-
-                    while(current_char == '\n')
-                    {
-                        advance_input_buffer(&buffer);
-                        current_char = buffer.data[buffer.position];
-                    }
                 }
                 current_state = new_state;
+                if(current_state == ST_SRT)
+                {
+                    break;
+                }
             }
             if (accept_table[current_state])
             {
                 printf("line: %d, token: , lexeme: \'%s\'\n", current_token->line, current_token->lexeme);
                 
-                // current_token->type = get_token_type(current_token->lexeme);
+                //current_token->type = get_token_type(current_token->lexeme);
                 //add_token(token_list, current_token);
                 
                 lexeme_count = 0;
                 free_token(current_token);
-                //print_token(current_token);
             }
 
         } while (current_char != '\n' && current_char != '\0');
@@ -159,7 +148,7 @@ token_list_t* lexical_analyzer(FILE *source_code_file)
 
 char_t get_char_type(char c) 
 {
-    if (isspace(c) || c == '\0')
+    if (isspace(c))
     {
         return CHAR_SPACE;
     } 
