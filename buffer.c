@@ -46,7 +46,7 @@ int fill_buffer(FILE *file, buffer_t *buffer)
     } 
     else 
     {
-        //replace_newline(buffer->data);
+        replace_newline(buffer->data);
         
         buffer->line++;
 

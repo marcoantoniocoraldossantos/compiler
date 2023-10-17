@@ -10,6 +10,52 @@
 #include "lexer.h"
 #include "error.h"
 
+
+token_t *initialize_token() 
+{
+    token_t *token = (token_t *)malloc(sizeof(token_t));
+    if (token == NULL) 
+    {
+        memory_alocation_error("token");
+    }
+    
+    // Initialize type and line
+    token->type = -1;
+    token->line = -1;
+    
+    // Allocate memory for lexeme and initialize it to '\0'
+    token->lexeme = (char *)malloc(64 * sizeof(char));
+    if (token->lexeme == NULL) 
+    {
+        memory_alocation_error("lexeme");
+    }
+    memset(token->lexeme, '\0', 64);
+    
+    return token;
+}
+
+
+void print_token(token_t *token) 
+{
+    if (token == NULL) 
+    {
+        printf("token is NULL.\n");
+        return;
+    }
+
+    printf("token: %d, line: %d, lexeme: %s\n", token->type, token->line, token->lexeme);
+}
+
+void free_token(token_t *token) 
+{
+    if (token == NULL) 
+    {
+        return;
+    }
+    free(token->lexeme);
+    free(token);
+}
+
 token_list_t* initialize_token_list() 
 {
     token_list_t *list = (token_list_t *)malloc(sizeof(token_list_t));
@@ -91,4 +137,6 @@ void free_token_list(token_list_t *list)
     free(list);  
 }
 
-
+char *token_type_to_string(token_type_t type)
+{
+}

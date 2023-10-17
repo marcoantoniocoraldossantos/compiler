@@ -2,12 +2,48 @@
 #ifndef TOKEN_H
 #define TOKEN_H
 
+#include <stdio.h>
+#include <stdlib.h>
+#include <stdbool.h>
+#include <string.h>
+#include <ctype.h>
+
 typedef enum 
 {
-    RESERVED_WORD,
-    SPECIAL_SYMBOL,
-    MARKER_ID,
-    MARKER_NUM,
+    // reserved words
+    ELSE,
+    IF,
+    INT,
+    RETURN,
+    VOID,
+    WHILE,
+    
+    // special symbols
+    PLUS,
+    MINUS,
+    MULTIPLY,
+    DIVIDE,
+    LESS_THAN,
+    LESS_THAN_EQUAL,
+    GREATER_THAN,
+    GREATER_THAN_EQUAL,
+    EQUAL,
+    NOT_EQUAL,
+    ASSIGN,
+    SEMICOLON,
+    COMMA,
+    LEFT_PAREN,
+    RIGHT_PAREN,
+    LEFT_BRACKET,
+    RIGHT_BRACKET,
+    LEFT_BRACE,
+    RIGHT_BRACE,
+    COMMENT_START,
+    COMMENT_END,
+    
+    // markers
+    ID,
+    NUM,
 } token_type_t;
 
 typedef struct 
@@ -31,49 +67,14 @@ typedef struct
 } token_list_t;
 
 // token functions
+token_t* initialize_token();
 token_list_t* initialize_token_list();
 void add_token_to_list(token_list_t *list, token_t *token);
 void print_token_list(token_list_t *list);
 void free_token_list(token_list_t *list);
+void print_token(token_t *token);
+void free_token(token_t *token);
+char *token_type_to_string(token_type_t type);
+
 
 #endif
-
-// typedef enum 
-//{
-//     // Reserved words
-//     ELSE,
-//     IF,
-//     INT,
-//     RETURN,
-//     VOID,
-//     WHILE,
-    
-//     // Special symbols
-//     PLUS,
-//     MINUS,
-//     MULTIPLY,
-//     DIVIDE,
-//     LESS_THAN,
-//     LESS_THAN_EQUAL,
-//     GREATER_THAN,
-//     GREATER_THAN_EQUAL,
-//     EQUAL,
-//     NOT_EQUAL,
-//     ASSIGN,
-//     SEMICOLON,
-//     COMMA,
-//     LEFT_PAREN,
-//     RIGHT_PAREN,
-//     LEFT_BRACKET,
-//     RIGHT_BRACKET,
-//     LEFT_BRACE,
-//     RIGHT_BRACE,
-//     COMMENT_START,
-//     COMMENT_END,
-    
-//     // Markers
-//     ID,
-//     NUM,
-
-//     // Add more tokens as needed for your language
-//} TokenType;

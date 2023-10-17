@@ -4,6 +4,8 @@
         "error.h": "c",
         "token.h": "c",
         "stdlib.h": "c",
-        "ctype.h": "c"
+        "ctype.h": "c",
+        "buffer.h": "c",
+        "stdio.h": "c"
     }
 }

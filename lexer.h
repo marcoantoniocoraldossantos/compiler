@@ -3,7 +3,10 @@
 #define LEXER_H
 
 #include <stdio.h>
-#include "token.h"
+#include <stdlib.h>
+#include <stdbool.h>
+#include <string.h>
+#include <ctype.h>
 
 #define NUM_CHAR_CLASSES 20
 #define NUM_STATES 26
@@ -48,5 +51,6 @@ typedef enum
 } state_t;
 
 token_list_t* lexical_analyzer(FILE *source_code_file);
+char_t get_char_type(char c);
 
 #endif
