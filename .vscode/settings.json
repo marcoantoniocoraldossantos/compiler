@@ -3,6 +3,7 @@
         "utilities.h": "c",
         "error.h": "c",
         "token.h": "c",
-        "stdlib.h": "c"
+        "stdlib.h": "c",
+        "ctype.h": "c"
     }
 }

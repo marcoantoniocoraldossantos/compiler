@@ -26,12 +26,12 @@ token_list_t* initialize_token_list()
 void add_token_to_list(token_list_t *list, token_t *token) 
 {
     token_node_t *new_node = (token_node_t *)malloc(sizeof(token_node_t));
-    if (new_node == NULL) 
+    if (new_node == NULL)
     {
         exit(EXIT_FAILURE);
     }
 
-    new_node->token = *token;  // Copy the provided token
+    new_node->token = *token; // Copy the provided token
 
     // Allocate memory for the lexeme and copy the provided lexeme
     new_node->token.lexeme = (char *)malloc(strlen(token->lexeme) + 1);
@@ -90,3 +90,5 @@ void free_token_list(token_list_t *list)
     }
     free(list);  
 }
+
+
