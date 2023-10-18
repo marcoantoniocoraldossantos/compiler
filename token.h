@@ -68,14 +68,13 @@ typedef struct
     int count;
 } token_list_t;
 
-typedef struct 
+typedef struct bst_node 
 {
     char lexeme[64];
-    token_type_t type;
-    struct token_lookup_t *next;
-} token_lookup_t;
-
-extern token_lookup_t hash_table[HASH_TABLE_SIZE];
+    token_type_t token_type;
+    struct bst_node* left;
+    struct bst_node* right;
+} bst_node_t;
 
 // token functions
 token_t* initialize_token();
@@ -86,13 +85,12 @@ void free_token_list(token_list_t *list);
 void print_token(token_t *token);
 void free_token(token_t *token);
 char *token_type_to_string(token_type_t type);
-void initialize_hash_table();
-token_type_t identify_lexeme(char *lexeme);
-token_type_t get_token_type(char *lexeme);
-unsigned int hash(char *lexeme);
-char *token_type_to_string(token_type_t type);
-
-
+token_type_t get_token_type(bst_node_t* root, char *lexeme);
+token_type_t identify_lexeme(bst_node_t* root, char *lexeme);
+bst_node_t* initialize_bst();
+bst_node_t* insert_bst_node(bst_node_t* root, char *lexeme, token_type_t token_type);
+void free_bst(bst_node_t* root);
+void print_bst(bst_node_t* root, int level);
 
 
 #endif

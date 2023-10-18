@@ -136,107 +136,117 @@ void free_token_list(token_list_t *list)
     free(list);  
 }
 
-token_type_t get_token_type(char *lexeme)
-{
-    unsigned int index = hash(lexeme) % HASH_TABLE_SIZE;
-    //printf("lexem %s hash %d cmp %s\n", lexeme, index, hash_table[index].lexeme);
-    if(hash_table[index].lexeme != NULL && strcmp(hash_table[index].lexeme, lexeme) == 0)
-    {
-        //printf("returning hash %s\n", token_type_to_string(hash_table[index].type));
-        return hash_table[index].type;
-    }
-    else
-    {
+token_type_t get_token_type(bst_node_t* root, char* lexeme) {
+    if (root == NULL) {
         return ID;
     }
+
+    int comparison_result = strcmp(lexeme, root->lexeme);
+    if (comparison_result == 0) {
+        return root->token_type;
+    } else if (comparison_result < 0) {
+        return get_token_type(root->left, lexeme);
+    } else {
+        return get_token_type(root->right, lexeme);
+    }
 }
 
-token_type_t identify_lexeme(char *lexeme)
-{
-    if(is_number(lexeme))
-    {
+token_type_t identify_lexeme(bst_node_t* root, char* lexeme) {
+    if (is_number(lexeme)) {
         return NUM;
-    }
-    else
-    {
-        return get_token_type(lexeme);
+    } else {
+        return get_token_type(root, lexeme);
     }
 }
 
-unsigned int hash(char *lexeme) 
+
+bst_node_t* initialize_bst() 
 {
-    unsigned int hash_val = 0;
-    for (int i = 0; lexeme[i] != '\0'; i++) 
-    {
-        hash_val = (hash_val << 5) + lexeme[i];
-    }
-    return hash_val % HASH_TABLE_SIZE;
+    bst_node_t* root = NULL;
+
+    root = insert_bst_node(root, "else", ELSE);
+    root = insert_bst_node(root, "if", IF);
+    root = insert_bst_node(root, "int", INT);
+    root = insert_bst_node(root, "return", RETURN);
+    root = insert_bst_node(root, "void", VOID);
+    root = insert_bst_node(root, "while", WHILE);
+
+    root = insert_bst_node(root, "+", PLUS);
+    root = insert_bst_node(root, "-", MINUS);
+    root = insert_bst_node(root, "*", MULTIPLY);
+    root = insert_bst_node(root, "/", DIVIDE);
+    root = insert_bst_node(root, "<", LESS_THAN);
+    root = insert_bst_node(root, "<=", LESS_THAN_EQUAL);
+    root = insert_bst_node(root, ">", GREATER_THAN);
+    root = insert_bst_node(root, ">=", GREATER_THAN_EQUAL);
+    root = insert_bst_node(root, "==", EQUAL);
+    root = insert_bst_node(root, "!=", NOT_EQUAL);
+    root = insert_bst_node(root, "=", ASSIGN);
+    root = insert_bst_node(root, ";", SEMICOLON);
+    root = insert_bst_node(root, ",", COMMA);
+    root = insert_bst_node(root, "(", LEFT_PAREN);
+    root = insert_bst_node(root, ")", RIGHT_PAREN);
+    root = insert_bst_node(root, "[", LEFT_BRACKET);
+    root = insert_bst_node(root, "]", RIGHT_BRACKET);
+    root = insert_bst_node(root, "{", LEFT_BRACE);
+    root = insert_bst_node(root, "}", RIGHT_BRACE);
+    root = insert_bst_node(root, "/*", COMMENT_START);
+    root = insert_bst_node(root, "*/", COMMENT_END);
+
+    return root;
 }
 
-void initialize_hash_table()
-{   
-    memset(hash_table, 0, sizeof(hash_table));
+void print_bst(bst_node_t* root, int level) {
+    if (root == NULL) {
+        return;
+    }
 
-    // Operators and special symbols
-    hash_table[hash("+") % HASH_TABLE_SIZE] = (token_lookup_t) {"+", PLUS};
-    hash_table[hash("-") % HASH_TABLE_SIZE] = (token_lookup_t) {"-", MINUS};
-    hash_table[hash("*") % HASH_TABLE_SIZE] = (token_lookup_t) {"*", MULTIPLY};
-    hash_table[hash("/") % HASH_TABLE_SIZE] = (token_lookup_t) {"/", DIVIDE};
-    hash_table[hash("<") % HASH_TABLE_SIZE] = (token_lookup_t) {"<", LESS_THAN};
-    hash_table[hash("<=") % HASH_TABLE_SIZE] = (token_lookup_t) {"<=", LESS_THAN_EQUAL};
-    hash_table[hash(">") % HASH_TABLE_SIZE] = (token_lookup_t) {">", GREATER_THAN};
-    hash_table[hash(">=") % HASH_TABLE_SIZE] = (token_lookup_t) {">=", GREATER_THAN_EQUAL};
-    hash_table[hash("=") % HASH_TABLE_SIZE] = (token_lookup_t) {"=", ASSIGN};
-    hash_table[hash("==") % HASH_TABLE_SIZE] = (token_lookup_t) {"==", EQUAL};
-    hash_table[hash("!=") % HASH_TABLE_SIZE] = (token_lookup_t) {"!=", NOT_EQUAL};
-    hash_table[hash("(") % HASH_TABLE_SIZE] = (token_lookup_t) {"(", LEFT_PAREN};
-    hash_table[hash(")") % HASH_TABLE_SIZE] = (token_lookup_t) {")", RIGHT_PAREN};
-    hash_table[hash("[") % HASH_TABLE_SIZE] = (token_lookup_t) {"[", LEFT_BRACKET};
-    hash_table[hash("]") % HASH_TABLE_SIZE] = (token_lookup_t) {"]", RIGHT_BRACKET};
-    hash_table[hash("{") % HASH_TABLE_SIZE] = (token_lookup_t) {"{", LEFT_BRACE};
-    hash_table[hash("}") % HASH_TABLE_SIZE] = (token_lookup_t) {"}", RIGHT_BRACE};
-    hash_table[hash(";") % HASH_TABLE_SIZE] = (token_lookup_t) {";", SEMICOLON};
-    hash_table[hash(",") % HASH_TABLE_SIZE] = (token_lookup_t) {",", COMMA};
+    print_bst(root->right, level + 1);
 
-    // Reserved words
-    hash_table[hash("else") % HASH_TABLE_SIZE] = (token_lookup_t) {"else", ELSE};
-    hash_table[hash("if") % HASH_TABLE_SIZE] = (token_lookup_t) {"if", IF};
-    hash_table[hash("int") % HASH_TABLE_SIZE] = (token_lookup_t) {"int", INT};
-    hash_table[hash("return") % HASH_TABLE_SIZE] = (token_lookup_t) {"return", RETURN};
-    hash_table[hash("void") % HASH_TABLE_SIZE] = (token_lookup_t) {"void", VOID};
-    hash_table[hash("while") % HASH_TABLE_SIZE] = (token_lookup_t) {"while", WHILE};
+    for (int i = 0; i < level; i++) {
+        printf("   ");  // Adjust spaces for indentation
+    }
 
-    // Comments
-    hash_table[hash("/*") % HASH_TABLE_SIZE] = (token_lookup_t) {"/*", COMMENT_START};
-    hash_table[hash("*/") % HASH_TABLE_SIZE] = (token_lookup_t) {"*/", COMMENT_END};
+    printf("%s\n", root->lexeme);
+    print_bst(root->left, level + 1);
+}
 
-    printf("\'%s\'\n", hash_table[hash("else") % HASH_TABLE_SIZE].lexeme);
-    printf("\'%s\'\n", hash_table[hash("if") % HASH_TABLE_SIZE].lexeme);
-    printf("\'%s\'\n", hash_table[hash("int") % HASH_TABLE_SIZE].lexeme);
-    printf("\'%s\'\n", hash_table[hash("return") % HASH_TABLE_SIZE].lexeme);
-    printf("\'%s\'\n", hash_table[hash("void") % HASH_TABLE_SIZE].lexeme);
-    printf("\'%s\'\n", hash_table[hash("while") % HASH_TABLE_SIZE].lexeme);
-    printf("\'%s\'\n", hash_table[hash("+") % HASH_TABLE_SIZE].lexeme);
-    printf("\'%s\'\n", hash_table[hash("-") % HASH_TABLE_SIZE].lexeme);
-    printf("\'%s\'\n", hash_table[hash("*") % HASH_TABLE_SIZE].lexeme);
-    printf("\'%s\'\n", hash_table[hash("/") % HASH_TABLE_SIZE].lexeme);
-    printf("\'%s\'\n", hash_table[hash("<") % HASH_TABLE_SIZE].lexeme);
-    printf("\'%s\'\n", hash_table[hash("<=") % HASH_TABLE_SIZE].lexeme);
-    printf("\'%s\'\n", hash_table[hash(">") % HASH_TABLE_SIZE].lexeme);
-    printf("\'%s\'\n", hash_table[hash(">=") % HASH_TABLE_SIZE].lexeme);
-    printf("\'%s\'\n", hash_table[hash("==") % HASH_TABLE_SIZE].lexeme);
-    printf("\'%s\'\n", hash_table[hash("!=") % HASH_TABLE_SIZE].lexeme);
-    printf("\'%s\'\n", hash_table[hash("=") % HASH_TABLE_SIZE].lexeme);
-    printf("\'%s\'\n", hash_table[hash(";") % HASH_TABLE_SIZE].lexeme);
-    printf("\'%s\'\n", hash_table[hash(",") % HASH_TABLE_SIZE].lexeme);
-    printf("\'%s\'\n", hash_table[hash("(") % HASH_TABLE_SIZE].lexeme);
-    printf("\'%s\'\n", hash_table[hash(")") % HASH_TABLE_SIZE].lexeme);
-    printf("\'%s\'\n", hash_table[hash("[") % HASH_TABLE_SIZE].lexeme);
-    printf("\'%s\'\n", hash_table[hash("]") % HASH_TABLE_SIZE].lexeme);
-    printf("\'%s\'\n", hash_table[hash("{") % HASH_TABLE_SIZE].lexeme);
-    printf("\'%s\'\n", hash_table[hash("}") % HASH_TABLE_SIZE].lexeme);
-    printf("\'%s\'\n", hash_table[hash("/*") % HASH_TABLE_SIZE].lexeme);
-    printf("\'%s\'\n", hash_table[hash("*/") % HASH_TABLE_SIZE].lexeme);
+bst_node_t* insert_bst_node(bst_node_t* root, char* lexeme, token_type_t token_type) 
+{
+    if (root == NULL) {
+        bst_node_t* new_node = (bst_node_t*)malloc(sizeof(bst_node_t));
+        if (new_node == NULL) {
+            fprintf(stderr, "Memory allocation error\n");
+            exit(EXIT_FAILURE);
+        }
+
+        strcpy(new_node->lexeme, lexeme);
+        new_node->token_type = token_type;
+        new_node->left = NULL;
+        new_node->right = NULL;
+        return new_node;
+    }
+
+    int comparison_result = strcmp(lexeme, root->lexeme);
+
+    if (comparison_result < 0) {
+        root->left = insert_bst_node(root->left, lexeme, token_type);
+    } else if (comparison_result > 0) {
+        root->right = insert_bst_node(root->right, lexeme, token_type);
+    }
+
+    return root;
+}
+
+void free_bst(bst_node_t* root) 
+{
+    if (root == NULL) {
+        return;
+    }
+
+    free_bst(root->left);
+    free_bst(root->right);
+    free(root);
 }
 
 char *token_type_to_string(token_type_t type)

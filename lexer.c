@@ -12,12 +12,11 @@
 #include "lexer.h"
 #include "error.h"
 
-token_lookup_t hash_table[HASH_TABLE_SIZE];
 
 // state_t table to indicate the next state given the current state and the current character class
 state_t transition_table[NUM_STATES][NUM_CHAR_CLASSES] = 
 {   //space, letter,  digit,      +,      -,      *,      /,      <,      >,      =,      !,      ;,      ,,      (,      ),      [,      ],      {,      },  other
-    {ST_SRT, ST_ID , ST_NUM, ST_ADD, ST_SUB, ST_MUL, ST_ENC,  ST_LT,  ST_GT,  ST_EQ,  ST_NE, ST_SEM, ST_COM, ST_LPA, ST_RPA, ST_LBK, ST_RBK, ST_LBC, ST_RBC, ST_END}, // ST_SRT
+    {ST_SRT, ST_ID , ST_NUM, ST_ADD, ST_SUB, ST_MUL, ST_ENC,  ST_LT,  ST_GT,  ST_EQ,  ST_NE, ST_SEM, ST_COM, ST_LPA, ST_RPA, ST_LBK, ST_RBK, ST_LBC, ST_RBC, ST_ERR}, // ST_SRT
     {ST_END, ST_ID , ST_END, ST_END, ST_END, ST_END, ST_END, ST_END, ST_END, ST_END, ST_END, ST_END, ST_END, ST_END, ST_END, ST_END, ST_END, ST_END, ST_END, ST_END}, // ST_ID
     {ST_END, ST_END, ST_NUM, ST_END, ST_END, ST_END, ST_END, ST_END, ST_END, ST_END, ST_END, ST_END, ST_END, ST_END, ST_END, ST_END, ST_END, ST_END, ST_END, ST_END}, // ST_NUM
     {ST_END, ST_END, ST_END, ST_END, ST_END, ST_END, ST_END, ST_END, ST_END, ST_END, ST_END, ST_END, ST_END, ST_END, ST_END, ST_END, ST_END, ST_END, ST_END, ST_END}, // ST_ADD
@@ -88,7 +87,9 @@ token_list_t* lexical_analyzer(FILE *source_code_file)
 {
     token_list_t *token_list = initialize_token_list();
     buffer_t buffer = allocate_buffer(256);
-    initialize_hash_table();
+    bst_node_t *bst_root = NULL;
+    bst_root = initialize_bst();
+    //print_bst(bst_root, 0);
 
     //variables used
     char current_char;
@@ -112,7 +113,23 @@ token_list_t* lexical_analyzer(FILE *source_code_file)
             {
                 new_state = transition_table[current_state][get_char_type(current_char)];
 
-                //printf("char \'%c\' st \'%s\' nw \'%s\'\n", current_char, state_to_string(current_state), state_to_string(new_state));
+                if(new_state == ST_ERR)
+                {
+                    if(strlen(current_token->lexeme) > 0)
+                    {
+                        current_token->lexeme[lexeme_count] = current_char;
+                        current_token->lexeme[lexeme_count + 1] = '\0';
+                        printf("LEX ERROR: line %d, lexeme: %s\n", buffer.line, current_token->lexeme);
+                    }
+                
+                    //stop the program
+                    //exit(0);
+                    advance_input_buffer(&buffer);
+                    lexeme_count = 0;
+                    free_token(current_token);
+
+                    break;
+                }
 
                 if (advance_table[current_state][get_char_type(current_char)])
                 {
@@ -129,6 +146,7 @@ token_list_t* lexical_analyzer(FILE *source_code_file)
                     }
                     current_char = buffer.data[buffer.position];
                 }
+
                 current_state = new_state;
                 if(current_state == ST_SRT)
                 {
@@ -140,11 +158,9 @@ token_list_t* lexical_analyzer(FILE *source_code_file)
             {
                 //printf("line: %d, token: , lexeme: \'%s\'\n", current_token->line, current_token->lexeme);
                 
-                current_token->type = identify_lexeme(current_token->lexeme);
-                //printf("lexeme: %s, token_type: %s\n", current_token->lexeme, token_type_to_string(current_token->type));
-                add_token_to_list(token_list, current_token);
-
-                //print_token(current_token);
+                current_token->type = identify_lexeme(bst_root, current_token->lexeme);
+                if(strlen(current_token->lexeme) > 0)
+                    add_token_to_list(token_list, current_token);
                 
                 lexeme_count = 0;
                 free_token(current_token);
@@ -156,6 +172,7 @@ token_list_t* lexical_analyzer(FILE *source_code_file)
     }
 
     deallocate_buffer(&buffer);
+    free_bst(bst_root);
 
     return token_list;
 }

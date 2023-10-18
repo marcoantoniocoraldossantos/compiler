@@ -1,3 +1,5 @@
+
+comentario /* aaaa*/
 else
 if
 int
@@ -10,7 +12,14 @@ while
 /
 <
 <=
->
+
+thay
+alves
+fernandes
+@
+>%
+%%$¨
+!a
 >=
 =
 !=
