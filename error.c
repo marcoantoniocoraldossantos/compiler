@@ -9,6 +9,20 @@
 #include "lexer.h"
 #include "error.h"
 
+void lex_error(buffer_t buffer, int line, int column) 
+{
+    if(line < 10)
+    {
+        fprintf(stderr, "lexical error.\nline 0%d : %d| %s\n", line, buffer.data, buffer.position);
+    }
+    else
+    {
+        fprintf(stderr, "lexical error.\nline %d | %s\n", line, buffer.data);
+    }
+    print_spaces(column);
+    //...
+    //exit(EXIT_FAILURE);
+}
 
 void memory_alocation_error(char *caller) 
 {

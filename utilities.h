@@ -19,4 +19,6 @@ void replace_newline(char *string);
 
 bool is_number(char *string);
 
+void print_spaces(int column);
+
 #endif

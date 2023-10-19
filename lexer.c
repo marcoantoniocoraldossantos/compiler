@@ -113,14 +113,16 @@ token_list_t* lexical_analyzer(FILE *source_code_file)
             {
                 new_state = transition_table[current_state][get_char_type(current_char)];
 
+                //printf("char %c, state %s, new state %s\n", current_char, state_to_string(current_state), state_to_string(new_state));
+
                 if(new_state == ST_ERR)
                 {
+                    current_token->lexeme[lexeme_count] = current_char;
+                    current_token->lexeme[lexeme_count + 1] = '\0';
+                    
+                    //pass all the buffer
                     if(strlen(current_token->lexeme) > 0)
-                    {
-                        current_token->lexeme[lexeme_count] = current_char;
-                        current_token->lexeme[lexeme_count + 1] = '\0';
-                        printf("LEX ERROR: line %d, lexeme: %s\n", buffer.line, current_token->lexeme);
-                    }
+                        lex_error(buffer, current_token->line, buffer.position);
                 
                     //stop the program
                     //exit(0);
@@ -129,6 +131,24 @@ token_list_t* lexical_analyzer(FILE *source_code_file)
                     free_token(current_token);
 
                     break;
+                }
+
+                //printf("char %c, state %s, new state %s\n", current_char, state_to_string(current_state), state_to_string(new_state));
+                if(new_state == ST_INC)
+                {
+                    current_state = new_state;
+                    while(new_state != ST_SRT)
+                    {
+                        advance_input_buffer(&buffer);
+                        if(buffer.position == buffer.size)
+                        {
+                            fill_buffer(source_code_file, &buffer);
+                        }
+                        current_char = buffer.data[buffer.position];
+                        new_state = transition_table[current_state][get_char_type(current_char)];
+                        //printf("char %c, state %s, new state %s\n", current_char, state_to_string(current_state), state_to_string(new_state));
+                        current_state = new_state;
+                    }
                 }
 
                 if (advance_table[current_state][get_char_type(current_char)])

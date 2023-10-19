@@ -57,3 +57,12 @@ bool is_number(char *string)
     }
     return true;
 }
+
+void print_spaces(int n) 
+{
+    for (int i = 0; i < n + 10; i++) 
+    {
+        fprintf(stderr, " ");
+    }
+    fprintf(stderr, "^\n");
+}
