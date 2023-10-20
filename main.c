@@ -3,12 +3,12 @@
 #include <stdlib.h>
 
 // include all header files
-#include "arguments.h"
 #include "utilities.h"
-#include "lexer.h"
-#include "token.h"
 #include "buffer.h"
+#include "token.h"
+#include "lexer.h"
 #include "error.h"
+#include "arguments.h"
 
 int main(int argc, char *argv[]) 
 {
@@ -21,14 +21,15 @@ int main(int argc, char *argv[])
 
     if(token_list == NULL)
     {
-        printf("\nerror: lexical analysis failed.\n");
+        printf("error: lexical analysis failed\n");
     }
     else
     {
-        printf("\nlexical analysis successful.\n");
+        printf("lexical analysis successful\n");
         print_token_list(token_list);
         free_token_list(token_list);
     }
+
 
     close_file(input_file);
 

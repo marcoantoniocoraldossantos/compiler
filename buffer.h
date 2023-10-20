@@ -1,13 +1,11 @@
 #ifndef BUFFER_H
 #define BUFFER_H
 
-#include "libraries.h"
-
-#include "lexer.h"
-#include "token.h"
-#include "error.h"
-#include "utilities.h"
-#include "arguments.h"
+#include <stdio.h>
+#include <stdlib.h>
+#include <stdbool.h>
+#include <string.h>
+#include <ctype.h>
 
 typedef struct 
 {

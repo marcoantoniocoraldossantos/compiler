@@ -9,6 +9,7 @@
         "stdio.h": "c",
         "string.h": "c",
         "stdbool.h": "c",
-        "arguments.h": "c"
+        "arguments.h": "c",
+        "lexer.h": "c"
     }
 }

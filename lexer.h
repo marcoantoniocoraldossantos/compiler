@@ -2,8 +2,11 @@
 #ifndef LEXER_H
 #define LEXER_H
 
-// include all libraries
-#include "libraries.h"
+#include <stdio.h>
+#include <stdlib.h>
+#include <stdbool.h>
+#include <string.h>
+#include <ctype.h>
 
 // include all header files
 #include "utilities.h"
@@ -40,5 +43,8 @@ typedef enum
 
 // main function to tokenize the source code file
 token_list_t* lexical_analyzer(FILE *source_code_file);
+
+char_t get_char_type(char c);
+char *state_to_string(state_t state);
 
 #endif
