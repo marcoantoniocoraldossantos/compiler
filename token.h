@@ -72,18 +72,20 @@ typedef struct bst_node
 
 // token functions
 token_t* initialize_token();
+void print_token(token_t *token);
+void free_token(token_t *token);
+
+// token list functions
 token_list_t* initialize_token_list();
 void add_token_to_list(token_list_t *list, token_t *token);
 void print_token_list(token_list_t *list);
 void free_token_list(token_list_t *list);
-void print_token(token_t *token);
-void free_token(token_t *token);
+
+
 token_type_t get_token_type(bst_node_t* root, char *lexeme);
 token_type_t identify_lexeme(bst_node_t* root, char *lexeme);
-bst_node_t* initialize_bst();
-bst_node_t* insert_bst_node(bst_node_t* root, char *lexeme, token_type_t token_type);
-void free_bst(bst_node_t* root);
-void print_bst(bst_node_t* root, int level);
+
+
 
 char* token_type_to_string(token_type_t token_type);
 

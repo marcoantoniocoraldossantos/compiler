@@ -4,16 +4,12 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-#include <stdbool.h>
 #include <string.h>
 #include <ctype.h>
+#include <stdbool.h>
 
-// include all header files
 #include "utilities.h"
-#include "arguments.h"
-#include "buffer.h"
 #include "token.h"
-#include "error.h"
 
 #define NUM_CHAR_CLASSES 20
 #define NUM_STATES 10

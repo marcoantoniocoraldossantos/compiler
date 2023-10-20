@@ -1,6 +1,4 @@
-#include "error.h"
-#include "arguments.h"
-#include "utilities.h"
+#include "libraries.h"
 
 void lex_error(token_t *token, buffer_t buffer, int line, int column) 
 {

@@ -1,4 +1,4 @@
-#include "lexer.h"
+#include "libraries.h"
 
 // state_t table to indicate the next state given the current state and the current character class
 state_t transition_table[NUM_STATES][NUM_CHAR_CLASSES] = 

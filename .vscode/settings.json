@@ -10,6 +10,7 @@
         "string.h": "c",
         "stdbool.h": "c",
         "arguments.h": "c",
-        "lexer.h": "c"
+        "lexer.h": "c",
+        "libraries.h": "c"
     }
 }

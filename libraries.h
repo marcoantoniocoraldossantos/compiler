@@ -7,4 +7,12 @@
 #include <ctype.h>
 #include <stdbool.h>
 
+#include "arguments.h"
+#include "utilities.h"
+#include "lexer.h"
+#include "buffer.h"
+#include "token.h"
+#include "bst.h"
+#include "error.h"
+
 #endif

@@ -1,14 +1,4 @@
-// libraries used
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-
-// include all header files
-#include "utilities.h"
-#include "buffer.h"
-#include "token.h"
-#include "lexer.h"
-#include "error.h"
+#include "libraries.h"
 
 buffer_t allocate_buffer(int size)
 {
