@@ -8,6 +8,8 @@
 #include <ctype.h>
 
 #include "arguments.h"
+#include "lexer.h"
+#include "token.h"
 
 // verify if the number of arguments is correct
 void verify_arguments(int argc, char *argv[]);
@@ -28,5 +30,11 @@ bool has_exclamation(char *lexeme);
 char *get_substring(char *string, int start, int end);
 
 void save_arguments(int argc, char **argv);
+
+char_t get_char_type(char c);
+
+char *state_to_string(state_t state);
+
+char *token_type_to_string(token_type_t token_type);
 
 #endif

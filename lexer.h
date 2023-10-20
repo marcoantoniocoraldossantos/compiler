@@ -2,19 +2,14 @@
 #ifndef LEXER_H
 #define LEXER_H
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <ctype.h>
-#include <stdbool.h>
-
 #include "utilities.h"
 #include "token.h"
 
 #define NUM_CHAR_CLASSES 20
 #define NUM_STATES 10
 
-typedef enum {
+typedef enum 
+{
     CHAR_SPACE, CHAR_LETTER, CHAR_DIGIT, // isspace isalpha isdigit
     CHAR_PLUS, CHAR_MINUS, CHAR_ASTERISK, CHAR_SLASH, // + - * /
     CHAR_LESS_THAN, CHAR_GREATER_THAN, CHAR_EQUALS, CHAR_EXCLAMATION, // = < > !
@@ -39,8 +34,5 @@ typedef enum
 
 // main function to tokenize the source code file
 token_list_t* lexical_analyzer(FILE *source_code_file);
-
-char_t get_char_type(char c);
-char *state_to_string(state_t state);
 
 #endif

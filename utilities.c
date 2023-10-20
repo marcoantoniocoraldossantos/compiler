@@ -128,3 +128,198 @@ void save_arguments(int argc, char *argv[])
     global_argc = argc;
     global_argv = argv;
 }
+
+char *state_to_string(state_t state)
+{
+    if(state == ST_SRT)
+    {
+        return "ST_SRT";
+    }
+    else if(state == ST_ID)
+    {
+        return "ST_ID";
+    }
+    else if(state == ST_NUM)
+    {
+        return "ST_NUM";
+    }
+    else if(state == ST_CMP)
+    {
+        return "ST_CMP";
+    }
+    else if(state == ST_NE)
+    {
+        return "ST_NE";
+    }
+    else if(state == ST_ENC)
+    {
+        return "ST_ENC";
+    }
+    else if(state == ST_INC)
+    {
+        return "ST_INC";
+    }
+    else if(state == ST_EXC)
+    {
+        return "ST_EXC";
+    }
+    else if(state == ST_ERR)
+    {
+        return "ST_ERR";
+    }
+    else if(state == ST_END)
+    {
+        return "ST_END";
+    }
+}
+
+char_t get_char_type(char c) 
+{
+    if (isspace(c))
+    {
+        return CHAR_SPACE;
+    } 
+    else if (isalpha(c)) 
+    {
+        return CHAR_LETTER;
+    } 
+    else if (isdigit(c)) 
+    {
+        return CHAR_DIGIT;
+    } 
+    else if (c == '+')
+    {
+        return CHAR_PLUS;
+    }   
+    else if (c == '-')
+    {
+        return CHAR_MINUS;
+    } 
+    else if (c == '*')
+    {
+        return CHAR_ASTERISK;
+    } 
+    else if (c == '/')
+    {
+        return CHAR_SLASH;
+    } 
+    else if (c == '<')
+    {
+        return CHAR_LESS_THAN;
+    } 
+    else if (c == '>')
+    {
+        return CHAR_GREATER_THAN;
+    } 
+    else if (c == '!')
+    {
+        return CHAR_EXCLAMATION;
+    } 
+    else if (c == '=')
+    {
+        return CHAR_EQUALS;
+    } 
+    else if (c == ';')
+    {
+        return CHAR_SEMICOLON;
+    } 
+    else if (c == ',')
+    {
+        return CHAR_COMMA;
+    } 
+    else if (c == '(')
+    {
+        return CHAR_LPAREN;
+    } 
+    else if (c == ')')
+    {
+        return CHAR_RPAREN;
+    } 
+    else if (c == '{')
+    {
+        return CHAR_LBRACE;
+    } 
+    else if (c == '}')
+    {
+        return CHAR_RBRACE;
+    } 
+    else if (c == '[')
+    {
+        return CHAR_LBRACKET;
+    } 
+    else if (c == ']')
+    {
+        return CHAR_RBRACKET;
+    } 
+    else 
+    {
+        return CHAR_OTHER;
+    }
+}
+
+char *token_type_to_string(token_type_t type)
+{
+    switch (type)
+    {
+        case ELSE:
+            return "ELSE";
+        case IF:
+            return "IF";
+        case INT:
+            return "INT";
+        case RETURN:
+            return "RETURN";
+        case VOID:
+            return "VOID";
+        case WHILE:
+            return "WHILE";
+        case PLUS:
+            return "PLUS";
+        case MINUS:
+            return "MINUS";
+        case MULTIPLY:
+            return "MULTIPLY";
+        case DIVIDE:
+            return "DIVIDE";
+        case LESS_THAN:
+            return "LESS_THAN";
+        case LESS_THAN_EQUAL:
+            return "LESS_THAN_EQUAL";
+        case GREATER_THAN:
+            return "GREATER_THAN";
+        case GREATER_THAN_EQUAL:
+            return "GREATER_THAN_EQUAL";
+        case EQUAL:
+            return "EQUAL";
+        case NOT_EQUAL:
+            return "NOT_EQUAL";
+        case ASSIGN:
+            return "ASSIGN";
+        case SEMICOLON:
+            return "SEMICOLON";
+        case COMMA:
+            return "COMMA";
+        case LEFT_PAREN:
+            return "LEFT_PAREN";
+        case RIGHT_PAREN:
+            return "RIGHT_PAREN";
+        case LEFT_BRACKET:
+            return "LEFT_BRACKET";
+        case RIGHT_BRACKET:
+            return "RIGHT_BRACKET";
+        case LEFT_BRACE:
+            return "LEFT_BRACE";
+        case RIGHT_BRACE:
+            return "RIGHT_BRACE";
+        case COMMENT_START:
+            return "COMMENT_START";
+        case COMMENT_END:
+            return "COMMENT_END";
+        case ID:
+            return "ID";
+        case NUM:
+            return "NUM";
+        default:
+            return "UNKNOWN";
+    }
+}

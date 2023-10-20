@@ -20,7 +20,6 @@ int main(int argc, char *argv[])
         free_token_list(token_list);
     }
 
-
     close_file(input_file);
 
     return 0;

@@ -42,22 +42,22 @@ bool accept_table[NUM_STATES] =
 // function to initialize the token list
 token_list_t* lexical_analyzer(FILE *source_code_file)
 {
+    // initialize the token list, the buffer and the bst
     token_list_t *token_list = initialize_token_list();
     buffer_t buffer = allocate_buffer(256);
-    bst_node_t *bst_root = NULL;
-    bst_root = initialize_bst();
-    //print_bst(bst_root, 0);
+    bst_node_t *bst_root = initialize_bst();
 
-    //variables used
+    // variables to control the state machine
     char current_char;
-    state_t new_state, current_state = ST_SRT;
     token_t *current_token;
+    state_t current_state, new_state;
+
+    // auxiliar variables
     int lexeme_count = 0;
     bool error_found = false;
 
     while (fill_buffer(source_code_file, &buffer)) 
     {   
-        //print_buffer(&buffer);
         do
         {   
             current_state = ST_SRT;
@@ -71,26 +71,21 @@ token_list_t* lexical_analyzer(FILE *source_code_file)
             {
                 new_state = transition_table[current_state][get_char_type(current_char)];
 
-                //printf("char %c, state %s, new state %s\n", current_char, state_to_string(current_state), state_to_string(new_state));
-
                 if(new_state == ST_ERR)
                 {
                     current_token->lexeme[lexeme_count] = current_char;
                     current_token->lexeme[lexeme_count + 1] = '\0';
                     
-                    //pass all the buffer
                     if(strlen(current_token->lexeme) > 0)
                     {
                         lex_error(current_token, buffer, current_token->line, buffer.position);
 
-                        //keep going but save the error
                         error_found = true;
                     
                         //stop the program
                         //exit(0);
                     }
                 
-                    
                     advance_input_buffer(&buffer);
                     lexeme_count = 0;
                     free_token(current_token);
@@ -98,7 +93,6 @@ token_list_t* lexical_analyzer(FILE *source_code_file)
                     break;
                 }
 
-                //printf("char %c, state %s, new state %s\n", current_char, state_to_string(current_state), state_to_string(new_state));
                 if(new_state == ST_INC)
                 {
                     current_state = new_state;
@@ -111,7 +105,6 @@ token_list_t* lexical_analyzer(FILE *source_code_file)
                         }
                         current_char = buffer.data[buffer.position];
                         new_state = transition_table[current_state][get_char_type(current_char)];
-                        //printf("char %c, state %s, new state %s\n", current_char, state_to_string(current_state), state_to_string(new_state));
                         current_state = new_state;
                     }
                 }
@@ -140,9 +133,7 @@ token_list_t* lexical_analyzer(FILE *source_code_file)
                
             }
             if (accept_table[current_state])
-            {
-                //printf("line: %d, token: , lexeme: \'%s\'\n", current_token->line, current_token->lexeme);
-                
+            {                
                 current_token->type = identify_lexeme(bst_root, current_token->lexeme);
                 if(strlen(current_token->lexeme) > 0)
                     add_token_to_list(token_list, current_token);
@@ -152,8 +143,6 @@ token_list_t* lexical_analyzer(FILE *source_code_file)
             }
 
         } while (current_char != '\n' && current_char != '\0');
-        
-        //print_buffer(&buffer);
     }
 
     deallocate_buffer(&buffer);
@@ -165,132 +154,4 @@ token_list_t* lexical_analyzer(FILE *source_code_file)
     }
 
     return token_list;
-}
-
-char *state_to_string(state_t state)
-{
-    if(state == ST_SRT)
-    {
-        return "ST_SRT";
-    }
-    else if(state == ST_ID)
-    {
-        return "ST_ID";
-    }
-    else if(state == ST_NUM)
-    {
-        return "ST_NUM";
-    }
-    else if(state == ST_CMP)
-    {
-        return "ST_CMP";
-    }
-    else if(state == ST_NE)
-    {
-        return "ST_NE";
-    }
-    else if(state == ST_ENC)
-    {
-        return "ST_ENC";
-    }
-    else if(state == ST_INC)
-    {
-        return "ST_INC";
-    }
-    else if(state == ST_EXC)
-    {
-        return "ST_EXC";
-    }
-    else if(state == ST_ERR)
-    {
-        return "ST_ERR";
-    }
-    else if(state == ST_END)
-    {
-        return "ST_END";
-    }
-}
-
-char_t get_char_type(char c) 
-{
-    if (isspace(c))
-    {
-        return CHAR_SPACE;
-    } 
-    else if (isalpha(c)) 
-    {
-        return CHAR_LETTER;
-    } 
-    else if (isdigit(c)) 
-    {
-        return CHAR_DIGIT;
-    } 
-    else if (c == '+')
-    {
-        return CHAR_PLUS;
-    }   
-    else if (c == '-')
-    {
-        return CHAR_MINUS;
-    } 
-    else if (c == '*')
-    {
-        return CHAR_ASTERISK;
-    } 
-    else if (c == '/')
-    {
-        return CHAR_SLASH;
-    } 
-    else if (c == '<')
-    {
-        return CHAR_LESS_THAN;
-    } 
-    else if (c == '>')
-    {
-        return CHAR_GREATER_THAN;
-    } 
-    else if (c == '!')
-    {
-        return CHAR_EXCLAMATION;
-    } 
-    else if (c == '=')
-    {
-        return CHAR_EQUALS;
-    } 
-    else if (c == ';')
-    {
-        return CHAR_SEMICOLON;
-    } 
-    else if (c == ',')
-    {
-        return CHAR_COMMA;
-    } 
-    else if (c == '(')
-    {
-        return CHAR_LPAREN;
-    } 
-    else if (c == ')')
-    {
-        return CHAR_RPAREN;
-    } 
-    else if (c == '{')
-    {
-        return CHAR_LBRACE;
-    } 
-    else if (c == '}')
-    {
-        return CHAR_RBRACE;
-    } 
-    else if (c == '[')
-    {
-        return CHAR_LBRACKET;
-    } 
-    else if (c == ']')
-    {
-        return CHAR_RBRACKET;
-    } 
-    else 
-    {
-        return CHAR_OTHER;
-    }
 }

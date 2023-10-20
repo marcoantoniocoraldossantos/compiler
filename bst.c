@@ -30,21 +30,24 @@ bst_node_t* initialize_bst()
     root = insert_bst_node(root, "]", RIGHT_BRACKET);
     root = insert_bst_node(root, "{", LEFT_BRACE);
     root = insert_bst_node(root, "}", RIGHT_BRACE);
-    root = insert_bst_node(root, "/*", COMMENT_START);
-    root = insert_bst_node(root, "*/", COMMENT_END);
+    //root = insert_bst_node(root, "/*", COMMENT_START);
+    //root = insert_bst_node(root, "*/", COMMENT_END);
 
     return root;
 }
 
-void print_bst(bst_node_t* root, int level) {
-    if (root == NULL) {
+void print_bst(bst_node_t* root, int level) 
+{
+    if (root == NULL) 
+    {
         return;
     }
 
     print_bst(root->right, level + 1);
 
-    for (int i = 0; i < level; i++) {
-        printf("   ");  // Adjust spaces for indentation
+    for (int i = 0; i < level; i++) 
+    {
+        printf("   ");
     }
 
     printf("%s\n", root->lexeme);
@@ -53,11 +56,12 @@ void print_bst(bst_node_t* root, int level) {
 
 bst_node_t* insert_bst_node(bst_node_t* root, char* lexeme, token_type_t token_type) 
 {
-    if (root == NULL) {
+    if (root == NULL) 
+    {
         bst_node_t* new_node = (bst_node_t*)malloc(sizeof(bst_node_t));
-        if (new_node == NULL) {
-            fprintf(stderr, "Memory allocation error\n");
-            exit(EXIT_FAILURE);
+        if (new_node == NULL) 
+        {
+            memory_alocation_error("bst node");
         }
 
         strcpy(new_node->lexeme, lexeme);
@@ -69,9 +73,12 @@ bst_node_t* insert_bst_node(bst_node_t* root, char* lexeme, token_type_t token_t
 
     int comparison_result = strcmp(lexeme, root->lexeme);
 
-    if (comparison_result < 0) {
+    if (comparison_result < 0) 
+    {
         root->left = insert_bst_node(root->left, lexeme, token_type);
-    } else if (comparison_result > 0) {
+    } 
+    else if (comparison_result > 0) 
+    {
         root->right = insert_bst_node(root->right, lexeme, token_type);
     }
 
@@ -80,11 +87,13 @@ bst_node_t* insert_bst_node(bst_node_t* root, char* lexeme, token_type_t token_t
 
 void free_bst(bst_node_t* root) 
 {
-    if (root == NULL) {
+    if (root == NULL) 
+    {
         return;
     }
 
     free_bst(root->left);
     free_bst(root->right);
+    
     free(root);
 }

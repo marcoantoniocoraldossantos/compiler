@@ -81,12 +81,8 @@ void add_token_to_list(token_list_t *list, token_t *token);
 void print_token_list(token_list_t *list);
 void free_token_list(token_list_t *list);
 
-
+// analyze functions
 token_type_t get_token_type(bst_node_t* root, char *lexeme);
 token_type_t identify_lexeme(bst_node_t* root, char *lexeme);
-
-
-
-char* token_type_to_string(token_type_t token_type);
 
 #endif
