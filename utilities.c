@@ -1,20 +1,9 @@
-// libraries used
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <stdbool.h>
-#include <ctype.h>
-
-// include all header files
-#include "utilities.h"
-#include "buffer.h"
-#include "token.h"
-#include "lexer.h"
-#include "error.h"
+#include "libraries.h"
 
 char **global_argv = NULL;
 int global_argc = 0;
 
+// arguments functions
 void verify_arguments(int argc, char *argv[]) 
 {
     if (argc != 2) 
@@ -23,6 +12,13 @@ void verify_arguments(int argc, char *argv[])
     }
 }
 
+void save_arguments(int argc, char *argv[])
+{
+    global_argc = argc;
+    global_argv = argv;
+}
+
+// functions to open and close files
 FILE *open_file(char *filename, char *mode) 
 {
     FILE *file = fopen(filename, mode);
@@ -39,15 +35,31 @@ void close_file(FILE *file)
     fclose(file);
 }
 
+// char / string functions
 void replace_newline(char *string) 
 {
     size_t length = strlen(string);
+
     if (string[length - 1] == '\n') 
     {
         string[length - 1] = '\0';
     }
 }
 
+char *get_substring(char *string, int start, int end)
+{
+    char *substring = malloc(sizeof(char) * (end - start + 1));
+    int j = 0;
+    for(int i = start; i < end; i++)
+    {
+        substring[j] = string[i];
+        j++;
+    }
+    substring[j] = '\0';
+    return substring;
+}
+
+// bool functions
 bool is_number(char *string) 
 {
     int length = strlen(string);
@@ -61,6 +73,16 @@ bool is_number(char *string)
     return true;
 }
 
+bool has_exclamation(char *string)
+{
+    if(string[0] == '!')
+    {
+        return true;
+    }
+    return false;
+}
+
+// auxiliar functions
 void print_spaces(int line, int column)
 {
     int extra = 9;
@@ -101,34 +123,7 @@ void print_spaces(int line, int column)
     }
 }
 
-bool has_exclamation(char *string)
-{
-    if(string[0] == '!')
-    {
-        return true;
-    }
-    return false;
-}
-
-char *get_substring(char *string, int start, int end)
-{
-    char *substring = malloc(sizeof(char) * (end - start + 1));
-    int j = 0;
-    for(int i = start; i < end; i++)
-    {
-        substring[j] = string[i];
-        j++;
-    }
-    substring[j] = '\0';
-    return substring;
-}
-
-void save_arguments(int argc, char *argv[])
-{
-    global_argc = argc;
-    global_argv = argv;
-}
-
+// functions to help with the state machine
 char *state_to_string(state_t state)
 {
     if(state == ST_SRT)

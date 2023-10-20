@@ -11,30 +11,28 @@
 #include "lexer.h"
 #include "token.h"
 
-// verify if the number of arguments is correct
+// arguments functions
 void verify_arguments(int argc, char *argv[]);
+void save_arguments(int argc, char **argv);
 
 // functions to open and close files
 FILE *open_file(char *filename, char *mode);
 void close_file(FILE *file);
 
-// 
+// char / string functions
 void replace_newline(char *string);
-
-bool is_number(char *string);
-
-void print_spaces(int line, int column);
-
-bool has_exclamation(char *lexeme);
-
 char *get_substring(char *string, int start, int end);
 
-void save_arguments(int argc, char **argv);
+// bool functions
+bool is_number(char *string);
+bool has_exclamation(char *lexeme);
 
+// auxiliar functions
+void print_spaces(int line, int column);
+
+// functions to help with the state machine
 char_t get_char_type(char c);
-
 char *state_to_string(state_t state);
-
 char *token_type_to_string(token_type_t token_type);
 
 #endif
