@@ -5,7 +5,10 @@ LDFLAGS = -lm
 SRC_DIR = src
 OBJ_DIR = obj
 
-SOURCES = $(wildcard $(SRC_DIR)/*.c) main.c
+# List of source files including main.c
+SOURCES = $(wildcard $(SRC_DIR)/*.c)
+
+# List of object files
 OBJECTS = $(patsubst $(SRC_DIR)/%.c, $(OBJ_DIR)/%.o, $(SOURCES))
 
 EXECUTABLE = compiler
