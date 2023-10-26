@@ -59,29 +59,6 @@ char *get_substring(char *string, int start, int end)
     return substring;
 }
 
-// bool functions
-bool is_number(char *string) 
-{
-    int length = strlen(string);
-    for (int i = 0; i < length; i++) 
-    {
-        if (!isdigit(string[i])) 
-        {
-            return false;
-        }
-    }
-    return true;
-}
-
-bool has_exclamation(char *string)
-{
-    if(string[0] == '!')
-    {
-        return true;
-    }
-    return false;
-}
-
 // auxiliar functions
 void print_spaces(int line, int column)
 {
@@ -138,13 +115,89 @@ char *state_to_string(state_t state)
     {
         return "ST_NUM";
     }
-    else if(state == ST_CMP)
+    else if(state == ST_ADD)
     {
-        return "ST_CMP";
+        return "ST_ADD";
+    }
+    else if(state == ST_SUB)
+    {
+        return "ST_SUB";
+    }
+    else if(state == ST_MUL)
+    {
+        return "ST_MUL";
+    }
+    else if(state == ST_LT)
+    {
+        return "ST_LT";
+    }
+    else if(state == ST_GT)
+    {
+        return "ST_GT";
+    }
+    else if(state == ST_LE)
+    {
+        return "ST_LE";
+    }
+    else if(state == ST_GE)
+    {
+        return "ST_GE";
+    }
+    else if(state == ST_EQ)
+    {
+        return "ST_EQ";
+    }
+    else if(state == ST_LE)
+    {
+        return "ST_LE";
+    }
+    else if(state == ST_GE)
+    {
+        return "ST_GE";
+    }
+    else if(state == ST_EQ)
+    {
+        return "ST_EQ";
+    }
+    else if(state == ST_ASG)
+    {
+        return "ST_ASG";
     }
     else if(state == ST_NE)
     {
         return "ST_NE";
+    }
+    else if(state == ST_SEM)
+    {
+        return "ST_SEM";
+    }
+    else if(state == ST_COM)
+    {
+        return "ST_COM";
+    }
+    else if(state == ST_LPA)
+    {
+        return "ST_LPA";
+    }
+    else if(state == ST_RPA)
+    {
+        return "ST_RPA";
+    }
+    else if(state == ST_LBK)
+    {
+        return "ST_LBK";
+    }
+    else if(state == ST_RBK)
+    {
+        return "ST_RBK";
+    }
+    else if(state == ST_LBC)
+    {
+        return "ST_LBC";
+    }
+    else if(state == ST_RBC)
+    {
+        return "ST_RBC";
     }
     else if(state == ST_ENC)
     {
@@ -166,6 +219,105 @@ char *state_to_string(state_t state)
     {
         return "ST_END";
     }
+
+    return "UNKNOWN";
+}
+
+token_type_t state_to_token_type(state_t state)
+{
+    if(state == ST_ID)
+    {
+        return ID;
+    }
+    else if(state == ST_NUM)
+    {
+        return NUM;
+    }
+    else if(state == ST_ADD)
+    {
+        return PLUS;
+    }
+    else if(state == ST_SUB)
+    {
+        return MINUS;
+    }
+    else if(state == ST_MUL)
+    {
+        return MULTIPLY;
+    }
+    else if(state == ST_LT)
+    {
+        return LESS_THAN;
+    }
+    else if(state == ST_GT)
+    {
+        return GREATER_THAN;
+    }
+    else if(state == ST_LE)
+    {
+        return LESS_THAN_EQUAL;
+    }
+    else if(state == ST_GE)
+    {
+        return GREATER_THAN_EQUAL;
+    }
+    else if(state == ST_EQ)
+    {
+        return EQUAL;
+    }
+    else if(state == ST_ASG)
+    {
+        return ASSIGN;
+    }
+    else if(state == ST_NE)
+    {
+        return NOT_EQUAL;
+    }
+    else if(state == ST_SEM)
+    {
+        return SEMICOLON;
+    }
+    else if(state == ST_COM)
+    {
+        return COMMA;
+    }
+    else if(state == ST_LPA)
+    {
+        return LEFT_PAREN;
+    }
+    else if(state == ST_RPA)
+    {
+        return RIGHT_PAREN;
+    }
+    else if(state == ST_LBK)
+    {
+        return LEFT_BRACKET;
+    }
+    else if(state == ST_RBK)
+    {
+        return RIGHT_BRACKET;
+    }
+    else if(state == ST_LBC)
+    {
+        return LEFT_BRACE;
+    }
+    else if(state == ST_RBC)
+    {
+        return RIGHT_BRACE;
+    }
+    else if(state == ST_ENC)
+    {
+        return DIVIDE;
+    }
+    else if(state == ST_INC)
+    {
+        return COMMENT_END;
+    }
+    else if(state == ST_EXC)
+    {
+        return COMMENT_END;
+    }
+    return UNKNOWN;
 }
 
 char_t get_char_type(char c) 

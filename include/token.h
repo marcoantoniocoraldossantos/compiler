@@ -40,6 +40,9 @@ typedef enum
     // markers
     ID,
     NUM,
+
+    //other
+    UNKNOWN
 } token_type_t;
 
 typedef struct 

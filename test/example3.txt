@@ -1,37 +1,8 @@
-
-comentario /* aaaa*/
-else
-if
-int
-return
-void
-while 
-+
--
-*
-/
-<
-<=
-
-thay
-alves
-fernandes
-@
->%
-%%$¨
-!a
->=
-=
-!=
-==
-;
-,
-(
-)
-[
-]
-{
-}
-marco
-123
-ident numero identifier number
+/* comentario */
+/* comentario /* dentro do comentario */ */
+ola tudo bem ?
+sim tudo bem ! e com voce ?
+mas sei la !. que doidera
+@marco 
+#compiladores
+100% de certeza

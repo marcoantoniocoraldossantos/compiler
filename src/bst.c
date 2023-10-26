@@ -11,28 +11,6 @@ bst_node_t* initialize_bst()
     root = insert_bst_node(root, "void", VOID);
     root = insert_bst_node(root, "while", WHILE);
 
-    root = insert_bst_node(root, "+", PLUS);
-    root = insert_bst_node(root, "-", MINUS);
-    root = insert_bst_node(root, "*", MULTIPLY);
-    root = insert_bst_node(root, "/", DIVIDE);
-    root = insert_bst_node(root, "<", LESS_THAN);
-    root = insert_bst_node(root, "<=", LESS_THAN_EQUAL);
-    root = insert_bst_node(root, ">", GREATER_THAN);
-    root = insert_bst_node(root, ">=", GREATER_THAN_EQUAL);
-    root = insert_bst_node(root, "==", EQUAL);
-    root = insert_bst_node(root, "!=", NOT_EQUAL);
-    root = insert_bst_node(root, "=", ASSIGN);
-    root = insert_bst_node(root, ";", SEMICOLON);
-    root = insert_bst_node(root, ",", COMMA);
-    root = insert_bst_node(root, "(", LEFT_PAREN);
-    root = insert_bst_node(root, ")", RIGHT_PAREN);
-    root = insert_bst_node(root, "[", LEFT_BRACKET);
-    root = insert_bst_node(root, "]", RIGHT_BRACKET);
-    root = insert_bst_node(root, "{", LEFT_BRACE);
-    root = insert_bst_node(root, "}", RIGHT_BRACE);
-    //root = insert_bst_node(root, "/*", COMMENT_START);
-    //root = insert_bst_node(root, "*/", COMMENT_END);
-
     return root;
 }
 

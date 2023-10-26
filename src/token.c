@@ -148,12 +148,6 @@ token_type_t get_token_type(bst_node_t* root, char* lexeme)
 
 token_type_t identify_lexeme(bst_node_t* root, char* lexeme) 
 {
-    if (is_number(lexeme)) 
-    {
-        return NUM;
-    } 
-    else 
-    {
-        return get_token_type(root, lexeme);
-    }
+
+    return get_token_type(root, lexeme);
 }

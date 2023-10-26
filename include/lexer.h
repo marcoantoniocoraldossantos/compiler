@@ -6,7 +6,7 @@
 #include "token.h"
 
 #define NUM_CHAR_CLASSES 20
-#define NUM_STATES 10
+#define NUM_STATES 26
 
 typedef enum 
 {
@@ -18,13 +18,29 @@ typedef enum
     CHAR_OTHER // anything else
 } char_t;
 
-typedef enum 
+typedef enum
 {
     ST_SRT, // start state
     ST_ID, // identifier
     ST_NUM, // number
-    ST_CMP, // < > = <= >= ==
+    ST_ADD, // +
+    ST_SUB, // -
+    ST_MUL, // *
+    ST_LT, // <
+    ST_GT, // > 
+    ST_LE, // <=
+    ST_GE, // >=
+    ST_EQ, // ==
+    ST_ASG, // =
     ST_NE, // !=
+    ST_SEM, // ;
+    ST_COM, // ,
+    ST_LPA, // (
+    ST_RPA, // )
+    ST_LBK, // [
+    ST_RBK, // ]
+    ST_LBC, // {
+    ST_RBC, // }
     ST_ENC, // /*
     ST_INC, // /* ... */
     ST_EXC, // */
