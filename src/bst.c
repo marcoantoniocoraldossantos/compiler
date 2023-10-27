@@ -4,7 +4,7 @@ bst_node_t* initialize_bst()
 {
     bst_node_t* root = NULL;
 
-    //char *optimal_root = find_optimal_root();
+    char *optimal_root = find_optimal_root();
 
     root = insert_bst_node(root, "return", RETURN);
     root = insert_bst_node(root, "void", VOID);
