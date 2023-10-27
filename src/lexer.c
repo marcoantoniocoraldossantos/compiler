@@ -78,7 +78,7 @@ token_list_t* lexical_analyzer(FILE *source_code_file)
     buffer_t buffer = allocate_buffer(256);
     bst_node_t *bst_root = initialize_bst();
 
-    print_bst(bst_root, 1);
+    //print_bst(bst_root, 1);
 
     // variables to control the state machine
     char current_char;
