@@ -5,6 +5,7 @@
 #include "utilities.h"
 #include "token.h"
 
+#define NUM_RESERVED_WORDS 6
 #define NUM_CHAR_CLASSES 20
 #define NUM_STATES 26
 
@@ -47,6 +48,9 @@ typedef enum
     ST_ERR, // error state
     ST_END // end state
 } state_t;
+
+// reserved words for the lexer
+extern char* reserved_words[];
 
 // main function to tokenize the source code file
 token_list_t* lexical_analyzer(FILE *source_code_file);

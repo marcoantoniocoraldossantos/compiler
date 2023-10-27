@@ -93,18 +93,33 @@ void print_token_list(token_list_t *list)
 {
     if (list == NULL || list->head == NULL) 
     {
-        printf("token list is empty.\n");
+        printf("Token list is empty.\n");
         return;
     }
 
     token_node_t *current = list->head;
 
+    // Find the maximum token name length
+    int maxTokenNameLength = 0;
     while (current != NULL) 
     {
         token_t token = current->token;
+        int tokenNameLength = strlen(token_type_to_string(token.type));
+        if (tokenNameLength > maxTokenNameLength) 
+        {
+            maxTokenNameLength = tokenNameLength;
+        }
+        current = current->next;
+    }
 
-        printf("line: %d token: %s lexeme: '%s'\n", token.line, token_type_to_string(token.type), token.lexeme);
+    printf("  %-6s | %-*s | %s\n", "line", maxTokenNameLength, "token", "lexeme");
+    printf("----------------------------------------\n");
 
+    current = list->head;
+    while (current != NULL) 
+    {
+        token_t token = current->token;
+        printf("> %-6d | %-*s | '%s'\n", token.line, maxTokenNameLength, token_type_to_string(token.type), token.lexeme);
         current = current->next;
     }
 }

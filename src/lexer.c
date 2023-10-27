@@ -121,7 +121,7 @@ token_list_t* lexical_analyzer(FILE *source_code_file)
                         error_found = true;
                     
                         //stop the program
-                        exit(EXIT_FAILURE);
+                        //exit(EXIT_FAILURE);
                     }
                 
                     advance_input_buffer(&buffer);

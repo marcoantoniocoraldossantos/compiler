@@ -30,6 +30,7 @@ void print_spaces(int line, int column);
 char_t get_char_type(char c);
 char *state_to_string(state_t state);
 token_type_t state_to_token_type(state_t state);
+token_type_t reserved_word_token_type(const char *word);
 char *token_type_to_string(token_type_t token_type);
 
 #endif
