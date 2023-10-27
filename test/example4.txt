@@ -24,5 +24,8 @@ while
 }
 [
 ]
-identificador
+
+id
 123
+
+/* comentario /* dentro do comentario */ */

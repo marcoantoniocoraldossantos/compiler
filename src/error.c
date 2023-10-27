@@ -13,7 +13,7 @@ void lex_error(token_t *token, buffer_t buffer, int line, int column)
 
             char *before_error = get_substring(buffer.data, 0, buffer.position-1);
             char *after_error = get_substring(buffer.data, buffer.position, buffer.size);
-            fprintf(stderr, "     %d:%d | %s\x1b[31m%c\x1b[0m%s\n", line, buffer.position, before_error, buffer.data[buffer.position-1], after_error);
+            fprintf(stderr, "     %d:%d | %s\x1b[31m%c\x1b[0m%s\n", line, buffer.position+1, before_error, buffer.data[buffer.position-1], after_error);
 
             print_spaces(line, column-1);
             fprintf(stderr, "\x1b[31m^\x1b[0m\n");
@@ -25,7 +25,7 @@ void lex_error(token_t *token, buffer_t buffer, int line, int column)
 
             char *before_error = get_substring(buffer.data, 0, buffer.position-1);
             char *after_error = get_substring(buffer.data, buffer.position+1, buffer.size);
-            fprintf(stderr, "     %d:%d | %s\x1b[31m!%c\x1b[0m%s\n", line, buffer.position, before_error, buffer.data[buffer.position], after_error);
+            fprintf(stderr, "     %d:%d | %s\x1b[31m!%c\x1b[0m%s\n", line, buffer.position+1, before_error, buffer.data[buffer.position], after_error);
 
             
             print_spaces(line, column-1);
@@ -43,7 +43,7 @@ void lex_error(token_t *token, buffer_t buffer, int line, int column)
 
         char *before_error = get_substring(buffer.data, 0, buffer.position);
         char *after_error = get_substring(buffer.data, buffer.position+1, buffer.size);
-        fprintf(stderr, "     %d:%d | %s\x1b[31m%c\x1b[0m%s\n", line, buffer.position, before_error, buffer.data[buffer.position], after_error);
+        fprintf(stderr, "     %d:%d | %s\x1b[31m%c\x1b[0m%s\n", line, buffer.position+1, before_error, buffer.data[buffer.position], after_error);
 
         print_spaces(line, column);
         fprintf(stderr, "\x1b[31m^\x1b[0m\n");

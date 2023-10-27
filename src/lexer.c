@@ -28,7 +28,7 @@ state_t transition_table[NUM_STATES][NUM_CHAR_CLASSES] =
     {ST_INC, ST_INC, ST_INC, ST_INC, ST_INC, ST_EXC, ST_INC, ST_INC, ST_INC, ST_INC, ST_INC, ST_INC, ST_INC, ST_INC, ST_INC, ST_INC, ST_INC, ST_INC, ST_INC, ST_INC}, // ST_INC
     {ST_INC, ST_INC, ST_INC, ST_INC, ST_INC, ST_INC, ST_SRT, ST_INC, ST_INC, ST_INC, ST_INC, ST_INC, ST_INC, ST_INC, ST_INC, ST_INC, ST_INC, ST_INC, ST_INC, ST_INC}, // ST_EXC
     {ST_END, ST_END, ST_END, ST_END, ST_END, ST_END, ST_END, ST_END, ST_END, ST_END, ST_END, ST_END, ST_END, ST_END, ST_END, ST_END, ST_END, ST_END, ST_END, ST_END}, // ST_ERR
-    {ST_SRT, ST_SRT, ST_SRT, ST_SRT, ST_SRT, ST_SRT, ST_SRT, ST_SRT, ST_SRT, ST_SRT, ST_SRT, ST_SRT, ST_SRT, ST_SRT, ST_SRT, ST_SRT, ST_SRT, ST_SRT, ST_SRT, ST_SRT} // ST_END
+    {ST_SRT, ST_SRT, ST_SRT, ST_SRT, ST_SRT, ST_SRT, ST_SRT, ST_SRT, ST_SRT, ST_SRT, ST_SRT, ST_SRT, ST_SRT, ST_SRT, ST_SRT, ST_SRT, ST_SRT, ST_SRT, ST_SRT, ST_SRT}  // ST_END
 };
 
 // boolean to indicate if should advance the input buffer
@@ -95,6 +95,7 @@ token_list_t* lexical_analyzer(FILE *source_code_file)
             previous_state = ST_SRT;
 
             current_token = initialize_token();
+            lexeme_count = 0;
 
             current_char = buffer.data[buffer.position];
 
@@ -118,11 +119,12 @@ token_list_t* lexical_analyzer(FILE *source_code_file)
                         error_found = true;
                     
                         //stop the program
-                        //exit(0);
+                        exit(EXIT_FAILURE);
                     }
                 
                     advance_input_buffer(&buffer);
                     lexeme_count = 0;
+                    
                     free_token(current_token);
 
                     break;
@@ -130,6 +132,8 @@ token_list_t* lexical_analyzer(FILE *source_code_file)
 
                 if(new_state == ST_INC)
                 {
+                    lexeme_count = 0;
+                    
                     previous_state = current_state;
                     current_state = new_state;
                     while(new_state != ST_SRT)
@@ -171,8 +175,6 @@ token_list_t* lexical_analyzer(FILE *source_code_file)
             }
             if (accept_table[current_state])
             {                
-                //printf("lexema %s prev %s\n", current_token->lexeme, state_to_string(previous_state));
-
                 if(previous_state == ST_ID)
                 {
                     
@@ -192,8 +194,6 @@ token_list_t* lexical_analyzer(FILE *source_code_file)
                 }
                 else
                 {
-                    //printf("prev %s\n", state_to_string(previous_state));
-
                    current_token->type = state_to_token_type(previous_state);
                     if(strlen(current_token->lexeme) > 0)
                     {
