@@ -115,12 +115,15 @@ token_list_t* lexical_analyzer(FILE *source_code_file)
                     
                     if(strlen(current_token->lexeme) > 0)
                     {
-                        lex_error(current_token, buffer, current_token->line, buffer.position);
+                        //lex_error(current_token, buffer, current_token->line, buffer.position);
                     
                         free_token(current_token);
                         deallocate_buffer(&buffer);
                         free_bst(bst_root);
                         free_token_list(token_list);
+
+                        //close file
+                        fclose(source_code_file);
                         
                         //stop the program
                         exit(EXIT_FAILURE);
@@ -129,7 +132,7 @@ token_list_t* lexical_analyzer(FILE *source_code_file)
                     advance_input_buffer(&buffer);
                     lexeme_count = 0;
 
-                    free_token(current_token);
+                    //free_token(current_token);
 
                     break;
                 }
