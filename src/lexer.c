@@ -78,8 +78,6 @@ token_list_t* lexical_analyzer(FILE *source_code_file)
     buffer_t buffer = allocate_buffer(256);
     bst_node_t *bst_root = initialize_bst();
 
-    //print_bst(bst_root, 1);
-
     // variables to control the state machine
     char current_char;
     token_t *current_token;
@@ -108,7 +106,6 @@ token_list_t* lexical_analyzer(FILE *source_code_file)
                 previous_state = current_state;
                 new_state = transition_table[current_state][get_char_type(current_char)];
                 
-                //printf("char %c, prev state %s, state %s, new state %s\n", current_char, state_to_string(previous_state),state_to_string(current_state), state_to_string(new_state));
                 if(new_state == ST_ERR)
                 {
                     current_token->lexeme[lexeme_count] = current_char;
@@ -118,6 +115,9 @@ token_list_t* lexical_analyzer(FILE *source_code_file)
                     {
                         lex_error(current_token, buffer, current_token->line, buffer.position);
                     
+                        error_flag = true;
+
+                        // uncomment to stop the program when an error is found
                         // free_token(current_token);
                         // deallocate_buffer(&buffer);
                         // free_bst(bst_root);
@@ -126,16 +126,12 @@ token_list_t* lexical_analyzer(FILE *source_code_file)
                         // //close file
                         // fclose(source_code_file);
                         
-                        //stop the program
-                        //exit(EXIT_FAILURE);
-
-                        error_flag = true;
+                        // stop the program
+                        // exit(EXIT_FAILURE);
                     }
                 
                     advance_input_buffer(&buffer);
                     lexeme_count = 0;
-
-                    //free_token(current_token);
 
                     break;
                 }
@@ -212,11 +208,8 @@ token_list_t* lexical_analyzer(FILE *source_code_file)
                 }
                 
                 lexeme_count = 0;
-                //free_token(current_token);
             }
 
-            //test memory leak
-            advance_input_buffer(&buffer);
             free_token(current_token);
 
         } while (current_char != '\n' && current_char != '\0');
