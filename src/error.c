@@ -2,7 +2,6 @@
 
 void lex_error(token_t *token, buffer_t buffer, int line, int column) 
 {
-   
     if (token->lexeme[0] == '!') 
     {
         if(token->lexeme[1] == ' ')
@@ -17,6 +16,9 @@ void lex_error(token_t *token, buffer_t buffer, int line, int column)
 
             print_spaces(line, column-1);
             fprintf(stderr, "\x1b[31m^\x1b[0m\n");
+
+            free(before_error);
+            free(after_error);
         }
         else
         {
@@ -32,6 +34,9 @@ void lex_error(token_t *token, buffer_t buffer, int line, int column)
             fprintf(stderr, "\x1b[31m^~\x1b[0m\n");
             print_spaces(line, column-1);
             fprintf(stderr, "\x1b[32m!=\x1b[0m\n");
+
+            free(before_error);
+            free(after_error);
         }
 
     } 
@@ -47,6 +52,9 @@ void lex_error(token_t *token, buffer_t buffer, int line, int column)
 
         print_spaces(line, column);
         fprintf(stderr, "\x1b[31m^\x1b[0m\n");
+
+        free(before_error);
+        free(after_error);
     }
 }
 

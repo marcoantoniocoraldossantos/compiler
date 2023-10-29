@@ -87,6 +87,7 @@ token_list_t* lexical_analyzer(FILE *source_code_file)
 
     // auxiliar variables
     int lexeme_count = 0;
+    bool error_flag = false;
 
     while (fill_buffer(source_code_file, &buffer)) 
     {   
@@ -117,19 +118,24 @@ token_list_t* lexical_analyzer(FILE *source_code_file)
                     {
                         lex_error(current_token, buffer, current_token->line, buffer.position);
                     
-                        free_token(current_token);
-                        deallocate_buffer(&buffer);
-                        free_bst(bst_root);
-                        free_token_list(token_list);
+                        // free_token(current_token);
+                        // deallocate_buffer(&buffer);
+                        // free_bst(bst_root);
+                        // free_token_list(token_list);
+
+                        // //close file
+                        // fclose(source_code_file);
                         
                         //stop the program
-                        exit(EXIT_FAILURE);
+                        //exit(EXIT_FAILURE);
+
+                        error_flag = true;
                     }
                 
                     advance_input_buffer(&buffer);
                     lexeme_count = 0;
 
-                    free_token(current_token);
+                    //free_token(current_token);
 
                     break;
                 }
@@ -218,6 +224,12 @@ token_list_t* lexical_analyzer(FILE *source_code_file)
 
     deallocate_buffer(&buffer);
     free_bst(bst_root);
+
+    if (error_flag)
+    {
+        free_token_list(token_list);
+        return NULL;
+    }
 
     return token_list;
 }

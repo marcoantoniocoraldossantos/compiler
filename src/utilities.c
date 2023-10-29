@@ -56,6 +56,7 @@ char *get_substring(char *string, int start, int end)
         j++;
     }
     substring[j] = '\0';
+
     return substring;
 }
 
