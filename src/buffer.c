@@ -1,6 +1,6 @@
 #include "libraries.h"
 
-buffer_t allocate_buffer(int size)
+buffer_t initialize_buffer(int size)
 {
     buffer_t buffer;
     buffer.data = (char *)malloc(sizeof(char) * size);

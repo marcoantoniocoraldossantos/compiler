@@ -9,7 +9,7 @@ typedef struct
     int position;
 } buffer_t;
 
-buffer_t allocate_buffer(int size);
+buffer_t initialize_buffer(int size);
 void deallocate_buffer(buffer_t *buffer);
 int fill_buffer(FILE *file, buffer_t *buffer);
 void print_buffer(buffer_t *buffer);
