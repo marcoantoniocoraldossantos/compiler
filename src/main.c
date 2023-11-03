@@ -1,5 +1,6 @@
 #include "libraries.h"
 
+// main function
 int main(int argc, char *argv[]) 
 {
     verify_arguments(argc, argv);
