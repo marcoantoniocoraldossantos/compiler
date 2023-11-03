@@ -4,6 +4,7 @@
 
 #include "utilities.h"
 #include "token.h"
+#include "buffer.h"
 
 #define NUM_RESERVED_WORDS 6
 #define NUM_CHAR_CLASSES 20
@@ -53,6 +54,6 @@ typedef enum
 extern char* reserved_words[];
 
 // main function to tokenize the source code file
-token_list_t* lexical_analyzer(FILE *source_code_file);
+token_t* lexical_analyzer(FILE *source_code_file, buffer_t *buffer);
 
 #endif

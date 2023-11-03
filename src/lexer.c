@@ -71,11 +71,10 @@ bool accept_table[NUM_STATES] =
 };
 
 // function to initialize the token list
-token_list_t* lexical_analyzer(FILE *source_code_file)
+token_t* lexical_analyzer(FILE *source_code_file, buffer_t *buffer)
 {
     // initialize the token list, the buffer and the bst
-    token_list_t *token_list = initialize_token_list();
-    buffer_t buffer = initialize_buffer(256);
+    //token_list_t *token_list = initialize_token_list();
     bst_node_t *bst_root = initialize_bst();
 
     // variables to control the state machine
@@ -87,142 +86,141 @@ token_list_t* lexical_analyzer(FILE *source_code_file)
     int lexeme_count = 0;
     bool error_flag = false;
 
-    while (fill_buffer(source_code_file, &buffer)) 
+    do
     {   
-        do
-        {   
-            current_state = ST_SRT;
-            previous_state = ST_SRT;
+        current_state = ST_SRT;
+        previous_state = ST_SRT;
 
-            current_token = initialize_token();
-            lexeme_count = 0;
+        current_token = initialize_token();
+        lexeme_count = 0;
 
-            current_char = buffer.data[buffer.position];
+        current_char = buffer->data[buffer->position];
 
-            current_token->line = buffer.line;
+        current_token->line = buffer->line;
 
-            while (!accept_table[current_state])
+        while (!accept_table[current_state])
+        {
+            previous_state = current_state;
+            new_state = transition_table[current_state][get_char_type(current_char)];
+            
+            if(new_state == ST_ERR)
             {
-                previous_state = current_state;
-                new_state = transition_table[current_state][get_char_type(current_char)];
+                current_token->lexeme[lexeme_count] = current_char;
+                current_token->lexeme[lexeme_count + 1] = '\0';
                 
-                if(new_state == ST_ERR)
+                if(strlen(current_token->lexeme) > 0)
                 {
-                    current_token->lexeme[lexeme_count] = current_char;
-                    current_token->lexeme[lexeme_count + 1] = '\0';
-                    
-                    if(strlen(current_token->lexeme) > 0)
-                    {
-                        lex_error(current_token, buffer, current_token->line, buffer.position);
-                    
-                        error_flag = true;
-
-                        // uncomment to stop the program when an error is found
-                        // free_token(current_token);
-                        // deallocate_buffer(&buffer);
-                        // free_bst(bst_root);
-                        // free_token_list(token_list);
-
-                        // //close file
-                        // fclose(source_code_file);
-                        
-                        // stop the program
-                        // exit(EXIT_FAILURE);
-                    }
+                    //lex_error(current_token, buffer, current_token->line, buffer->position);
                 
-                    advance_input_buffer(&buffer);
-                    lexeme_count = 0;
+                    error_flag = true;
 
-                    break;
+                    // uncomment to stop the program when an error is found
+                    // free_token(current_token);
+                    // deallocate_buffer(&buffer);
+                    // free_bst(bst_root);
+                    // free_token_list(token_list);
+
+                    // //close file
+                    // fclose(source_code_file);
+                    
+                    // stop the program
+                    // exit(EXIT_FAILURE);
                 }
+            
+                advance_input_buffer(buffer);
+                lexeme_count = 0;
 
-                if(new_state == ST_INC)
+                break;
+            }
+
+            if(new_state == ST_INC)
+            {
+                lexeme_count = 0;
+                
+                previous_state = current_state;
+                current_state = new_state;
+                while(new_state != ST_SRT)
                 {
-                    lexeme_count = 0;
-                    
+                    advance_input_buffer(buffer);
+                    if(buffer->position == buffer->size)
+                    {
+                        fill_buffer(source_code_file, buffer);
+                    }
+                    current_char = buffer->data[buffer->position];
+                    new_state = transition_table[current_state][get_char_type(current_char)];
                     previous_state = current_state;
                     current_state = new_state;
-                    while(new_state != ST_SRT)
-                    {
-                        advance_input_buffer(&buffer);
-                        if(buffer.position == buffer.size)
-                        {
-                            fill_buffer(source_code_file, &buffer);
-                        }
-                        current_char = buffer.data[buffer.position];
-                        new_state = transition_table[current_state][get_char_type(current_char)];
-                        previous_state = current_state;
-                        current_state = new_state;
-                    }
                 }
-
-                if (advance_table[current_state][get_char_type(current_char)])
-                {
-                    if (!isspace(current_char))
-                    {
-                        current_token->lexeme[lexeme_count] = current_char;
-                        lexeme_count++;
-                    }
-
-                    advance_input_buffer(&buffer);
-                    if(buffer.position == buffer.size)
-                    {
-                        fill_buffer(source_code_file, &buffer);
-                    }
-                    current_char = buffer.data[buffer.position];
-                }
-
-                current_state = new_state;
-                if(current_state == ST_SRT)
-                {
-                    break;
-                }
-               
             }
-            if (accept_table[current_state])
-            {                
-                if(previous_state == ST_ID)
+
+            if (advance_table[current_state][get_char_type(current_char)])
+            {
+                if (!isspace(current_char))
                 {
-                    
-                    current_token->type = identify_lexeme(bst_root, current_token->lexeme);
-                    if(strlen(current_token->lexeme) > 0)
-                    {
-                        add_token_to_list(token_list, current_token);
-                    }
+                    current_token->lexeme[lexeme_count] = current_char;
+                    lexeme_count++;
                 }
-                else if(previous_state == ST_NUM)
+
+                advance_input_buffer(buffer);
+                if(buffer->position == buffer->size)
                 {
-                    current_token->type = NUM;
-                    if(strlen(current_token->lexeme) > 0)
-                    {
-                        add_token_to_list(token_list, current_token);
-                    }
+                    fill_buffer(source_code_file, buffer);
                 }
-                else
-                {
-                   current_token->type = state_to_token_type(previous_state);
-                    if(strlen(current_token->lexeme) > 0)
-                    {
-                        add_token_to_list(token_list, current_token);
-                    }
-                }
+                current_char = buffer->data[buffer->position];
+            }
+
+            current_state = new_state;
+            if(current_state == ST_SRT)
+            {
+                break;
+            }
+            
+        }
+        if (accept_table[current_state])
+        {                
+            if(previous_state == ST_ID)
+            {
                 
-                lexeme_count = 0;
+                current_token->type = identify_lexeme(bst_root, current_token->lexeme);
+                if(strlen(current_token->lexeme) > 0)
+                {
+                    //add_token_to_list(token_list, current_token);
+                    return current_token;
+                }
             }
+            else if(previous_state == ST_NUM)
+            {
+                current_token->type = NUM;
+                if(strlen(current_token->lexeme) > 0)
+                {
+                    //add_token_to_list(token_list, current_token);
+                    return current_token;
+                }
+            }
+            else
+            {
+                current_token->type = state_to_token_type(previous_state);
+                if(strlen(current_token->lexeme) > 0)
+                {
+                    //add_token_to_list(token_list, current_token);
+                    return current_token;
+                }
+            }
+            
+            lexeme_count = 0;
+        }
 
-            free_token(current_token);
+        free_token(current_token);
 
-        } while (current_char != '\n' && current_char != '\0');
-    }
+    } while (current_char != '\n' && current_char != '\0');
 
-    deallocate_buffer(&buffer);
     free_bst(bst_root);
 
     if (error_flag)
     {
-        free_token_list(token_list);
+        //free_token_list(token_list);
         return NULL;
     }
 
-    return token_list;
+    return NULL;
 }

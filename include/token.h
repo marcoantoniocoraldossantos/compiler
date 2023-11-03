@@ -52,19 +52,6 @@ typedef struct
     int line;  
 } token_t;
 
-typedef struct token_node_t 
-{
-    token_t token;
-    struct token_node_t *next;
-} token_node_t;
-
-typedef struct 
-{
-    token_node_t *head;
-    token_node_t *tail;
-    int count;
-} token_list_t;
-
 typedef struct bst_node 
 {
     char lexeme[64];
@@ -77,12 +64,6 @@ typedef struct bst_node
 token_t* initialize_token();
 void print_token(token_t *token);
 void free_token(token_t *token);
-
-// token list functions
-token_list_t* initialize_token_list();
-void add_token_to_list(token_list_t *list, token_t *token);
-void print_token_list(token_list_t *list);
-void free_token_list(token_list_t *list);
 
 // analyze functions
 token_type_t get_token_type(bst_node_t* root, char *lexeme);

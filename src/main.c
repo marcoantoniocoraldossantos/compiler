@@ -7,21 +7,26 @@ int main(int argc, char *argv[])
     save_arguments(argc, argv);
 
     FILE *input_file = open_file(argv[1], "r");
+    buffer_t buffer = initialize_buffer(256);
+    token_t *token = NULL;
 
-    token_list_t *token_list = lexical_analyzer(input_file);
+    while(1)
+    {
+        if(buffer.data[buffer.position] == '\0')
+        {
+            if(!fill_buffer(input_file, &buffer))
+            {
+                break;
+            }
+        }
 
-    if(token_list == NULL)
-    {
-        printf("error: lexical analysis failed\n");
-    }
-    else
-    {
-        printf("lexical analysis successful\n");
-        print_token_list(token_list);
-        free_token_list(token_list);
+        token = lexical_analyzer(input_file, &buffer);
+        print_token(token);
+        free_token(token);
     }
 
     close_file(input_file);
+    deallocate_buffer(&buffer);
 
     return 0;
 }

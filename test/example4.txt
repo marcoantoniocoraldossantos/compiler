@@ -1,9 +1,5 @@
-else
-if
-int
-return
-void
-while
+else if int
+return void while
 
 +
 -
