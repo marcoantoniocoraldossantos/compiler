@@ -1,5 +1,4 @@
 /* comentario */
-/* comentario /* dentro do comentario */ */
 ola tudo bem ?
 sim tudo bem ! e com voce ?
 mas sei la !. que doidera

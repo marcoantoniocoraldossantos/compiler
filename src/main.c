@@ -21,6 +21,8 @@ int main(int argc, char *argv[])
         }
 
         token = lexical_analyzer(input_file, &buffer);
+        
+
         print_token(token);
         free_token(token);
     }

@@ -42,7 +42,8 @@ typedef enum
     NUM,
 
     //other
-    UNKNOWN
+    UNKNOWN,
+    ERROR,
 } token_type_t;
 
 typedef struct 

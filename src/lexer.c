@@ -110,21 +110,12 @@ token_t* lexical_analyzer(FILE *source_code_file, buffer_t *buffer)
                 
                 if(strlen(current_token->lexeme) > 0)
                 {
-                    //lex_error(current_token, buffer, current_token->line, buffer->position);
+                    lex_error(current_token, buffer, current_token->line, buffer->position);
                 
-                    error_flag = true;
-
-                    // uncomment to stop the program when an error is found
-                    // free_token(current_token);
-                    // deallocate_buffer(&buffer);
-                    // free_bst(bst_root);
-                    // free_token_list(token_list);
-
-                    // //close file
-                    // fclose(source_code_file);
+                    error_flag = true;                    
                     
                     // stop the program
-                    // exit(EXIT_FAILURE);
+                    exit(EXIT_FAILURE);
                 }
             
                 advance_input_buffer(buffer);
@@ -218,7 +209,6 @@ token_t* lexical_analyzer(FILE *source_code_file, buffer_t *buffer)
 
     if (error_flag)
     {
-        //free_token_list(token_list);
         return NULL;
     }
 

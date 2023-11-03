@@ -1,6 +1,6 @@
 #include "libraries.h"
 
-void lex_error(token_t *token, buffer_t buffer, int line, int column) 
+void lex_error(token_t *token, buffer_t *buffer, int line, int column) 
 {
     if (token->lexeme[0] == '!') 
     {
@@ -10,9 +10,9 @@ void lex_error(token_t *token, buffer_t buffer, int line, int column)
             fprintf(stderr, "\x1b[31mlexical error: \x1b[0m");
             fprintf(stderr, "unknown type name \x1b[1m'%c'\x1b[0m\n", token->lexeme[0]);
 
-            char *before_error = get_substring(buffer.data, 0, buffer.position-1);
-            char *after_error = get_substring(buffer.data, buffer.position, buffer.size);
-            fprintf(stderr, "     %d:%d | %s\x1b[31m%c\x1b[0m%s\n", line, buffer.position+1, before_error, buffer.data[buffer.position-1], after_error);
+            char *before_error = get_substring(buffer->data, 0, buffer->position-1);
+            char *after_error = get_substring(buffer->data, buffer->position, buffer->size);
+            fprintf(stderr, "     %d:%d | %s\x1b[31m%c\x1b[0m%s\n", line, buffer->position+1, before_error, buffer->data[buffer->position-1], after_error);
 
             print_spaces(line, column-1);
             fprintf(stderr, "\x1b[31m^\x1b[0m\n");
@@ -25,9 +25,9 @@ void lex_error(token_t *token, buffer_t buffer, int line, int column)
             fprintf(stderr, "\x1b[31mlexical error: \x1b[0m");
             fprintf(stderr, "unknown type name \x1b[1m\'!%c\'\x1b[0m; did you mean \x1b[1m'!='?\x1b[0m\n", token->lexeme[1]);
 
-            char *before_error = get_substring(buffer.data, 0, buffer.position-1);
-            char *after_error = get_substring(buffer.data, buffer.position+1, buffer.size);
-            fprintf(stderr, "     %d:%d | %s\x1b[31m!%c\x1b[0m%s\n", line, buffer.position+1, before_error, buffer.data[buffer.position], after_error);
+            char *before_error = get_substring(buffer->data, 0, buffer->position-1);
+            char *after_error = get_substring(buffer->data, buffer->position+1, buffer->size);
+            fprintf(stderr, "     %d:%d | %s\x1b[31m!%c\x1b[0m%s\n", line, buffer->position+1, before_error, buffer->data[buffer->position], after_error);
 
             
             print_spaces(line, column-1);
@@ -46,9 +46,9 @@ void lex_error(token_t *token, buffer_t buffer, int line, int column)
         fprintf(stderr, "\x1b[31mlexical error: \x1b[0m");
         fprintf(stderr, "unknown type name \x1b[1m'%c'\x1b[0m\n", token->lexeme[0]);
 
-        char *before_error = get_substring(buffer.data, 0, buffer.position);
-        char *after_error = get_substring(buffer.data, buffer.position+1, buffer.size);
-        fprintf(stderr, "     %d:%d | %s\x1b[31m%c\x1b[0m%s\n", line, buffer.position+1, before_error, buffer.data[buffer.position], after_error);
+        char *before_error = get_substring(buffer->data, 0, buffer->position);
+        char *after_error = get_substring(buffer->data, buffer->position+1, buffer->size);
+        fprintf(stderr, "     %d:%d | %s\x1b[31m%c\x1b[0m%s\n", line, buffer->position+1, before_error, buffer->data[buffer->position], after_error);
 
         print_spaces(line, column);
         fprintf(stderr, "\x1b[31m^\x1b[0m\n");
