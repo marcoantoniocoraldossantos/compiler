@@ -29,7 +29,8 @@ void print_token(token_t *token)
         return;
     }
 
-//
+    printf("> line %-6d | %-15s | '%s'\n", token->line, token_type_to_string(token->type), token->lexeme);
+
 }
 
 void free_token(token_t *token) 
