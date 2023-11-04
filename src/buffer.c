@@ -13,6 +13,11 @@ buffer_t initialize_buffer(int size)
     buffer.line = 0;
     buffer.position = 0;
 
+    for (int i = 0; i < size; i++) 
+    {
+        buffer.data[i] = '\0';
+    }
+
     return buffer;
 }
 

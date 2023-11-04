@@ -54,6 +54,6 @@ typedef enum
 extern char* reserved_words[];
 
 // main function to tokenize the source code file
-token_t* lexical_analyzer(FILE *source_code_file, buffer_t *buffer);
+token_t* lexical_analyzer(FILE *source_code_file, buffer_t *buffer, bst_node_t *bst_root, token_t *token);
 
 #endif

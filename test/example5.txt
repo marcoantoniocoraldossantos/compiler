@@ -1,0 +1,7 @@
+indentificador
+
+
+
+numero
+123
+if else int

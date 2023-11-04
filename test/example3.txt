@@ -1,7 +1,11 @@
 /* comentario */
 ola tudo bem ?
-sim tudo bem ! e com voce ?
-mas sei la !. que doidera
+sim tudo bem! e com voce ?
+mas sei la!.que doidera
 @marco 
 #compiladores
 100% de certeza
+!A
+!
+?
+$

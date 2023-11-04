@@ -355,7 +355,7 @@ token_type_t reserved_word_token_type(const char *word)
 
 char_t get_char_type(char c) 
 {
-    if (isspace(c))
+    if (isspace(c) || c == '\n' || c == '\t' || c == '\r' || c == '\v' || c == '\f' || c == '\b' || c == '\a' || c == '\0')
     {
         return CHAR_SPACE;
     } 
@@ -499,7 +499,11 @@ char *token_type_to_string(token_type_t type)
             return "ID";
         case NUM:
             return "NUM";
-        default:
+        case UNKNOWN:
             return "UNKNOWN";
+        case ERROR:
+            return "ERROR";
+        default:
+            return "TYPE TBD";
     }
 }

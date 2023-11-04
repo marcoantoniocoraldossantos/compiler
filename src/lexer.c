@@ -71,27 +71,20 @@ bool accept_table[NUM_STATES] =
 };
 
 // function to initialize the token list
-token_t* lexical_analyzer(FILE *source_code_file, buffer_t *buffer)
+token_t* lexical_analyzer(FILE *source_code_file, buffer_t *buffer, bst_node_t *bst_root, token_t *current_token)
 {
-    // initialize the token list, the buffer and the bst
-    //token_list_t *token_list = initialize_token_list();
-    bst_node_t *bst_root = initialize_bst();
-
     // variables to control the state machine
     char current_char;
-    token_t *current_token;
     state_t previous_state, current_state, new_state;
 
     // auxiliar variables
     int lexeme_count = 0;
-    bool error_flag = false;
 
     do
     {   
         current_state = ST_SRT;
         previous_state = ST_SRT;
 
-        current_token = initialize_token();
         lexeme_count = 0;
 
         current_char = buffer->data[buffer->position];
@@ -102,6 +95,7 @@ token_t* lexical_analyzer(FILE *source_code_file, buffer_t *buffer)
         {
             previous_state = current_state;
             new_state = transition_table[current_state][get_char_type(current_char)];
+            //printf("current_char: %c, current_state: %d, new_state: %d\n", current_char, current_state, new_state);
             
             if(new_state == ST_ERR)
             {
@@ -110,12 +104,14 @@ token_t* lexical_analyzer(FILE *source_code_file, buffer_t *buffer)
                 
                 if(strlen(current_token->lexeme) > 0)
                 {
-                    lex_error(current_token, buffer, current_token->line, buffer->position);
+                    //lex_error(current_token, buffer, current_token->line, buffer->position);
                 
-                    error_flag = true;                    
-                    
+                    advance_input_buffer(buffer);
+                    current_token->type = ERROR;
+                    return current_token;
+
                     // stop the program
-                    exit(EXIT_FAILURE);
+                    //exit(EXIT_FAILURE);
                 }
             
                 advance_input_buffer(buffer);
@@ -167,6 +163,8 @@ token_t* lexical_analyzer(FILE *source_code_file, buffer_t *buffer)
             }
             
         }
+
+
         if (accept_table[current_state])
         {                
             if(previous_state == ST_ID)
@@ -175,16 +173,14 @@ token_t* lexical_analyzer(FILE *source_code_file, buffer_t *buffer)
                 current_token->type = identify_lexeme(bst_root, current_token->lexeme);
                 if(strlen(current_token->lexeme) > 0)
                 {
-                    //add_token_to_list(token_list, current_token);
                     return current_token;
-                }
+                }                
             }
             else if(previous_state == ST_NUM)
             {
                 current_token->type = NUM;
                 if(strlen(current_token->lexeme) > 0)
                 {
-                    //add_token_to_list(token_list, current_token);
                     return current_token;
                 }
             }
@@ -193,7 +189,6 @@ token_t* lexical_analyzer(FILE *source_code_file, buffer_t *buffer)
                 current_token->type = state_to_token_type(previous_state);
                 if(strlen(current_token->lexeme) > 0)
                 {
-                    //add_token_to_list(token_list, current_token);
                     return current_token;
                 }
             }
@@ -201,16 +196,14 @@ token_t* lexical_analyzer(FILE *source_code_file, buffer_t *buffer)
             lexeme_count = 0;
         }
 
-        free_token(current_token);
+        //test leak
+        //advance_input_buffer(buffer);
 
     } while (current_char != '\n' && current_char != '\0');
 
-    free_bst(bst_root);
 
-    if (error_flag)
-    {
-        return NULL;
-    }
+    //test leak
+    current_token->type = UNKNOWN;
 
-    return NULL;
+    return current_token;
 }
