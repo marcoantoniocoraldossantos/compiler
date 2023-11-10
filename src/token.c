@@ -43,6 +43,24 @@ void free_token(token_t *token)
     free(token);
 }
 
+token_t* get_next_token(FILE *input_file, buffer_t *buffer, bst_node_t *bst_root) 
+{
+    // fill the buffer 
+    if (buffer->data[buffer->position] == '\0') 
+    {
+        if (!fill_buffer(input_file, buffer)) 
+        {
+            return NULL;  // end of file
+        }
+    }
+
+    // Inicializar o token
+    token_t *token = initialize_token();
+    token = lexical_analyzer(input_file, buffer, bst_root, token);
+
+    return token;  // return the token
+}
+
 token_type_t get_token_type(bst_node_t* root, char* lexeme) 
 {
     if (root == NULL) 

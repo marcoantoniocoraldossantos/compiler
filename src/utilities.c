@@ -35,6 +35,18 @@ void close_file(FILE *file)
     fclose(file);
 }
 
+int handle_buffer_end(FILE *input_file, buffer_t *buffer) 
+{
+    if (buffer->data[buffer->position] == '\0') 
+    {
+        if (!fill_buffer(input_file, buffer)) 
+        {
+            return 0;  // end of file
+        }
+    }
+    return 1;  // buffer filled successfully
+}
+
 // char / string functions
 void replace_newline(char *string) 
 {

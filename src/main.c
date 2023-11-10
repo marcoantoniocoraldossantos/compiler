@@ -10,41 +10,28 @@ int main(int argc, char *argv[])
     buffer_t buffer = initialize_buffer(256);
     bst_node_t *bst_root = initialize_bst();
     token_t *token = NULL;
-    int error_flag = 0;
 
     while(1)
     {
-        if(error_flag != 0)
-        {
-            break;
-        }
+        // fill the buffer, if it finds the end of file, it will return 0 and break the loop
+        if (!handle_buffer_end(input_file, &buffer)) break; 
 
-        if(buffer.data[buffer.position] == '\0')
-        {
-            if(!fill_buffer(input_file, &buffer))
-            {
-                break;
-            }
-        }
-
-        //advance_input_buffer(&buffer);
-
-        token = initialize_token();
-        token = lexical_analyzer(input_file, &buffer, bst_root, token);
+        // get the next token  
+        token_t *token = get_next_token(input_file, &buffer, bst_root);
         
-        //print_token(token);
-
         if(token->type != ERROR && token->type != UNKNOWN)
         {
-            print_token(token);
+            //here we can do the sintatic analysis
+            //with the parser   
         }
         else if(token->type == ERROR)
         {
             lex_error(token, &buffer, token->line, buffer.position);
-            error_flag = 1;
+            free_token(token);
+            break;
         }
 
-        free_token(token); // Free token after using it
+        free_token(token); // free token memory
     }
 
     close_file(input_file);

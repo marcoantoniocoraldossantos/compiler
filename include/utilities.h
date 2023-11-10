@@ -19,6 +19,8 @@ void save_arguments(int argc, char **argv);
 FILE *open_file(char *filename, char *mode);
 void close_file(FILE *file);
 
+int handle_buffer_end(FILE *input_file, buffer_t *buffer);
+
 // char / string functions
 void replace_newline(char *string);
 char *get_substring(char *string, int start, int end);
