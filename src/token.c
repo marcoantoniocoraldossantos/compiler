@@ -61,6 +61,23 @@ token_t* get_next_token(FILE *input_file, buffer_t *buffer, bst_node_t *bst_root
     return token;  // return the token
 }
 
+void process_token(token_t *token, buffer_t *buffer) 
+{
+    if (token->type != ERROR && token->type != UNKNOWN) 
+    {
+        return;// Aqui você pode realizar a análise sintática com o parser
+    } 
+    else if (token->type == ERROR) 
+    {
+        lex_error(token, buffer, token->line, buffer->position);
+        //free_token(token);
+
+
+        // Você pode decidir como lidar com erros, como imprimir uma mensagem ou encerrar o programa
+        // Aqui, o código simplesmente quebra o loop
+    }
+}
+
 token_type_t get_token_type(bst_node_t* root, char* lexeme) 
 {
     if (root == NULL) 

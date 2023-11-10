@@ -19,15 +19,12 @@ int main(int argc, char *argv[])
         // get the next token  
         token_t *token = get_next_token(input_file, &buffer, bst_root);
         
-        if(token->type != ERROR && token->type != UNKNOWN)
+        if (token != NULL) 
         {
-            //here we can do the sintatic analysis
-            //with the parser   
-        }
-        else if(token->type == ERROR)
+            process_token(token, &buffer);
+        } 
+        else 
         {
-            lex_error(token, &buffer, token->line, buffer.position);
-            free_token(token);
             break;
         }
 
