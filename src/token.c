@@ -29,7 +29,7 @@ void print_token(token_t *token)
         return;
     }
 
-    printf("> line %-6d | %-15s | '%s'\n", token->line, token_type_to_string(token->type), token->lexeme);
+    printf("> line %-6d | %-20s | '%s'\n", token->line, token_type_to_string(token->type), token->lexeme);
 
 }
 
@@ -65,6 +65,7 @@ void process_token(token_t *token, buffer_t *buffer)
 {
     if (token->type != ERROR && token->type != UNKNOWN) 
     {
+        print_token(token);
         return;// Aqui você pode realizar a análise sintática com o parser
     } 
     else if (token->type == ERROR) 
