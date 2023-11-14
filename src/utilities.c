@@ -52,7 +52,7 @@ int handle_buffer_end(FILE *input_file, buffer_t *buffer)
     return 1;  // buffer filled successfully
 }
 
-// char / string functions
+// function to replace the newline character with the null character
 void replace_newline(char *string) 
 {
     size_t length = strlen(string);
@@ -63,6 +63,7 @@ void replace_newline(char *string)
     }
 }
 
+// function to get the substring of a string based on the start and end index
 char *get_substring(char *string, int start, int end)
 {
     char *substring = malloc(sizeof(char) * (end - start + 1));
@@ -77,7 +78,7 @@ char *get_substring(char *string, int start, int end)
     return substring;
 }
 
-// auxiliar functions
+// auxiliar function to print the spaces in the lexical error message
 void print_spaces(int line, int column)
 {
     int extra = 9;
@@ -118,7 +119,7 @@ void print_spaces(int line, int column)
     }
 }
 
-// functions to help with the state machine
+// function to help with the state machine that returns the string of the state
 char *state_to_string(state_t state)
 {
     if(state == ST_SRT)
@@ -241,6 +242,7 @@ char *state_to_string(state_t state)
     return "UNKNOWN";
 }
 
+// function to help with the state machine that returns the token type of the state
 token_type_t state_to_token_type(state_t state)
 {
     if(state == ST_ID)
@@ -336,38 +338,6 @@ token_type_t state_to_token_type(state_t state)
         return COMMENT_END;
     }
     return UNKNOWN;
-}
-
-token_type_t reserved_word_token_type(const char *word) 
-{
-    if (strcmp(word, "else") == 0) 
-    {
-        return ELSE;
-    } 
-    else if (strcmp(word, "if") == 0) 
-    {
-        return IF;
-    } 
-    else if (strcmp(word, "int") == 0) 
-    {
-        return INT;
-    } 
-    else if (strcmp(word, "return") == 0) 
-    {
-        return RETURN;
-    } 
-    else if (strcmp(word, "void") == 0) 
-    {
-        return VOID;
-    } 
-    else if (strcmp(word, "while") == 0) 
-    {
-        return WHILE;
-    } 
-    else 
-    {
-        return ID; 
-    }
 }
 
 char_t get_char_type(char c) 
