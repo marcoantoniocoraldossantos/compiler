@@ -23,6 +23,7 @@ token_t *initialize_token()
     return token;
 }
 
+// function to print the token
 void print_token(token_t *token)
 {
     if (token == NULL) 
