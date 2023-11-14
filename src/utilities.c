@@ -425,6 +425,7 @@ char_t get_char_type(char c)
     }
 }
 
+// function to help with the state machine that returns the string of the token type
 char *token_type_to_string(token_type_t type)
 {
     switch (type)
