@@ -41,7 +41,7 @@ void lex_error(token_t *token, buffer_t *buffer, int line, int column)
         }
 
     } 
-    else
+    else // if is an invalid character print "unknow type name"
     {
         fprintf(stderr, "\x1b[1m%s:\x1b[0m in line \x1b[1m%d:\x1b[0m\n", global_argv[1], line);
         fprintf(stderr, "\x1b[31mlexical error: \x1b[0m");
