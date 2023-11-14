@@ -75,6 +75,7 @@ void file_open_error(char *file_name)
     exit(EXIT_FAILURE);
 }
 
+// function to handle argument errors when running the program
 void argument_error(char *program_name) 
 {
     fprintf(stderr, "error: invalid arguments\n");
