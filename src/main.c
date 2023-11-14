@@ -3,8 +3,8 @@
 
 int main(int argc, char *argv[]) 
 {
-    verify_arguments(argc, argv);
-    save_arguments(argc, argv);
+    verify_arguments(argc, argv); // verify if the code was called correctly with "compiler <input_file>"
+    save_arguments(argc, argv); // save the arguments in the global_argv and global_argc variables
 
     FILE *input_file = open_file(argv[1], "r");
     buffer_t buffer = initialize_buffer(256);
