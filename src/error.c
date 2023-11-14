@@ -59,6 +59,7 @@ void lex_error(token_t *token, buffer_t *buffer, int line, int column)
     }
 }
 
+// function to handle memory allocation errors
 void memory_alocation_error(char *caller) 
 {
     fprintf(stderr, "error: unable to allocate memory (%s).\n", caller);
