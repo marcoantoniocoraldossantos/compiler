@@ -33,11 +33,13 @@ FILE *open_file(char *filename, char *mode)
     return file;
 }
 
+// function to close the file
 void close_file(FILE *file) 
 {
     fclose(file);
 }
 
+// function to check if the buffer reached the end of file
 int handle_buffer_end(FILE *input_file, buffer_t *buffer) 
 {
     if (buffer->data[buffer->position] == '\0') 
