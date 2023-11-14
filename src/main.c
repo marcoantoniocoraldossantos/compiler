@@ -6,7 +6,7 @@ int main(int argc, char *argv[])
     verify_arguments(argc, argv); // verify if the code was called correctly with "compiler <input_file>"
     save_arguments(argc, argv); // save the arguments in the global_argv and global_argc variables
 
-    FILE *input_file = open_file(argv[1], "r");
+    FILE *input_file = open_file(argv[1], "r"); // open the file in read mode
     buffer_t buffer = initialize_buffer(256);
     bst_node_t *bst_root = initialize_bst();
     token_t *token = NULL;
