@@ -1,11 +1,5 @@
-/* comentario */
-ola tudo bem ?
+/* comentario */ola tudo bem? 
 sim tudo bem! e com voce ?
-mas sei la!.que doidera
-@marco 
-#compiladores
-100% de certeza
-!A
-!
-?
-$
+talvez.mas sei la!+ que doidera
+@marco #compiladores 100% !A
+,. < > ; : ~ ^ ] } ) ( { [ ! ? / \ * - + = & % $ # @ º ª § ¬ ¢ £ ¤ ¥ © ® ¯ ° ± ² ³ ´ µ ¶ · ¸ ¹ ¼ ½ ¾ ¿ ¡
