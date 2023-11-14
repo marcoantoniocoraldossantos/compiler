@@ -26,9 +26,9 @@ int main(int argc, char *argv[])
         free_token(token); // free token memory
     }
 
-    close_file(input_file);
-    deallocate_buffer(&buffer);
-    free_bst(bst_root);
+    close_file(input_file); // close the file
+    deallocate_buffer(&buffer); // deallocate the buffer
+    free_bst(bst_root); // deallocate the bst
 
     return 0;
 }
