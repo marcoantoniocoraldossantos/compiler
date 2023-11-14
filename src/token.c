@@ -82,25 +82,27 @@ void process_token(token_t *token, buffer_t *buffer)
     }
 }
 
+// function that returns the token type
 token_type_t get_token_type(bst_node_t* root, char* lexeme) 
 {
     if (root == NULL) 
     {
-        return ID;
+        return ID; // if the root is null, return ID, because there are no reserved words
     }
 
+    // compare the lexeme with the root lexeme
     int comparison_result = strcmp(lexeme, root->lexeme);
     if (comparison_result == 0) 
     {
-        return root->token_type;
+        return root->token_type;    // if the lexeme is equal to the root lexeme, return the token type
     } 
     else if (comparison_result < 0) 
     {
-        return get_token_type(root->left, lexeme);
+        return get_token_type(root->left, lexeme); // if the lexeme is less than the root lexeme, go to the left of the bst
     } 
     else 
     {
-        return get_token_type(root->right, lexeme);
+        return get_token_type(root->right, lexeme); // if the lexeme is greater than the root lexeme, go to the right of the bst
     }
 }
 
