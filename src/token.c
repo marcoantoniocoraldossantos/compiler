@@ -47,6 +47,7 @@ void free_token(token_t *token)
     free(token);
 }
 
+// function to return the next token of the file
 token_t* get_next_token(FILE *input_file, buffer_t *buffer, bst_node_t *bst_root) 
 {
     // fill the buffer 
@@ -58,9 +59,8 @@ token_t* get_next_token(FILE *input_file, buffer_t *buffer, bst_node_t *bst_root
         }
     }
 
-    // Inicializar o token
-    token_t *token = initialize_token();
-    token = lexical_analyzer(input_file, buffer, bst_root, token);
+    token_t *token = initialize_token(); // initialize the token
+    token = lexical_analyzer(input_file, buffer, bst_root, token); // call the lexical analyzer to get what type of token it is
 
     return token;  // return the token
 }
