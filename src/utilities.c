@@ -496,3 +496,36 @@ char *token_type_to_string(token_type_t type)
             return "TYPE TBD";
     }
 }
+
+// function to help with the bst that returns the token type of the reserved word
+token_type_t reserved_word_token_type(const char *word)
+{
+    if (strcmp(word, "else") == 0)
+    {
+        return ELSE;
+    }
+    else if (strcmp(word, "if") == 0)
+    {
+        return IF;
+    }
+    else if (strcmp(word, "int") == 0)
+    {
+        return INT;
+    }
+    else if (strcmp(word, "return") == 0)
+    {
+        return RETURN;
+    }
+    else if (strcmp(word, "void") == 0)
+    {
+        return VOID;
+    }
+    else if (strcmp(word, "while") == 0)
+    {
+        return WHILE;
+    }
+    else
+    {
+        return UNKNOWN;
+    }
+}
