@@ -1,5 +1,6 @@
 #include "libraries.h"
 
+// global variables of the arguments
 char **global_argv = NULL;
 int global_argc = 0;
 
