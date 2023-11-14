@@ -1,5 +1,6 @@
 #include "libraries.h"
 
+// function to handle lexical errors
 void lex_error(token_t *token, buffer_t *buffer, int line, int column) 
 {
     if (token->lexeme[0] == '!') 
