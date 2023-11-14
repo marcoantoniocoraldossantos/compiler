@@ -13,6 +13,7 @@ void verify_arguments(int argc, char *argv[])
     }
 }
 
+// function to save the arguments in the global variables
 void save_arguments(int argc, char *argv[])
 {
     global_argc = argc;
@@ -25,6 +26,7 @@ FILE *open_file(char *filename, char *mode)
     FILE *file = fopen(filename, mode);
     if (file == NULL) 
     {
+        // handle the error in the error.c file
         file_open_error(filename);
     }
 
