@@ -106,8 +106,8 @@ token_type_t get_token_type(bst_node_t* root, char* lexeme)
     }
 }
 
+// auxiliar function to identify the lexeme
 token_type_t identify_lexeme(bst_node_t* root, char* lexeme) 
 {
-
     return get_token_type(root, lexeme);
 }
