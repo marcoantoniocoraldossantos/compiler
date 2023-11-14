@@ -340,6 +340,7 @@ token_type_t state_to_token_type(state_t state)
     return UNKNOWN;
 }
 
+// function to help with the state machine that returns the character type of the current char
 char_t get_char_type(char c) 
 {
     if (isspace(c) || c == '\n' || c == '\t' || c == '\r' || c == '\v' || c == '\f' || c == '\b' || c == '\a' || c == '\0')
