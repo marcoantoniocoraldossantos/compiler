@@ -201,9 +201,10 @@ token_t* lexical_analyzer(FILE *source_code_file, buffer_t *buffer, bst_node_t *
 
     } while (current_char != '\n' && current_char != '\0');
 
-
     //test leak
     current_token->type = UNKNOWN;
 
     return current_token;
 }
+
+// TODO: modularize this function
