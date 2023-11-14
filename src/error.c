@@ -3,10 +3,10 @@
 // function to handle lexical errors
 void lex_error(token_t *token, buffer_t *buffer, int line, int column) 
 {
-    if (token->lexeme[0] == '!') 
+    if (token->lexeme[0] == '!') // if the first character is a '!'
     {
-        if(token->lexeme[1] == ' ' || token->lexeme[1] == '\n' || token->lexeme[1] == '\0')
-        {
+        if(token->lexeme[1] == ' ' || token->lexeme[1] == '\n' || token->lexeme[1] == '\0') // if the second character is a space, newline or null character
+        {                                                                                   // print only "unknow type name"
             fprintf(stderr, "\x1b[1m%s:\x1b[0m in line \x1b[1m%d:\x1b[0m\n", global_argv[1], line);
             fprintf(stderr, "\x1b[31mlexical error: \x1b[0m");
             fprintf(stderr, "unknown type name \x1b[1m'%c'\x1b[0m\n", token->lexeme[0]);
