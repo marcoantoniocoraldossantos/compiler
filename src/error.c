@@ -21,8 +21,8 @@ void lex_error(token_t *token, buffer_t *buffer, int line, int column)
             free(before_error);
             free(after_error);
         }
-        else
-        {
+        else    // if the second character is not a space, newline or null character
+        {       // print the suggestion "did you mean '!='?"
             fprintf(stderr, "\x1b[31mlexical error: \x1b[0m");
             fprintf(stderr, "unknown type name \x1b[1m\'!%c\'\x1b[0m; did you mean \x1b[1m'!='?\x1b[0m\n", token->lexeme[1]);
 
