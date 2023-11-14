@@ -1,5 +1,6 @@
 #include "libraries.h"
 
+// function to initialize the token
 token_t *initialize_token() 
 {
     token_t *token = (token_t *)malloc(sizeof(token_t));
@@ -14,6 +15,7 @@ token_t *initialize_token()
     token->lexeme = (char *)malloc(64 * sizeof(char));
     if (token->lexeme == NULL) 
     {
+        // handle the error in the error.c file
         memory_alocation_error("lexeme");
     }
     memset(token->lexeme, '\0', 64);
