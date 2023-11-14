@@ -67,6 +67,7 @@ void memory_alocation_error(char *caller)
     exit(EXIT_FAILURE);
 }
 
+// function to handle file open errors
 void file_open_error(char *file_name) 
 {
     fprintf(stderr, "error: unable to open file '%s'.\n", file_name);
