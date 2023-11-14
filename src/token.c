@@ -36,6 +36,7 @@ void print_token(token_t *token)
 
 }
 
+// function to free the token memory
 void free_token(token_t *token) 
 {
     if (token == NULL) 
