@@ -7,9 +7,9 @@ int main(int argc, char *argv[])
     save_arguments(argc, argv); // save the arguments in the global_argv and global_argc variables
 
     FILE *input_file = open_file(argv[1], "r"); // open the file in read mode
-    buffer_t buffer = initialize_buffer(256);
-    bst_node_t *bst_root = initialize_bst();
-    token_t *token = NULL;
+    buffer_t buffer = initialize_buffer(256); // initialize the buffer
+    bst_node_t *bst_root = initialize_bst(); // initialize the bst
+    token_t *token = NULL; // initialize the token
 
     while(1)
     {
