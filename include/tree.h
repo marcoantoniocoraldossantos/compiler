@@ -1,31 +1,31 @@
 #ifndef TREE_H
 #define TREE_H
 
-typedef enum {
-    ASSIGNMENT_STMT,  // Atribuição (ex: x = 5;)
-    IF_STMT,          // Declaração IF (ex: if (condição) { ... } [else { ... }])
-    WHILE_STMT,       // Declaração WHILE (ex: while (condição) { ... })
-    RETURN_STMT,      // Declaração RETURN (ex: return x;)
-    // Outros tipos de declarações, se aplicáveis...
-} StatementKind;
+typedef enum 
+{
+    ASSIGN_STMT,        // id = expression;
+    IF_STMT,            // if (condition) { ... }
+    WHILE_STMT,         // while (condition) { ... }
+    RETURN_STMT,        // return 0;
+} statement_kind_t;
 
-typedef enum {
-    OPERATION_EXP,    // Expressão de operação (ex: x + y)
-    CONSTANT_EXP,     // Expressão de constante (ex: 10, 'a', "string")
-    VARIABLE_EXP,     // Expressão de variável (ex: x, y)
-    RELATIONAL_EXP,   // Expressão relacional (ex: x > y, x <= y)
-    EQUALITY_EXP,     // Expressão de igualdade (ex: x == y, x != y)
-    // Outros tipos de expressões, se aplicáveis...
-} ExpressionKind;
-
+typedef enum 
+{
+    OPERATION_EXP,    // id + id, id - id, id * id, id / id
+    CONSTANT_EXP,     // 0-9, 'a'-'Z', "string"
+    VARIABLE_EXP,     // id
+    RELATIONAL_EXP,   // id < id, id > id, id <= id, id >= id, id == id, id != id
+    EQUALITY_EXP,     // id == id, id != id
+} expression_kind_t;
 
 // Define your tree node structure
-typedef struct TreeNode {
+typedef struct parse_tree_node_t 
+{
     // Data in the node
     int data; // Replace 'int' with your desired data type
-    struct TreeNode *child; // Pointer to the first child node
-    struct TreeNode *sibling; // Pointer to the next sibling node
-} TreeNode;
+    struct parse_tree_node_t *child; // Pointer to the first child node
+    struct parse_tree_node_t *sibling; // Pointer to the next sibling node
+} parse_tree_node_t;
 
 // Function prototypes
 TreeNode* create_node(int data);
