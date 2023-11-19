@@ -5,7 +5,7 @@ LDFLAGS = -lm
 SRC_DIR = src
 OBJ_DIR = obj
 
-# List of source files including main.c
+# List of source files including main.c and tree.c
 SOURCES = $(wildcard $(SRC_DIR)/*.c)
 
 # List of object files
