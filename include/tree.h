@@ -3,7 +3,7 @@
 
 typedef enum {
     STATEMENT_NODE,
-    EXPRESSION_NODE
+    EXPRESSION_NODE,
 } node_type_t;
 
 typedef enum 
@@ -12,7 +12,7 @@ typedef enum
     IF_STMT,            // if (condition) { ... }
     WHILE_STMT,         // while (condition) { ... }
     RETURN_STMT,        // return 0;
-} statement_kind_t;
+} statement_type_t;
 
 typedef enum 
 {
@@ -21,7 +21,7 @@ typedef enum
     VARIABLE_EXP,     // id
     RELATIONAL_EXP,   // id < id, id > id, id <= id, id >= id, id == id, id != id
     EQUALITY_EXP,     // id == id, id != id
-} expression_kind_t;
+} expression_type_t;
 
 // Define your tree node structure
 typedef struct parse_tree_node_t {
@@ -35,7 +35,7 @@ typedef struct parse_tree_node_t {
 } parse_tree_node_t;
 
 // Function prototypes
-parse_tree_node_t* create_node(int line, char *lexeme, node_type_t node_type, statement_type_t statement_type, expression_type_t expression_type));
+parse_tree_node_t* create_node(int line, char *lexeme, node_type_t node_type, statement_type_t statement_type, expression_type_t expression_type);
 void add_child(parse_tree_node_t *parent, parse_tree_node_t *child);
 void add_sibling(parse_tree_node_t *node, parse_tree_node_t *sibling);
 void delete_tree(parse_tree_node_t *root);
