@@ -5,6 +5,7 @@
 #define HASH_TABLE_SIZE 27
 
 #include "buffer.h"
+#include "ast.h"
 typedef enum 
 {
     // reserved words
@@ -69,7 +70,7 @@ void free_token(token_t *token);
 
 // analyze functions
 token_t* get_next_token(FILE *input_file, buffer_t *buffer, bst_node_t *bst_root);
-void process_token(token_t *token, buffer_t *buffer);
+void process_token(token_t *token, buffer_t *buffer, ast_node_t *ast_root);
 
 token_type_t get_token_type(bst_node_t* root, char *lexeme);
 token_type_t identify_lexeme(bst_node_t* root, char *lexeme);

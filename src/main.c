@@ -21,7 +21,7 @@ int main(int argc, char *argv[])
         token_t *token = get_next_token(input_file, &buffer, bst_root);
         
         // if token is not null, process it
-        if (token != NULL) process_token(token, &buffer);
+        if (token != NULL) process_token(token, &buffer, ast_root);
         else break;
 
         free_token(token); // free token memory

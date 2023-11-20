@@ -66,7 +66,7 @@ token_t* get_next_token(FILE *input_file, buffer_t *buffer, bst_node_t *bst_root
 }
 
 // function to process the token
-void process_token(token_t *token, buffer_t *buffer) 
+void process_token(token_t *token, buffer_t *buffer, ast_node_t *ast_root) 
 {
     if (token->type != ERROR && token->type != UNKNOWN) 
     {
