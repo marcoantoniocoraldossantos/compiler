@@ -14,5 +14,6 @@
 #include "token.h"
 #include "bst.h"
 #include "error.h"
+#include "ast.h"
 
 #endif
