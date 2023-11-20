@@ -4,6 +4,7 @@
 #include "libraries.h"
 
 #define MAXCHILDREN 3
+#define MAXTOKENLEN 64
 
 typedef enum 
 {
@@ -36,7 +37,9 @@ typedef struct ast_node_t
     struct ast_node_t *child[MAXCHILDREN];
     struct ast_node_t *sibling;
     int lineno;
+    char lexeme[MAXTOKENLEN];
     node_kind_t node_kind;
+    /*
     union {
         statement_kind_t statement;
         expression_kind_t expression;
@@ -48,13 +51,15 @@ typedef struct ast_node_t
         char *name;
     } attr;
     expression_type_t expr_type;
+    */
 } ast_node_t;
 
-ast_node_t *createProgramNode(/* ... */);
-ast_node_t *createDeclarationNode(/* ... */);
-ast_node_t *createStatementNode(/* ... */);
-ast_node_t *createExpressionNode(/* ... */);
-void add_child(ast_node_t *parent, ast_node_t *child);
-void add_sibling(ast_node_t *node, ast_node_t *sibling);
+ast_node_t *initialize_ast();
+void print_ast(ast_node_t *root);
+void print_ast_util(ast_node_t *node, int level);
+void free_ast(ast_node_t *root);
+// void add_child(ast_node_t *parent, ast_node_t *child);
+// void add_sibling(ast_node_t *node, ast_node_t *sibling);
+// void add_sample_nodes();
 
 #endif /* AST_H */

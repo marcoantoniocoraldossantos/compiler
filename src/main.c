@@ -9,6 +9,7 @@ int main(int argc, char *argv[])
     FILE *input_file = open_file(argv[1], "r"); // open the file in read mode
     buffer_t buffer = initialize_buffer(256); // initialize the buffer
     bst_node_t *bst_root = initialize_bst(); // initialize the bst
+    ast_node_t *ast_root = initialize_ast(); // initialize the ast
     token_t *token = NULL; // initialize the token
 
     while(1)
@@ -29,6 +30,7 @@ int main(int argc, char *argv[])
     close_file(input_file); // close the file
     deallocate_buffer(&buffer); // deallocate the buffer
     free_bst(bst_root); // deallocate the bst
+    free_ast(ast_root); // deallocate the ast
 
     return 0;
 }
