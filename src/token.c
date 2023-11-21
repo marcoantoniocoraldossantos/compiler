@@ -72,7 +72,6 @@ void process_token(token_t *token, buffer_t *buffer, ast_node_t *ast_root)
     {
         print_token(token);
         return;
-        // TODO: parser
     } 
     else if (token->type == ERROR) 
     {
