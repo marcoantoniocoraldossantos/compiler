@@ -204,7 +204,8 @@ token_t* lexical_analyzer(FILE *source_code_file, buffer_t *buffer, bst_node_t *
     //test leak
     current_token->type = UNKNOWN;
 
-    return current_token;
+    // if the token is unknown
+    return lexical_analyzer(source_code_file, buffer, bst_root, current_token);
 }
 
 // TODO: modularize this function
