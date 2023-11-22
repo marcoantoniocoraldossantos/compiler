@@ -12,20 +12,22 @@ int main(int argc, char *argv[])
     ast_node_t *ast_root = initialize_ast(); // initialize the ast
     token_t *token = NULL; // initialize the token
 
-    // while(1)
-    // {
-    //     // fill the buffer, if it finds the end of file, it will return 0 and break the loop
-    //     if (!handle_buffer_end(input_file, &buffer)) break; 
+    while(1)
+    {
+        // fill the buffer, if it finds the end of file, it will return 0 and break the loop
+        if (!handle_buffer_end(input_file, &buffer)) break; 
 
-    //     // get the next token  
-    //     token_t *token = get_next_token(input_file, &buffer, bst_root);
+        // get the next token  
+        token_t *token = get_next_token(input_file, &buffer, bst_root);
         
-    //     // if token is not null, process it
-    //     if (token != NULL) process_token(token, &buffer, ast_root);
-    //     else break;
+        // if token is not null, process it
+        if (token != NULL) process_token(token, &buffer, ast_root);
+        else break;
 
-    //     free_token(token); // free token memory
-    // }
+        free_token(token); // free token memory
+    }
+
+    //ast_root = parse();
 
     close_file(input_file); // close the file
     deallocate_buffer(&buffer); // deallocate the buffer
