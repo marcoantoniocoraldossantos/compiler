@@ -85,3 +85,18 @@ void add_child(ast_node_t *parent, ast_node_t *child)
     // Se chegou até aqui, não foi possível adicionar o filho
     // Tratamento de erro, se necessário
 }
+
+void add_sibling(ast_node_t *node, ast_node_t *sibling) 
+{
+    if (node == NULL || sibling == NULL) 
+    {
+        // Tratamento de erro ou saída antecipada, se necessário
+        return;
+    }
+
+    while (node->sibling != NULL)
+    {
+        node = node->sibling;
+    }
+    node->sibling = sibling;
+}

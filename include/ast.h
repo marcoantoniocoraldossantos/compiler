@@ -49,14 +49,6 @@ void free_ast(ast_node_t *root);
 void add_child(ast_node_t *parent, ast_node_t *child);
 void add_sibling(ast_node_t *node, ast_node_t *sibling);
 
-
-
-
-
-// void add_child(ast_node_t *parent, ast_node_t *child);
-// void add_sibling(ast_node_t *node, ast_node_t *sibling);
-// void add_sample_nodes();
-
 #endif /* AST_H */
 
 
