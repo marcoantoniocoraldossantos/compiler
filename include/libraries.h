@@ -15,5 +15,7 @@
 #include "bst.h"
 #include "error.h"
 #include "ast.h"
+#include "parser.h"
+#include "globals.h"
 
 #endif

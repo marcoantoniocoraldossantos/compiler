@@ -12,6 +12,8 @@ int main(int argc, char *argv[])
     ast_node_t *ast_root = initialize_ast(); // initialize the ast
     token_t *token = NULL; // initialize the token
 
+    save_global_variables(input_file, &buffer, bst_root); // save the global variables
+
     while(1)
     {
         // fill the buffer, if it finds the end of file, it will return 0 and break the loop

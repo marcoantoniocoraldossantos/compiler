@@ -3,6 +3,9 @@
 // global variables of the arguments
 char **global_argv = NULL;
 int global_argc = 0;
+FILE *global_input_file = NULL;
+buffer_t *global_buffer = NULL;
+bst_node_t *global_bst_tree = NULL;
 
 // arguments functions
 void verify_arguments(int argc, char *argv[]) 
@@ -18,6 +21,14 @@ void save_arguments(int argc, char *argv[])
 {
     global_argc = argc;
     global_argv = argv;
+}
+
+// function to save global variables
+void save_global_variables(FILE *input_file, buffer_t *buffer, bst_node_t *bst_root)
+{
+    global_input_file = input_file;
+    global_buffer = buffer;
+    global_bst_tree = bst_root;
 }
 
 // functions to open and close files
