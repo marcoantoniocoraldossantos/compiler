@@ -72,13 +72,15 @@
 
     #include "libraries.h"
 
-    ast_node_t parse(ast_node_t ast_root);
+    ast_node_t* parse();
 
     int yylex();
     int yyparse();
     void yyerror(char *s);
 
-#line 82 "parser.c"
+    ast_node_t* ast_root;
+
+#line 84 "parser.c"
 
 # ifndef YY_CAST
 #  ifdef __cplusplus
@@ -556,13 +558,13 @@ static const yytype_int8 yytranslate[] =
 /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
 static const yytype_int16 yyrline[] =
 {
-       0,    24,    24,    30,    34,    40,    44,    50,    54,    60,
-      64,    70,    76,    80,    86,    90,    96,   100,   106,   112,
-     117,   122,   127,   132,   136,   140,   144,   148,   154,   158,
-     164,   168,   174,   180,   184,   190,   194,   200,   204,   210,
-     214,   220,   224,   228,   232,   236,   240,   246,   250,   256,
-     260,   266,   270,   276,   280,   286,   290,   294,   298,   304,
-     310,   315,   320,   324
+       0,    26,    26,    32,    36,    42,    46,    52,    56,    62,
+      66,    72,    78,    82,    88,    92,    98,   102,   108,   114,
+     119,   124,   129,   134,   138,   142,   146,   150,   156,   160,
+     166,   170,   176,   182,   186,   192,   196,   202,   206,   212,
+     216,   222,   226,   230,   234,   238,   242,   248,   252,   258,
+     262,   268,   272,   278,   282,   288,   292,   296,   300,   306,
+     312,   317,   322,   326
 };
 #endif
 
@@ -1195,503 +1197,503 @@ yyreduce:
   switch (yyn)
     {
   case 2: /* program: decl_list  */
-#line 25 "parser.y"
+#line 27 "parser.y"
 {
     printf("reduced: program -> decl_list\n");
 }
-#line 1203 "parser.c"
+#line 1205 "parser.c"
     break;
 
   case 3: /* decl_list: decl_list declaration  */
-#line 31 "parser.y"
+#line 33 "parser.y"
 {
     printf("reduced: decl_list -> decl_list declaration\n");
 }
-#line 1211 "parser.c"
+#line 1213 "parser.c"
     break;
 
   case 4: /* decl_list: declaration  */
-#line 35 "parser.y"
+#line 37 "parser.y"
 {
     printf("reduced: decl_list -> declaration\n");
 }
-#line 1219 "parser.c"
+#line 1221 "parser.c"
     break;
 
   case 5: /* declaration: var_declaration  */
-#line 41 "parser.y"
+#line 43 "parser.y"
 {
     printf("reduced: declaration -> var_declaration\n");
 }
-#line 1227 "parser.c"
+#line 1229 "parser.c"
     break;
 
   case 6: /* declaration: fun_declaration  */
-#line 45 "parser.y"
+#line 47 "parser.y"
 {
     printf("reduced: declaration -> fun_declaration\n");
 }
-#line 1235 "parser.c"
+#line 1237 "parser.c"
     break;
 
   case 7: /* var_declaration: type_specifier ID_TOKEN SEMICOLON_TOKEN  */
-#line 51 "parser.y"
+#line 53 "parser.y"
 {
     printf("reduced: var_declaration -> type_specifier ID_TOKEN SEMICOLON_TOKEN\n");
 }
-#line 1243 "parser.c"
+#line 1245 "parser.c"
     break;
 
   case 8: /* var_declaration: type_specifier ID_TOKEN LBRACKET_TOKEN NUM_TOKEN RBRACKET_TOKEN SEMICOLON_TOKEN  */
-#line 55 "parser.y"
+#line 57 "parser.y"
 {
     printf("reduced: var_declaration -> type_specifier ID_TOKEN LBRACKET_TOKEN NUM_TOKEN RBRACKET_TOKEN SEMICOLON_TOKEN\n");
 }
-#line 1251 "parser.c"
+#line 1253 "parser.c"
     break;
 
   case 9: /* type_specifier: INT_TOKEN  */
-#line 61 "parser.y"
+#line 63 "parser.y"
 {
     printf("reduced: type_specifier -> INT_TOKEN\n");
 }
-#line 1259 "parser.c"
+#line 1261 "parser.c"
     break;
 
   case 10: /* type_specifier: VOID_TOKEN  */
-#line 65 "parser.y"
+#line 67 "parser.y"
 {
     printf("reduced: type_specifier -> VOID_TOKEN\n");
 }
-#line 1267 "parser.c"
+#line 1269 "parser.c"
     break;
 
   case 11: /* fun_declaration: type_specifier ID_TOKEN LPAREN_TOKEN params RPAREN_TOKEN compound_decl  */
-#line 71 "parser.y"
+#line 73 "parser.y"
 {
     printf("reduced: fun_declaration -> type_specifier ID_TOKEN LPAREN_TOKEN params RPAREN_TOKEN compound_decl\n");
 }
-#line 1275 "parser.c"
+#line 1277 "parser.c"
     break;
 
   case 12: /* params: param_list  */
-#line 77 "parser.y"
+#line 79 "parser.y"
 {
     printf("reduced: params -> param_list\n");
 }
-#line 1283 "parser.c"
+#line 1285 "parser.c"
     break;
 
   case 13: /* params: VOID_TOKEN  */
-#line 81 "parser.y"
+#line 83 "parser.y"
 {
     printf("reduced: params -> VOID_TOKEN\n");
 }
-#line 1291 "parser.c"
+#line 1293 "parser.c"
     break;
 
   case 14: /* param_list: param_list COMMA_TOKEN param  */
-#line 87 "parser.y"
+#line 89 "parser.y"
 {
     printf("reduced: param_list -> param_list COMMA_TOKEN param\n");
 }
-#line 1299 "parser.c"
+#line 1301 "parser.c"
     break;
 
   case 15: /* param_list: param  */
-#line 91 "parser.y"
+#line 93 "parser.y"
 {
     printf("reduced: param_list -> param\n");
 }
-#line 1307 "parser.c"
+#line 1309 "parser.c"
     break;
 
   case 16: /* param: type_specifier ID_TOKEN  */
-#line 97 "parser.y"
+#line 99 "parser.y"
 {
     printf("reduced: param -> type_specifier ID_TOKEN\n");
 }
-#line 1315 "parser.c"
+#line 1317 "parser.c"
     break;
 
   case 17: /* param: type_specifier ID_TOKEN LBRACKET_TOKEN RBRACKET_TOKEN  */
-#line 101 "parser.y"
+#line 103 "parser.y"
 {
     printf("reduced: param -> type_specifier ID_TOKEN LBRACKET_TOKEN RBRACKET_TOKEN\n");
 }
-#line 1323 "parser.c"
+#line 1325 "parser.c"
     break;
 
   case 18: /* compound_decl: LBRACE_TOKEN local_declarations statement_list RBRACE_TOKEN  */
-#line 107 "parser.y"
+#line 109 "parser.y"
 {
     printf("reduced: compound_decl -> LBRACE_TOKEN local_declarations statement_list RBRACE_TOKEN\n");
 }
-#line 1331 "parser.c"
+#line 1333 "parser.c"
     break;
 
   case 19: /* local_declarations: local_declarations var_declaration  */
-#line 113 "parser.y"
+#line 115 "parser.y"
 {
     printf("reduced: local_declarations -> local_declarations var_declaration\n");
 }
-#line 1339 "parser.c"
+#line 1341 "parser.c"
     break;
 
   case 20: /* local_declarations: %empty  */
-#line 117 "parser.y"
+#line 119 "parser.y"
 {
     printf("reduced: local_declarations -> vazio\n");
 }
-#line 1347 "parser.c"
+#line 1349 "parser.c"
     break;
 
   case 21: /* statement_list: statement_list statement  */
-#line 123 "parser.y"
+#line 125 "parser.y"
 {
     printf("reduced: statement_list -> statement_list statement\n");
 }
-#line 1355 "parser.c"
+#line 1357 "parser.c"
     break;
 
   case 22: /* statement_list: %empty  */
-#line 127 "parser.y"
+#line 129 "parser.y"
 {
     printf("reduced: statement_list -> vazio\n");
 }
-#line 1363 "parser.c"
+#line 1365 "parser.c"
     break;
 
   case 23: /* statement: expression_decl  */
-#line 133 "parser.y"
+#line 135 "parser.y"
 {
     printf("reduced: statement -> expression_decl\n");
 }
-#line 1371 "parser.c"
+#line 1373 "parser.c"
     break;
 
   case 24: /* statement: compound_decl  */
-#line 137 "parser.y"
+#line 139 "parser.y"
 {
     printf("reduced: statement -> compound_decl\n");
 }
-#line 1379 "parser.c"
+#line 1381 "parser.c"
     break;
 
   case 25: /* statement: selection_decl  */
-#line 141 "parser.y"
+#line 143 "parser.y"
 {
     printf("reduced: statement -> selection_decl\n");
 }
-#line 1387 "parser.c"
+#line 1389 "parser.c"
     break;
 
   case 26: /* statement: iteration_decl  */
-#line 145 "parser.y"
+#line 147 "parser.y"
 {
     printf("reduced: statement -> iteration_decl\n");
 }
-#line 1395 "parser.c"
+#line 1397 "parser.c"
     break;
 
   case 27: /* statement: return_decl  */
-#line 149 "parser.y"
+#line 151 "parser.y"
 {
     printf("reduced: statement -> return_decl\n");
 }
-#line 1403 "parser.c"
+#line 1405 "parser.c"
     break;
 
   case 28: /* expression_decl: expression SEMICOLON_TOKEN  */
-#line 155 "parser.y"
+#line 157 "parser.y"
 {
     printf("reduced: expression_decl -> expression SEMICOLON_TOKEN\n");
 }
-#line 1411 "parser.c"
+#line 1413 "parser.c"
     break;
 
   case 29: /* expression_decl: SEMICOLON_TOKEN  */
-#line 159 "parser.y"
+#line 161 "parser.y"
 {
     printf("reduced: expression_decl -> SEMICOLON_TOKEN\n");
 }
-#line 1419 "parser.c"
+#line 1421 "parser.c"
     break;
 
   case 30: /* selection_decl: IF_TOKEN LPAREN_TOKEN expression RPAREN_TOKEN statement  */
-#line 165 "parser.y"
+#line 167 "parser.y"
 {
     printf("reduced: selection_decl -> IF_TOKEN LPAREN_TOKEN expression RPAREN_TOKEN statement\n");
 }
-#line 1427 "parser.c"
+#line 1429 "parser.c"
     break;
 
   case 31: /* selection_decl: IF_TOKEN LPAREN_TOKEN expression RPAREN_TOKEN statement ELSE_TOKEN statement  */
-#line 169 "parser.y"
+#line 171 "parser.y"
 {
     printf("reduced: selection_decl -> IF_TOKEN LPAREN_TOKEN expression RPAREN_TOKEN statement ELSE_TOKEN statement\n");
 }
-#line 1435 "parser.c"
+#line 1437 "parser.c"
     break;
 
   case 32: /* iteration_decl: WHILE_TOKEN LPAREN_TOKEN expression RPAREN_TOKEN statement  */
-#line 175 "parser.y"
+#line 177 "parser.y"
 {
     printf("reduced: iteration_decl -> WHILE_TOKEN LPAREN_TOKEN expression RPAREN_TOKEN statement\n");
 }
-#line 1443 "parser.c"
+#line 1445 "parser.c"
     break;
 
   case 33: /* return_decl: RETURN_TOKEN SEMICOLON_TOKEN  */
-#line 181 "parser.y"
+#line 183 "parser.y"
 {
     printf("reduced: return_decl -> RETURN_TOKEN SEMICOLON_TOKEN\n");
 }
-#line 1451 "parser.c"
+#line 1453 "parser.c"
     break;
 
   case 34: /* return_decl: RETURN_TOKEN expression SEMICOLON_TOKEN  */
-#line 185 "parser.y"
+#line 187 "parser.y"
 {
     printf("reduced: return_decl -> RETURN_TOKEN expression SEMICOLON_TOKEN\n");
 }
-#line 1459 "parser.c"
+#line 1461 "parser.c"
     break;
 
   case 35: /* expression: var ASSIGN_TOKEN expression  */
-#line 191 "parser.y"
+#line 193 "parser.y"
 {
     printf("reduced: expression -> var ASSIGN_TOKEN expression\n");
 }
-#line 1467 "parser.c"
+#line 1469 "parser.c"
     break;
 
   case 36: /* expression: simple_expression  */
-#line 195 "parser.y"
+#line 197 "parser.y"
 {
     printf("reduced: expression -> simple_expression\n");
 }
-#line 1475 "parser.c"
+#line 1477 "parser.c"
     break;
 
   case 37: /* var: ID_TOKEN  */
-#line 201 "parser.y"
+#line 203 "parser.y"
 {
     printf("reduced: var -> ID_TOKEN\n");
 }
-#line 1483 "parser.c"
+#line 1485 "parser.c"
     break;
 
   case 38: /* var: ID_TOKEN LBRACKET_TOKEN expression RBRACKET_TOKEN  */
-#line 205 "parser.y"
+#line 207 "parser.y"
 {
     printf("reduced: var -> ID_TOKEN LBRACKET_TOKEN expression RBRACKET_TOKEN\n");
 }
-#line 1491 "parser.c"
+#line 1493 "parser.c"
     break;
 
   case 39: /* simple_expression: sum_expression relational sum_expression  */
-#line 211 "parser.y"
+#line 213 "parser.y"
 {
     printf("reduced: simple_expression -> sum_expression relational sum_expression\n");
 }
-#line 1499 "parser.c"
+#line 1501 "parser.c"
     break;
 
   case 40: /* simple_expression: sum_expression  */
-#line 215 "parser.y"
+#line 217 "parser.y"
 {
     printf("reduced: simple_expression -> sum_expression\n");
 }
-#line 1507 "parser.c"
+#line 1509 "parser.c"
     break;
 
   case 41: /* relational: LT_TOKEN  */
-#line 221 "parser.y"
+#line 223 "parser.y"
 {
     printf("reduced: relational -> LT_TOKEN\n");
 }
-#line 1515 "parser.c"
+#line 1517 "parser.c"
     break;
 
   case 42: /* relational: LTE_TOKEN  */
-#line 225 "parser.y"
+#line 227 "parser.y"
 {
     printf("reduced: relational -> LTE_TOKEN\n");
 }
-#line 1523 "parser.c"
+#line 1525 "parser.c"
     break;
 
   case 43: /* relational: GT_TOKEN  */
-#line 229 "parser.y"
+#line 231 "parser.y"
 {
     printf("reduced: relational -> GT_TOKEN\n");
 }
-#line 1531 "parser.c"
+#line 1533 "parser.c"
     break;
 
   case 44: /* relational: GTE_TOKEN  */
-#line 233 "parser.y"
+#line 235 "parser.y"
 {
     printf("reduced: relational -> GTE_TOKEN\n");
 }
-#line 1539 "parser.c"
+#line 1541 "parser.c"
     break;
 
   case 45: /* relational: EQ_TOKEN  */
-#line 237 "parser.y"
+#line 239 "parser.y"
 {
     printf("reduced: relational -> EQ_TOKEN\n");
 }
-#line 1547 "parser.c"
+#line 1549 "parser.c"
     break;
 
   case 46: /* relational: NEQ_TOKEN  */
-#line 241 "parser.y"
+#line 243 "parser.y"
 {
     printf("reduced: relational -> NEQ_TOKEN\n");
 }
-#line 1555 "parser.c"
+#line 1557 "parser.c"
     break;
 
   case 47: /* sum_expression: sum_expression sum term  */
-#line 247 "parser.y"
+#line 249 "parser.y"
 {
     printf("reduced: sum_expression -> sum_expression sum term\n");
 }
-#line 1563 "parser.c"
+#line 1565 "parser.c"
     break;
 
   case 48: /* sum_expression: term  */
-#line 251 "parser.y"
+#line 253 "parser.y"
 {
     printf("reduced: sum_expression -> term\n");
 }
-#line 1571 "parser.c"
+#line 1573 "parser.c"
     break;
 
   case 49: /* sum: PLUS_TOKEN  */
-#line 257 "parser.y"
+#line 259 "parser.y"
 {
     printf("reduced: sum -> PLUS_TOKEN\n");
 }
-#line 1579 "parser.c"
+#line 1581 "parser.c"
     break;
 
   case 50: /* sum: MINUS_TOKEN  */
-#line 261 "parser.y"
+#line 263 "parser.y"
 {
     printf("reduced: sum -> MINUS_TOKEN\n");
 }
-#line 1587 "parser.c"
+#line 1589 "parser.c"
     break;
 
   case 51: /* term: term mult factor  */
-#line 267 "parser.y"
+#line 269 "parser.y"
 {
     printf("reduced: term -> term mult factor\n");
 }
-#line 1595 "parser.c"
+#line 1597 "parser.c"
     break;
 
   case 52: /* term: factor  */
-#line 271 "parser.y"
+#line 273 "parser.y"
 {
     printf("reduced: term -> factor\n");
 }
-#line 1603 "parser.c"
+#line 1605 "parser.c"
     break;
 
   case 53: /* mult: MULTIPLY_TOKEN  */
-#line 277 "parser.y"
+#line 279 "parser.y"
 {
     printf("reduced: mult -> MULTIPLY_TOKEN\n");
 }
-#line 1611 "parser.c"
+#line 1613 "parser.c"
     break;
 
   case 54: /* mult: DIVIDE_TOKEN  */
-#line 281 "parser.y"
+#line 283 "parser.y"
 {
     printf("reduced: mult -> DIVID_TOKEN\n");
 }
-#line 1619 "parser.c"
+#line 1621 "parser.c"
     break;
 
   case 55: /* factor: LPAREN_TOKEN expression RPAREN_TOKEN  */
-#line 287 "parser.y"
+#line 289 "parser.y"
 {
     printf("reduced: factor -> LPAREN_TOKEN expression RPAREN_TOKEN\n");
 }
-#line 1627 "parser.c"
+#line 1629 "parser.c"
     break;
 
   case 56: /* factor: var  */
-#line 291 "parser.y"
+#line 293 "parser.y"
 {
     printf("reduced: factor -> var\n");
 }
-#line 1635 "parser.c"
+#line 1637 "parser.c"
     break;
 
   case 57: /* factor: activation  */
-#line 295 "parser.y"
+#line 297 "parser.y"
 {
     printf("reduced: factor -> activation\n");
 }
-#line 1643 "parser.c"
+#line 1645 "parser.c"
     break;
 
   case 58: /* factor: NUM_TOKEN  */
-#line 299 "parser.y"
+#line 301 "parser.y"
 {
     printf("reduced: factor -> NUM_TOKEN\n");
 }
-#line 1651 "parser.c"
+#line 1653 "parser.c"
     break;
 
   case 59: /* activation: ID_TOKEN LPAREN_TOKEN args RPAREN_TOKEN  */
-#line 305 "parser.y"
+#line 307 "parser.y"
 {
     printf("reduced: activation -> ID_TOKEN LPAREN_TOKEN args RPAREN_TOKEN\n");
 }
-#line 1659 "parser.c"
+#line 1661 "parser.c"
     break;
 
   case 60: /* args: arg_list  */
-#line 311 "parser.y"
+#line 313 "parser.y"
 {
     printf("reduced: args -> arg_list\n");
 }
-#line 1667 "parser.c"
+#line 1669 "parser.c"
     break;
 
   case 61: /* args: %empty  */
-#line 315 "parser.y"
+#line 317 "parser.y"
 {
     printf("reduced: args -> vazio\n");
 }
-#line 1675 "parser.c"
+#line 1677 "parser.c"
     break;
 
   case 62: /* arg_list: arg_list COMMA_TOKEN expression  */
-#line 321 "parser.y"
+#line 323 "parser.y"
 {
     printf("reduced: arg_list -> arg_list COMMA_TOKEN expression\n");
 }
-#line 1683 "parser.c"
+#line 1685 "parser.c"
     break;
 
   case 63: /* arg_list: expression  */
-#line 325 "parser.y"
+#line 327 "parser.y"
 {
     printf("reduced: arg_list -> expression\n");
 }
-#line 1691 "parser.c"
+#line 1693 "parser.c"
     break;
 
 
-#line 1695 "parser.c"
+#line 1697 "parser.c"
 
       default: break;
     }
@@ -1884,7 +1886,7 @@ yyreturnlab:
   return yyresult;
 }
 
-#line 330 "parser.y"
+#line 332 "parser.y"
 
 
 void yyerror(char *s)
@@ -1912,18 +1914,15 @@ int yylex()
         return ERROR_TOKEN; // Retornando um token de erro especial
     }
 
-    //printf("will return token: %d\n", token_to_return);
+    printf("will return token: %d\n", token_to_return);
     return token_to_return;
 }
 
-
-
-
-ast_node_t parse(ast_node_t ast_root)
+ast_node_t *parse()
 {       
+    ast_root = initialize_ast();
+
     yyparse();
 
     return ast_root;
 }
-
-//estrutura de dados usar YYSTYPE

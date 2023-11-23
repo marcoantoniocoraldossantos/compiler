@@ -2,11 +2,13 @@
 
     #include "libraries.h"
 
-    ast_node_t parse(ast_node_t ast_root);
+    ast_node_t* parse();
 
     int yylex();
     int yyparse();
     void yyerror(char *s);
+
+    ast_node_t* ast_root;
 %}
 
 %expect 1
@@ -354,18 +356,15 @@ int yylex()
         return ERROR_TOKEN; // Retornando um token de erro especial
     }
 
-    //printf("will return token: %d\n", token_to_return);
+    printf("will return token: %d\n", token_to_return);
     return token_to_return;
 }
 
-
-
-
-ast_node_t parse(ast_node_t ast_root)
+ast_node_t *parse()
 {       
+    ast_root = initialize_ast();
+
     yyparse();
 
     return ast_root;
 }
-
-//estrutura de dados usar YYSTYPE

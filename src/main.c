@@ -30,7 +30,7 @@ int main(int argc, char *argv[])
     // }
 
     printf("sintatic analysis:\n");
-    ast_tree = parse(ast_tree);
+    ast_tree = parse();
     //print_ast(ast_tree);
 
     printf("freeing memory...\n");
