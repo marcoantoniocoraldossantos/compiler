@@ -74,9 +74,9 @@
 
     
 
-    int yylex();
-    int yyparse();
-    void yyerror(char *s);
+    INT_TOKEN yylex();
+    INT_TOKEN yyparse();
+    voID_TOKEN yyerror(char *s);
 
 
 #line 83 "parser.c"
@@ -110,41 +110,41 @@ enum yysymbol_kind_t
   YYSYMBOL_YYEOF = 0,                      /* "end of file"  */
   YYSYMBOL_YYerror = 1,                    /* error  */
   YYSYMBOL_YYUNDEF = 2,                    /* "invalid token"  */
-  YYSYMBOL_ELSE = 3,                       /* ELSE  */
-  YYSYMBOL_IF = 4,                         /* IF  */
-  YYSYMBOL_INT = 5,                        /* INT  */
-  YYSYMBOL_RETURN = 6,                     /* RETURN  */
-  YYSYMBOL_VOID = 7,                       /* VOID  */
-  YYSYMBOL_WHILE = 8,                      /* WHILE  */
-  YYSYMBOL_PLUS = 9,                       /* PLUS  */
-  YYSYMBOL_MINUS = 10,                     /* MINUS  */
-  YYSYMBOL_MULTIPLY = 11,                  /* MULTIPLY  */
-  YYSYMBOL_DIVIDE = 12,                    /* DIVIDE  */
-  YYSYMBOL_LT = 13,                        /* LT  */
-  YYSYMBOL_LTE = 14,                       /* LTE  */
-  YYSYMBOL_GT = 15,                        /* GT  */
-  YYSYMBOL_GTE = 16,                       /* GTE  */
-  YYSYMBOL_EQ = 17,                        /* EQ  */
-  YYSYMBOL_NEQ = 18,                       /* NEQ  */
-  YYSYMBOL_ASSIGN = 19,                    /* ASSIGN  */
-  YYSYMBOL_SEMICOLON = 20,                 /* SEMICOLON  */
-  YYSYMBOL_COMMA = 21,                     /* COMMA  */
-  YYSYMBOL_LPAREN = 22,                    /* LPAREN  */
-  YYSYMBOL_RPAREN = 23,                    /* RPAREN  */
-  YYSYMBOL_LBRACKET = 24,                  /* LBRACKET  */
-  YYSYMBOL_RBRACKET = 25,                  /* RBRACKET  */
-  YYSYMBOL_LBRACE = 26,                    /* LBRACE  */
-  YYSYMBOL_RBRACE = 27,                    /* RBRACE  */
-  YYSYMBOL_ID = 28,                        /* ID  */
-  YYSYMBOL_NUM = 29,                       /* NUM  */
-  YYSYMBOL_UNKNOW = 30,                    /* UNKNOW  */
-  YYSYMBOL_ERROR = 31,                     /* ERROR  */
+  YYSYMBOL_ELSE_TOKEN = 3,                 /* ELSE_TOKEN  */
+  YYSYMBOL_IF_TOKEN = 4,                   /* IF_TOKEN  */
+  YYSYMBOL_INT_TOKEN = 5,                  /* INT_TOKEN  */
+  YYSYMBOL_RETURN_TOKEN = 6,               /* RETURN_TOKEN  */
+  YYSYMBOL_VOID_TOKEN = 7,                 /* VOID_TOKEN  */
+  YYSYMBOL_WHILE_TOKEN = 8,                /* WHILE_TOKEN  */
+  YYSYMBOL_PLUS_TOKEN = 9,                 /* PLUS_TOKEN  */
+  YYSYMBOL_MINUS_TOKEN = 10,               /* MINUS_TOKEN  */
+  YYSYMBOL_MULTIPLY_TOKEN = 11,            /* MULTIPLY_TOKEN  */
+  YYSYMBOL_DIVID_TOKENE = 12,              /* DIVID_TOKENE  */
+  YYSYMBOL_LT_TOKEN = 13,                  /* LT_TOKEN  */
+  YYSYMBOL_LTE_TOKEN = 14,                 /* LTE_TOKEN  */
+  YYSYMBOL_GT_TOKEN = 15,                  /* GT_TOKEN  */
+  YYSYMBOL_GTE_TOKEN = 16,                 /* GTE_TOKEN  */
+  YYSYMBOL_EQ_TOKEN = 17,                  /* EQ_TOKEN  */
+  YYSYMBOL_NEQ_TOKEN = 18,                 /* NEQ_TOKEN  */
+  YYSYMBOL_ASSIGN_TOKEN = 19,              /* ASSIGN_TOKEN  */
+  YYSYMBOL_SEMICOLON_TOKEN = 20,           /* SEMICOLON_TOKEN  */
+  YYSYMBOL_COMMA_TOKEN = 21,               /* COMMA_TOKEN  */
+  YYSYMBOL_LPAREN_TOKEN = 22,              /* LPAREN_TOKEN  */
+  YYSYMBOL_RPAREN_TOKEN = 23,              /* RPAREN_TOKEN  */
+  YYSYMBOL_LBRACKET_TOKEN = 24,            /* LBRACKET_TOKEN  */
+  YYSYMBOL_RBRACKET_TOKEN = 25,            /* RBRACKET_TOKEN  */
+  YYSYMBOL_LBRACE_TOKEN = 26,              /* LBRACE_TOKEN  */
+  YYSYMBOL_RBRACE_TOKEN = 27,              /* RBRACE_TOKEN  */
+  YYSYMBOL_ID_TOKEN = 28,                  /* ID_TOKEN  */
+  YYSYMBOL_NUM_TOKEN = 29,                 /* NUM_TOKEN  */
+  YYSYMBOL_UNKNOW_TOKEN = 30,              /* UNKNOW_TOKEN  */
+  YYSYMBOL_ERROR_TOKEN = 31,               /* ERROR_TOKEN  */
   YYSYMBOL_YYACCEPT = 32,                  /* $accept  */
   YYSYMBOL_program = 33,                   /* program  */
   YYSYMBOL_decl_list = 34,                 /* decl_list  */
   YYSYMBOL_declaration = 35,               /* declaration  */
   YYSYMBOL_var_declaration = 36,           /* var_declaration  */
-  YYSYMBOL_type_specifier = 37,            /* type_specifier  */
+  YYSYMBOL_type_specIF_TOKENier = 37,      /* type_specIF_TOKENier  */
   YYSYMBOL_fun_declaration = 38,           /* fun_declaration  */
   YYSYMBOL_params = 39,                    /* params  */
   YYSYMBOL_param_list = 40,                /* param_list  */
@@ -579,13 +579,16 @@ static const char *yysymbol_name (yysymbol_kind_t yysymbol) YY_ATTRIBUTE_UNUSED;
    First, the terminals, then, starting at YYNTOKENS, nonterminals.  */
 static const char *const yytname[] =
 {
-  "\"end of file\"", "error", "\"invalid token\"", "ELSE", "IF", "INT",
-  "RETURN", "VOID", "WHILE", "PLUS", "MINUS", "MULTIPLY", "DIVIDE", "LT",
-  "LTE", "GT", "GTE", "EQ", "NEQ", "ASSIGN", "SEMICOLON", "COMMA",
-  "LPAREN", "RPAREN", "LBRACKET", "RBRACKET", "LBRACE", "RBRACE", "ID",
-  "NUM", "UNKNOW", "ERROR", "$accept", "program", "decl_list",
-  "declaration", "var_declaration", "type_specifier", "fun_declaration",
-  "params", "param_list", "param", "compound_decl", "local_declarations",
+  "\"end of file\"", "error", "\"invalid token\"", "ELSE_TOKEN",
+  "IF_TOKEN", "INT_TOKEN", "RETURN_TOKEN", "VOID_TOKEN", "WHILE_TOKEN",
+  "PLUS_TOKEN", "MINUS_TOKEN", "MULTIPLY_TOKEN", "DIVID_TOKENE",
+  "LT_TOKEN", "LTE_TOKEN", "GT_TOKEN", "GTE_TOKEN", "EQ_TOKEN",
+  "NEQ_TOKEN", "ASSIGN_TOKEN", "SEMICOLON_TOKEN", "COMMA_TOKEN",
+  "LPAREN_TOKEN", "RPAREN_TOKEN", "LBRACKET_TOKEN", "RBRACKET_TOKEN",
+  "LBRACE_TOKEN", "RBRACE_TOKEN", "ID_TOKEN", "NUM_TOKEN", "UNKNOW_TOKEN",
+  "ERROR_TOKEN", "$accept", "program", "decl_list", "declaration",
+  "var_declaration", "type_specIF_TOKENier", "fun_declaration", "params",
+  "param_list", "param", "compound_decl", "local_declarations",
   "statement_list", "statement", "expression_decl", "selection_decl",
   "iteration_decl", "return_decl", "expression", "var",
   "simple_expression", "relational", "sum_expression", "sum", "term",
@@ -1194,12 +1197,12 @@ yyreduce:
     {
   case 2: /* program: decl_list  */
 #line 26 "parser.y"
-                    {printf("$$ = %p\n", yyvsp[0]);}
-#line 1199 "parser.c"
+                    {prINT_TOKENf("$$ = %p\n", yyvsp[0]);}
+#line 1202 "parser.c"
     break;
 
 
-#line 1203 "parser.c"
+#line 1206 "parser.c"
 
       default: break;
     }
@@ -1395,16 +1398,16 @@ yyreturnlab:
 #line 173 "parser.y"
 
 
-void yyerror(char *s)
+voID_TOKEN yyerror(char *s)
 {
-    printf("\n%s: invalid lexeme!\n", s);
+    prINT_TOKENf("\n%s: invalID_TOKEN lexeme!\n", s);
 }
 
-int yylex()
+INT_TOKEN yylex()
 {
     token_t token;
     token = get_next_token(input_file, &buffer, bst_root);
-    return token->type;
+    RETURN_TOKEN token->type;
 }
 
 ast_node_t parse(FILE *input_file, bst_node_t *bst_root)
@@ -1420,7 +1423,7 @@ ast_node_t parse(FILE *input_file, bst_node_t *bst_root)
 
     fclose(yyout);
 
-    return ast_root;
+    RETURN_TOKEN ast_root;
 }
 
 //estrutura de dados usar YYSTYPE

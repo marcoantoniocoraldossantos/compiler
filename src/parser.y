@@ -4,16 +4,16 @@
 
     
 
-    int yylex();
-    int yyparse();
-    void yyerror(char *s);
+    INT_TOKEN yylex();
+    INT_TOKEN yyparse();
+    voID_TOKEN yyerror(char *s);
 
 %}
 
 %expect 1
 
 %token ELSE_TOKEN IF_TOKEN INT_TOKEN RETURN_TOKEN VOID_TOKEN WHILE_TOKEN
-%token PLUS_TOKEN MINUS_TOKEN MULTIPLY_TOKEN DIVIDE_TOKEN
+%token PLUS_TOKEN MINUS_TOKEN MULTIPLY_TOKEN DIVID_TOKENE
 %token LT_TOKEN LTE_TOKEN GT_TOKEN GTE_TOKEN EQ_TOKEN NEQ_TOKEN ASSIGN_TOKEN
 %token SEMICOLON_TOKEN COMMA_TOKEN 
 %token LPAREN_TOKEN RPAREN_TOKEN LBRACKET_TOKEN RBRACKET_TOKEN LBRACE_TOKEN RBRACE_TOKEN
@@ -23,7 +23,7 @@
 %%
 
 //1
-program : decl_list {printf("$$ = %p\n", $1);}
+program : decl_list {prINT_TOKENf("$$ = %p\n", $1);}
     ;
 
 //2
@@ -37,36 +37,36 @@ declaration : var_declaration
             ;
 
 //4
-var_declaration : type_specifier ID SEMICOLON
-                | type_specifier ID LBRACKET NUM RBRACKET SEMICOLON
+var_declaration : type_specIF_TOKENier ID_TOKEN SEMICOLON_TOKEN
+                | type_specIF_TOKENier ID_TOKEN LBRACKET_TOKEN NUM_TOKEN RBRACKET_TOKEN SEMICOLON_TOKEN
                 ;
 
 //5
-type_specifier : INT
-               | VOID
+type_specIF_TOKENier : INT_TOKEN
+               | VOID_TOKEN
                ;
 
 //6
-fun_declaration : type_specifier ID LPAREN params RPAREN compound_decl
+fun_declaration : type_specIF_TOKENier ID_TOKEN LPAREN_TOKEN params RPAREN_TOKEN compound_decl
                 ;
 
 //7
 params : param_list
-       | VOID
+       | VOID_TOKEN
        ;
 
 //8
-param_list : param_list COMMA param
+param_list : param_list COMMA_TOKEN param
            | param
            ;
 
 //9
-param : type_specifier ID
-      | type_specifier ID LBRACKET RBRACKET
+param : type_specIF_TOKENier ID_TOKEN
+      | type_specIF_TOKENier ID_TOKEN LBRACKET_TOKEN RBRACKET_TOKEN
       ;
 
 //10
-compound_decl : LBRACE local_declarations statement_list RBRACE
+compound_decl : LBRACE_TOKEN local_declarations statement_list RBRACE_TOKEN
               ;
 
 //11
@@ -88,32 +88,32 @@ statement : expression_decl
           ;
 
 //14
-expression_decl : expression SEMICOLON
-                | SEMICOLON
+expression_decl : expression SEMICOLON_TOKEN
+                | SEMICOLON_TOKEN
                 ;
 
 //15
-selection_decl : IF LPAREN expression RPAREN statement 
-               | IF LPAREN expression RPAREN statement ELSE statement
+selection_decl : IF_TOKEN LPAREN_TOKEN expression RPAREN_TOKEN statement 
+               | IF_TOKEN LPAREN_TOKEN expression RPAREN_TOKEN statement ELSE_TOKEN statement
                ;
 
 //16
-iteration_decl : WHILE LPAREN expression RPAREN statement
+iteration_decl : WHILE_TOKEN LPAREN_TOKEN expression RPAREN_TOKEN statement
                ;
 
 //17
-return_decl : RETURN SEMICOLON
-            | RETURN expression SEMICOLON
+return_decl : RETURN_TOKEN SEMICOLON_TOKEN
+            | RETURN_TOKEN expression SEMICOLON_TOKEN
             ;
 
 //18
-expression : var ASSIGN expression
+expression : var ASSIGN_TOKEN expression
            | simple_expression
            ;
 
 //19
-var : ID
-    | ID LBRACKET expression RBRACKET
+var : ID_TOKEN
+    | ID_TOKEN LBRACKET_TOKEN expression RBRACKET_TOKEN
     ;
 
 //20
@@ -122,12 +122,12 @@ simple_expression : sum_expression relational sum_expression
                   ;
 
 //21
-relational : LT
-           | LTE
-           | GT
-           | GTE
-           | EQ
-           | NEQ
+relational : LT_TOKEN
+           | LTE_TOKEN
+           | GT_TOKEN
+           | GTE_TOKEN
+           | EQ_TOKEN
+           | NEQ_TOKEN
            ;
 
 //22
@@ -136,8 +136,8 @@ sum_expression : sum_expression sum term
                ;
 
 //23
-sum : PLUS
-    | MINUS
+sum : PLUS_TOKEN
+    | MINUS_TOKEN
     ;
 
 //24
@@ -146,19 +146,19 @@ term : term mult factor
      ;
 
 //25
-mult : MULTIPLY
-     | DIVIDE
+mult : MULTIPLY_TOKEN
+     | DIVID_TOKENE
      ;
 
 //26
-factor : LPAREN expression RPAREN
+factor : LPAREN_TOKEN expression RPAREN_TOKEN
        | var
        | activation
-       | NUM
+       | NUM_TOKEN
        ;
 
 //27
-activation : ID LPAREN args RPAREN
+activation : ID_TOKEN LPAREN_TOKEN args RPAREN_TOKEN
            ;
 
 //28
@@ -167,21 +167,21 @@ args : arg_list
      ;
 
 //29
-arg_list : arg_list COMMA expression
+arg_list : arg_list COMMA_TOKEN expression
          | expression
          ;
 %%
 
-void yyerror(char *s)
+voID_TOKEN yyerror(char *s)
 {
-    printf("\n%s: invalid lexeme!\n", s);
+    prINT_TOKENf("\n%s: invalID_TOKEN lexeme!\n", s);
 }
 
-int yylex()
+INT_TOKEN yylex()
 {
     token_t token;
     token = get_next_token(input_file, &buffer, bst_root);
-    return token->type;
+    RETURN_TOKEN token->type;
 }
 
 ast_node_t parse(FILE *input_file, bst_node_t *bst_root)
@@ -197,7 +197,7 @@ ast_node_t parse(FILE *input_file, bst_node_t *bst_root)
 
     fclose(yyout);
 
-    return ast_root;
+    RETURN_TOKEN ast_root;
 }
 
 //estrutura de dados usar YYSTYPE
