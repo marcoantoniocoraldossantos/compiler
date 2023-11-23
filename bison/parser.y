@@ -2,12 +2,9 @@
 
     #include "libraries.h"
 
-    
-
-    INT_TOKEN yylex();
-    INT_TOKEN yyparse();
-    voID_TOKEN yyerror(char *s);
-
+    int yylex();
+    int yyparse();
+    void yyerror(char *s);
 %}
 
 %expect 1
@@ -23,7 +20,7 @@
 %%
 
 //1
-program : decl_list {prINT_TOKENf("$$ = %p\n", $1);}
+program : decl_list 
     ;
 
 //2
@@ -172,32 +169,24 @@ arg_list : arg_list COMMA_TOKEN expression
          ;
 %%
 
-voID_TOKEN yyerror(char *s)
+void yyerror(char *s)
 {
-    prINT_TOKENf("\n%s: invalID_TOKEN lexeme!\n", s);
+    printf("\n%s: invalid lexeme!\n", s);
 }
 
-INT_TOKEN yylex()
+int yylex()
 {
-    token_t token;
-    token = get_next_token(input_file, &buffer, bst_root);
-    RETURN_TOKEN token->type;
+    //token_t token;
+    //token = get_next_token(input_file, &buffer, bst_root);
+    return 1;
 }
 
-ast_node_t parse(FILE *input_file, bst_node_t *bst_root)
-{
-    ast_node_t ast_root = NULL;
+void parse(FILE *input_file)
+{    
+    //ast_node_t ast_root = NULL;
+    yyparse();
 
-    yyin = input_file;
-    yyout = fopen("output.txt", "w");
-
-    yyrestart(yyin);
-    
-    yyparse(&ast_root);
-
-    fclose(yyout);
-
-    RETURN_TOKEN ast_root;
+    return;// ast_root;
 }
 
 //estrutura de dados usar YYSTYPE

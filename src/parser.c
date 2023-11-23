@@ -72,14 +72,11 @@
 
     #include "libraries.h"
 
-    
+    int yylex();
+    int yyparse();
+    void yyerror(char *s);
 
-    INT_TOKEN yylex();
-    INT_TOKEN yyparse();
-    voID_TOKEN yyerror(char *s);
-
-
-#line 83 "parser.c"
+#line 80 "parser.c"
 
 # ifndef YY_CAST
 #  ifdef __cplusplus
@@ -557,13 +554,13 @@ static const yytype_int8 yytranslate[] =
 /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
 static const yytype_uint8 yyrline[] =
 {
-       0,    26,    26,    30,    31,    35,    36,    40,    41,    45,
-      46,    50,    54,    55,    59,    60,    64,    65,    69,    73,
-      74,    78,    79,    83,    84,    85,    86,    87,    91,    92,
-      96,    97,   101,   105,   106,   110,   111,   115,   116,   120,
-     121,   125,   126,   127,   128,   129,   130,   134,   135,   139,
-     140,   144,   145,   149,   150,   154,   155,   156,   157,   161,
-     165,   166,   170,   171
+       0,    23,    23,    27,    28,    32,    33,    37,    38,    42,
+      43,    47,    51,    52,    56,    57,    61,    62,    66,    70,
+      71,    75,    76,    80,    81,    82,    83,    84,    88,    89,
+      93,    94,    98,   102,   103,   107,   108,   112,   113,   117,
+     118,   122,   123,   124,   125,   126,   127,   131,   132,   136,
+     137,   141,   142,   146,   147,   151,   152,   153,   154,   158,
+     162,   163,   167,   168
 };
 #endif
 
@@ -1195,14 +1192,8 @@ yyreduce:
   YY_REDUCE_PRINT (yyn);
   switch (yyn)
     {
-  case 2: /* program: decl_list  */
-#line 26 "parser.y"
-                    {prINT_TOKENf("$$ = %p\n", yyvsp[0]);}
-#line 1202 "parser.c"
-    break;
 
-
-#line 1206 "parser.c"
+#line 1197 "parser.c"
 
       default: break;
     }
@@ -1395,35 +1386,27 @@ yyreturnlab:
   return yyresult;
 }
 
-#line 173 "parser.y"
+#line 170 "parser.y"
 
 
-voID_TOKEN yyerror(char *s)
+void yyerror(char *s)
 {
-    prINT_TOKENf("\n%s: invalID_TOKEN lexeme!\n", s);
+    printf("\n%s: invalid lexeme!\n", s);
 }
 
-INT_TOKEN yylex()
+int yylex()
 {
-    token_t token;
-    token = get_next_token(input_file, &buffer, bst_root);
-    RETURN_TOKEN token->type;
+    //token_t token;
+    //token = get_next_token(input_file, &buffer, bst_root);
+    return 1;
 }
 
-ast_node_t parse(FILE *input_file, bst_node_t *bst_root)
-{
-    ast_node_t ast_root = NULL;
+void parse(FILE *input_file)
+{    
+    //ast_node_t ast_root = NULL;
+    yyparse();
 
-    yyin = input_file;
-    yyout = fopen("output.txt", "w");
-
-    yyrestart(yyin);
-    
-    yyparse(&ast_root);
-
-    fclose(yyout);
-
-    RETURN_TOKEN ast_root;
+    return;// ast_root;
 }
 
 //estrutura de dados usar YYSTYPE
