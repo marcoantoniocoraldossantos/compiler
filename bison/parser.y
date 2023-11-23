@@ -341,10 +341,15 @@ int yylex()
     token_t *token;
     token = get_next_token();
     int flag = process_token(token);
+    int token_to_return = convert_token(token->type);  
+    printf("token to return: %d\n", token_to_return);
+
     if(flag == 1)
         return token->type;
     else
         printf("lexycal error\n");
+
+
 
     return token->type;
 }

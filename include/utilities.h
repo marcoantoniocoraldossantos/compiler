@@ -35,5 +35,6 @@ char *state_to_string(state_t state);
 token_type_t state_to_token_type(state_t state);
 char *token_type_to_string(token_type_t token_type);
 token_type_t reserved_word_token_type(const char *word);
+int convert_token(token_type_t token_type);
 
 #endif

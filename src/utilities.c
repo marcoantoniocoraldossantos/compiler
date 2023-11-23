@@ -540,3 +540,75 @@ token_type_t reserved_word_token_type(const char *word)
         return UNKNOWN;
     }
 }
+
+// convert tokentype to yytokentype to int
+int convert_token(token_type_t token_type)
+{
+    switch(token_type)
+    {
+        case ELSE:
+            return ELSE_TOKEN;
+        case IF:
+            return IF_TOKEN;
+        case INT:
+            return INT_TOKEN;
+        case RETURN:
+            return RETURN_TOKEN;
+        case VOID:
+            return VOID_TOKEN;
+        case WHILE:
+            return WHILE_TOKEN;
+        case PLUS:
+            return PLUS_TOKEN;
+        case MINUS:
+            return MINUS_TOKEN;
+        case MULTIPLY:
+            return MULTIPLY_TOKEN;
+        case DIVIDE:
+            return DIVIDE_TOKEN;
+        case LESS_THAN:
+            return LT_TOKEN;
+        case LESS_THAN_EQUAL:
+            return LTE_TOKEN;
+        case GREATER_THAN:
+            return GT_TOKEN;
+        case GREATER_THAN_EQUAL:
+            return GTE_TOKEN;
+        case EQUAL:
+            return EQ_TOKEN;
+        case NOT_EQUAL:
+            return NEQ_TOKEN;
+        case ASSIGN:
+            return ASSIGN_TOKEN;
+        case SEMICOLON:
+            return SEMICOLON_TOKEN;
+        case COMMA:
+            return COMMA_TOKEN;
+        case LEFT_PAREN:
+            return LPAREN_TOKEN;
+        case RIGHT_PAREN:
+            return RPAREN_TOKEN;
+        case LEFT_BRACKET:
+            return LBRACKET_TOKEN;
+        case RIGHT_BRACKET:
+            return RBRACKET_TOKEN;
+        case LEFT_BRACE:
+            return LBRACE_TOKEN;
+        case RIGHT_BRACE:
+            return RBRACE_TOKEN;
+        case COMMENT_START:
+            return ERROR_TOKEN;
+        case COMMENT_END:
+            return ERROR_TOKEN;
+        case ID:
+            return ID_TOKEN;
+        case NUM:   
+            return NUM_TOKEN;   
+        case UNKNOWN:
+            return UNKNOW_TOKEN;
+        case ERROR:
+            return ERROR_TOKEN;
+        default:
+            return ERROR_TOKEN;
+    }
+}
