@@ -29,14 +29,7 @@ int main(int argc, char *argv[])
     //     free_token(token); // free token memory
     // }
 
-    //ast_root = parse();
-
-    //token = get_next_token();
-    //process_token(token, &buffer, ast_root);
-    //free_token(token);
-    //token = get_next_token();
-    //process_token(token, &buffer, ast_root);
-    //free_token(token);
+    ast_root = parse();
 
     close_file(input_file); // close the file
     deallocate_buffer(&buffer); // deallocate the buffer

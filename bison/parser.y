@@ -2,6 +2,8 @@
 
     #include "libraries.h"
 
+    ast_node_t parse(FILE *input_file);
+
     int yylex();
     int yyparse();
     void yyerror(char *s);
@@ -172,21 +174,25 @@ arg_list : arg_list COMMA_TOKEN expression
 void yyerror(char *s)
 {
     printf("\n%s: invalid lexeme!\n", s);
+    printf("Exiting...\n");
+    exit(1);
 }
 
 int yylex()
 {
-    //token_t token;
-    //token = get_next_token(input_file, &buffer, bst_root);
-    return 1;
+    token_t *token;
+    token = get_next_token();
+    printf("token: %d lexeme: %s\n", token->type, token->lexeme);
+    return token->type;
 }
 
-void parse(FILE *input_file)
+ast_node_t parse(FILE *input_file)
 {    
-    //ast_node_t ast_root = NULL;
+    ast_node_t ast_root;
+   
     yyparse();
 
-    return;// ast_root;
+    return ast_root;
 }
 
 //estrutura de dados usar YYSTYPE

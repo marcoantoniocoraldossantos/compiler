@@ -72,11 +72,13 @@
 
     #include "libraries.h"
 
+    ast_node_t parse(FILE *input_file);
+
     int yylex();
     int yyparse();
     void yyerror(char *s);
 
-#line 80 "parser.c"
+#line 82 "parser.c"
 
 # ifndef YY_CAST
 #  ifdef __cplusplus
@@ -554,13 +556,13 @@ static const yytype_int8 yytranslate[] =
 /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
 static const yytype_uint8 yyrline[] =
 {
-       0,    23,    23,    27,    28,    32,    33,    37,    38,    42,
-      43,    47,    51,    52,    56,    57,    61,    62,    66,    70,
-      71,    75,    76,    80,    81,    82,    83,    84,    88,    89,
-      93,    94,    98,   102,   103,   107,   108,   112,   113,   117,
-     118,   122,   123,   124,   125,   126,   127,   131,   132,   136,
-     137,   141,   142,   146,   147,   151,   152,   153,   154,   158,
-     162,   163,   167,   168
+       0,    25,    25,    29,    30,    34,    35,    39,    40,    44,
+      45,    49,    53,    54,    58,    59,    63,    64,    68,    72,
+      73,    77,    78,    82,    83,    84,    85,    86,    90,    91,
+      95,    96,   100,   104,   105,   109,   110,   114,   115,   119,
+     120,   124,   125,   126,   127,   128,   129,   133,   134,   138,
+     139,   143,   144,   148,   149,   153,   154,   155,   156,   160,
+     164,   165,   169,   170
 };
 #endif
 
@@ -1193,7 +1195,7 @@ yyreduce:
   switch (yyn)
     {
 
-#line 1197 "parser.c"
+#line 1199 "parser.c"
 
       default: break;
     }
@@ -1386,27 +1388,31 @@ yyreturnlab:
   return yyresult;
 }
 
-#line 170 "parser.y"
+#line 172 "parser.y"
 
 
 void yyerror(char *s)
 {
     printf("\n%s: invalid lexeme!\n", s);
+    printf("Exiting...\n");
+    exit(1);
 }
 
 int yylex()
 {
-    //token_t token;
-    //token = get_next_token(input_file, &buffer, bst_root);
-    return 1;
+    token_t *token;
+    token = get_next_token();
+    printf("token: %d lexeme: %s\n", token->type, token->lexeme);
+    return token->type;
 }
 
-void parse(FILE *input_file)
+ast_node_t parse(FILE *input_file)
 {    
-    //ast_node_t ast_root = NULL;
+    ast_node_t ast_root;
+   
     yyparse();
 
-    return;// ast_root;
+    return ast_root;
 }
 
 //estrutura de dados usar YYSTYPE
