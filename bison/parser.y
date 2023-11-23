@@ -21,160 +21,319 @@
 
 %%
 
-//1
 program : decl_list 
-    ;
+{
+    printf("reduced: program -> decl_list\n");
+}
+;
 
-//2
 decl_list : decl_list declaration
-          | declaration
-          ;
+{
+    printf("reduced: decl_list -> decl_list declaration\n");
+}
+| declaration
+{
+    printf("reduced: decl_list -> declaration\n");
+}
+;
 
-//3
 declaration : var_declaration
-            | fun_declaration
-            ;
+{
+    printf("reduced: declaration -> var_declaration\n");
+}
+| fun_declaration
+{
+    printf("reduced: declaration -> fun_declaration\n");
+}
+;
 
-//4
 var_declaration : type_specifier ID_TOKEN SEMICOLON_TOKEN
-                | type_specifier ID_TOKEN LBRACKET_TOKEN NUM_TOKEN RBRACKET_TOKEN SEMICOLON_TOKEN
-                ;
+{
+    printf("reduced: var_declaration -> type_specifier ID_TOKEN SEMICOLON_TOKEN\n");
+}
+| type_specifier ID_TOKEN LBRACKET_TOKEN NUM_TOKEN RBRACKET_TOKEN SEMICOLON_TOKEN
+{
+    printf("reduced: var_declaration -> type_specifier ID_TOKEN LBRACKET_TOKEN NUM_TOKEN RBRACKET_TOKEN SEMICOLON_TOKEN\n");
+}
+;
 
-//5
 type_specifier : INT_TOKEN
-               | VOID_TOKEN
-               ;
+{
+    printf("reduced: type_specifier -> INT_TOKEN\n");
+}
+| VOID_TOKEN
+{
+    printf("reduced: type_specifier -> VOID_TOKEN\n");
+}
+;
 
-//6
 fun_declaration : type_specifier ID_TOKEN LPAREN_TOKEN params RPAREN_TOKEN compound_decl
-                ;
+{
+    printf("reduced: fun_declaration -> type_specifier ID_TOKEN LPAREN_TOKEN params RPAREN_TOKEN compound_decl\n");
+}
+;
 
-//7
 params : param_list
-       | VOID_TOKEN
-       ;
+{
+    printf("reduced: params -> param_list\n");
+}
+| VOID_TOKEN
+{
+    printf("reduced: params -> VOID_TOKEN\n");
+}
+;
 
-//8
 param_list : param_list COMMA_TOKEN param
-           | param
-           ;
+{
+    printf("reduced: param_list -> param_list COMMA_TOKEN param\n");
+}
+| param
+{
+    printf("reduced: param_list -> param\n");
+}
+;
 
-//9
 param : type_specifier ID_TOKEN
-      | type_specifier ID_TOKEN LBRACKET_TOKEN RBRACKET_TOKEN
-      ;
+{
+    printf("reduced: param -> type_specifier ID_TOKEN\n");
+}
+| type_specifier ID_TOKEN LBRACKET_TOKEN RBRACKET_TOKEN
+{
+    printf("reduced: param -> type_specifier ID_TOKEN LBRACKET_TOKEN RBRACKET_TOKEN\n");
+}
+;
 
-//10
 compound_decl : LBRACE_TOKEN local_declarations statement_list RBRACE_TOKEN
-              ;
+{
+    printf("reduced: compound_decl -> LBRACE_TOKEN local_declarations statement_list RBRACE_TOKEN\n");
+}
+;
 
-//11
 local_declarations : local_declarations var_declaration
-                   | /* vazio */
-                   ;
+{
+    printf("reduced: local_declarations -> local_declarations var_declaration\n");
+}
+| /* vazio */
+{
+    printf("reduced: local_declarations -> vazio\n");
+}
+;
 
-//12
 statement_list : statement_list statement
-               | /* vazio */
-               ;
+{
+    printf("reduced: statement_list -> statement_list statement\n");
+}
+| /* vazio */
+{
+    printf("reduced: statement_list -> vazio\n");
+}
+;
 
-//13
 statement : expression_decl
-          | compound_decl
-          | selection_decl
-          | iteration_decl
-          | return_decl
-          ;
+{
+    printf("reduced: statement -> expression_decl\n");
+}
+| compound_decl
+{
+    printf("reduced: statement -> compound_decl\n");
+}
+| selection_decl
+{
+    printf("reduced: statement -> selection_decl\n");
+}
+| iteration_decl
+{
+    printf("reduced: statement -> iteration_decl\n");
+}
+| return_decl
+{
+    printf("reduced: statement -> return_decl\n");
+}
+;
 
-//14
 expression_decl : expression SEMICOLON_TOKEN
-                | SEMICOLON_TOKEN
-                ;
+{
+    printf("reduced: expression_decl -> expression SEMICOLON_TOKEN\n");
+}
+| SEMICOLON_TOKEN
+{
+    printf("reduced: expression_decl -> SEMICOLON_TOKEN\n");
+}
+;
 
-//15
 selection_decl : IF_TOKEN LPAREN_TOKEN expression RPAREN_TOKEN statement 
-               | IF_TOKEN LPAREN_TOKEN expression RPAREN_TOKEN statement ELSE_TOKEN statement
-               ;
+{
+    printf("reduced: selection_decl -> IF_TOKEN LPAREN_TOKEN expression RPAREN_TOKEN statement\n");
+}
+| IF_TOKEN LPAREN_TOKEN expression RPAREN_TOKEN statement ELSE_TOKEN statement
+{
+    printf("reduced: selection_decl -> IF_TOKEN LPAREN_TOKEN expression RPAREN_TOKEN statement ELSE_TOKEN statement\n");
+}
+;
 
-//16
 iteration_decl : WHILE_TOKEN LPAREN_TOKEN expression RPAREN_TOKEN statement
-               ;
+{
+    printf("reduced: iteration_decl -> WHILE_TOKEN LPAREN_TOKEN expression RPAREN_TOKEN statement\n");
+}
+;
 
-//17
 return_decl : RETURN_TOKEN SEMICOLON_TOKEN
-            | RETURN_TOKEN expression SEMICOLON_TOKEN
-            ;
+{
+    printf("reduced: return_decl -> RETURN_TOKEN SEMICOLON_TOKEN\n");
+}
+| RETURN_TOKEN expression SEMICOLON_TOKEN
+{
+    printf("reduced: return_decl -> RETURN_TOKEN expression SEMICOLON_TOKEN\n");
+}
+;
 
-//18
 expression : var ASSIGN_TOKEN expression
-           | simple_expression
-           ;
+{
+    printf("reduced: expression -> var ASSIGN_TOKEN expression\n");
+}
+| simple_expression
+{
+    printf("reduced: expression -> simple_expression\n");
+}
+;
 
-//19
 var : ID_TOKEN
-    | ID_TOKEN LBRACKET_TOKEN expression RBRACKET_TOKEN
-    ;
+{
+    printf("reduced: var -> ID_TOKEN\n");
+}
+| ID_TOKEN LBRACKET_TOKEN expression RBRACKET_TOKEN
+{
+    printf("reduced: var -> ID_TOKEN LBRACKET_TOKEN expression RBRACKET_TOKEN\n");
+}
+;
 
-//20
 simple_expression : sum_expression relational sum_expression
-                  | sum_expression
-                  ;
+{
+    printf("reduced: simple_expression -> sum_expression relational sum_expression\n");
+}
+| sum_expression
+{
+    printf("reduced: simple_expression -> sum_expression\n");
+}
+;
 
-//21
 relational : LT_TOKEN
-           | LTE_TOKEN
-           | GT_TOKEN
-           | GTE_TOKEN
-           | EQ_TOKEN
-           | NEQ_TOKEN
-           ;
+{
+    printf("reduced: relational -> LT_TOKEN\n");
+}
+| LTE_TOKEN
+{
+    printf("reduced: relational -> LTE_TOKEN\n");
+}
+| GT_TOKEN
+{
+    printf("reduced: relational -> GT_TOKEN\n");
+}
+| GTE_TOKEN
+{
+    printf("reduced: relational -> GTE_TOKEN\n");
+}
+| EQ_TOKEN
+{
+    printf("reduced: relational -> EQ_TOKEN\n");
+}
+| NEQ_TOKEN
+{
+    printf("reduced: relational -> NEQ_TOKEN\n");
+}
+;
 
-//22
 sum_expression : sum_expression sum term
-               | term
-               ;
+{
+    printf("reduced: sum_expression -> sum_expression sum term\n");
+}
+| term
+{
+    printf("reduced: sum_expression -> term\n");
+}
+;
 
-//23
 sum : PLUS_TOKEN
-    | MINUS_TOKEN
-    ;
+{
+    printf("reduced: sum -> PLUS_TOKEN\n");
+}
+| MINUS_TOKEN
+{
+    printf("reduced: sum -> MINUS_TOKEN\n");
+}
+;
 
-//24
 term : term mult factor
-     | factor
-     ;
+{
+    printf("reduced: term -> term mult factor\n");
+}
+| factor
+{
+    printf("reduced: term -> factor\n");
+}
+;
 
-//25
 mult : MULTIPLY_TOKEN
-     | DIVID_TOKENE
-     ;
+{
+    printf("reduced: mult -> MULTIPLY_TOKEN\n");
+}
+| DIVID_TOKEN
+{
+    printf("reduced: mult -> DIVID_TOKEN\n");
+}
+;
 
-//26
 factor : LPAREN_TOKEN expression RPAREN_TOKEN
-       | var
-       | activation
-       | NUM_TOKEN
-       ;
+{
+    printf("reduced: factor -> LPAREN_TOKEN expression RPAREN_TOKEN\n");
+}
+| var
+{
+    printf("reduced: factor -> var\n");
+}
+| activation
+{
+    printf("reduced: factor -> activation\n");
+}
+| NUM_TOKEN
+{
+    printf("reduced: factor -> NUM_TOKEN\n");
+}
+;
 
-//27
 activation : ID_TOKEN LPAREN_TOKEN args RPAREN_TOKEN
-           ;
+{
+    printf("reduced: activation -> ID_TOKEN LPAREN_TOKEN args RPAREN_TOKEN\n");
+}
+;
 
-//28
 args : arg_list
-     | /* vazio */
-     ;
+{
+    printf("reduced: args -> arg_list\n");
+}
+| /* vazio */
+{
+    printf("reduced: args -> vazio\n");
+}
+;
 
-//29
 arg_list : arg_list COMMA_TOKEN expression
-         | expression
-         ;
+{
+    printf("reduced: arg_list -> arg_list COMMA_TOKEN expression\n");
+}
+| expression
+{
+    printf("reduced: arg_list -> expression\n");
+}
+;
+
 %%
+
 
 void yyerror(char *s)
 {
     printf("\n%s: invalid lexeme!\n", s);
-    printf("Exiting...\n");
+    printf("exiting...\n");
     exit(1);
 }
 
