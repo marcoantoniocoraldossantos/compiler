@@ -63,7 +63,7 @@ extern int yydebug;
     PLUS_TOKEN = 264,              /* PLUS_TOKEN  */
     MINUS_TOKEN = 265,             /* MINUS_TOKEN  */
     MULTIPLY_TOKEN = 266,          /* MULTIPLY_TOKEN  */
-    DIVID_TOKENE = 267,            /* DIVID_TOKENE  */
+    DIVIDE_TOKEN = 267,            /* DIVIDE_TOKEN  */
     LT_TOKEN = 268,                /* LT_TOKEN  */
     LTE_TOKEN = 269,               /* LTE_TOKEN  */
     GT_TOKEN = 270,                /* GT_TOKEN  */

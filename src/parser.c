@@ -118,7 +118,7 @@ enum yysymbol_kind_t
   YYSYMBOL_PLUS_TOKEN = 9,                 /* PLUS_TOKEN  */
   YYSYMBOL_MINUS_TOKEN = 10,               /* MINUS_TOKEN  */
   YYSYMBOL_MULTIPLY_TOKEN = 11,            /* MULTIPLY_TOKEN  */
-  YYSYMBOL_DIVID_TOKENE = 12,              /* DIVID_TOKENE  */
+  YYSYMBOL_DIVIDE_TOKEN = 12,              /* DIVIDE_TOKEN  */
   YYSYMBOL_LT_TOKEN = 13,                  /* LT_TOKEN  */
   YYSYMBOL_LTE_TOKEN = 14,                 /* LTE_TOKEN  */
   YYSYMBOL_GT_TOKEN = 15,                  /* GT_TOKEN  */
@@ -554,15 +554,15 @@ static const yytype_int8 yytranslate[] =
 
 #if YYDEBUG
 /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
-static const yytype_uint8 yyrline[] =
+static const yytype_int16 yyrline[] =
 {
-       0,    25,    25,    29,    30,    34,    35,    39,    40,    44,
-      45,    49,    53,    54,    58,    59,    63,    64,    68,    72,
-      73,    77,    78,    82,    83,    84,    85,    86,    90,    91,
-      95,    96,   100,   104,   105,   109,   110,   114,   115,   119,
-     120,   124,   125,   126,   127,   128,   129,   133,   134,   138,
-     139,   143,   144,   148,   149,   153,   154,   155,   156,   160,
-     164,   165,   169,   170
+       0,    24,    24,    30,    34,    40,    44,    50,    54,    60,
+      64,    70,    76,    80,    86,    90,    96,   100,   106,   112,
+     117,   122,   127,   132,   136,   140,   144,   148,   154,   158,
+     164,   168,   174,   180,   184,   190,   194,   200,   204,   210,
+     214,   220,   224,   228,   232,   236,   240,   246,   250,   256,
+     260,   266,   270,   276,   280,   286,   290,   294,   298,   304,
+     310,   315,   320,   324
 };
 #endif
 
@@ -580,7 +580,7 @@ static const char *const yytname[] =
 {
   "\"end of file\"", "error", "\"invalid token\"", "ELSE_TOKEN",
   "IF_TOKEN", "INT_TOKEN", "RETURN_TOKEN", "VOID_TOKEN", "WHILE_TOKEN",
-  "PLUS_TOKEN", "MINUS_TOKEN", "MULTIPLY_TOKEN", "DIVID_TOKENE",
+  "PLUS_TOKEN", "MINUS_TOKEN", "MULTIPLY_TOKEN", "DIVIDE_TOKEN",
   "LT_TOKEN", "LTE_TOKEN", "GT_TOKEN", "GTE_TOKEN", "EQ_TOKEN",
   "NEQ_TOKEN", "ASSIGN_TOKEN", "SEMICOLON_TOKEN", "COMMA_TOKEN",
   "LPAREN_TOKEN", "RPAREN_TOKEN", "LBRACKET_TOKEN", "RBRACKET_TOKEN",
@@ -1194,8 +1194,504 @@ yyreduce:
   YY_REDUCE_PRINT (yyn);
   switch (yyn)
     {
+  case 2: /* program: decl_list  */
+#line 25 "parser.y"
+{
+    printf("reduced: program -> decl_list\n");
+}
+#line 1203 "parser.c"
+    break;
 
-#line 1199 "parser.c"
+  case 3: /* decl_list: decl_list declaration  */
+#line 31 "parser.y"
+{
+    printf("reduced: decl_list -> decl_list declaration\n");
+}
+#line 1211 "parser.c"
+    break;
+
+  case 4: /* decl_list: declaration  */
+#line 35 "parser.y"
+{
+    printf("reduced: decl_list -> declaration\n");
+}
+#line 1219 "parser.c"
+    break;
+
+  case 5: /* declaration: var_declaration  */
+#line 41 "parser.y"
+{
+    printf("reduced: declaration -> var_declaration\n");
+}
+#line 1227 "parser.c"
+    break;
+
+  case 6: /* declaration: fun_declaration  */
+#line 45 "parser.y"
+{
+    printf("reduced: declaration -> fun_declaration\n");
+}
+#line 1235 "parser.c"
+    break;
+
+  case 7: /* var_declaration: type_specifier ID_TOKEN SEMICOLON_TOKEN  */
+#line 51 "parser.y"
+{
+    printf("reduced: var_declaration -> type_specifier ID_TOKEN SEMICOLON_TOKEN\n");
+}
+#line 1243 "parser.c"
+    break;
+
+  case 8: /* var_declaration: type_specifier ID_TOKEN LBRACKET_TOKEN NUM_TOKEN RBRACKET_TOKEN SEMICOLON_TOKEN  */
+#line 55 "parser.y"
+{
+    printf("reduced: var_declaration -> type_specifier ID_TOKEN LBRACKET_TOKEN NUM_TOKEN RBRACKET_TOKEN SEMICOLON_TOKEN\n");
+}
+#line 1251 "parser.c"
+    break;
+
+  case 9: /* type_specifier: INT_TOKEN  */
+#line 61 "parser.y"
+{
+    printf("reduced: type_specifier -> INT_TOKEN\n");
+}
+#line 1259 "parser.c"
+    break;
+
+  case 10: /* type_specifier: VOID_TOKEN  */
+#line 65 "parser.y"
+{
+    printf("reduced: type_specifier -> VOID_TOKEN\n");
+}
+#line 1267 "parser.c"
+    break;
+
+  case 11: /* fun_declaration: type_specifier ID_TOKEN LPAREN_TOKEN params RPAREN_TOKEN compound_decl  */
+#line 71 "parser.y"
+{
+    printf("reduced: fun_declaration -> type_specifier ID_TOKEN LPAREN_TOKEN params RPAREN_TOKEN compound_decl\n");
+}
+#line 1275 "parser.c"
+    break;
+
+  case 12: /* params: param_list  */
+#line 77 "parser.y"
+{
+    printf("reduced: params -> param_list\n");
+}
+#line 1283 "parser.c"
+    break;
+
+  case 13: /* params: VOID_TOKEN  */
+#line 81 "parser.y"
+{
+    printf("reduced: params -> VOID_TOKEN\n");
+}
+#line 1291 "parser.c"
+    break;
+
+  case 14: /* param_list: param_list COMMA_TOKEN param  */
+#line 87 "parser.y"
+{
+    printf("reduced: param_list -> param_list COMMA_TOKEN param\n");
+}
+#line 1299 "parser.c"
+    break;
+
+  case 15: /* param_list: param  */
+#line 91 "parser.y"
+{
+    printf("reduced: param_list -> param\n");
+}
+#line 1307 "parser.c"
+    break;
+
+  case 16: /* param: type_specifier ID_TOKEN  */
+#line 97 "parser.y"
+{
+    printf("reduced: param -> type_specifier ID_TOKEN\n");
+}
+#line 1315 "parser.c"
+    break;
+
+  case 17: /* param: type_specifier ID_TOKEN LBRACKET_TOKEN RBRACKET_TOKEN  */
+#line 101 "parser.y"
+{
+    printf("reduced: param -> type_specifier ID_TOKEN LBRACKET_TOKEN RBRACKET_TOKEN\n");
+}
+#line 1323 "parser.c"
+    break;
+
+  case 18: /* compound_decl: LBRACE_TOKEN local_declarations statement_list RBRACE_TOKEN  */
+#line 107 "parser.y"
+{
+    printf("reduced: compound_decl -> LBRACE_TOKEN local_declarations statement_list RBRACE_TOKEN\n");
+}
+#line 1331 "parser.c"
+    break;
+
+  case 19: /* local_declarations: local_declarations var_declaration  */
+#line 113 "parser.y"
+{
+    printf("reduced: local_declarations -> local_declarations var_declaration\n");
+}
+#line 1339 "parser.c"
+    break;
+
+  case 20: /* local_declarations: %empty  */
+#line 117 "parser.y"
+{
+    printf("reduced: local_declarations -> vazio\n");
+}
+#line 1347 "parser.c"
+    break;
+
+  case 21: /* statement_list: statement_list statement  */
+#line 123 "parser.y"
+{
+    printf("reduced: statement_list -> statement_list statement\n");
+}
+#line 1355 "parser.c"
+    break;
+
+  case 22: /* statement_list: %empty  */
+#line 127 "parser.y"
+{
+    printf("reduced: statement_list -> vazio\n");
+}
+#line 1363 "parser.c"
+    break;
+
+  case 23: /* statement: expression_decl  */
+#line 133 "parser.y"
+{
+    printf("reduced: statement -> expression_decl\n");
+}
+#line 1371 "parser.c"
+    break;
+
+  case 24: /* statement: compound_decl  */
+#line 137 "parser.y"
+{
+    printf("reduced: statement -> compound_decl\n");
+}
+#line 1379 "parser.c"
+    break;
+
+  case 25: /* statement: selection_decl  */
+#line 141 "parser.y"
+{
+    printf("reduced: statement -> selection_decl\n");
+}
+#line 1387 "parser.c"
+    break;
+
+  case 26: /* statement: iteration_decl  */
+#line 145 "parser.y"
+{
+    printf("reduced: statement -> iteration_decl\n");
+}
+#line 1395 "parser.c"
+    break;
+
+  case 27: /* statement: return_decl  */
+#line 149 "parser.y"
+{
+    printf("reduced: statement -> return_decl\n");
+}
+#line 1403 "parser.c"
+    break;
+
+  case 28: /* expression_decl: expression SEMICOLON_TOKEN  */
+#line 155 "parser.y"
+{
+    printf("reduced: expression_decl -> expression SEMICOLON_TOKEN\n");
+}
+#line 1411 "parser.c"
+    break;
+
+  case 29: /* expression_decl: SEMICOLON_TOKEN  */
+#line 159 "parser.y"
+{
+    printf("reduced: expression_decl -> SEMICOLON_TOKEN\n");
+}
+#line 1419 "parser.c"
+    break;
+
+  case 30: /* selection_decl: IF_TOKEN LPAREN_TOKEN expression RPAREN_TOKEN statement  */
+#line 165 "parser.y"
+{
+    printf("reduced: selection_decl -> IF_TOKEN LPAREN_TOKEN expression RPAREN_TOKEN statement\n");
+}
+#line 1427 "parser.c"
+    break;
+
+  case 31: /* selection_decl: IF_TOKEN LPAREN_TOKEN expression RPAREN_TOKEN statement ELSE_TOKEN statement  */
+#line 169 "parser.y"
+{
+    printf("reduced: selection_decl -> IF_TOKEN LPAREN_TOKEN expression RPAREN_TOKEN statement ELSE_TOKEN statement\n");
+}
+#line 1435 "parser.c"
+    break;
+
+  case 32: /* iteration_decl: WHILE_TOKEN LPAREN_TOKEN expression RPAREN_TOKEN statement  */
+#line 175 "parser.y"
+{
+    printf("reduced: iteration_decl -> WHILE_TOKEN LPAREN_TOKEN expression RPAREN_TOKEN statement\n");
+}
+#line 1443 "parser.c"
+    break;
+
+  case 33: /* return_decl: RETURN_TOKEN SEMICOLON_TOKEN  */
+#line 181 "parser.y"
+{
+    printf("reduced: return_decl -> RETURN_TOKEN SEMICOLON_TOKEN\n");
+}
+#line 1451 "parser.c"
+    break;
+
+  case 34: /* return_decl: RETURN_TOKEN expression SEMICOLON_TOKEN  */
+#line 185 "parser.y"
+{
+    printf("reduced: return_decl -> RETURN_TOKEN expression SEMICOLON_TOKEN\n");
+}
+#line 1459 "parser.c"
+    break;
+
+  case 35: /* expression: var ASSIGN_TOKEN expression  */
+#line 191 "parser.y"
+{
+    printf("reduced: expression -> var ASSIGN_TOKEN expression\n");
+}
+#line 1467 "parser.c"
+    break;
+
+  case 36: /* expression: simple_expression  */
+#line 195 "parser.y"
+{
+    printf("reduced: expression -> simple_expression\n");
+}
+#line 1475 "parser.c"
+    break;
+
+  case 37: /* var: ID_TOKEN  */
+#line 201 "parser.y"
+{
+    printf("reduced: var -> ID_TOKEN\n");
+}
+#line 1483 "parser.c"
+    break;
+
+  case 38: /* var: ID_TOKEN LBRACKET_TOKEN expression RBRACKET_TOKEN  */
+#line 205 "parser.y"
+{
+    printf("reduced: var -> ID_TOKEN LBRACKET_TOKEN expression RBRACKET_TOKEN\n");
+}
+#line 1491 "parser.c"
+    break;
+
+  case 39: /* simple_expression: sum_expression relational sum_expression  */
+#line 211 "parser.y"
+{
+    printf("reduced: simple_expression -> sum_expression relational sum_expression\n");
+}
+#line 1499 "parser.c"
+    break;
+
+  case 40: /* simple_expression: sum_expression  */
+#line 215 "parser.y"
+{
+    printf("reduced: simple_expression -> sum_expression\n");
+}
+#line 1507 "parser.c"
+    break;
+
+  case 41: /* relational: LT_TOKEN  */
+#line 221 "parser.y"
+{
+    printf("reduced: relational -> LT_TOKEN\n");
+}
+#line 1515 "parser.c"
+    break;
+
+  case 42: /* relational: LTE_TOKEN  */
+#line 225 "parser.y"
+{
+    printf("reduced: relational -> LTE_TOKEN\n");
+}
+#line 1523 "parser.c"
+    break;
+
+  case 43: /* relational: GT_TOKEN  */
+#line 229 "parser.y"
+{
+    printf("reduced: relational -> GT_TOKEN\n");
+}
+#line 1531 "parser.c"
+    break;
+
+  case 44: /* relational: GTE_TOKEN  */
+#line 233 "parser.y"
+{
+    printf("reduced: relational -> GTE_TOKEN\n");
+}
+#line 1539 "parser.c"
+    break;
+
+  case 45: /* relational: EQ_TOKEN  */
+#line 237 "parser.y"
+{
+    printf("reduced: relational -> EQ_TOKEN\n");
+}
+#line 1547 "parser.c"
+    break;
+
+  case 46: /* relational: NEQ_TOKEN  */
+#line 241 "parser.y"
+{
+    printf("reduced: relational -> NEQ_TOKEN\n");
+}
+#line 1555 "parser.c"
+    break;
+
+  case 47: /* sum_expression: sum_expression sum term  */
+#line 247 "parser.y"
+{
+    printf("reduced: sum_expression -> sum_expression sum term\n");
+}
+#line 1563 "parser.c"
+    break;
+
+  case 48: /* sum_expression: term  */
+#line 251 "parser.y"
+{
+    printf("reduced: sum_expression -> term\n");
+}
+#line 1571 "parser.c"
+    break;
+
+  case 49: /* sum: PLUS_TOKEN  */
+#line 257 "parser.y"
+{
+    printf("reduced: sum -> PLUS_TOKEN\n");
+}
+#line 1579 "parser.c"
+    break;
+
+  case 50: /* sum: MINUS_TOKEN  */
+#line 261 "parser.y"
+{
+    printf("reduced: sum -> MINUS_TOKEN\n");
+}
+#line 1587 "parser.c"
+    break;
+
+  case 51: /* term: term mult factor  */
+#line 267 "parser.y"
+{
+    printf("reduced: term -> term mult factor\n");
+}
+#line 1595 "parser.c"
+    break;
+
+  case 52: /* term: factor  */
+#line 271 "parser.y"
+{
+    printf("reduced: term -> factor\n");
+}
+#line 1603 "parser.c"
+    break;
+
+  case 53: /* mult: MULTIPLY_TOKEN  */
+#line 277 "parser.y"
+{
+    printf("reduced: mult -> MULTIPLY_TOKEN\n");
+}
+#line 1611 "parser.c"
+    break;
+
+  case 54: /* mult: DIVIDE_TOKEN  */
+#line 281 "parser.y"
+{
+    printf("reduced: mult -> DIVID_TOKEN\n");
+}
+#line 1619 "parser.c"
+    break;
+
+  case 55: /* factor: LPAREN_TOKEN expression RPAREN_TOKEN  */
+#line 287 "parser.y"
+{
+    printf("reduced: factor -> LPAREN_TOKEN expression RPAREN_TOKEN\n");
+}
+#line 1627 "parser.c"
+    break;
+
+  case 56: /* factor: var  */
+#line 291 "parser.y"
+{
+    printf("reduced: factor -> var\n");
+}
+#line 1635 "parser.c"
+    break;
+
+  case 57: /* factor: activation  */
+#line 295 "parser.y"
+{
+    printf("reduced: factor -> activation\n");
+}
+#line 1643 "parser.c"
+    break;
+
+  case 58: /* factor: NUM_TOKEN  */
+#line 299 "parser.y"
+{
+    printf("reduced: factor -> NUM_TOKEN\n");
+}
+#line 1651 "parser.c"
+    break;
+
+  case 59: /* activation: ID_TOKEN LPAREN_TOKEN args RPAREN_TOKEN  */
+#line 305 "parser.y"
+{
+    printf("reduced: activation -> ID_TOKEN LPAREN_TOKEN args RPAREN_TOKEN\n");
+}
+#line 1659 "parser.c"
+    break;
+
+  case 60: /* args: arg_list  */
+#line 311 "parser.y"
+{
+    printf("reduced: args -> arg_list\n");
+}
+#line 1667 "parser.c"
+    break;
+
+  case 61: /* args: %empty  */
+#line 315 "parser.y"
+{
+    printf("reduced: args -> vazio\n");
+}
+#line 1675 "parser.c"
+    break;
+
+  case 62: /* arg_list: arg_list COMMA_TOKEN expression  */
+#line 321 "parser.y"
+{
+    printf("reduced: arg_list -> arg_list COMMA_TOKEN expression\n");
+}
+#line 1683 "parser.c"
+    break;
+
+  case 63: /* arg_list: expression  */
+#line 325 "parser.y"
+{
+    printf("reduced: arg_list -> expression\n");
+}
+#line 1691 "parser.c"
+    break;
+
+
+#line 1695 "parser.c"
 
       default: break;
     }
@@ -1388,13 +1884,13 @@ yyreturnlab:
   return yyresult;
 }
 
-#line 172 "parser.y"
+#line 330 "parser.y"
 
 
 void yyerror(char *s)
 {
     printf("\n%s: invalid lexeme!\n", s);
-    printf("Exiting...\n");
+    printf("exiting...\n");
     exit(1);
 }
 
