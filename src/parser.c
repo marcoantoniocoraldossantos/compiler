@@ -143,7 +143,7 @@ enum yysymbol_kind_t
   YYSYMBOL_decl_list = 34,                 /* decl_list  */
   YYSYMBOL_declaration = 35,               /* declaration  */
   YYSYMBOL_var_declaration = 36,           /* var_declaration  */
-  YYSYMBOL_type_specIF_TOKENier = 37,      /* type_specIF_TOKENier  */
+  YYSYMBOL_type_specifier = 37,            /* type_specifier  */
   YYSYMBOL_fun_declaration = 38,           /* fun_declaration  */
   YYSYMBOL_params = 39,                    /* params  */
   YYSYMBOL_param_list = 40,                /* param_list  */
@@ -586,7 +586,7 @@ static const char *const yytname[] =
   "LPAREN_TOKEN", "RPAREN_TOKEN", "LBRACKET_TOKEN", "RBRACKET_TOKEN",
   "LBRACE_TOKEN", "RBRACE_TOKEN", "ID_TOKEN", "NUM_TOKEN", "UNKNOW_TOKEN",
   "ERROR_TOKEN", "$accept", "program", "decl_list", "declaration",
-  "var_declaration", "type_specIF_TOKENier", "fun_declaration", "params",
+  "var_declaration", "type_specifier", "fun_declaration", "params",
   "param_list", "param", "compound_decl", "local_declarations",
   "statement_list", "statement", "expression_decl", "selection_decl",
   "iteration_decl", "return_decl", "expression", "var",
@@ -1407,7 +1407,7 @@ int yylex()
         return token->type;
     else
         printf("lexycal error\n");
-        
+
     return token->type;
 }
 
