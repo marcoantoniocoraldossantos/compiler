@@ -47,7 +47,6 @@ void print_ast(ast_node_t *root)
     print_ast_util(root, 0);
 }
 
-
 void free_ast(ast_node_t* node) 
 {
     if (node == NULL) 

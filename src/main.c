@@ -31,9 +31,12 @@ int main(int argc, char *argv[])
 
     //ast_root = parse();
 
-    token = get_next_token();
-    process_token(token, &buffer, ast_root);
-
+    //token = get_next_token();
+    //process_token(token, &buffer, ast_root);
+    //free_token(token);
+    //token = get_next_token();
+    //process_token(token, &buffer, ast_root);
+    //free_token(token);
 
     close_file(input_file); // close the file
     deallocate_buffer(&buffer); // deallocate the buffer
