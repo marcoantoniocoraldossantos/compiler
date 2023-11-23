@@ -29,6 +29,9 @@ int main(int argc, char *argv[])
     //     free_token(token); // free token memory
     // }
 
+    //ast_tree = create_sample_tree();
+    //print_ast(ast_tree);
+
     printf("sintatic analysis:\n");
     ast_tree = parse();
     //print_ast(ast_tree);

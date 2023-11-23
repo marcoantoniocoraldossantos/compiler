@@ -100,3 +100,45 @@ void add_sibling(ast_node_t *node, ast_node_t *sibling)
     }
     node->sibling = sibling;
 }
+
+ast_node_t* new_node(node_kind_t kind, const char* lexeme) {
+    ast_node_t* new_node = (ast_node_t*)malloc(sizeof(ast_node_t));
+    if (new_node != NULL) {
+        new_node->node_kind = kind;
+        new_node->lineno = 1;
+        strcpy(new_node->lexeme, lexeme);
+        new_node->sibling = NULL;
+        for (int i = 0; i < MAXCHILDREN; ++i) {
+            new_node->child[i] = NULL;
+        }
+    }
+    return new_node;
+}
+
+ast_node_t* create_sample_tree() {
+    ast_node_t* root = new_node(PROGRAM_NODE, "PROGRAM");
+    ast_node_t* declaration1 = new_node(DECLARATION_NODE, "DECLARATION_1");
+    ast_node_t* declaration2 = new_node(DECLARATION_NODE, "DECLARATION_2");
+    ast_node_t* statement = new_node(STATEMENT_NODE, "STATEMENT");
+    ast_node_t* expression = new_node(EXPRESSION_NODE, "EXPRESSION");
+
+    root->child[0] = declaration1;
+    root->child[1] = declaration2;
+    declaration1->sibling = declaration2;
+    declaration2->sibling = statement;
+    statement->sibling = expression;
+
+    ast_node_t* varDeclaration = new_node(DECLARATION_NODE, "VAR_DECLARATION");
+    declaration1->child[0] = varDeclaration;
+
+    ast_node_t* funDeclaration = new_node(DECLARATION_NODE, "FUN_DECLARATION");
+    declaration2->child[0] = funDeclaration;
+
+    ast_node_t* assignment = new_node(EXPRESSION_NODE, "ASSIGNMENT");
+    statement->child[0] = assignment;
+
+    ast_node_t* binaryExpression = new_node(EXPRESSION_NODE, "BINARY_EXPRESSION");
+    expression->child[0] = binaryExpression;
+
+    return root;
+}

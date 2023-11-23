@@ -1914,7 +1914,7 @@ int yylex()
         return ERROR_TOKEN; // Retornando um token de erro especial
     }
 
-    printf("will return token: %d\n", token_to_return);
+    //printf("will return token: %d\n", token_to_return);
     return token_to_return;
 }
 
