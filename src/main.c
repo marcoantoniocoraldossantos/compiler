@@ -23,13 +23,13 @@ int main(int argc, char *argv[])
     //     token_t *token = get_next_token();
         
     //     // if token is not null, process it
-    //     if (token != NULL) process_token(token, &buffer, ast_root);
+    //     if (token != NULL) process_token(token, &buffer);
     //     else break;
 
     //     free_token(token); // free token memory
     // }
 
-    ast_root = parse();
+    ast_root = parse(ast_root);
 
     close_file(input_file); // close the file
     deallocate_buffer(&buffer); // deallocate the buffer

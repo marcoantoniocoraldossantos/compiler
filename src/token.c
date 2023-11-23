@@ -66,24 +66,26 @@ token_t* get_next_token()
 }
 
 // function to process the token
-void process_token(token_t *token, buffer_t *buffer, ast_node_t *ast_root) 
+int process_token(token_t *token) 
 {
     if (token == NULL) 
     {
-        return;
+        return 0;
     }
 
     if (token->type != ERROR && token->type != UNKNOWN) 
     {
         print_token(token);
-        return;
+        return 1;
     } 
     else if (token->type == ERROR) 
     {
-        lex_error(token, buffer, token->line, buffer->position);
-
+        lex_error(token, global_buffer, token->line, global_buffer->position);
+        return 0;
         // TODO: implement other types of errors
     }
+
+    return 0;
 }
 
 // function that returns the token type

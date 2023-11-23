@@ -2,7 +2,7 @@
 
     #include "libraries.h"
 
-    ast_node_t parse(FILE *input_file);
+    ast_node_t parse(ast_node_t ast_root);
 
     int yylex();
     int yyparse();
@@ -36,17 +36,17 @@ declaration : var_declaration
             ;
 
 //4
-var_declaration : type_specIF_TOKENier ID_TOKEN SEMICOLON_TOKEN
-                | type_specIF_TOKENier ID_TOKEN LBRACKET_TOKEN NUM_TOKEN RBRACKET_TOKEN SEMICOLON_TOKEN
+var_declaration : type_specifier ID_TOKEN SEMICOLON_TOKEN
+                | type_specifier ID_TOKEN LBRACKET_TOKEN NUM_TOKEN RBRACKET_TOKEN SEMICOLON_TOKEN
                 ;
 
 //5
-type_specIF_TOKENier : INT_TOKEN
+type_specifier : INT_TOKEN
                | VOID_TOKEN
                ;
 
 //6
-fun_declaration : type_specIF_TOKENier ID_TOKEN LPAREN_TOKEN params RPAREN_TOKEN compound_decl
+fun_declaration : type_specifier ID_TOKEN LPAREN_TOKEN params RPAREN_TOKEN compound_decl
                 ;
 
 //7
@@ -60,8 +60,8 @@ param_list : param_list COMMA_TOKEN param
            ;
 
 //9
-param : type_specIF_TOKENier ID_TOKEN
-      | type_specIF_TOKENier ID_TOKEN LBRACKET_TOKEN RBRACKET_TOKEN
+param : type_specifier ID_TOKEN
+      | type_specifier ID_TOKEN LBRACKET_TOKEN RBRACKET_TOKEN
       ;
 
 //10
@@ -182,14 +182,17 @@ int yylex()
 {
     token_t *token;
     token = get_next_token();
-    printf("token: %d lexeme: %s\n", token->type, token->lexeme);
+    int flag = process_token(token);
+    if(flag == 1)
+        return token->type;
+    else
+        printf("lexycal error\n");
+
     return token->type;
 }
 
-ast_node_t parse(FILE *input_file)
-{    
-    ast_node_t ast_root;
-   
+ast_node_t parse(ast_node_t ast_root)
+{       
     yyparse();
 
     return ast_root;

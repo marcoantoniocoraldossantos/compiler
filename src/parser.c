@@ -72,7 +72,7 @@
 
     #include "libraries.h"
 
-    ast_node_t parse(FILE *input_file);
+    ast_node_t parse(ast_node_t ast_root);
 
     int yylex();
     int yyparse();
@@ -1402,14 +1402,17 @@ int yylex()
 {
     token_t *token;
     token = get_next_token();
-    printf("token: %d lexeme: %s\n", token->type, token->lexeme);
+    int flag = process_token(token);
+    if(flag == 1)
+        return token->type;
+    else
+        printf("lexycal error\n");
+        
     return token->type;
 }
 
-ast_node_t parse(FILE *input_file)
-{    
-    ast_node_t ast_root;
-   
+ast_node_t parse(ast_node_t ast_root)
+{       
     yyparse();
 
     return ast_root;

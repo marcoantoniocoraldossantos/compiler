@@ -1,4 +1,4 @@
-/* comentario */ola tudo bem? 
+/* comentario */% ola tudo bem? 
 sim tudo bem! e com voce ?
 talvez.mas sei la!+ que doidera
 @marco #compiladores 100% !A

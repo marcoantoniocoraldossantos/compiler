@@ -71,7 +71,7 @@ void free_token(token_t *token);
 
 // analyze functions
 token_t* get_next_token();
-void process_token(token_t *token, buffer_t *buffer, ast_node_t *ast_root);
+int process_token(token_t *token);
 
 token_type_t get_token_type(bst_node_t* root, char *lexeme);
 token_type_t identify_lexeme(bst_node_t* root, char *lexeme);
