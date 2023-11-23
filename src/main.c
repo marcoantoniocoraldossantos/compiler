@@ -31,9 +31,9 @@ int main(int argc, char *argv[])
 
     printf("sintatic analysis:\n");
     ast_tree = parse(ast_tree);
-    printf("ast tree:\n");
     //print_ast(ast_tree);
 
+    printf("freeing memory...\n");
     close_file(input_file); // close the file
     deallocate_buffer(&buffer); // deallocate the buffer
     free_bst(bst_tree); // deallocate the bst
