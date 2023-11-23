@@ -64,3 +64,24 @@ void free_ast(ast_node_t* node)
 
     free(node);
 }
+
+void add_child(ast_node_t *parent, ast_node_t *child) 
+{
+    if (parent == NULL || child == NULL)
+    {
+        // Tratamento de erro ou saída antecipada, se necessário
+        return;
+    }
+
+    int i;
+    for (i = 0; i < MAXCHILDREN; ++i) 
+    {
+        if (parent->child[i] == NULL) 
+        {
+            parent->child[i] = child;
+            return; // Adicionou o filho com sucesso
+        }
+    }
+    // Se chegou até aqui, não foi possível adicionar o filho
+    // Tratamento de erro, se necessário
+}

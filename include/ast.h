@@ -39,7 +39,28 @@ typedef struct ast_node_t
     int lineno;
     char lexeme[MAXTOKENLEN];
     node_kind_t node_kind;
-    /*
+    
+} ast_node_t;
+
+ast_node_t *initialize_ast();
+void print_ast(ast_node_t *root);
+void print_ast_util(ast_node_t *node, int level);
+void free_ast(ast_node_t *root);
+void add_child(ast_node_t *parent, ast_node_t *child);
+void add_sibling(ast_node_t *node, ast_node_t *sibling);
+
+
+
+
+
+// void add_child(ast_node_t *parent, ast_node_t *child);
+// void add_sibling(ast_node_t *node, ast_node_t *sibling);
+// void add_sample_nodes();
+
+#endif /* AST_H */
+
+
+/*
     union {
         statement_kind_t statement;
         expression_kind_t expression;
@@ -52,14 +73,3 @@ typedef struct ast_node_t
     } attr;
     expression_type_t expr_type;
     */
-} ast_node_t;
-
-ast_node_t *initialize_ast();
-void print_ast(ast_node_t *root);
-void print_ast_util(ast_node_t *node, int level);
-void free_ast(ast_node_t *root);
-// void add_child(ast_node_t *parent, ast_node_t *child);
-// void add_sibling(ast_node_t *node, ast_node_t *sibling);
-// void add_sample_nodes();
-
-#endif /* AST_H */

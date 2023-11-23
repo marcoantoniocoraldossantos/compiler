@@ -341,21 +341,23 @@ int yylex()
     token_t *token = get_next_token();
 
     if (token == NULL) {
-        //printf("lexical error: NULL token\n");
-        return ERROR_TOKEN; // Retornando um token de erro especial
+        // EOF: Retorna um token especial para indicar o fim do arquivo
+        printf("lexical error: unexpected EOF\n");
+        return YYEOF;
     }
 
     int flag = process_token(token);
     int token_to_return = convert_token(token->type);  
     
-
     if (flag != 1) {
         printf("lexical error: invalid token\n");
         return ERROR_TOKEN; // Retornando um token de erro especial
     }
 
+    //printf("will return token: %d\n", token_to_return);
     return token_to_return;
 }
+
 
 
 

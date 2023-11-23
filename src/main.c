@@ -8,11 +8,11 @@ int main(int argc, char *argv[])
 
     FILE *input_file = open_file(argv[1], "r"); // open the file in read mode
     buffer_t buffer = initialize_buffer(256); // initialize the buffer
-    bst_node_t *bst_root = initialize_bst(); // initialize the bst
-    ast_node_t *ast_root = initialize_ast(); // initialize the ast
+    bst_node_t *bst_tree = initialize_bst(); // initialize the bst
+    ast_node_t *ast_tree = initialize_ast(); // initialize the ast
     token_t *token = NULL; // initialize the token
 
-    save_global_variables(input_file, &buffer, bst_root); // save the global variables
+    save_global_variables(input_file, &buffer, bst_tree); // save the global variables
 
     // while(1)
     // {
@@ -29,12 +29,15 @@ int main(int argc, char *argv[])
     //     free_token(token); // free token memory
     // }
 
-    ast_root = parse(ast_root);
+    printf("sintatic analysis:\n");
+    ast_tree = parse(ast_tree);
+    printf("ast tree:\n");
+    //print_ast(ast_tree);
 
     close_file(input_file); // close the file
     deallocate_buffer(&buffer); // deallocate the buffer
-    free_bst(bst_root); // deallocate the bst
-    free_ast(ast_root); // deallocate the ast
+    free_bst(bst_tree); // deallocate the bst
+    //free_ast(ast_tree); // deallocate the ast
 
     return 0;
 }
