@@ -338,21 +338,26 @@ void yyerror(char *s)
 
 int yylex()
 {
-    token_t *token;
-    token = get_next_token();
+    token_t *token = get_next_token();
+
+    if (token == NULL) {
+        //printf("lexical error: NULL token\n");
+        return ERROR_TOKEN; // Retornando um token de erro especial
+    }
+
     int flag = process_token(token);
     int token_to_return = convert_token(token->type);  
-    printf("token to return: %d\n", token_to_return);
+    
 
-    if(flag == 1)
-        return token->type;
-    else
-        printf("lexycal error\n");
+    if (flag != 1) {
+        printf("lexical error: invalid token\n");
+        return ERROR_TOKEN; // Retornando um token de erro especial
+    }
 
-
-
-    return token->type;
+    return token_to_return;
 }
+
+
 
 ast_node_t parse(ast_node_t ast_root)
 {       

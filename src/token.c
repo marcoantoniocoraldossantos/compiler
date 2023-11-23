@@ -75,7 +75,7 @@ int process_token(token_t *token)
 
     if (token->type != ERROR && token->type != UNKNOWN) 
     {
-        print_token(token);
+        //print_token(token);
         return 1;
     } 
     else if (token->type == ERROR) 
