@@ -14,6 +14,7 @@
 // arguments functions
 void verify_arguments(int argc, char *argv[]);
 void save_arguments(int argc, char **argv);
+void save_global_variables(FILE *input_file, buffer_t *buffer, bst_node_t *bst_root);
 
 // functions to open and close files
 FILE *open_file(char *filename, char *mode);

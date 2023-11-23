@@ -48,19 +48,19 @@ void free_token(token_t *token)
 }
 
 // function to return the next token of the file
-token_t* get_next_token(FILE *input_file, buffer_t *buffer, bst_node_t *bst_root) 
+token_t* get_next_token() 
 {
     // fill the buffer 
-    if (buffer->data[buffer->position] == '\0') 
+    if (global_buffer->data[global_buffer->position] == '\0') 
     {
-        if (!fill_buffer(input_file, buffer)) 
+        if (!fill_buffer(global_input_file, global_buffer)) 
         {
             return NULL;  // end of file
         }
     }
 
     token_t *token = initialize_token(); // initialize the token
-    token = lexical_analyzer(input_file, buffer, bst_root, token); // call the lexical analyzer to get what type of token it is
+    token = lexical_analyzer(global_input_file, global_buffer, global_bst_tree, token); // call the lexical analyzer to get what type of token it is
 
     return token;  // return the token
 }
@@ -68,6 +68,11 @@ token_t* get_next_token(FILE *input_file, buffer_t *buffer, bst_node_t *bst_root
 // function to process the token
 void process_token(token_t *token, buffer_t *buffer, ast_node_t *ast_root) 
 {
+    if (token == NULL) 
+    {
+        return;
+    }
+
     if (token->type != ERROR && token->type != UNKNOWN) 
     {
         print_token(token);

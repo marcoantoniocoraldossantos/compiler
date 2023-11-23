@@ -70,7 +70,7 @@ void print_token(token_t *token);
 void free_token(token_t *token);
 
 // analyze functions
-token_t* get_next_token(FILE *input_file, buffer_t *buffer, bst_node_t *bst_root);
+token_t* get_next_token();
 void process_token(token_t *token, buffer_t *buffer, ast_node_t *ast_root);
 
 token_type_t get_token_type(bst_node_t* root, char *lexeme);
