@@ -1,12 +1,5 @@
 #include "libraries.h"
 
-// global variables of the arguments
-char **global_argv = NULL;
-int global_argc = 0;
-FILE *global_input_file = NULL;
-buffer_t *global_buffer = NULL;
-bst_node_t *global_bst_tree = NULL;
-
 // arguments functions
 void verify_arguments(int argc, char *argv[]) 
 {

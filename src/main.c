@@ -1,5 +1,15 @@
 // main function
 #include "libraries.h"
+#include "globals.h"
+
+// global variables
+char **global_argv = NULL;
+int global_argc = 0;
+FILE *global_input_file = NULL;
+buffer_t *global_buffer = NULL;
+FILE *global_input_file;
+bst_node_t *global_bst_tree;
+ast_node_t *global_ast_tree;
 
 int main(int argc, char *argv[]) 
 {
@@ -13,6 +23,7 @@ int main(int argc, char *argv[])
     token_t *token = NULL; // initialize the token
 
     save_global_variables(input_file, &buffer, bst_tree); // save the global variables
+    global_ast_tree = ast_tree; // save the ast tree in the global variable
 
     // while(1)
     // {
@@ -29,18 +40,17 @@ int main(int argc, char *argv[])
     //     free_token(token); // free token memory
     // }
 
-    //ast_tree = create_sample_tree();
-    //print_ast(ast_tree);
+    printf("\nsintatic analysis:\n");
+    parse();
 
-    printf("sintatic analysis:\n");
-    ast_tree = parse();
-    //print_ast(ast_tree);
+    printf("\n\nAST FINAL TREE:\n");
+    print_ast(global_ast_tree);
 
     printf("freeing memory...\n");
     close_file(input_file); // close the file
     deallocate_buffer(&buffer); // deallocate the buffer
     free_bst(bst_tree); // deallocate the bst
-    //free_ast(ast_tree); // deallocate the ast
+    free_ast(ast_tree); // deallocate the ast
 
     return 0;
 }

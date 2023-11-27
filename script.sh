@@ -18,8 +18,6 @@ mv parser.h ../include/
 # going back to the original directory
 cd "$INITIAL_DIR" || exit
 
-
-
 # going back to the original directory
 cd "$INITIAL_DIR" || exit
 
@@ -28,3 +26,4 @@ echo "calling makefile..."
 make -s
 
 echo "compiled successfully!"
+./compiler test/example1.txt

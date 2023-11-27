@@ -22,7 +22,7 @@ int minloc(int a[], int low, int high)
 }
 
 
-void sort(int a[], in low, int high)
+void sort(int a[], int low, int high)
 { 
     int i; int k; 
     i = low;

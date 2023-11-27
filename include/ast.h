@@ -49,22 +49,5 @@ void free_ast(ast_node_t *root);
 void add_child(ast_node_t *parent, ast_node_t *child);
 void add_sibling(ast_node_t *node, ast_node_t *sibling);
 ast_node_t* new_node(node_kind_t kind, const char* lexeme);
-ast_node_t* create_sample_tree();
-
 
 #endif /* AST_H */
-
-
-/*
-    union {
-        statement_kind_t statement;
-        expression_kind_t expression;
-        expression_type_t type;
-    } kind;
-    union {
-        token_type_t token_type;
-        int val;
-        char *name;
-    } attr;
-    expression_type_t expr_type;
-    */
