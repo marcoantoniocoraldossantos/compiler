@@ -26,4 +26,4 @@ echo "calling makefile..."
 make -s
 
 echo "compiled successfully!"
-./compiler test/example1.txt
+./compiler test/example2.txt

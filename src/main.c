@@ -44,6 +44,7 @@ int main(int argc, char *argv[])
     parse();
 
     printf("\n\nAST FINAL TREE:\n");
+    global_ast_tree = create_sample_tree();
     print_ast(global_ast_tree);
 
     printf("freeing memory...\n");

@@ -38,8 +38,12 @@ void print_ast_util(ast_node_t *node, int level)
         print_ast_util(node->child[i], level + 1);
     }
 
-    print_ast_util(node->sibling, level);
+    if (node->child[0] != NULL) 
+    {
+        print_ast_util(node->child[0]->sibling, level);
+    }
 }
+
 
 void print_ast(ast_node_t *root) 
 {
@@ -115,7 +119,8 @@ ast_node_t* new_node(node_kind_t kind, const char* lexeme) {
     return new_node;
 }
 
-ast_node_t* create_sample_tree() {
+ast_node_t* create_sample_tree() 
+{
     ast_node_t* root = new_node(PROGRAM_NODE, "PROGRAM");
     ast_node_t* declaration1 = new_node(DECLARATION_NODE, "DECLARATION_1");
     ast_node_t* declaration2 = new_node(DECLARATION_NODE, "DECLARATION_2");
@@ -123,7 +128,6 @@ ast_node_t* create_sample_tree() {
     ast_node_t* expression = new_node(EXPRESSION_NODE, "EXPRESSION");
 
     root->child[0] = declaration1;
-    root->child[1] = declaration2;
     declaration1->sibling = declaration2;
     declaration2->sibling = statement;
     statement->sibling = expression;

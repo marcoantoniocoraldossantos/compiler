@@ -1933,6 +1933,6 @@ void parse()
 {       
     yyparse();
 
-    printf("\n\ntree to return from bison\n");
-    print_ast(global_ast_tree);
+    //printf("\n\ntree to return from bison\n");
+    //print_ast(global_ast_tree);
 }
