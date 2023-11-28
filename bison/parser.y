@@ -132,7 +132,8 @@
     compound_decl : LBRACE_TOKEN local_declarations statement_list RBRACE_TOKEN
     {
         //printf("reduced: compound_decl -> LBRACE_TOKEN local_declarations statement_list RBRACE_TOKEN\n");
-    
+        add_sibling($2, $3);
+        $$ = $2;
     }
     ;
 
