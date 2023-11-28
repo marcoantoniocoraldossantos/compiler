@@ -226,14 +226,27 @@
     | RETURN_TOKEN expression SEMICOLON_TOKEN
     {
         //printf("reduced: return_decl -> RETURN_TOKEN expression SEMICOLON_TOKEN\n");
-    
+        ast_node_t* return_node = new_ast_node(STATEMENT_NODE, global_line_number, global_lexeme, RETURN_STMT, NOT_EXP, NO_TYPE);
+        print_ast(return_node);
+        printf("return lexeme: %s line number: %d\n", return_node->lexeme, return_node->lineno);
+        //add_child(return_node, $2);
+        //$$ = return_node;
+
+        free_ast(return_node);
     }
     ;
 
     expression : var ASSIGN_TOKEN expression
     {
         //printf("reduced: expression -> var ASSIGN_TOKEN expression\n");
-    
+        ast_node_t* assign_node = new_ast_node(EXPRESSION_NODE, global_line_number, global_lexeme, NOT_STMT, OP_EXP, NO_TYPE);
+        print_ast(assign_node);
+        printf("assign lexeme: %s line number: %d\n", assign_node->lexeme, assign_node->lineno);
+        //add_child(assign_node, $1);
+        //add_child(assign_node, $3);
+        //$$ = assign_node;
+
+        free_ast(assign_node);
     }
     | simple_expression
     {
