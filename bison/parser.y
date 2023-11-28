@@ -6,6 +6,10 @@
     char global_lexeme[64];
     token_type_t global_token_type;
 
+    #define MAX_TOKENS 100000
+    token_t* token_list[MAX_TOKENS];
+    int token_count = 0;
+
     void parse();
 
     int yylex();
@@ -364,17 +368,27 @@ int yylex()
     if (flag != 1) 
     {
         printf("lexical error: invalid token\n");
+        free(token);
         return ERROR_TOKEN; // 
     }
+
+    token_list[token_count++] = token; 
+    //free_token(token);
 
     //printf("will return token: %d\n", token_to_return);
     return token_to_return;
 }
 
-void parse()
-{       
-    yyparse();
+void free_tokens() 
+{
+    for (int i = 0; i < token_count; ++i) 
+    {
+        free_token(token_list[i]);
+    }
+}
 
-    //printf("\n\ntree to return from bison\n");
-    //print_ast(global_ast_tree);
+void parse() 
+{ 
+    yyparse(); 
+    free_tokens();    
 }
