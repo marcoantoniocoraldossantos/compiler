@@ -1,4 +1,5 @@
 %{
+    #define YYSTYPE ast_node_t*
 
     #include "libraries.h"
 
@@ -18,12 +19,6 @@
 
 %}
 
-%union {
-    token_t* token;
-    ast_node_t* ast_node;
-    int intValue;
-}
-
 %expect 1
 
 %token ELSE_TOKEN IF_TOKEN INT_TOKEN RETURN_TOKEN VOID_TOKEN WHILE_TOKEN
@@ -33,37 +28,6 @@
 %token LPAREN_TOKEN RPAREN_TOKEN LBRACKET_TOKEN RBRACKET_TOKEN LBRACE_TOKEN RBRACE_TOKEN
 %token ID_TOKEN NUM_TOKEN
 %token UNKNOW_TOKEN ERROR_TOKEN
-
-%type <ast_node> program
-%type <ast_node> decl_list
-%type <ast_node> declaration
-%type <ast_node> var_declaration
-%type <ast_node> type_specifier
-%type <ast_node> fun_declaration
-%type <ast_node> params
-%type <ast_node> param_list
-%type <ast_node> param
-%type <ast_node> compound_decl
-%type <ast_node> local_declarations
-%type <ast_node> statement_list
-%type <ast_node> statement
-%type <ast_node> expression_decl
-%type <ast_node> selection_decl
-%type <ast_node> iteration_decl
-%type <ast_node> return_decl
-%type <ast_node> expression
-%type <ast_node> var
-%type <ast_node> simple_expression
-%type <ast_node> relational
-%type <ast_node> sum_expression
-%type <ast_node> sum
-%type <ast_node> term
-%type <ast_node> mult
-%type <ast_node> factor
-%type <ast_node> activation
-%type <ast_node> args
-%type <ast_node> arg_list
-
 
 %%
 
@@ -77,6 +41,7 @@
     decl_list : decl_list declaration
     {
         printf("reduced: decl_list -> decl_list declaration\n");
+
     }
     | declaration
     {
@@ -399,7 +364,6 @@
     activation : ID_TOKEN LPAREN_TOKEN args RPAREN_TOKEN
     {
         printf("reduced: activation -> ID_TOKEN LPAREN_TOKEN args RPAREN_TOKEN\n");
-    
     }
     ;
 
@@ -441,6 +405,7 @@ int yylex()
 {
     token_t *token = get_next_token();
 
+
     if (token == NULL) 
     {
         // EOF
@@ -455,7 +420,8 @@ int yylex()
         printf("lexical error: invalid token\n");
         free(token);
         return ERROR_TOKEN; // 
-    }
+    }    
+
 
     token_list[token_count++] = token; 
     //free_token(token);
