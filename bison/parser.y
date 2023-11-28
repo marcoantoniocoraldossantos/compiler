@@ -337,7 +337,12 @@
     mult : MULTIPLY_TOKEN
     {
         //printf("reduced: mult -> MULTIPLY_TOKEN\n");
-    
+        ast_node_t* multiply_node = new_ast_node(EXPRESSION_NODE, global_line_number, global_lexeme, NOT_STMT, OP_EXP, NO_TYPE);
+        print_ast(multiply_node);
+        printf("multiply lexeme: %s line number: %d\n", multiply_node->lexeme, multiply_node->lineno);
+        //$$ = multiply_node;
+
+        free_ast(multiply_node);
     }
     | DIVIDE_TOKEN
     {
