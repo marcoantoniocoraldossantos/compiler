@@ -11,6 +11,7 @@
         "stdbool.h": "c",
         "arguments.h": "c",
         "lexer.h": "c",
-        "libraries.h": "c"
+        "libraries.h": "c",
+        "type_traits": "c"
     }
 }

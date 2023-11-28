@@ -30,4 +30,3 @@ make -s
 echo "compiled successfully!"
 
 valgrind --leak-check=full --show-leak-kinds=all ./compiler test/example1.txt
-valgrind --leak-check=full --show-leak-kinds=all ./compiler test/example2.txt

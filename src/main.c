@@ -43,8 +43,7 @@ int main(int argc, char *argv[])
     printf("\nsintatic analysis:\n");
     parse();
 
-    printf("\n\nAST FINAL TREE:\n");
-    //global_ast_tree = create_sample_tree();
+    printf("\n");
     print_ast(global_ast_tree);
 
     printf("freeing memory...\n");
