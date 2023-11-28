@@ -377,12 +377,12 @@
     args : arg_list
     {
         printf("reduced: args -> arg_list\n");
-
+        $$ = $1;
     }
     | /* vazio */
     {
         printf("reduced: args -> vazio\n");
-
+        $$ = NULL;
     }
     ;
 
