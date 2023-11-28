@@ -221,7 +221,12 @@
     return_decl : RETURN_TOKEN SEMICOLON_TOKEN
     {
         //printf("reduced: return_decl -> RETURN_TOKEN SEMICOLON_TOKEN\n");
-    
+        ast_node_t* return_node = new_ast_node(STATEMENT_NODE, global_line_number, global_lexeme, RETURN_STMT, NOT_EXP, NO_TYPE);
+        print_ast(return_node);
+        printf("return lexeme: %s line number: %d\n", return_node->lexeme, return_node->lineno);
+        //$$ = return_node;
+
+        free_ast(return_node);
     }
     | RETURN_TOKEN expression SEMICOLON_TOKEN
     {
