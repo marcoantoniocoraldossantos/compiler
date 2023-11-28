@@ -325,12 +325,14 @@
     term : term mult factor
     {
         //printf("reduced: term -> term mult factor\n");
-    
+        add_child($2, $1);
+        add_child($2, $3);
+        $$ = $2;
     }
     | factor
     {
         //printf("reduced: term -> factor\n");
-    
+        $$ = $1;
     }
     ;
 
