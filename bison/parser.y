@@ -238,19 +238,30 @@
     | simple_expression
     {
         //printf("reduced: expression -> simple_expression\n");
-    
+        $$ = $1;
     }
     ;
 
     var : ID_TOKEN
     {
         //printf("reduced: var -> ID_TOKEN\n");
-    
+        ast_node_t* id_node = new_ast_node(EXPRESSION_NODE, global_line_number, global_lexeme, NOT_STMT, ID_EXP, NO_TYPE);
+        print_ast(id_node);
+        printf("id lexeme: %s line number: %d\n", id_node->lexeme, id_node->lineno);
+        //$$ = id_node;
+
+        free_ast(id_node);
     }
     | ID_TOKEN LBRACKET_TOKEN expression RBRACKET_TOKEN
     {
         //printf("reduced: var -> ID_TOKEN LBRACKET_TOKEN expression RBRACKET_TOKEN\n");
-    
+        ast_node_t* id_node = new_ast_node(EXPRESSION_NODE, global_line_number, global_lexeme, NOT_STMT, ID_EXP, NO_TYPE);
+        print_ast(id_node);
+        printf("id lexeme: %s line number: %d\n", id_node->lexeme, id_node->lineno);
+        //add_child(id_node, $3);
+        //$$ = id_node;
+
+        free_ast(id_node);
     }
     ;
 
