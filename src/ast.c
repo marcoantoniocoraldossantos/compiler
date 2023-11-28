@@ -101,14 +101,14 @@ void add_sibling(ast_node_t *node, ast_node_t *sibling)
     }
 }
 
-ast_node_t* new_ast_node(node_kind_t kind, const char* lexeme) 
+ast_node_t* new_ast_node(node_kind_t kind, int line, const char* lexeme, statement_kind_t statement, expression_kind_t expression, expression_type_t type)
 {
     ast_node_t* new_node = (ast_node_t*)malloc(sizeof(ast_node_t));
 
     if (new_node != NULL) 
     {
         new_node->node_kind = kind;
-        new_node->lineno = global_line_number;
+        new_node->lineno = line;
 
         strcpy(new_node->lexeme, lexeme);
 
@@ -118,11 +118,11 @@ ast_node_t* new_ast_node(node_kind_t kind, const char* lexeme)
         {
             new_node->child[i] = NULL;
         }
-    }
-    return new_node;
-}
 
-ast_node_t* create_default_node(node_kind_t kind) 
-{
-    return new_ast_node(kind, "default");
+        new_node->kind.statement = statement;
+        new_node->kind.expression = expression;
+        new_node->kind.type = type;
+    }
+    
+    return new_node;
 }
