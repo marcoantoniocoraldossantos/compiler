@@ -214,7 +214,14 @@
     iteration_decl : WHILE_TOKEN LPAREN_TOKEN expression RPAREN_TOKEN statement
     {
         //printf("reduced: iteration_decl -> WHILE_TOKEN LPAREN_TOKEN expression RPAREN_TOKEN statement\n");
-    
+        ast_node_t* while_node = new_ast_node(STATEMENT_NODE, global_line_number, global_lexeme, WHILE_STMT, NOT_EXP, NO_TYPE);
+        print_ast(while_node);
+        printf("while lexeme: %s line number: %d\n", while_node->lexeme, while_node->lineno);
+        //add_child(while_node, $3);
+        //add_child(while_node, $5);
+        //$$ = while_node;
+
+        free_ast(while_node);
     }
     ;
 
