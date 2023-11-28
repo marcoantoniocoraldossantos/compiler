@@ -117,3 +117,11 @@ token_type_t identify_lexeme(bst_node_t* root, char* lexeme)
 {
     return get_token_type(root, lexeme);
 }
+
+void save_token_info(token_t *token)
+{
+    global_line_number = token->line;
+    strcpy(global_lexeme, token->lexeme);
+    global_token_type = token->type;
+}
+

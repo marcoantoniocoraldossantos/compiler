@@ -122,3 +122,7 @@ ast_node_t* new_ast_node(node_kind_t kind, const char* lexeme)
     return new_node;
 }
 
+ast_node_t* create_default_node(node_kind_t kind) 
+{
+    return new_ast_node(kind, "default");
+}

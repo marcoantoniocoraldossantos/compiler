@@ -572,7 +572,7 @@ static const yytype_int16 yyrline[] =
      202,   207,   214,   221,   226,   233,   238,   245,   250,   257,
      262,   269,   274,   279,   284,   289,   294,   301,   306,   313,
      318,   325,   330,   337,   342,   349,   354,   359,   364,   371,
-     377,   383,   389,   394
+     377,   383,   389,   404
 };
 #endif
 
@@ -1208,7 +1208,7 @@ yyreduce:
 #line 35 "parser.y"
     {
         printf("reduced: program -> decl_list\n");
-        global_ast_tree = yyvsp[0];
+        //global_ast_tree = $1;
     }
 #line 1214 "parser.c"
     break;
@@ -1729,7 +1729,7 @@ yyreduce:
 #line 378 "parser.y"
     {
         printf("reduced: args -> arg_list\n");
-    
+
     }
 #line 1735 "parser.c"
     break;
@@ -1738,7 +1738,7 @@ yyreduce:
 #line 383 "parser.y"
     {
         printf("reduced: args -> vazio\n");
-    
+
     }
 #line 1744 "parser.c"
     break;
@@ -1747,22 +1747,39 @@ yyreduce:
 #line 390 "parser.y"
     {
         printf("reduced: arg_list -> arg_list COMMA_TOKEN expression\n");
-    
+        // arg_list have expression as sibling
+        if (yyvsp[-2] != NULL) 
+        {
+            add_sibling(yyvsp[-2], yyvsp[0]);
+            yyval = yyvsp[-2];
+        }
+        else 
+        {
+            yyval = yyvsp[0];
+        }
+
     }
-#line 1753 "parser.c"
+#line 1763 "parser.c"
     break;
 
   case 63: /* arg_list: expression  */
-#line 395 "parser.y"
+#line 405 "parser.y"
     {
         printf("reduced: arg_list -> expression\n");
-    
+        yyval = yyvsp[0];
+
+        // node_kind_t kind = EXPRESSION_NODE;
+        // ast_node_t* node = create_default_node(kind);
+        // printf("\n\n\ncreated node: %s\n\n\n", node->lexeme);
+        // add_child(global_ast_tree, node);
+        // add_child(node, $1);
+        // print_ast(global_ast_tree);
     }
-#line 1762 "parser.c"
+#line 1779 "parser.c"
     break;
 
 
-#line 1766 "parser.c"
+#line 1783 "parser.c"
 
       default: break;
     }
@@ -1955,7 +1972,7 @@ yyreturnlab:
   return yyresult;
 }
 
-#line 401 "parser.y"
+#line 418 "parser.y"
 
 
 void yyerror(char *s)
@@ -1969,6 +1986,7 @@ int yylex()
 {
     token_t *token = get_next_token();
     print_token(token);
+    if(token!=NULL) save_token_info(token);
 
 
     if (token == NULL) 

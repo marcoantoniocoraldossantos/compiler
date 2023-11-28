@@ -34,7 +34,7 @@
     program : decl_list 
     {
         printf("reduced: program -> decl_list\n");
-        global_ast_tree = $1;
+        //global_ast_tree = $1;
     }
     ;
 
@@ -377,24 +377,41 @@
     args : arg_list
     {
         printf("reduced: args -> arg_list\n");
-    
+
     }
     | /* vazio */
     {
         printf("reduced: args -> vazio\n");
-    
+
     }
     ;
 
     arg_list : arg_list COMMA_TOKEN expression
     {
         printf("reduced: arg_list -> arg_list COMMA_TOKEN expression\n");
-    
+        // arg_list have expression as sibling
+        if ($1 != NULL) 
+        {
+            add_sibling($1, $3);
+            $$ = $1;
+        }
+        else 
+        {
+            $$ = $3;
+        }
+
     }
     | expression
     {
         printf("reduced: arg_list -> expression\n");
-    
+        $$ = $1;
+
+        // node_kind_t kind = EXPRESSION_NODE;
+        // ast_node_t* node = create_default_node(kind);
+        // printf("\n\n\ncreated node: %s\n\n\n", node->lexeme);
+        // add_child(global_ast_tree, node);
+        // add_child(node, $1);
+        // print_ast(global_ast_tree);
     }
     ;
 
@@ -411,7 +428,7 @@ int yylex()
 {
     token_t *token = get_next_token();
     print_token(token);
-    save_token_info(token);
+    if(token!=NULL) save_token_info(token);
 
 
     if (token == NULL) 
