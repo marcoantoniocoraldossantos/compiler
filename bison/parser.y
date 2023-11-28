@@ -301,12 +301,14 @@
     sum_expression : sum_expression sum term
     {
         //printf("reduced: sum_expression -> sum_expression sum term\n");
-    
+        add_child($2, $1);
+        add_child($2, $3);
+        $$ = $2;
     }
     | term
     {
         //printf("reduced: sum_expression -> term\n");
-    
+        $$ = $1;
     }
     ;
 
