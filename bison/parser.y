@@ -41,41 +41,48 @@
     decl_list : decl_list declaration
     {
         printf("reduced: decl_list -> decl_list declaration\n");
-
+        $1->sibling = $2;
     }
     | declaration
     {
         printf("reduced: decl_list -> declaration\n");
+
     }
     ;
 
     declaration : var_declaration
     {
         printf("reduced: declaration -> var_declaration\n");
+
     }
     | fun_declaration
     {
         printf("reduced: declaration -> fun_declaration\n");
+
     }
     ;
 
     var_declaration : type_specifier ID_TOKEN SEMICOLON_TOKEN
     {
         printf("reduced: var_declaration -> type_specifier ID_TOKEN SEMICOLON_TOKEN\n");
+    
     }
     | type_specifier ID_TOKEN LBRACKET_TOKEN NUM_TOKEN RBRACKET_TOKEN SEMICOLON_TOKEN
     {
         printf("reduced: var_declaration -> type_specifier ID_TOKEN LBRACKET_TOKEN NUM_TOKEN RBRACKET_TOKEN SEMICOLON_TOKEN\n");
+    
     }
     ;
 
     type_specifier : INT_TOKEN
     {
         printf("reduced: type_specifier -> INT_TOKEN\n");
+    
     }
     | VOID_TOKEN
     {
         printf("reduced: type_specifier -> VOID_TOKEN\n");
+    
     }
     ;
 
