@@ -163,27 +163,27 @@
     statement : expression_decl
     {
         //printf("reduced: statement -> expression_decl\n");
-    
+        $$ = $1;
     }
     | compound_decl
     {
         //printf("reduced: statement -> compound_decl\n");
-    
+        $$ = $1;
     }
     | selection_decl
     {
         //printf("reduced: statement -> selection_decl\n");
-    
+        $$ = $1;
     }
     | iteration_decl
     {
         //printf("reduced: statement -> iteration_decl\n");
-    
+        $$ = $1;
     }
     | return_decl
     {
         //printf("reduced: statement -> return_decl\n");
-    
+        $$ = $1;
     }
     ;
 
