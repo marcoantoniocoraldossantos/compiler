@@ -120,12 +120,26 @@
     param : type_specifier ID_TOKEN
     {
         //printf("reduced: param -> type_specifier ID_TOKEN\n");
-    
+        ast_node_t* id_node = new_ast_node(EXPRESSION_NODE, global_line_number, global_lexeme, NOT_STMT, ID_EXP, NO_TYPE);
+        print_ast(id_node);
+        printf("id lexeme: %s line number: %d\n", id_node->lexeme, id_node->lineno);
+
+        //add_child($1, id_node);
+        //$$ = $1;
+
+        free_ast(id_node);
     }
     | type_specifier ID_TOKEN LBRACKET_TOKEN RBRACKET_TOKEN
     {
         //printf("reduced: param -> type_specifier ID_TOKEN LBRACKET_TOKEN RBRACKET_TOKEN\n");
-    
+        ast_node_t* id_node = new_ast_node(EXPRESSION_NODE, global_line_number, global_lexeme, NOT_STMT, ID_EXP, NO_TYPE);
+        print_ast(id_node);
+        printf("id lexeme: %s line number: %d\n", id_node->lexeme, id_node->lineno);
+        
+        //add_child($1, id_node);
+        //$$ = $1;
+
+        free_ast(id_node);
     }
     ;
 
