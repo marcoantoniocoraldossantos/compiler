@@ -101,7 +101,7 @@ void add_sibling(ast_node_t *node, ast_node_t *sibling)
     }
 }
 
-ast_node_t* new_node(node_kind_t kind, const char* lexeme) 
+ast_node_t* new_ast_node(node_kind_t kind, const char* lexeme) 
 {
     ast_node_t* new_node = (ast_node_t*)malloc(sizeof(ast_node_t));
 

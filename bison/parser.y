@@ -41,7 +41,7 @@
     decl_list : decl_list declaration
     {
         printf("reduced: decl_list -> decl_list declaration\n");
-        $1->sibling = $2;
+
     }
     | declaration
     {
@@ -77,7 +77,7 @@
     type_specifier : INT_TOKEN
     {
         printf("reduced: type_specifier -> INT_TOKEN\n");
-    
+
     }
     | VOID_TOKEN
     {
@@ -403,7 +403,6 @@
 void yyerror(char *s)
 {
     printf("\n%s: invalid lexeme!\n", s);
-    //printf("\nline %d lexeme: %s type %s\n", global_line_number, global_lexeme, token_type_to_string(global_token_type));
     printf("exiting...\n");
     exit(1);
 }
@@ -411,6 +410,8 @@ void yyerror(char *s)
 int yylex()
 {
     token_t *token = get_next_token();
+    print_token(token);
+    save_token_info(token);
 
 
     if (token == NULL) 
