@@ -139,20 +139,35 @@
     local_declarations : local_declarations var_declaration
     {
         //printf("reduced: local_declarations -> local_declarations var_declaration\n");
-    
+        if ($1 != NULL) 
+        {
+            add_sibling($1, $2);
+            $$ = $1;
+        }
+        else 
+        {
+            $$ = $2;
+        }
     }
     | /* vazio */
     {
         //printf("reduced: local_declarations -> vazio\n");
-    
+        $$ = NULL;
     }
     ;
 
     statement_list : statement_list statement
     {
         //printf("reduced: statement_list -> statement_list statement\n");
-        add_sibling($1, $2);
-        $$ = $1;
+        if ($1 != NULL) 
+        {
+            add_sibling($1, $2);
+            $$ = $1;
+        }
+        else 
+        {
+            $$ = $2;
+        }
     }
     | /* vazio */
     {
