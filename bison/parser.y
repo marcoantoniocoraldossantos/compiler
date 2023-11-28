@@ -151,12 +151,13 @@
     statement_list : statement_list statement
     {
         //printf("reduced: statement_list -> statement_list statement\n");
-    
+        add_sibling($1, $2);
+        $$ = $1;
     }
     | /* vazio */
     {
         //printf("reduced: statement_list -> vazio\n");
-    
+        $$ = NULL;
     }
     ;
 
