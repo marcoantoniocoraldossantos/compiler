@@ -313,12 +313,22 @@
     sum : PLUS_TOKEN
     {
         //printf("reduced: sum -> PLUS_TOKEN\n");
-    
+        ast_node_t* plus_node = new_ast_node(EXPRESSION_NODE, global_line_number, global_lexeme, NOT_STMT, OP_EXP, NO_TYPE);
+        print_ast(plus_node);
+        printf("plus lexeme: %s line number: %d\n", plus_node->lexeme, plus_node->lineno);
+        //$$ = plus_node;
+
+        free_ast(plus_node);
     }
     | MINUS_TOKEN
     {
         //printf("reduced: sum -> MINUS_TOKEN\n");
-    
+        ast_node_t* minus_node = new_ast_node(EXPRESSION_NODE, global_line_number, global_lexeme, NOT_STMT, OP_EXP, NO_TYPE);
+        print_ast(minus_node);
+        printf("minus lexeme: %s line number: %d\n", minus_node->lexeme, minus_node->lineno);
+        //$$ = minus_node;
+
+        free_ast(minus_node);
     }
     ;
 
