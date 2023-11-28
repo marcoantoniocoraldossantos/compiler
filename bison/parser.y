@@ -257,44 +257,76 @@
     simple_expression : sum_expression relational sum_expression
     {
         //printf("reduced: simple_expression -> sum_expression relational sum_expression\n");
-    
+        add_child($2, $1);
+        add_child($2, $3);
+        $$ = $2;
     }
     | sum_expression
     {
         //printf("reduced: simple_expression -> sum_expression\n");
-    
+        $$ = $1;
     }
     ;
 
     relational : LT_TOKEN
     {
         //printf("reduced: relational -> LT_TOKEN\n");
-    
+        ast_node_t* lt_node = new_ast_node(EXPRESSION_NODE, global_line_number, global_lexeme, NOT_STMT, OP_EXP, NO_TYPE);
+        print_ast(lt_node);
+        printf("lt lexeme: %s line number: %d\n", lt_node->lexeme, lt_node->lineno);
+        //$$ = lt_node;
+
+        free_ast(lt_node);
     }
     | LTE_TOKEN
     {
         //printf("reduced: relational -> LTE_TOKEN\n");
-    
+        ast_node_t* lte_node = new_ast_node(EXPRESSION_NODE, global_line_number, global_lexeme, NOT_STMT, OP_EXP, NO_TYPE);
+        print_ast(lte_node);
+        printf("lte lexeme: %s line number: %d\n", lte_node->lexeme, lte_node->lineno);
+        //$$ = lte_node;
+
+        free_ast(lte_node);
     }
     | GT_TOKEN
     {
         //printf("reduced: relational -> GT_TOKEN\n");
-    
+        ast_node_t* gt_node = new_ast_node(EXPRESSION_NODE, global_line_number, global_lexeme, NOT_STMT, OP_EXP, NO_TYPE);
+        print_ast(gt_node);
+        printf("gt lexeme: %s line number: %d\n", gt_node->lexeme, gt_node->lineno);
+        //$$ = gt_node;
+
+        free_ast(gt_node);
     }
     | GTE_TOKEN
     {
         //printf("reduced: relational -> GTE_TOKEN\n");
-    
+        ast_node_t* gte_node = new_ast_node(EXPRESSION_NODE, global_line_number, global_lexeme, NOT_STMT, OP_EXP, NO_TYPE);
+        print_ast(gte_node);
+        printf("gte lexeme: %s line number: %d\n", gte_node->lexeme, gte_node->lineno);
+        //$$ = gte_node;
+
+        free_ast(gte_node);
     }
     | EQ_TOKEN
     {
         //printf("reduced: relational -> EQ_TOKEN\n");
-    
+        ast_node_t* eq_node = new_ast_node(EXPRESSION_NODE, global_line_number, global_lexeme, NOT_STMT, OP_EXP, NO_TYPE);
+        print_ast(eq_node);
+        printf("eq lexeme: %s line number: %d\n", eq_node->lexeme, eq_node->lineno);
+        //$$ = eq_node;
+
+        free_ast(eq_node);
     }
     | NEQ_TOKEN
     {
         //printf("reduced: relational -> NEQ_TOKEN\n");
-    
+        ast_node_t* neq_node = new_ast_node(EXPRESSION_NODE, global_line_number, global_lexeme, NOT_STMT, OP_EXP, NO_TYPE);
+        print_ast(neq_node);
+        printf("neq lexeme: %s line number: %d\n", neq_node->lexeme, neq_node->lineno);
+        //$$ = neq_node;
+
+        free_ast(neq_node);
     }
     ;
 
