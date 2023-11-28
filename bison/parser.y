@@ -190,19 +190,26 @@
     expression_decl : expression SEMICOLON_TOKEN
     {
         //printf("reduced: expression_decl -> expression SEMICOLON_TOKEN\n");
-    
+        $$ = $1;
     }
     | SEMICOLON_TOKEN
     {
         //printf("reduced: expression_decl -> SEMICOLON_TOKEN\n");
-    
+        $$ = NULL;
     }
     ;
 
     selection_decl : IF_TOKEN LPAREN_TOKEN expression RPAREN_TOKEN statement 
     {
         //printf("reduced: selection_decl -> IF_TOKEN LPAREN_TOKEN expression RPAREN_TOKEN statement\n");
-    
+        ast_node_t* if_node = new_ast_node(STATEMENT_NODE, global_line_number, global_lexeme, IF_STMT, NOT_EXP, NO_TYPE);
+        print_ast(if_node);
+        printf("if lexeme: %s line number: %d\n", if_node->lexeme, if_node->lineno);
+        //add_child(if_node, $3);
+        //add_child(if_node, $5);
+        //$$ = if_node;
+
+        free_ast(if_node);
     }
     | IF_TOKEN LPAREN_TOKEN expression RPAREN_TOKEN statement ELSE_TOKEN statement
     {
