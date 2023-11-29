@@ -45,21 +45,14 @@ void print_ast(ast_node_t *root)
     print_ast_util(root, 1);
 }
 
-void free_ast(ast_node_t* node) 
-{
-    if (node == NULL) 
-    {
-        return;
+void free_ast(ast_node_t* node) {
+    if (node != NULL) {
+        for (int i = 0; i < MAXCHILDREN; ++i) {
+            free_ast(node->child[i]);
+        }
+        free_ast(node->sibling);
+        free(node);
     }
-
-    for (int i = 0; i < MAXCHILDREN; i++) 
-    {
-        free_ast(node->child[i]);
-    }
-
-    free_ast(node->sibling);
-
-    free(node);
 }
 
 void add_child(ast_node_t *parent, ast_node_t *child) 

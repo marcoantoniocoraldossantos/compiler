@@ -23,7 +23,7 @@ int main(int argc, char *argv[])
     token_t *token = NULL; // initialize the token
 
     save_global_variables(input_file, &buffer, bst_tree); // save the global variables
-    global_ast_tree = ast_tree; // save the ast tree in the global variable
+    global_ast_tree = ast_tree;
 
     // while(1)
     // {
@@ -51,6 +51,7 @@ int main(int argc, char *argv[])
     deallocate_buffer(&buffer); // deallocate the buffer
     free_bst(bst_tree); // deallocate the bst
     free_ast(ast_tree); // deallocate the ast
+    free_ast(global_ast_tree); // deallocate the ast
 
     return 0;
 }
