@@ -154,29 +154,31 @@ enum yysymbol_kind_t
   YYSYMBOL_var_declaration = 36,           /* var_declaration  */
   YYSYMBOL_type_specifier = 37,            /* type_specifier  */
   YYSYMBOL_fun_declaration = 38,           /* fun_declaration  */
-  YYSYMBOL_params = 39,                    /* params  */
-  YYSYMBOL_param_list = 40,                /* param_list  */
-  YYSYMBOL_param = 41,                     /* param  */
-  YYSYMBOL_compound_decl = 42,             /* compound_decl  */
-  YYSYMBOL_local_declarations = 43,        /* local_declarations  */
-  YYSYMBOL_statement_list = 44,            /* statement_list  */
-  YYSYMBOL_statement = 45,                 /* statement  */
-  YYSYMBOL_expression_decl = 46,           /* expression_decl  */
-  YYSYMBOL_selection_decl = 47,            /* selection_decl  */
-  YYSYMBOL_iteration_decl = 48,            /* iteration_decl  */
-  YYSYMBOL_return_decl = 49,               /* return_decl  */
-  YYSYMBOL_expression = 50,                /* expression  */
-  YYSYMBOL_var = 51,                       /* var  */
-  YYSYMBOL_simple_expression = 52,         /* simple_expression  */
-  YYSYMBOL_relational = 53,                /* relational  */
-  YYSYMBOL_sum_expression = 54,            /* sum_expression  */
-  YYSYMBOL_sum = 55,                       /* sum  */
-  YYSYMBOL_term = 56,                      /* term  */
-  YYSYMBOL_mult = 57,                      /* mult  */
-  YYSYMBOL_factor = 58,                    /* factor  */
-  YYSYMBOL_activation = 59,                /* activation  */
-  YYSYMBOL_args = 60,                      /* args  */
-  YYSYMBOL_arg_list = 61                   /* arg_list  */
+  YYSYMBOL_fun_id = 39,                    /* fun_id  */
+  YYSYMBOL_params = 40,                    /* params  */
+  YYSYMBOL_param_list = 41,                /* param_list  */
+  YYSYMBOL_param = 42,                     /* param  */
+  YYSYMBOL_compound_decl = 43,             /* compound_decl  */
+  YYSYMBOL_local_declarations = 44,        /* local_declarations  */
+  YYSYMBOL_statement_list = 45,            /* statement_list  */
+  YYSYMBOL_statement = 46,                 /* statement  */
+  YYSYMBOL_expression_decl = 47,           /* expression_decl  */
+  YYSYMBOL_selection_decl = 48,            /* selection_decl  */
+  YYSYMBOL_fun_else = 49,                  /* fun_else  */
+  YYSYMBOL_iteration_decl = 50,            /* iteration_decl  */
+  YYSYMBOL_return_decl = 51,               /* return_decl  */
+  YYSYMBOL_expression = 52,                /* expression  */
+  YYSYMBOL_var = 53,                       /* var  */
+  YYSYMBOL_simple_expression = 54,         /* simple_expression  */
+  YYSYMBOL_relational = 55,                /* relational  */
+  YYSYMBOL_sum_expression = 56,            /* sum_expression  */
+  YYSYMBOL_sum = 57,                       /* sum  */
+  YYSYMBOL_term = 58,                      /* term  */
+  YYSYMBOL_mult = 59,                      /* mult  */
+  YYSYMBOL_factor = 60,                    /* factor  */
+  YYSYMBOL_activation = 61,                /* activation  */
+  YYSYMBOL_args = 62,                      /* args  */
+  YYSYMBOL_arg_list = 63                   /* arg_list  */
 };
 typedef enum yysymbol_kind_t yysymbol_kind_t;
 
@@ -509,11 +511,11 @@ union yyalloc
 /* YYNTOKENS -- Number of terminals.  */
 #define YYNTOKENS  32
 /* YYNNTS -- Number of nonterminals.  */
-#define YYNNTS  30
+#define YYNNTS  32
 /* YYNRULES -- Number of rules.  */
-#define YYNRULES  63
+#define YYNRULES  65
 /* YYNSTATES -- Number of states.  */
-#define YYNSTATES  102
+#define YYNSTATES  105
 
 /* YYMAXUTOK -- Last valid token kind.  */
 #define YYMAXUTOK   286
@@ -565,13 +567,13 @@ static const yytype_int8 yytranslate[] =
 /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
 static const yytype_int16 yyrline[] =
 {
-       0,    33,    33,    41,    56,    65,    72,    81,   108,   154,
-     167,   182,   214,   219,   233,   246,   253,   280,   309,   324,
-     340,   348,   364,   372,   379,   386,   393,   400,   409,   416,
-     425,   439,   458,   475,   488,   504,   519,   528,   555,   584,
-     593,   602,   614,   626,   638,   651,   664,   678,   687,   696,
-     707,   720,   729,   738,   750,   764,   769,   775,   781,   809,
-     841,   847,   853,   868
+       0,    33,    33,    41,    56,    65,    72,    81,   110,   158,
+     171,   186,   218,   245,   250,   264,   278,   285,   314,   344,
+     360,   377,   385,   402,   410,   417,   424,   431,   438,   447,
+     454,   463,   499,   510,   515,   532,   545,   561,   576,   585,
+     612,   642,   652,   661,   673,   685,   697,   709,   721,   734,
+     745,   754,   765,   778,   789,   798,   809,   823,   828,   834,
+     840,   869,   903,   909,   915,   931
 };
 #endif
 
@@ -595,10 +597,10 @@ static const char *const yytname[] =
   "LPAREN_TOKEN", "RPAREN_TOKEN", "LBRACKET_TOKEN", "RBRACKET_TOKEN",
   "LBRACE_TOKEN", "RBRACE_TOKEN", "ID_TOKEN", "NUM_TOKEN", "UNKNOW_TOKEN",
   "ERROR_TOKEN", "$accept", "program", "decl_list", "declaration",
-  "var_declaration", "type_specifier", "fun_declaration", "params",
-  "param_list", "param", "compound_decl", "local_declarations",
+  "var_declaration", "type_specifier", "fun_declaration", "fun_id",
+  "params", "param_list", "param", "compound_decl", "local_declarations",
   "statement_list", "statement", "expression_decl", "selection_decl",
-  "iteration_decl", "return_decl", "expression", "var",
+  "fun_else", "iteration_decl", "return_decl", "expression", "var",
   "simple_expression", "relational", "sum_expression", "sum", "term",
   "mult", "factor", "activation", "args", "arg_list", YY_NULLPTR
 };
@@ -610,12 +612,12 @@ yysymbol_name (yysymbol_kind_t yysymbol)
 }
 #endif
 
-#define YYPACT_NINF (-77)
+#define YYPACT_NINF (-90)
 
 #define yypact_value_is_default(Yyn) \
   ((Yyn) == YYPACT_NINF)
 
-#define YYTABLE_NINF (-14)
+#define YYTABLE_NINF (-15)
 
 #define yytable_value_is_error(Yyn) \
   0
@@ -624,17 +626,17 @@ yysymbol_name (yysymbol_kind_t yysymbol)
    STATE-NUM.  */
 static const yytype_int8 yypact[] =
 {
-      37,   -77,   -77,    21,    37,   -77,   -77,     3,   -77,   -77,
-     -77,    28,   -77,    58,    14,    31,    23,    41,    49,   -77,
-      46,    48,    47,    37,    54,    50,   -77,   -77,   -77,   -77,
-     -77,    37,   -77,    51,     7,    25,    56,    18,    60,   -77,
-     -10,   -77,     8,   -77,   -77,   -77,   -77,   -77,   -77,   -77,
-      57,    61,   -77,    -8,    55,   -77,   -77,   -10,   -77,    63,
-     -10,    53,   -10,   -10,   -77,   -10,   -77,   -77,   -77,   -77,
-     -77,   -77,   -77,   -77,   -10,   -10,   -77,   -77,   -10,    62,
-     -77,    64,   -77,   -77,    65,    68,    66,   -77,   -77,    59,
-      55,   -77,    33,    33,   -77,   -10,   -77,    78,   -77,   -77,
-      33,   -77
+      15,   -90,   -90,     4,    15,   -90,   -90,   -21,   -90,   -90,
+     -90,    -5,   -12,   -90,    27,    33,    -8,    10,    39,    45,
+      48,   -90,    50,    47,    46,    15,   -90,    49,   -90,   -90,
+     -90,   -90,    15,   -90,    51,     8,    -5,    53,     3,    55,
+     -90,   -20,   -90,    20,   -90,    56,   -90,   -90,   -90,   -90,
+     -90,   -90,    60,    57,   -90,    36,    54,   -90,   -90,   -20,
+     -90,    61,   -20,    59,   -20,   -20,   -90,   -20,   -90,   -90,
+     -90,   -90,   -90,   -90,   -90,   -90,   -20,   -20,   -90,   -90,
+     -20,    62,   -90,    63,   -90,    58,   -90,    64,    52,   -90,
+     -90,    38,    54,   -90,    35,    35,   -90,   -90,   -20,    81,
+     -90,   -90,    35,   -90,   -90
 };
 
 /* YYDEFACT[STATE-NUM] -- Default reduction number in state STATE-NUM.
@@ -643,32 +645,34 @@ static const yytype_int8 yypact[] =
 static const yytype_int8 yydefact[] =
 {
        0,     9,    10,     0,     2,     4,     5,     0,     6,     1,
-       3,     0,     7,     0,     0,    10,     0,     0,    12,    15,
-       0,    16,     0,     0,     0,     0,    20,    11,    14,     8,
-      17,    22,    19,     0,     0,     0,     0,     0,     0,    29,
-       0,    18,    37,    58,    24,    21,    23,    25,    26,    27,
-       0,    56,    36,    40,    48,    52,    57,     0,    33,     0,
-       0,     0,    61,     0,    28,     0,    49,    50,    41,    42,
-      43,    44,    45,    46,     0,     0,    53,    54,     0,     0,
-      34,     0,    55,    63,     0,    60,     0,    35,    56,    39,
-      47,    51,     0,     0,    59,     0,    38,    30,    32,    62,
-       0,    31
+       3,    12,     0,     7,     0,     0,     0,    10,     0,     0,
+      13,    16,     0,    17,     0,     0,     8,     0,    21,    11,
+      15,    18,    23,    20,     0,     0,     0,     0,     0,     0,
+      30,     0,    19,    39,    60,     0,    25,    22,    24,    26,
+      27,    28,     0,    58,    38,    42,    50,    54,    59,     0,
+      35,     0,     0,     0,     0,    63,    29,     0,    51,    52,
+      43,    44,    45,    46,    47,    48,     0,     0,    55,    56,
+       0,     0,    36,     0,    57,     0,    65,     0,    62,    37,
+      58,    41,    49,    53,     0,     0,    40,    61,     0,    33,
+      34,    64,     0,    31,    32
 };
 
 /* YYPGOTO[NTERM-NUM].  */
 static const yytype_int8 yypgoto[] =
 {
-     -77,   -77,   -77,    80,    67,    -9,   -77,   -77,   -77,    69,
-      71,   -77,   -77,   -76,   -77,   -77,   -77,   -77,   -37,   -18,
-     -77,   -77,    12,   -77,    15,   -77,    16,   -77,   -77,   -77
+     -90,   -90,   -90,    84,    65,   -14,   -90,    82,   -90,   -90,
+      66,    68,   -90,   -90,   -89,   -90,   -90,   -90,   -90,   -90,
+     -38,   -18,   -90,   -90,    14,   -90,    16,   -90,    18,   -90,
+     -90,   -90
 };
 
 /* YYDEFGOTO[NTERM-NUM].  */
 static const yytype_int8 yydefgoto[] =
 {
-       0,     3,     4,     5,     6,     7,     8,    17,    18,    19,
-      44,    31,    34,    45,    46,    47,    48,    49,    50,    51,
-      52,    74,    53,    75,    54,    78,    55,    56,    84,    85
+       0,     3,     4,     5,     6,     7,     8,    45,    19,    20,
+      21,    46,    32,    35,    47,    48,    49,   103,    50,    51,
+      52,    53,    54,    76,    55,    77,    56,    80,    57,    58,
+      87,    88
 };
 
 /* YYTABLE[YYPACT[STATE-NUM]] -- What to do in state STATE-NUM.  If
@@ -676,30 +680,30 @@ static const yytype_int8 yydefgoto[] =
    number is the opposite.  If YYTABLE_NINF, syntax error.  */
 static const yytype_int8 yytable[] =
 {
-      59,    66,    67,    61,    16,    68,    69,    70,    71,    72,
-      73,    36,    40,    37,    16,    38,    97,    98,    42,    43,
-      79,     9,    33,    81,   101,    83,    86,    39,    87,    40,
-      62,    11,    63,    26,    41,    42,    43,    36,    58,    37,
-      40,    38,     1,    20,     2,    12,    42,    43,    12,    14,
-      13,    21,    14,    39,   -13,    40,    88,    88,    99,    26,
-      88,    42,    43,     1,    22,    15,    76,    77,    66,    67,
-      23,    24,    25,    26,    29,    30,    82,    64,    57,    35,
-      65,   100,    60,    80,    10,    92,    89,    93,    94,    95,
-      90,    96,    28,    27,    91,     0,     0,     0,    32
+      61,    18,    41,    63,     9,    99,   100,    11,    43,    44,
+      15,    18,    37,   104,    38,    13,    39,    22,    34,    14,
+       1,    81,     2,    60,    83,    41,    85,    86,    40,    89,
+      41,    43,    44,   -14,    28,    42,    43,    44,     1,    37,
+      17,    38,   -12,    39,    64,    68,    69,    68,    69,    70,
+      71,    72,    73,    74,    75,    40,    16,    41,    90,    90,
+     101,    28,    90,    43,    44,    78,    79,    23,    24,    25,
+      26,    27,    28,    98,    31,    59,    67,    62,    65,    36,
+      66,    82,    84,    96,   102,    94,    95,    97,    10,    12,
+      91,    30,    29,    92,     0,     0,     0,    33,    93
 };
 
 static const yytype_int8 yycheck[] =
 {
-      37,     9,    10,    40,    13,    13,    14,    15,    16,    17,
-      18,     4,    22,     6,    23,     8,    92,    93,    28,    29,
-      57,     0,    31,    60,   100,    62,    63,    20,    65,    22,
-      22,    28,    24,    26,    27,    28,    29,     4,    20,     6,
-      22,     8,     5,    29,     7,    20,    28,    29,    20,    24,
-      22,    28,    24,    20,    23,    22,    74,    75,    95,    26,
-      78,    28,    29,     5,    23,     7,    11,    12,     9,    10,
-      21,    25,    24,    26,    20,    25,    23,    20,    22,    28,
-      19,     3,    22,    20,     4,    23,    74,    23,    23,    21,
-      75,    25,    23,    22,    78,    -1,    -1,    -1,    31
+      38,    15,    22,    41,     0,    94,    95,    28,    28,    29,
+      22,    25,     4,   102,     6,    20,     8,    25,    32,    24,
+       5,    59,     7,    20,    62,    22,    64,    65,    20,    67,
+      22,    28,    29,    23,    26,    27,    28,    29,     5,     4,
+       7,     6,    22,     8,    24,     9,    10,     9,    10,    13,
+      14,    15,    16,    17,    18,    20,    29,    22,    76,    77,
+      98,    26,    80,    28,    29,    11,    12,    28,    23,    21,
+      20,    24,    26,    21,    25,    22,    19,    22,    22,    28,
+      20,    20,    23,    25,     3,    23,    23,    23,     4,     7,
+      76,    25,    24,    77,    -1,    -1,    -1,    32,    80
 };
 
 /* YYSTOS[STATE-NUM] -- The symbol kind of the accessing symbol of
@@ -707,40 +711,40 @@ static const yytype_int8 yycheck[] =
 static const yytype_int8 yystos[] =
 {
        0,     5,     7,    33,    34,    35,    36,    37,    38,     0,
-      35,    28,    20,    22,    24,     7,    37,    39,    40,    41,
-      29,    28,    23,    21,    25,    24,    26,    42,    41,    20,
-      25,    43,    36,    37,    44,    28,     4,     6,     8,    20,
-      22,    27,    28,    29,    42,    45,    46,    47,    48,    49,
-      50,    51,    52,    54,    56,    58,    59,    22,    20,    50,
-      22,    50,    22,    24,    20,    19,     9,    10,    13,    14,
-      15,    16,    17,    18,    53,    55,    11,    12,    57,    50,
-      20,    50,    23,    50,    60,    61,    50,    50,    51,    54,
-      56,    58,    23,    23,    23,    21,    25,    45,    45,    50,
-       3,    45
+      35,    28,    39,    20,    24,    22,    29,     7,    37,    40,
+      41,    42,    25,    28,    23,    21,    20,    24,    26,    43,
+      42,    25,    44,    36,    37,    45,    28,     4,     6,     8,
+      20,    22,    27,    28,    29,    39,    43,    46,    47,    48,
+      50,    51,    52,    53,    54,    56,    58,    60,    61,    22,
+      20,    52,    22,    52,    24,    22,    20,    19,     9,    10,
+      13,    14,    15,    16,    17,    18,    55,    57,    11,    12,
+      59,    52,    20,    52,    23,    52,    52,    62,    63,    52,
+      53,    56,    58,    60,    23,    23,    25,    23,    21,    46,
+      46,    52,     3,    49,    46
 };
 
 /* YYR1[RULE-NUM] -- Symbol kind of the left-hand side of rule RULE-NUM.  */
 static const yytype_int8 yyr1[] =
 {
        0,    32,    33,    34,    34,    35,    35,    36,    36,    37,
-      37,    38,    39,    39,    40,    40,    41,    41,    42,    43,
-      43,    44,    44,    45,    45,    45,    45,    45,    46,    46,
-      47,    47,    48,    49,    49,    50,    50,    51,    51,    52,
-      52,    53,    53,    53,    53,    53,    53,    54,    54,    55,
-      55,    56,    56,    57,    57,    58,    58,    58,    58,    59,
-      60,    60,    61,    61
+      37,    38,    39,    40,    40,    41,    41,    42,    42,    43,
+      44,    44,    45,    45,    46,    46,    46,    46,    46,    47,
+      47,    48,    49,    49,    50,    51,    51,    52,    52,    53,
+      53,    54,    54,    55,    55,    55,    55,    55,    55,    56,
+      56,    57,    57,    58,    58,    59,    59,    60,    60,    60,
+      60,    61,    62,    62,    63,    63
 };
 
 /* YYR2[RULE-NUM] -- Number of symbols on the right-hand side of rule RULE-NUM.  */
 static const yytype_int8 yyr2[] =
 {
        0,     2,     1,     2,     1,     1,     1,     3,     6,     1,
-       1,     6,     1,     1,     3,     1,     2,     4,     4,     2,
-       0,     2,     0,     1,     1,     1,     1,     1,     2,     1,
-       5,     7,     5,     2,     3,     3,     1,     1,     4,     3,
-       1,     1,     1,     1,     1,     1,     1,     3,     1,     1,
-       1,     3,     1,     1,     1,     3,     1,     1,     1,     4,
-       1,     0,     3,     1
+       1,     6,     1,     1,     1,     3,     1,     2,     4,     4,
+       2,     0,     2,     0,     1,     1,     1,     1,     1,     2,
+       1,     6,     2,     0,     5,     2,     3,     3,     1,     1,
+       4,     3,     1,     1,     1,     1,     1,     1,     1,     3,
+       1,     1,     1,     3,     1,     1,     1,     3,     1,     1,
+       1,     4,     1,     0,     3,     1
 };
 
 
@@ -1210,7 +1214,7 @@ yyreduce:
         global_ast_tree = yyvsp[0];
         print_ast(yyval);
     }
-#line 1214 "parser.c"
+#line 1218 "parser.c"
     break;
 
   case 3: /* decl_list: decl_list declaration  */
@@ -1219,17 +1223,17 @@ yyreduce:
         //printf("reduced: decl_list -> decl_list declaration\n");
         if (yyvsp[-1] != NULL) 
         {
-            add_sibling(yyvsp[-1], yyvsp[0]);
             yyval = yyvsp[-1];
+            add_sibling(yyval, yyvsp[0]);
         }
         else 
         {
             yyval = yyvsp[0];
         }
 
-        print_ast(yyval);
+        // print_ast($$);
     }
-#line 1233 "parser.c"
+#line 1237 "parser.c"
     break;
 
   case 4: /* decl_list: declaration  */
@@ -1238,9 +1242,9 @@ yyreduce:
         //printf("reduced: decl_list -> declaration\n");
         yyval = yyvsp[0];
 
-        print_ast(yyval);
+        // print_ast($$);
     }
-#line 1244 "parser.c"
+#line 1248 "parser.c"
     break;
 
   case 5: /* declaration: var_declaration  */
@@ -1249,9 +1253,9 @@ yyreduce:
         //printf("reduced: declaration -> var_declaration\n");
         yyval = yyvsp[0];
 
-        print_ast(yyval);
+        // print_ast($$);
     }
-#line 1255 "parser.c"
+#line 1259 "parser.c"
     break;
 
   case 6: /* declaration: fun_declaration  */
@@ -1260,9 +1264,9 @@ yyreduce:
         //printf("reduced: declaration -> fun_declaration\n");
         yyval = yyvsp[0];
 
-        print_ast(yyval);
+        // print_ast($$);
     }
-#line 1266 "parser.c"
+#line 1270 "parser.c"
     break;
 
   case 7: /* var_declaration: type_specifier ID_TOKEN SEMICOLON_TOKEN  */
@@ -1270,11 +1274,14 @@ yyreduce:
     {
         //printf("reduced: var_declaration -> type_specifier ID_TOKEN SEMICOLON_TOKEN\n");
 
+        yyval = yyvsp[-2];
+
         //find ID in tokens list
         token_t* token = NULL;
         for(int i = token_count-1; i >= 0; i--)
         {
             token_type_t type = token_list[i]->type;
+            print_token(token_list[i]);
             if (convert_token(type) == ID_TOKEN) 
             {
                 // printf("found token id\n");
@@ -1286,18 +1293,17 @@ yyreduce:
         ast_node_t* id_node = new_ast_node(EXPRESSION_NODE, global_line_number, token->lexeme, NOT_STMT, ID_EXP, NO_TYPE);
         //print_ast(id_node);
         //printf("id lexeme: %s line number: %d\n", id_node->lexeme, id_node->lineno);
-        add_child(yyvsp[-2], id_node);
-        yyval = yyvsp[-2];
+        add_child(yyval, id_node);
 
-        print_ast(yyval);
+        // print_ast($$);
 
         // free_ast(id_node);
     }
-#line 1297 "parser.c"
+#line 1303 "parser.c"
     break;
 
   case 8: /* var_declaration: type_specifier ID_TOKEN LBRACKET_TOKEN NUM_TOKEN RBRACKET_TOKEN SEMICOLON_TOKEN  */
-#line 109 "parser.y"
+#line 111 "parser.y"
     {
         //printf("reduced: var_declaration -> type_specifier ID_TOKEN LBRACKET_TOKEN NUM_TOKEN RBRACKET_TOKEN SEMICOLON_TOKEN\n");
 
@@ -1306,6 +1312,7 @@ yyreduce:
         for(int i = token_count-1; i >= 0; i--)
         {
             token_type_t type = token_list[i]->type;
+            print_token(token_list[i]);
             if (convert_token(type) == ID_TOKEN) 
             {
                 // printf("found token id\n");
@@ -1321,9 +1328,9 @@ yyreduce:
         for(int i = token_count-1; i >= 0; i--)
         {
             token_type_t type = token_list[i]->type;
+            print_token(token_list[i]);
             if (convert_token(type) == NUM_TOKEN) 
             {
-                // printf("found token num\n");
                 token_num = token_list[i];
                 break;
             }
@@ -1333,19 +1340,20 @@ yyreduce:
 
         //print_ast(id_node);
         //printf("id lexeme: %s line number: %d\n", id_node->lexeme, id_node->lineno);
-        add_child(yyvsp[-5], id_node);
-        add_child(yyvsp[-5], num_node);
+        
         yyval = yyvsp[-5];
+        add_child(yyval, id_node);
+        add_child(yyval, num_node);
 
-        print_ast(yyval);
+        // print_ast($$);
 
         // free_ast(id_node);
     }
-#line 1345 "parser.c"
+#line 1353 "parser.c"
     break;
 
   case 9: /* type_specifier: INT_TOKEN  */
-#line 155 "parser.y"
+#line 159 "parser.y"
     {
         //printf("reduced: type_specifier -> INT_TOKEN\n");
         ast_node_t* int_node = new_ast_node(EXPRESSION_NODE, global_line_number, "int", NOT_STMT, CONST_EXP, INT_TYPE);
@@ -1354,43 +1362,76 @@ yyreduce:
 
         yyval = int_node;
 
-        print_ast(yyval);
+        // print_ast($$);
 
         // free_ast(int_node);
     }
-#line 1362 "parser.c"
+#line 1370 "parser.c"
     break;
 
   case 10: /* type_specifier: VOID_TOKEN  */
-#line 168 "parser.y"
+#line 172 "parser.y"
     {
         //printf("reduced: type_specifier -> VOID_TOKEN\n");
         ast_node_t* void_node = new_ast_node(EXPRESSION_NODE, global_line_number, "void", NOT_STMT, CONST_EXP, VOID_TYPE);
         //print_ast(void_node);
         //printf("void lexeme: %s line number: %d\n", void_node->lexeme, void_node->lineno);
        
-        print_ast(yyval);
+        // print_ast($$);
 
         yyval = void_node;
 
     //    free_ast(void_node);
     }
-#line 1379 "parser.c"
+#line 1387 "parser.c"
     break;
 
-  case 11: /* fun_declaration: type_specifier ID_TOKEN LPAREN_TOKEN params RPAREN_TOKEN compound_decl  */
-#line 183 "parser.y"
+  case 11: /* fun_declaration: type_specifier fun_id LPAREN_TOKEN params RPAREN_TOKEN compound_decl  */
+#line 187 "parser.y"
     {
         //printf("reduced: fun_declaration -> type_specifier ID_TOKEN LPAREN_TOKEN params RPAREN_TOKEN compound_decl\n");
 
+        //find ID in tokens list
+        // token_t* token = NULL;
+        // for(int i = token_count-1; i >= 0; i--)
+        // {
+        //     token_type_t type = token_list[i]->type;
+        //     print_token(token_list[i]);
+        //     if (convert_token(type) == ID_TOKEN) 
+        //     {
+        //         token = token_list[i];
+        //         break;
+        //     }
+        // }
+
+        // ast_node_t* id_node = new_ast_node(EXPRESSION_NODE, global_line_number, token->lexeme, NOT_STMT, ID_EXP, NO_TYPE);
+        //print_ast(id_node);
+        //printf("id lexeme: %s line number: %d\n", id_node->lexeme, id_node->lineno);
+        
+        yyval = yyvsp[-5];        
+        add_child(yyval, yyvsp[-2]);
+        add_child(yyval, yyvsp[-4]);
+        add_child(yyvsp[-4], yyvsp[0]);
+
+        // print_ast($$);
+
+        // free_ast(id_node);
+    }
+#line 1421 "parser.c"
+    break;
+
+  case 12: /* fun_id: ID_TOKEN  */
+#line 219 "parser.y"
+    {
+        //printf("reduced: fun_id -> ID_TOKEN\n");
         //find ID in tokens list
         token_t* token = NULL;
         for(int i = token_count-1; i >= 0; i--)
         {
             token_type_t type = token_list[i]->type;
+            print_token(token_list[i]);
             if (convert_token(type) == ID_TOKEN) 
             {
-                // printf("found token id\n");
                 token = token_list[i];
                 break;
             }
@@ -1400,29 +1441,26 @@ yyreduce:
         //print_ast(id_node);
         //printf("id lexeme: %s line number: %d\n", id_node->lexeme, id_node->lineno);
         
-        add_child(yyvsp[-5], id_node);
-        add_child(yyvsp[-5], yyvsp[-2]);
-        add_child(id_node, yyvsp[0]);
-        yyval = yyvsp[-5];        
+        yyval = id_node;
 
-        print_ast(yyval);
+        // print_ast($$);
 
         // free_ast(id_node);
     }
-#line 1413 "parser.c"
+#line 1451 "parser.c"
     break;
 
-  case 12: /* params: param_list  */
-#line 215 "parser.y"
+  case 13: /* params: param_list  */
+#line 246 "parser.y"
     {
         //printf("reduced: params -> param_list\n");
         yyval = yyvsp[0];
     }
-#line 1422 "parser.c"
+#line 1460 "parser.c"
     break;
 
-  case 13: /* params: VOID_TOKEN  */
-#line 220 "parser.y"
+  case 14: /* params: VOID_TOKEN  */
+#line 251 "parser.y"
     {
         //printf("reduced: params -> VOID_TOKEN\n");
         ast_node_t* void_node = new_ast_node(EXPRESSION_NODE, global_line_number, "void", NOT_STMT, CONST_EXP, VOID_TYPE);
@@ -1430,41 +1468,42 @@ yyreduce:
         //printf("void lexeme: %s line number: %d\n", void_node->lexeme, void_node->lineno);
         yyval = void_node;
 
-        print_ast(yyval);
+        // print_ast($$);
 
         // free_ast(void_node);
     }
-#line 1438 "parser.c"
+#line 1476 "parser.c"
     break;
 
-  case 14: /* param_list: param_list COMMA_TOKEN param  */
-#line 234 "parser.y"
+  case 15: /* param_list: param_list COMMA_TOKEN param  */
+#line 265 "parser.y"
     {
         //printf("reduced: param_list -> param_list COMMA_TOKEN param\n");
         if (yyvsp[-2] != NULL) 
         {
-            add_sibling(yyvsp[-2], yyvsp[0]);
             yyval = yyvsp[-2];
+            add_sibling(yyval, yyvsp[0]);
+            
         }
         else 
         {
             yyval = yyvsp[0];
         }
     }
-#line 1455 "parser.c"
+#line 1494 "parser.c"
     break;
 
-  case 15: /* param_list: param  */
-#line 247 "parser.y"
+  case 16: /* param_list: param  */
+#line 279 "parser.y"
     {
         //printf("reduced: param_list -> param\n");
         yyval = yyvsp[0];
     }
-#line 1464 "parser.c"
+#line 1503 "parser.c"
     break;
 
-  case 16: /* param: type_specifier ID_TOKEN  */
-#line 254 "parser.y"
+  case 17: /* param: type_specifier ID_TOKEN  */
+#line 286 "parser.y"
     {
         //printf("reduced: param -> type_specifier ID_TOKEN\n");
         //find ID in tokens list
@@ -1472,9 +1511,9 @@ yyreduce:
         for(int i = token_count-1; i >= 0; i--)
         {
             token_type_t type = token_list[i]->type;
+            print_token(token_list[i]);
             if (convert_token(type) == ID_TOKEN) 
             {
-                // printf("found token id\n");
                 token = token_list[i];
                 break;
             }
@@ -1484,18 +1523,20 @@ yyreduce:
         //print_ast(id_node);
         //printf("id lexeme: %s line number: %d\n", id_node->lexeme, id_node->lineno);
 
-        add_child(yyvsp[-1], id_node);
-        yyval = yyvsp[-1];
 
-        print_ast(yyval);
+        yyval = yyvsp[-1];
+        add_child(yyval, id_node);
+        
+
+        // print_ast($$);
 
         // free_ast(id_node);
     }
-#line 1495 "parser.c"
+#line 1536 "parser.c"
     break;
 
-  case 17: /* param: type_specifier ID_TOKEN LBRACKET_TOKEN RBRACKET_TOKEN  */
-#line 281 "parser.y"
+  case 18: /* param: type_specifier ID_TOKEN LBRACKET_TOKEN RBRACKET_TOKEN  */
+#line 315 "parser.y"
     {
         //printf("reduced: param -> type_specifier ID_TOKEN LBRACKET_TOKEN RBRACKET_TOKEN\n");
         // find ID in tokens list
@@ -1503,9 +1544,9 @@ yyreduce:
         for(int i = token_count-1; i >= 0; i--)
         {
             token_type_t type = token_list[i]->type;
+            print_token(token_list[i]);
             if (convert_token(type) == ID_TOKEN) 
             {
-                // printf("found token id\n");
                 token = token_list[i];
                 break;
             }
@@ -1515,230 +1556,238 @@ yyreduce:
         //print_ast(id_node);
         //printf("id lexeme: %s line number: %d\n", id_node->lexeme, id_node->lineno);
         
-        add_child(yyvsp[-3], id_node);
         yyval = yyvsp[-3];
+        add_child(yyval, id_node);
+        
 
-        print_ast(yyval);
+        // print_ast($$);
 
         // free_ast(id_node);
     }
-#line 1526 "parser.c"
+#line 1568 "parser.c"
     break;
 
-  case 18: /* compound_decl: LBRACE_TOKEN local_declarations statement_list RBRACE_TOKEN  */
-#line 310 "parser.y"
+  case 19: /* compound_decl: LBRACE_TOKEN local_declarations statement_list RBRACE_TOKEN  */
+#line 345 "parser.y"
     {
         //printf("reduced: compound_decl -> LBRACE_TOKEN local_declarations statement_list RBRACE_TOKEN\n");
         if(yyvsp[-2] != NULL) 
         {
-            add_sibling(yyvsp[-2], yyvsp[-1]);
             yyval = yyvsp[-2];
+            add_sibling(yyval, yyvsp[-1]);
+            
         }
         else 
         {
             yyval = yyvsp[-1];
         }
     }
-#line 1543 "parser.c"
+#line 1586 "parser.c"
     break;
 
-  case 19: /* local_declarations: local_declarations var_declaration  */
-#line 325 "parser.y"
+  case 20: /* local_declarations: local_declarations var_declaration  */
+#line 361 "parser.y"
     {
         //printf("reduced: local_declarations -> local_declarations var_declaration\n");
         if (yyvsp[-1] != NULL) 
         {
-            add_sibling(yyvsp[-1], yyvsp[0]);
             yyval = yyvsp[-1];
+            add_sibling(yyval, yyvsp[0]);
+            
         }
         else 
         {
             yyval = yyvsp[0];
         }
 
-        print_ast(yyval);
+        // print_ast($$);
     }
-#line 1562 "parser.c"
+#line 1606 "parser.c"
     break;
 
-  case 20: /* local_declarations: %empty  */
-#line 340 "parser.y"
+  case 21: /* local_declarations: %empty  */
+#line 377 "parser.y"
     {
         //printf("reduced: local_declarations -> vazio\n");
         yyval = NULL;
 
-        print_ast(yyval);
+        // print_ast($$);
     }
-#line 1573 "parser.c"
+#line 1617 "parser.c"
     break;
 
-  case 21: /* statement_list: statement_list statement  */
-#line 349 "parser.y"
+  case 22: /* statement_list: statement_list statement  */
+#line 386 "parser.y"
     {
         //printf("reduced: statement_list -> statement_list statement\n");
         if (yyvsp[-1] != NULL) 
         {
-            add_sibling(yyvsp[-1], yyvsp[0]);
             yyval = yyvsp[-1];
+            add_sibling(yyval, yyvsp[0]);
+           
         }
         else 
         {
             yyval = yyvsp[0];
         }
 
-        print_ast(yyval);
+        // print_ast($$);
     }
-#line 1592 "parser.c"
+#line 1637 "parser.c"
     break;
 
-  case 22: /* statement_list: %empty  */
-#line 364 "parser.y"
+  case 23: /* statement_list: %empty  */
+#line 402 "parser.y"
     {
         //printf("reduced: statement_list -> vazio\n");
         yyval = NULL;
 
         print_ast(yyval);
     }
-#line 1603 "parser.c"
+#line 1648 "parser.c"
     break;
 
-  case 23: /* statement: expression_decl  */
-#line 373 "parser.y"
+  case 24: /* statement: expression_decl  */
+#line 411 "parser.y"
     {
         //printf("reduced: statement -> expression_decl\n");
         yyval = yyvsp[0];
 
-        print_ast(yyval);
+        // print_ast($$);
     }
-#line 1614 "parser.c"
+#line 1659 "parser.c"
     break;
 
-  case 24: /* statement: compound_decl  */
-#line 380 "parser.y"
+  case 25: /* statement: compound_decl  */
+#line 418 "parser.y"
     {
         //printf("reduced: statement -> compound_decl\n");
         yyval = yyvsp[0];
 
-        print_ast(yyval);
+        // print_ast($$);
     }
-#line 1625 "parser.c"
+#line 1670 "parser.c"
     break;
 
-  case 25: /* statement: selection_decl  */
-#line 387 "parser.y"
+  case 26: /* statement: selection_decl  */
+#line 425 "parser.y"
     {
         //printf("reduced: statement -> selection_decl\n");
         yyval = yyvsp[0];
 
-        print_ast(yyval);
+        // print_ast($$);
     }
-#line 1636 "parser.c"
+#line 1681 "parser.c"
     break;
 
-  case 26: /* statement: iteration_decl  */
-#line 394 "parser.y"
+  case 27: /* statement: iteration_decl  */
+#line 432 "parser.y"
     {
         //printf("reduced: statement -> iteration_decl\n");
         yyval = yyvsp[0];
 
-        print_ast(yyval);
+        // print_ast($$);
     }
-#line 1647 "parser.c"
+#line 1692 "parser.c"
     break;
 
-  case 27: /* statement: return_decl  */
-#line 401 "parser.y"
+  case 28: /* statement: return_decl  */
+#line 439 "parser.y"
     {
         //printf("reduced: statement -> return_decl\n");
         yyval = yyvsp[0];
 
-        print_ast(yyval);
+        // print_ast($$);
     }
-#line 1658 "parser.c"
+#line 1703 "parser.c"
     break;
 
-  case 28: /* expression_decl: expression SEMICOLON_TOKEN  */
-#line 410 "parser.y"
+  case 29: /* expression_decl: expression SEMICOLON_TOKEN  */
+#line 448 "parser.y"
     {
         //printf("reduced: expression_decl -> expression SEMICOLON_TOKEN\n");
         yyval = yyvsp[-1];
 
-        print_ast(yyval);
+        // print_ast($$);
     }
-#line 1669 "parser.c"
+#line 1714 "parser.c"
     break;
 
-  case 29: /* expression_decl: SEMICOLON_TOKEN  */
-#line 417 "parser.y"
+  case 30: /* expression_decl: SEMICOLON_TOKEN  */
+#line 455 "parser.y"
     {
         //printf("reduced: expression_decl -> SEMICOLON_TOKEN\n");
         yyval = NULL;
 
-        print_ast(yyval);
+        // print_ast($$);
     }
-#line 1680 "parser.c"
+#line 1725 "parser.c"
     break;
 
-  case 30: /* selection_decl: IF_TOKEN LPAREN_TOKEN expression RPAREN_TOKEN statement  */
-#line 426 "parser.y"
+  case 31: /* selection_decl: IF_TOKEN LPAREN_TOKEN expression RPAREN_TOKEN statement fun_else  */
+#line 464 "parser.y"
     {
         //printf("reduced: selection_decl -> IF_TOKEN LPAREN_TOKEN expression RPAREN_TOKEN statement\n");
         ast_node_t* if_node = new_ast_node(STATEMENT_NODE, global_line_number, "if", IF_STMT, NOT_EXP, NO_TYPE);
         //print_ast(if_node);
         //printf("if lexeme: %s line number: %d\n", if_node->lexeme, if_node->lineno);
-        add_child(if_node, yyvsp[-2]);
-        add_child(if_node, yyvsp[0]);
-        yyval = if_node;
-
-        print_ast(yyval);
-
-        // free_ast(if_node);
-    }
-#line 1698 "parser.c"
-    break;
-
-  case 31: /* selection_decl: IF_TOKEN LPAREN_TOKEN expression RPAREN_TOKEN statement ELSE_TOKEN statement  */
-#line 440 "parser.y"
-    {
-        //printf("reduced: selection_decl -> IF_TOKEN LPAREN_TOKEN expression RPAREN_TOKEN statement ELSE_TOKEN statement\n");
-        ast_node_t* if_node = new_ast_node(STATEMENT_NODE, global_line_number, "if", IF_STMT, NOT_EXP, NO_TYPE);
-        ast_node_t* else_node = new_ast_node(STATEMENT_NODE, global_line_number, "else", ELSE_STMT, NOT_EXP, NO_TYPE);
-        //print_ast(if_node);
-        //printf("if lexeme: %s line number: %d\n", if_node->lexeme, if_node->lineno);
         
-        add_child(if_node, yyvsp[-4]);
-        add_child(if_node, yyvsp[-2]);
-        add_child(if_node, else_node);
         yyval = if_node;
+        add_child(yyval, yyvsp[-3]);
+        add_child(yyval, yyvsp[-1]);
 
-        print_ast(yyval);
+        if(yyvsp[0] != NULL) add_child(yyval, yyvsp[0]);
+
+        // print_ast($$);
 
         // free_ast(if_node);
     }
-#line 1719 "parser.c"
+#line 1746 "parser.c"
     break;
 
-  case 32: /* iteration_decl: WHILE_TOKEN LPAREN_TOKEN expression RPAREN_TOKEN statement  */
-#line 459 "parser.y"
+  case 32: /* fun_else: ELSE_TOKEN statement  */
+#line 500 "parser.y"
+    {
+        //create else node
+        //printf("reduced: fun_else -> ELSE_TOKEN statement\n");
+        ast_node_t* else_node = new_ast_node(STATEMENT_NODE, global_line_number, "else", ELSE_STMT, NOT_EXP, NO_TYPE);
+        //print_ast(else_node);
+        //printf("else lexeme: %s line number: %d\n", else_node->lexeme, else_node->lineno);
+        yyval = else_node;
+        add_child(yyval, yyvsp[0]);
+    }
+#line 1760 "parser.c"
+    break;
+
+  case 33: /* fun_else: %empty  */
+#line 510 "parser.y"
+    {
+        yyval = NULL;
+    }
+#line 1768 "parser.c"
+    break;
+
+  case 34: /* iteration_decl: WHILE_TOKEN LPAREN_TOKEN expression RPAREN_TOKEN statement  */
+#line 516 "parser.y"
     {
         //printf("reduced: iteration_decl -> WHILE_TOKEN LPAREN_TOKEN expression RPAREN_TOKEN statement\n");
         ast_node_t* while_node = new_ast_node(STATEMENT_NODE, global_line_number, "while", WHILE_STMT, NOT_EXP, NO_TYPE);
         //print_ast(while_node);
         //printf("while lexeme: %s line number: %d\n", while_node->lexeme, while_node->lineno);
         
-        add_child(while_node, yyvsp[-2]);
-        add_child(while_node, yyvsp[0]);
         yyval = while_node;
+        add_child(yyval, yyvsp[-2]);
+        add_child(yyval, yyvsp[0]);
 
-        print_ast(yyval);
+        // print_ast($$);
 
         // free_ast(while_node);
     }
-#line 1738 "parser.c"
+#line 1787 "parser.c"
     break;
 
-  case 33: /* return_decl: RETURN_TOKEN SEMICOLON_TOKEN  */
-#line 476 "parser.y"
+  case 35: /* return_decl: RETURN_TOKEN SEMICOLON_TOKEN  */
+#line 533 "parser.y"
     {
         //printf("reduced: return_decl -> RETURN_TOKEN SEMICOLON_TOKEN\n");
         ast_node_t* return_node = new_ast_node(STATEMENT_NODE, global_line_number, "return", RETURN_STMT, NOT_EXP, NO_TYPE);
@@ -1747,63 +1796,63 @@ yyreduce:
         
         yyval = return_node;
 
-        print_ast(yyval);
+        // print_ast($$);
 
         // free_ast(return_node);
     }
-#line 1755 "parser.c"
+#line 1804 "parser.c"
     break;
 
-  case 34: /* return_decl: RETURN_TOKEN expression SEMICOLON_TOKEN  */
-#line 489 "parser.y"
+  case 36: /* return_decl: RETURN_TOKEN expression SEMICOLON_TOKEN  */
+#line 546 "parser.y"
     {
         //printf("reduced: return_decl -> RETURN_TOKEN expression SEMICOLON_TOKEN\n");
         ast_node_t* return_node = new_ast_node(STATEMENT_NODE, global_line_number, "return", RETURN_STMT, NOT_EXP, NO_TYPE);
         //print_ast(return_node);
         //printf("return lexeme: %s line number: %d\n", return_node->lexeme, return_node->lineno);
         
-        add_child(return_node, yyvsp[-1]);
         yyval = return_node;
-
-        print_ast(yyval);
+        add_child(yyval, yyvsp[-1]);
+        
+        // print_ast($$);
 
         // free_ast(return_node);
     }
-#line 1773 "parser.c"
+#line 1822 "parser.c"
     break;
 
-  case 35: /* expression: var ASSIGN_TOKEN expression  */
-#line 505 "parser.y"
+  case 37: /* expression: var ASSIGN_TOKEN expression  */
+#line 562 "parser.y"
     {
         //printf("reduced: expression -> var ASSIGN_TOKEN expression\n");
-        ast_node_t* assign_node = new_ast_node(EXPRESSION_NODE, global_line_number, "=", NOT_STMT, OP_EXP, NO_TYPE);
+        ast_node_t* assign_node = new_ast_node(EXPRESSION_NODE, global_line_number, "==", NOT_STMT, OP_EXP, NO_TYPE);
         //print_ast(assign_node);
         //printf("assign lexeme: %s line number: %d\n", assign_node->lexeme, assign_node->lineno);
         
-        add_child(assign_node, yyvsp[-2]);
-        add_child(assign_node, yyvsp[0]);
         yyval = assign_node;
-
-        print_ast(yyval);
+        add_child(yyval, yyvsp[-2]);
+        add_child(yyval, yyvsp[0]);
+        
+        // print_ast($$);
 
         // free_ast(assign_node);
     }
-#line 1792 "parser.c"
+#line 1841 "parser.c"
     break;
 
-  case 36: /* expression: simple_expression  */
-#line 520 "parser.y"
+  case 38: /* expression: simple_expression  */
+#line 577 "parser.y"
     {
         //printf("reduced: expression -> simple_expression\n");
         yyval = yyvsp[0];
 
-        print_ast(yyval);
+        // print_ast($$);
     }
-#line 1803 "parser.c"
+#line 1852 "parser.c"
     break;
 
-  case 37: /* var: ID_TOKEN  */
-#line 529 "parser.y"
+  case 39: /* var: ID_TOKEN  */
+#line 586 "parser.y"
     {
         //printf("reduced: var -> ID_TOKEN\n");
         //find ID in tokens list
@@ -1812,9 +1861,9 @@ yyreduce:
         for(int i = token_count-1; i >= 0; i--)
         {
             token_type_t type = token_list[i]->type;
+            print_token(token_list[i]);
             if (convert_token(type) == ID_TOKEN) 
             {
-                // printf("found token id\n");
                 token = token_list[i];
                 break;
             }
@@ -1826,15 +1875,15 @@ yyreduce:
         
         yyval = id_node;
 
-        print_ast(yyval);
+        // print_ast($$);
 
         // free_ast(id_node);
     }
-#line 1834 "parser.c"
+#line 1883 "parser.c"
     break;
 
-  case 38: /* var: ID_TOKEN LBRACKET_TOKEN expression RBRACKET_TOKEN  */
-#line 556 "parser.y"
+  case 40: /* var: ID_TOKEN LBRACKET_TOKEN expression RBRACKET_TOKEN  */
+#line 613 "parser.y"
     {
         //printf("reduced: var -> ID_TOKEN LBRACKET_TOKEN expression RBRACKET_TOKEN\n");
         //find ID in tokens list
@@ -1842,9 +1891,9 @@ yyreduce:
         for(int i = token_count-1; i >= 0; i--)
         {
             token_type_t type = token_list[i]->type;
+            print_token(token_list[i]);
             if (convert_token(type) == ID_TOKEN) 
             {
-                // printf("found token id\n");
                 token = token_list[i];
                 break;
             }
@@ -1854,42 +1903,44 @@ yyreduce:
         //print_ast(id_node);
         //printf("id lexeme: %s line number: %d\n", id_node->lexeme, id_node->lineno);
         
-        add_child(id_node, yyvsp[-1]);
         yyval = id_node;
+        add_child(yyval, yyvsp[-1]);
+        
 
-        print_ast(yyval);
+        // print_ast($$);
 
         //free_ast(id_node);
     }
-#line 1865 "parser.c"
+#line 1915 "parser.c"
     break;
 
-  case 39: /* simple_expression: sum_expression relational sum_expression  */
-#line 585 "parser.y"
+  case 41: /* simple_expression: sum_expression relational sum_expression  */
+#line 643 "parser.y"
     {
         //printf("reduced: simple_expression -> sum_expression relational sum_expression\n");
-        add_child(yyvsp[-1], yyvsp[-2]);
-        add_child(yyvsp[-1], yyvsp[0]);
+        
         yyval = yyvsp[-1];
+        add_child(yyval, yyvsp[-2]);
+        add_child(yyval, yyvsp[0]);
 
-        print_ast(yyval);
+        // print_ast($$);
     }
-#line 1878 "parser.c"
+#line 1929 "parser.c"
     break;
 
-  case 40: /* simple_expression: sum_expression  */
-#line 594 "parser.y"
+  case 42: /* simple_expression: sum_expression  */
+#line 653 "parser.y"
     {
         //printf("reduced: simple_expression -> sum_expression\n");
         yyval = yyvsp[0];
 
-        print_ast(yyval);
+        // print_ast($$);
     }
-#line 1889 "parser.c"
+#line 1940 "parser.c"
     break;
 
-  case 41: /* relational: LT_TOKEN  */
-#line 603 "parser.y"
+  case 43: /* relational: LT_TOKEN  */
+#line 662 "parser.y"
     {
         //printf("reduced: relational -> LT_TOKEN\n");
         ast_node_t* lt_node = new_ast_node(EXPRESSION_NODE, global_line_number, "<", NOT_STMT, OP_EXP, NO_TYPE);
@@ -1898,14 +1949,14 @@ yyreduce:
         
         yyval = lt_node;
 
-        print_ast(yyval);
+        // print_ast($$);
         // free_ast(lt_node);
     }
-#line 1905 "parser.c"
+#line 1956 "parser.c"
     break;
 
-  case 42: /* relational: LTE_TOKEN  */
-#line 615 "parser.y"
+  case 44: /* relational: LTE_TOKEN  */
+#line 674 "parser.y"
     {
         //printf("reduced: relational -> LTE_TOKEN\n");
         ast_node_t* lte_node = new_ast_node(EXPRESSION_NODE, global_line_number, "<=", NOT_STMT, OP_EXP, NO_TYPE);
@@ -1914,14 +1965,14 @@ yyreduce:
         
         yyval = lte_node;
 
-        print_ast(yyval);
+        // print_ast($$);
         //free_ast(lte_node);
     }
-#line 1921 "parser.c"
+#line 1972 "parser.c"
     break;
 
-  case 43: /* relational: GT_TOKEN  */
-#line 627 "parser.y"
+  case 45: /* relational: GT_TOKEN  */
+#line 686 "parser.y"
     {
         //printf("reduced: relational -> GT_TOKEN\n");
         ast_node_t* gt_node = new_ast_node(EXPRESSION_NODE, global_line_number, ">", NOT_STMT, OP_EXP, NO_TYPE);
@@ -1930,14 +1981,14 @@ yyreduce:
         
         yyval = gt_node;
 
-        print_ast(yyval);
+        // print_ast($$);
         //free_ast(gt_node);
     }
-#line 1937 "parser.c"
+#line 1988 "parser.c"
     break;
 
-  case 44: /* relational: GTE_TOKEN  */
-#line 639 "parser.y"
+  case 46: /* relational: GTE_TOKEN  */
+#line 698 "parser.y"
     {
         //printf("reduced: relational -> GTE_TOKEN\n");
         ast_node_t* gte_node = new_ast_node(EXPRESSION_NODE, global_line_number, ">=", NOT_STMT, OP_EXP, NO_TYPE);
@@ -1946,32 +1997,30 @@ yyreduce:
         
         yyval = gte_node;
 
-        print_ast(yyval);
-
+        // print_ast($$);
         // free_ast(gte_node);
     }
-#line 1954 "parser.c"
+#line 2004 "parser.c"
     break;
 
-  case 45: /* relational: EQ_TOKEN  */
-#line 652 "parser.y"
+  case 47: /* relational: EQ_TOKEN  */
+#line 710 "parser.y"
     {
         //printf("reduced: relational -> EQ_TOKEN\n");
-        ast_node_t* eq_node = new_ast_node(EXPRESSION_NODE, global_line_number, "==", NOT_STMT, OP_EXP, NO_TYPE);
+        ast_node_t* eq_node = new_ast_node(EXPRESSION_NODE, global_line_number, "=", NOT_STMT, OP_EXP, NO_TYPE);
         //print_ast(eq_node);
         //printf("eq lexeme: %s line number: %d\n", eq_node->lexeme, eq_node->lineno);
         
         yyval = eq_node;
 
-        print_ast(yyval);
-
+        // print_ast($$);
         //free_ast(eq_node);
     }
-#line 1971 "parser.c"
+#line 2020 "parser.c"
     break;
 
-  case 46: /* relational: NEQ_TOKEN  */
-#line 665 "parser.y"
+  case 48: /* relational: NEQ_TOKEN  */
+#line 722 "parser.y"
     {
         //printf("reduced: relational -> NEQ_TOKEN\n");
         ast_node_t* neq_node = new_ast_node(EXPRESSION_NODE, global_line_number, "!=", NOT_STMT, OP_EXP, NO_TYPE);
@@ -1979,39 +2028,40 @@ yyreduce:
         //printf("neq lexeme: %s line number: %d\n", neq_node->lexeme, neq_node->lineno);
         yyval = neq_node;
 
-        print_ast(yyval);
-
+        // print_ast($$);
         //free_ast(neq_node);
     }
-#line 1987 "parser.c"
+#line 2035 "parser.c"
     break;
 
-  case 47: /* sum_expression: sum_expression sum term  */
-#line 679 "parser.y"
+  case 49: /* sum_expression: sum_expression sum term  */
+#line 735 "parser.y"
     {
         //printf("reduced: sum_expression -> sum_expression sum term\n");
-        add_child(yyvsp[-1], yyvsp[-2]);
-        add_child(yyvsp[-1], yyvsp[0]);
+        
         yyval = yyvsp[-1];
+        add_child(yyval, yyvsp[-2]);
+        add_child(yyval, yyvsp[0]);
+        
 
-        print_ast(yyval);
+        // print_ast($$);
     }
-#line 2000 "parser.c"
+#line 2050 "parser.c"
     break;
 
-  case 48: /* sum_expression: term  */
-#line 688 "parser.y"
+  case 50: /* sum_expression: term  */
+#line 746 "parser.y"
     {
         //printf("reduced: sum_expression -> term\n");
         yyval = yyvsp[0];
 
-        print_ast(yyval);
+        // print_ast($$);
     }
-#line 2011 "parser.c"
+#line 2061 "parser.c"
     break;
 
-  case 49: /* sum: PLUS_TOKEN  */
-#line 697 "parser.y"
+  case 51: /* sum: PLUS_TOKEN  */
+#line 755 "parser.y"
     {
         //printf("reduced: sum -> PLUS_TOKEN\n");
         ast_node_t* plus_node = new_ast_node(EXPRESSION_NODE, global_line_number, "+", NOT_STMT, OP_EXP, NO_TYPE);
@@ -2020,13 +2070,13 @@ yyreduce:
         yyval = plus_node;
 
         //free_ast(plus_node);
-        print_ast(yyval);
+        // print_ast($$);
     }
-#line 2026 "parser.c"
+#line 2076 "parser.c"
     break;
 
-  case 50: /* sum: MINUS_TOKEN  */
-#line 708 "parser.y"
+  case 52: /* sum: MINUS_TOKEN  */
+#line 766 "parser.y"
     {
         //printf("reduced: sum -> MINUS_TOKEN\n");
         ast_node_t* minus_node = new_ast_node(EXPRESSION_NODE, global_line_number, "-", NOT_STMT, OP_EXP, NO_TYPE);
@@ -2035,37 +2085,39 @@ yyreduce:
         yyval = minus_node;
 
         //free_ast(minus_node);
-        print_ast(yyval);
+        // print_ast($$);
     }
-#line 2041 "parser.c"
+#line 2091 "parser.c"
     break;
 
-  case 51: /* term: term mult factor  */
-#line 721 "parser.y"
+  case 53: /* term: term mult factor  */
+#line 779 "parser.y"
     {
         //printf("reduced: term -> term mult factor\n");
-        add_child(yyvsp[-1], yyvsp[-2]);
-        add_child(yyvsp[-1], yyvsp[0]);
+        
+        
         yyval = yyvsp[-1];
-
-        print_ast(yyval);
+        add_child(yyval, yyvsp[-2]);
+        add_child(yyval, yyvsp[0]);
+        
+        // print_ast($$);
     }
-#line 2054 "parser.c"
+#line 2106 "parser.c"
     break;
 
-  case 52: /* term: factor  */
-#line 730 "parser.y"
+  case 54: /* term: factor  */
+#line 790 "parser.y"
     {
         //printf("reduced: term -> factor\n");
         yyval = yyvsp[0];
 
-        print_ast(yyval);
+        // print_ast($$);
     }
-#line 2065 "parser.c"
+#line 2117 "parser.c"
     break;
 
-  case 53: /* mult: MULTIPLY_TOKEN  */
-#line 739 "parser.y"
+  case 55: /* mult: MULTIPLY_TOKEN  */
+#line 799 "parser.y"
     {
         //printf("reduced: mult -> MULTIPLY_TOKEN\n");
         ast_node_t* multiply_node = new_ast_node(EXPRESSION_NODE, global_line_number, "*", NOT_STMT, OP_EXP, NO_TYPE);
@@ -2073,15 +2125,14 @@ yyreduce:
         //printf("multiply lexeme: %s line number: %d\n", multiply_node->lexeme, multiply_node->lineno);
         yyval = multiply_node;
 
-        print_ast(yyval);
-
+        // print_ast($$);
         //free_ast(multiply_node);
     }
-#line 2081 "parser.c"
+#line 2132 "parser.c"
     break;
 
-  case 54: /* mult: DIVIDE_TOKEN  */
-#line 751 "parser.y"
+  case 56: /* mult: DIVIDE_TOKEN  */
+#line 810 "parser.y"
     {
         //printf("reduced: mult -> DIVIDE_TOKEN\n");
         ast_node_t* divide_node = new_ast_node(EXPRESSION_NODE, global_line_number, "/", NOT_STMT, OP_EXP, NO_TYPE);
@@ -2089,44 +2140,44 @@ yyreduce:
         //printf("divide lexeme: %s line number: %d\n", divide_node->lexeme, divide_node->lineno);
         yyval = divide_node;
 
-        print_ast(yyval);
+        // print_ast($$);
 
         // free_ast(divide_node);
     }
-#line 2097 "parser.c"
+#line 2148 "parser.c"
     break;
 
-  case 55: /* factor: LPAREN_TOKEN expression RPAREN_TOKEN  */
-#line 765 "parser.y"
+  case 57: /* factor: LPAREN_TOKEN expression RPAREN_TOKEN  */
+#line 824 "parser.y"
     {
         //printf("reduced: factor -> LPAREN_TOKEN expression RPAREN_TOKEN\n");
         yyval = yyvsp[-1];
     }
-#line 2106 "parser.c"
+#line 2157 "parser.c"
     break;
 
-  case 56: /* factor: var  */
-#line 770 "parser.y"
+  case 58: /* factor: var  */
+#line 829 "parser.y"
     {
         //printf("reduced: factor -> var\n");
         yyval = yyvsp[0];
     
     }
-#line 2116 "parser.c"
+#line 2167 "parser.c"
     break;
 
-  case 57: /* factor: activation  */
-#line 776 "parser.y"
+  case 59: /* factor: activation  */
+#line 835 "parser.y"
     {
         //printf("reduced: factor -> activation\n");
         yyval = yyvsp[0];
     
     }
-#line 2126 "parser.c"
+#line 2177 "parser.c"
     break;
 
-  case 58: /* factor: NUM_TOKEN  */
-#line 782 "parser.y"
+  case 60: /* factor: NUM_TOKEN  */
+#line 841 "parser.y"
     {
         //printf("reduced: factor -> NUM_TOKEN\n");
         //create NUM node
@@ -2136,6 +2187,7 @@ yyreduce:
         for(int i = token_count-1; i >= 0; i--)
         {
             token_type_t type = token_list[i]->type;
+            print_token(token_list[i]);
             if (convert_token(type) == NUM_TOKEN) 
             {
                 // printf("found token num\n");
@@ -2152,70 +2204,73 @@ yyreduce:
         
         //free_ast(num_node);
     }
-#line 2156 "parser.c"
+#line 2208 "parser.c"
     break;
 
-  case 59: /* activation: ID_TOKEN LPAREN_TOKEN args RPAREN_TOKEN  */
-#line 810 "parser.y"
+  case 61: /* activation: fun_id LPAREN_TOKEN args RPAREN_TOKEN  */
+#line 870 "parser.y"
     {
         //printf("reduced: activation -> ID_TOKEN LPAREN_TOKEN args RPAREN_TOKEN\n");
         //create ID node
 
         //find ID lexeme in token list
-        token_t* token = NULL;
-        for (int i = token_count-1; i >= 0; i--) 
-        {
-            token_type_t type = token_list[i]->type;
-            if (convert_token(type) == ID_TOKEN) 
-            {
-                // printf("found token id\n");
-                token = token_list[i];
-                break;
-            }
-        }
+        // token_t* token = NULL;
+        // for (int i = token_count-1; i >= 0; i--) 
+        // {
+        //     token_type_t type = token_list[i]->type;
+        //     print_token(token_list[i]);
+        //     if (convert_token(type) == ID_TOKEN) 
+        //     {
+        //         // printf("found token id\n");
+        //         token = token_list[i];
+        //         break;
+        //     }
+        // }
 
-        // printf("needed to find token id\n");
-        // printf("found token: %s\n", token->lexeme);
+        // // printf("needed to find token id\n");
+        // // printf("found token: %s\n", token->lexeme);
 
-        ast_node_t* id_node = new_ast_node(EXPRESSION_NODE, global_line_number, token->lexeme, NOT_STMT, ID_EXP, NO_TYPE);
+        // ast_node_t* id_node = new_ast_node(EXPRESSION_NODE, global_line_number, token->lexeme, NOT_STMT, ID_EXP, NO_TYPE);
         //print_ast(id_node);
         //printf("id lexeme: %s line number: %d\n", id_node->lexeme, id_node->lineno);
         
-        add_child(id_node, yyvsp[-1]);
-        yyval = id_node;
+        yyval = yyvsp[-3];
+        add_child(yyval, yyvsp[-1]);
+        
         
         //free_ast(id_node);
     }
-#line 2190 "parser.c"
+#line 2244 "parser.c"
     break;
 
-  case 60: /* args: arg_list  */
-#line 842 "parser.y"
+  case 62: /* args: arg_list  */
+#line 904 "parser.y"
     {
         //printf("reduced: args -> arg_list\n");
         yyval = yyvsp[0];
     }
-#line 2199 "parser.c"
+#line 2253 "parser.c"
     break;
 
-  case 61: /* args: %empty  */
-#line 847 "parser.y"
+  case 63: /* args: %empty  */
+#line 909 "parser.y"
     {
         //printf("reduced: args -> vazio\n");
         yyval = NULL;
     }
-#line 2208 "parser.c"
+#line 2262 "parser.c"
     break;
 
-  case 62: /* arg_list: arg_list COMMA_TOKEN expression  */
-#line 854 "parser.y"
+  case 64: /* arg_list: arg_list COMMA_TOKEN expression  */
+#line 916 "parser.y"
     {
         //printf("reduced: arg_list -> arg_list COMMA_TOKEN expression\n");
         // arg_list have expression as sibling
         if (yyvsp[-2] != NULL) 
         {
-            add_sibling(yyvsp[-2], yyvsp[0]);
             yyval = yyvsp[-2];
+            add_sibling(yyval, yyvsp[0]);
+            
         }
         else 
         {
@@ -2223,20 +2278,20 @@ yyreduce:
         }
 
     }
-#line 2227 "parser.c"
+#line 2282 "parser.c"
     break;
 
-  case 63: /* arg_list: expression  */
-#line 869 "parser.y"
+  case 65: /* arg_list: expression  */
+#line 932 "parser.y"
     {
         //printf("reduced: arg_list -> expression\n");
         yyval = yyvsp[0];
     }
-#line 2236 "parser.c"
+#line 2291 "parser.c"
     break;
 
 
-#line 2240 "parser.c"
+#line 2295 "parser.c"
 
       default: break;
     }
@@ -2429,7 +2484,7 @@ yyreturnlab:
   return yyresult;
 }
 
-#line 875 "parser.y"
+#line 938 "parser.y"
 
 
 void yyerror(char *s)

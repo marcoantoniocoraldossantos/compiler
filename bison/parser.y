@@ -43,22 +43,22 @@
         //printf("reduced: decl_list -> decl_list declaration\n");
         if ($1 != NULL) 
         {
-            add_sibling($1, $2);
             $$ = $1;
+            add_sibling($$, $2);
         }
         else 
         {
             $$ = $2;
         }
 
-        print_ast($$);
+        // print_ast($$);
     }
     | declaration
     {
         //printf("reduced: decl_list -> declaration\n");
         $$ = $1;
 
-        print_ast($$);
+        // print_ast($$);
     }
     ;
 
@@ -67,14 +67,14 @@
         //printf("reduced: declaration -> var_declaration\n");
         $$ = $1;
 
-        print_ast($$);
+        // print_ast($$);
     }
     | fun_declaration
     {
         //printf("reduced: declaration -> fun_declaration\n");
         $$ = $1;
 
-        print_ast($$);
+        // print_ast($$);
     }
     ;
 
@@ -82,11 +82,14 @@
     {
         //printf("reduced: var_declaration -> type_specifier ID_TOKEN SEMICOLON_TOKEN\n");
 
+        $$ = $1;
+
         //find ID in tokens list
         token_t* token = NULL;
         for(int i = token_count-1; i >= 0; i--)
         {
             token_type_t type = token_list[i]->type;
+            print_token(token_list[i]);
             if (convert_token(type) == ID_TOKEN) 
             {
                 // printf("found token id\n");
@@ -98,10 +101,9 @@
         ast_node_t* id_node = new_ast_node(EXPRESSION_NODE, global_line_number, token->lexeme, NOT_STMT, ID_EXP, NO_TYPE);
         //print_ast(id_node);
         //printf("id lexeme: %s line number: %d\n", id_node->lexeme, id_node->lineno);
-        add_child($1, id_node);
-        $$ = $1;
+        add_child($$, id_node);
 
-        print_ast($$);
+        // print_ast($$);
 
         // free_ast(id_node);
     }
@@ -114,6 +116,7 @@
         for(int i = token_count-1; i >= 0; i--)
         {
             token_type_t type = token_list[i]->type;
+            print_token(token_list[i]);
             if (convert_token(type) == ID_TOKEN) 
             {
                 // printf("found token id\n");
@@ -129,9 +132,9 @@
         for(int i = token_count-1; i >= 0; i--)
         {
             token_type_t type = token_list[i]->type;
+            print_token(token_list[i]);
             if (convert_token(type) == NUM_TOKEN) 
             {
-                // printf("found token num\n");
                 token_num = token_list[i];
                 break;
             }
@@ -141,11 +144,12 @@
 
         //print_ast(id_node);
         //printf("id lexeme: %s line number: %d\n", id_node->lexeme, id_node->lineno);
-        add_child($1, id_node);
-        add_child($1, num_node);
+        
         $$ = $1;
+        add_child($$, id_node);
+        add_child($$, num_node);
 
-        print_ast($$);
+        // print_ast($$);
 
         // free_ast(id_node);
     }
@@ -160,7 +164,7 @@
 
         $$ = int_node;
 
-        print_ast($$);
+        // print_ast($$);
 
         // free_ast(int_node);
     }
@@ -171,7 +175,7 @@
         //print_ast(void_node);
         //printf("void lexeme: %s line number: %d\n", void_node->lexeme, void_node->lineno);
        
-        print_ast($$);
+        // print_ast($$);
 
         $$ = void_node;
 
@@ -179,18 +183,49 @@
     }
     ;
 
-    fun_declaration : type_specifier ID_TOKEN LPAREN_TOKEN params RPAREN_TOKEN compound_decl
+    fun_declaration : type_specifier fun_id LPAREN_TOKEN params RPAREN_TOKEN compound_decl
     {
         //printf("reduced: fun_declaration -> type_specifier ID_TOKEN LPAREN_TOKEN params RPAREN_TOKEN compound_decl\n");
 
+        //find ID in tokens list
+        // token_t* token = NULL;
+        // for(int i = token_count-1; i >= 0; i--)
+        // {
+        //     token_type_t type = token_list[i]->type;
+        //     print_token(token_list[i]);
+        //     if (convert_token(type) == ID_TOKEN) 
+        //     {
+        //         token = token_list[i];
+        //         break;
+        //     }
+        // }
+
+        // ast_node_t* id_node = new_ast_node(EXPRESSION_NODE, global_line_number, token->lexeme, NOT_STMT, ID_EXP, NO_TYPE);
+        //print_ast(id_node);
+        //printf("id lexeme: %s line number: %d\n", id_node->lexeme, id_node->lineno);
+        
+        $$ = $1;        
+        add_child($$, $4);
+        add_child($$, $2);
+        add_child($2, $6);
+
+        // print_ast($$);
+
+        // free_ast(id_node);
+    }
+    ;
+
+    fun_id : ID_TOKEN
+    {
+        //printf("reduced: fun_id -> ID_TOKEN\n");
         //find ID in tokens list
         token_t* token = NULL;
         for(int i = token_count-1; i >= 0; i--)
         {
             token_type_t type = token_list[i]->type;
+            print_token(token_list[i]);
             if (convert_token(type) == ID_TOKEN) 
             {
-                // printf("found token id\n");
                 token = token_list[i];
                 break;
             }
@@ -200,16 +235,12 @@
         //print_ast(id_node);
         //printf("id lexeme: %s line number: %d\n", id_node->lexeme, id_node->lineno);
         
-        add_child($1, id_node);
-        add_child($1, $4);
-        add_child(id_node, $6);
-        $$ = $1;        
+        $$ = id_node;
 
-        print_ast($$);
+        // print_ast($$);
 
         // free_ast(id_node);
     }
-    ;
 
     params : param_list
     {
@@ -224,7 +255,7 @@
         //printf("void lexeme: %s line number: %d\n", void_node->lexeme, void_node->lineno);
         $$ = void_node;
 
-        print_ast($$);
+        // print_ast($$);
 
         // free_ast(void_node);
     }
@@ -235,8 +266,9 @@
         //printf("reduced: param_list -> param_list COMMA_TOKEN param\n");
         if ($1 != NULL) 
         {
-            add_sibling($1, $3);
             $$ = $1;
+            add_sibling($$, $3);
+            
         }
         else 
         {
@@ -258,9 +290,9 @@
         for(int i = token_count-1; i >= 0; i--)
         {
             token_type_t type = token_list[i]->type;
+            print_token(token_list[i]);
             if (convert_token(type) == ID_TOKEN) 
             {
-                // printf("found token id\n");
                 token = token_list[i];
                 break;
             }
@@ -270,10 +302,12 @@
         //print_ast(id_node);
         //printf("id lexeme: %s line number: %d\n", id_node->lexeme, id_node->lineno);
 
-        add_child($1, id_node);
-        $$ = $1;
 
-        print_ast($$);
+        $$ = $1;
+        add_child($$, id_node);
+        
+
+        // print_ast($$);
 
         // free_ast(id_node);
     }
@@ -285,9 +319,9 @@
         for(int i = token_count-1; i >= 0; i--)
         {
             token_type_t type = token_list[i]->type;
+            print_token(token_list[i]);
             if (convert_token(type) == ID_TOKEN) 
             {
-                // printf("found token id\n");
                 token = token_list[i];
                 break;
             }
@@ -297,10 +331,11 @@
         //print_ast(id_node);
         //printf("id lexeme: %s line number: %d\n", id_node->lexeme, id_node->lineno);
         
-        add_child($1, id_node);
         $$ = $1;
+        add_child($$, id_node);
+        
 
-        print_ast($$);
+        // print_ast($$);
 
         // free_ast(id_node);
     }
@@ -311,8 +346,9 @@
         //printf("reduced: compound_decl -> LBRACE_TOKEN local_declarations statement_list RBRACE_TOKEN\n");
         if($2 != NULL) 
         {
-            add_sibling($2, $3);
             $$ = $2;
+            add_sibling($$, $3);
+            
         }
         else 
         {
@@ -326,22 +362,23 @@
         //printf("reduced: local_declarations -> local_declarations var_declaration\n");
         if ($1 != NULL) 
         {
-            add_sibling($1, $2);
             $$ = $1;
+            add_sibling($$, $2);
+            
         }
         else 
         {
             $$ = $2;
         }
 
-        print_ast($$);
+        // print_ast($$);
     }
     | /* vazio */
     {
         //printf("reduced: local_declarations -> vazio\n");
         $$ = NULL;
 
-        print_ast($$);
+        // print_ast($$);
     }
     ;
 
@@ -350,15 +387,16 @@
         //printf("reduced: statement_list -> statement_list statement\n");
         if ($1 != NULL) 
         {
-            add_sibling($1, $2);
             $$ = $1;
+            add_sibling($$, $2);
+           
         }
         else 
         {
             $$ = $2;
         }
 
-        print_ast($$);
+        // print_ast($$);
     }
     | /* vazio */
     {
@@ -374,35 +412,35 @@
         //printf("reduced: statement -> expression_decl\n");
         $$ = $1;
 
-        print_ast($$);
+        // print_ast($$);
     }
     | compound_decl
     {
         //printf("reduced: statement -> compound_decl\n");
         $$ = $1;
 
-        print_ast($$);
+        // print_ast($$);
     }
     | selection_decl
     {
         //printf("reduced: statement -> selection_decl\n");
         $$ = $1;
 
-        print_ast($$);
+        // print_ast($$);
     }
     | iteration_decl
     {
         //printf("reduced: statement -> iteration_decl\n");
         $$ = $1;
 
-        print_ast($$);
+        // print_ast($$);
     }
     | return_decl
     {
         //printf("reduced: statement -> return_decl\n");
         $$ = $1;
 
-        print_ast($$);
+        // print_ast($$);
     }
     ;
 
@@ -411,49 +449,68 @@
         //printf("reduced: expression_decl -> expression SEMICOLON_TOKEN\n");
         $$ = $1;
 
-        print_ast($$);
+        // print_ast($$);
     }
     | SEMICOLON_TOKEN
     {
         //printf("reduced: expression_decl -> SEMICOLON_TOKEN\n");
         $$ = NULL;
 
-        print_ast($$);
+        // print_ast($$);
     }
     ;
 
-    selection_decl : IF_TOKEN LPAREN_TOKEN expression RPAREN_TOKEN statement 
+    selection_decl : IF_TOKEN LPAREN_TOKEN expression RPAREN_TOKEN statement fun_else
     {
         //printf("reduced: selection_decl -> IF_TOKEN LPAREN_TOKEN expression RPAREN_TOKEN statement\n");
         ast_node_t* if_node = new_ast_node(STATEMENT_NODE, global_line_number, "if", IF_STMT, NOT_EXP, NO_TYPE);
         //print_ast(if_node);
         //printf("if lexeme: %s line number: %d\n", if_node->lexeme, if_node->lineno);
-        add_child(if_node, $3);
-        add_child(if_node, $5);
-        $$ = if_node;
-
-        print_ast($$);
-
-        // free_ast(if_node);
-    }
-    | IF_TOKEN LPAREN_TOKEN expression RPAREN_TOKEN statement ELSE_TOKEN statement
-    {
-        //printf("reduced: selection_decl -> IF_TOKEN LPAREN_TOKEN expression RPAREN_TOKEN statement ELSE_TOKEN statement\n");
-        ast_node_t* if_node = new_ast_node(STATEMENT_NODE, global_line_number, "if", IF_STMT, NOT_EXP, NO_TYPE);
-        ast_node_t* else_node = new_ast_node(STATEMENT_NODE, global_line_number, "else", ELSE_STMT, NOT_EXP, NO_TYPE);
-        //print_ast(if_node);
-        //printf("if lexeme: %s line number: %d\n", if_node->lexeme, if_node->lineno);
         
-        add_child(if_node, $3);
-        add_child(if_node, $5);
-        add_child(if_node, else_node);
         $$ = if_node;
+        add_child($$, $3);
+        add_child($$, $5);
 
-        print_ast($$);
+        if($6 != NULL) add_child($$, $6);
+
+        // print_ast($$);
 
         // free_ast(if_node);
     }
+    // | IF_TOKEN LPAREN_TOKEN expression RPAREN_TOKEN statement ELSE_TOKEN statement
+    // {
+    //     //printf("reduced: selection_decl -> IF_TOKEN LPAREN_TOKEN expression RPAREN_TOKEN statement ELSE_TOKEN statement\n");
+    //     ast_node_t* if_node = new_ast_node(STATEMENT_NODE, global_line_number, "if", IF_STMT, NOT_EXP, NO_TYPE);
+    //     ast_node_t* else_node = new_ast_node(STATEMENT_NODE, global_line_number, "else", ELSE_STMT, NOT_EXP, NO_TYPE);
+    //     //print_ast(if_node);
+    //     //printf("if lexeme: %s line number: %d\n", if_node->lexeme, if_node->lineno);
+        
+    //     add_child(if_node, $3);
+    //     add_child(if_node, $5);
+    //     add_child(if_node, else_node);
+    //     $$ = if_node;
+
+    //     print_ast($$);
+
+    //     // free_ast(if_node);
+    // }
     ;
+
+    fun_else: ELSE_TOKEN statement
+    {
+        //create else node
+        //printf("reduced: fun_else -> ELSE_TOKEN statement\n");
+        ast_node_t* else_node = new_ast_node(STATEMENT_NODE, global_line_number, "else", ELSE_STMT, NOT_EXP, NO_TYPE);
+        //print_ast(else_node);
+        //printf("else lexeme: %s line number: %d\n", else_node->lexeme, else_node->lineno);
+        $$ = else_node;
+        add_child($$, $2);
+    }
+    |
+    {
+        $$ = NULL;
+    } 
+
 
     iteration_decl : WHILE_TOKEN LPAREN_TOKEN expression RPAREN_TOKEN statement
     {
@@ -462,11 +519,11 @@
         //print_ast(while_node);
         //printf("while lexeme: %s line number: %d\n", while_node->lexeme, while_node->lineno);
         
-        add_child(while_node, $3);
-        add_child(while_node, $5);
         $$ = while_node;
+        add_child($$, $3);
+        add_child($$, $5);
 
-        print_ast($$);
+        // print_ast($$);
 
         // free_ast(while_node);
     }
@@ -481,7 +538,7 @@
         
         $$ = return_node;
 
-        print_ast($$);
+        // print_ast($$);
 
         // free_ast(return_node);
     }
@@ -492,10 +549,10 @@
         //print_ast(return_node);
         //printf("return lexeme: %s line number: %d\n", return_node->lexeme, return_node->lineno);
         
-        add_child(return_node, $2);
         $$ = return_node;
-
-        print_ast($$);
+        add_child($$, $2);
+        
+        // print_ast($$);
 
         // free_ast(return_node);
     }
@@ -504,15 +561,15 @@
     expression : var ASSIGN_TOKEN expression
     {
         //printf("reduced: expression -> var ASSIGN_TOKEN expression\n");
-        ast_node_t* assign_node = new_ast_node(EXPRESSION_NODE, global_line_number, "=", NOT_STMT, OP_EXP, NO_TYPE);
+        ast_node_t* assign_node = new_ast_node(EXPRESSION_NODE, global_line_number, "==", NOT_STMT, OP_EXP, NO_TYPE);
         //print_ast(assign_node);
         //printf("assign lexeme: %s line number: %d\n", assign_node->lexeme, assign_node->lineno);
         
-        add_child(assign_node, $1);
-        add_child(assign_node, $3);
         $$ = assign_node;
-
-        print_ast($$);
+        add_child($$, $1);
+        add_child($$, $3);
+        
+        // print_ast($$);
 
         // free_ast(assign_node);
     }
@@ -521,7 +578,7 @@
         //printf("reduced: expression -> simple_expression\n");
         $$ = $1;
 
-        print_ast($$);
+        // print_ast($$);
     }
     ;
 
@@ -534,9 +591,9 @@
         for(int i = token_count-1; i >= 0; i--)
         {
             token_type_t type = token_list[i]->type;
+            print_token(token_list[i]);
             if (convert_token(type) == ID_TOKEN) 
             {
-                // printf("found token id\n");
                 token = token_list[i];
                 break;
             }
@@ -548,7 +605,7 @@
         
         $$ = id_node;
 
-        print_ast($$);
+        // print_ast($$);
 
         // free_ast(id_node);
     }
@@ -560,9 +617,9 @@
         for(int i = token_count-1; i >= 0; i--)
         {
             token_type_t type = token_list[i]->type;
+            print_token(token_list[i]);
             if (convert_token(type) == ID_TOKEN) 
             {
-                // printf("found token id\n");
                 token = token_list[i];
                 break;
             }
@@ -572,10 +629,11 @@
         //print_ast(id_node);
         //printf("id lexeme: %s line number: %d\n", id_node->lexeme, id_node->lineno);
         
-        add_child(id_node, $3);
         $$ = id_node;
+        add_child($$, $3);
+        
 
-        print_ast($$);
+        // print_ast($$);
 
         //free_ast(id_node);
     }
@@ -584,18 +642,19 @@
     simple_expression : sum_expression relational sum_expression
     {
         //printf("reduced: simple_expression -> sum_expression relational sum_expression\n");
-        add_child($2, $1);
-        add_child($2, $3);
+        
         $$ = $2;
+        add_child($$, $1);
+        add_child($$, $3);
 
-        print_ast($$);
+        // print_ast($$);
     }
     | sum_expression
     {
         //printf("reduced: simple_expression -> sum_expression\n");
         $$ = $1;
 
-        print_ast($$);
+        // print_ast($$);
     }
     ;
 
@@ -608,7 +667,7 @@
         
         $$ = lt_node;
 
-        print_ast($$);
+        // print_ast($$);
         // free_ast(lt_node);
     }
     | LTE_TOKEN
@@ -620,7 +679,7 @@
         
         $$ = lte_node;
 
-        print_ast($$);
+        // print_ast($$);
         //free_ast(lte_node);
     }
     | GT_TOKEN
@@ -632,7 +691,7 @@
         
         $$ = gt_node;
 
-        print_ast($$);
+        // print_ast($$);
         //free_ast(gt_node);
     }
     | GTE_TOKEN
@@ -644,21 +703,19 @@
         
         $$ = gte_node;
 
-        print_ast($$);
-
+        // print_ast($$);
         // free_ast(gte_node);
     }
     | EQ_TOKEN
     {
         //printf("reduced: relational -> EQ_TOKEN\n");
-        ast_node_t* eq_node = new_ast_node(EXPRESSION_NODE, global_line_number, "==", NOT_STMT, OP_EXP, NO_TYPE);
+        ast_node_t* eq_node = new_ast_node(EXPRESSION_NODE, global_line_number, "=", NOT_STMT, OP_EXP, NO_TYPE);
         //print_ast(eq_node);
         //printf("eq lexeme: %s line number: %d\n", eq_node->lexeme, eq_node->lineno);
         
         $$ = eq_node;
 
-        print_ast($$);
-
+        // print_ast($$);
         //free_ast(eq_node);
     }
     | NEQ_TOKEN
@@ -669,8 +726,7 @@
         //printf("neq lexeme: %s line number: %d\n", neq_node->lexeme, neq_node->lineno);
         $$ = neq_node;
 
-        print_ast($$);
-
+        // print_ast($$);
         //free_ast(neq_node);
     }
     ;
@@ -678,18 +734,20 @@
     sum_expression : sum_expression sum term
     {
         //printf("reduced: sum_expression -> sum_expression sum term\n");
-        add_child($2, $1);
-        add_child($2, $3);
+        
         $$ = $2;
+        add_child($$, $1);
+        add_child($$, $3);
+        
 
-        print_ast($$);
+        // print_ast($$);
     }
     | term
     {
         //printf("reduced: sum_expression -> term\n");
         $$ = $1;
 
-        print_ast($$);
+        // print_ast($$);
     }
     ;
 
@@ -702,7 +760,7 @@
         $$ = plus_node;
 
         //free_ast(plus_node);
-        print_ast($$);
+        // print_ast($$);
     }
     | MINUS_TOKEN
     {
@@ -713,25 +771,27 @@
         $$ = minus_node;
 
         //free_ast(minus_node);
-        print_ast($$);
+        // print_ast($$);
     }
     ;
 
     term : term mult factor
     {
         //printf("reduced: term -> term mult factor\n");
-        add_child($2, $1);
-        add_child($2, $3);
+        
+        
         $$ = $2;
-
-        print_ast($$);
+        add_child($$, $1);
+        add_child($$, $3);
+        
+        // print_ast($$);
     }
     | factor
     {
         //printf("reduced: term -> factor\n");
         $$ = $1;
 
-        print_ast($$);
+        // print_ast($$);
     }
     ;
 
@@ -743,8 +803,7 @@
         //printf("multiply lexeme: %s line number: %d\n", multiply_node->lexeme, multiply_node->lineno);
         $$ = multiply_node;
 
-        print_ast($$);
-
+        // print_ast($$);
         //free_ast(multiply_node);
     }
     | DIVIDE_TOKEN
@@ -755,7 +814,7 @@
         //printf("divide lexeme: %s line number: %d\n", divide_node->lexeme, divide_node->lineno);
         $$ = divide_node;
 
-        print_ast($$);
+        // print_ast($$);
 
         // free_ast(divide_node);
     }   
@@ -788,6 +847,7 @@
         for(int i = token_count-1; i >= 0; i--)
         {
             token_type_t type = token_list[i]->type;
+            print_token(token_list[i]);
             if (convert_token(type) == NUM_TOKEN) 
             {
                 // printf("found token num\n");
@@ -806,33 +866,35 @@
     }
     ;
 
-    activation : ID_TOKEN LPAREN_TOKEN args RPAREN_TOKEN
+    activation : fun_id LPAREN_TOKEN args RPAREN_TOKEN
     {
         //printf("reduced: activation -> ID_TOKEN LPAREN_TOKEN args RPAREN_TOKEN\n");
         //create ID node
 
         //find ID lexeme in token list
-        token_t* token = NULL;
-        for (int i = token_count-1; i >= 0; i--) 
-        {
-            token_type_t type = token_list[i]->type;
-            if (convert_token(type) == ID_TOKEN) 
-            {
-                // printf("found token id\n");
-                token = token_list[i];
-                break;
-            }
-        }
+        // token_t* token = NULL;
+        // for (int i = token_count-1; i >= 0; i--) 
+        // {
+        //     token_type_t type = token_list[i]->type;
+        //     print_token(token_list[i]);
+        //     if (convert_token(type) == ID_TOKEN) 
+        //     {
+        //         // printf("found token id\n");
+        //         token = token_list[i];
+        //         break;
+        //     }
+        // }
 
-        // printf("needed to find token id\n");
-        // printf("found token: %s\n", token->lexeme);
+        // // printf("needed to find token id\n");
+        // // printf("found token: %s\n", token->lexeme);
 
-        ast_node_t* id_node = new_ast_node(EXPRESSION_NODE, global_line_number, token->lexeme, NOT_STMT, ID_EXP, NO_TYPE);
+        // ast_node_t* id_node = new_ast_node(EXPRESSION_NODE, global_line_number, token->lexeme, NOT_STMT, ID_EXP, NO_TYPE);
         //print_ast(id_node);
         //printf("id lexeme: %s line number: %d\n", id_node->lexeme, id_node->lineno);
         
-        add_child(id_node, $3);
-        $$ = id_node;
+        $$ = $1;
+        add_child($$, $3);
+        
         
         //free_ast(id_node);
     }
@@ -856,8 +918,9 @@
         // arg_list have expression as sibling
         if ($1 != NULL) 
         {
-            add_sibling($1, $3);
             $$ = $1;
+            add_sibling($$, $3);
+            
         }
         else 
         {
