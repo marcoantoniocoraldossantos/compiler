@@ -16,7 +16,6 @@
     int yylex();
     int yyparse();
     void yyerror(char *s);
-
 %}
 
 %expect 1
@@ -585,7 +584,24 @@
     {
         //printf("reduced: activation -> ID_TOKEN LPAREN_TOKEN args RPAREN_TOKEN\n");
         //create ID node
-        ast_node_t* id_node = new_ast_node(EXPRESSION_NODE, global_line_number, global_lexeme, NOT_STMT, ID_EXP, NO_TYPE);
+
+        //find ID lexeme in token list
+        token_t* token = NULL;
+        for (int i = 0; i < token_count; ++i) 
+        {
+            token_type_t type = token_list[i]->type;
+            if (convert_token(type) == ID_TOKEN) 
+            {
+                // printf("found token id\n");
+                token = token_list[i];
+                break;
+            }
+        }
+
+        // printf("needed to find token id\n");
+        // printf("found token: %s\n", token->lexeme);
+
+        ast_node_t* id_node = new_ast_node(EXPRESSION_NODE, global_line_number, token->lexeme, NOT_STMT, ID_EXP, NO_TYPE);
         //print_ast(id_node);
         //printf("id lexeme: %s line number: %d\n", id_node->lexeme, id_node->lineno);
         
@@ -634,8 +650,11 @@
 
 void yyerror(char *s)
 {
-    printf("\n%s: invalid lexeme!\n", s);
+    printf("\n%s: \'%s\' at line %d\n", s, global_lexeme, global_line_number);
     printf("exiting...\n");
+
+    //free_ast(global_ast_tree);
+
     exit(1);
 }
 
