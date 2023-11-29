@@ -65,23 +65,48 @@
     var_declaration : type_specifier ID_TOKEN SEMICOLON_TOKEN
     {
         //printf("reduced: var_declaration -> type_specifier ID_TOKEN SEMICOLON_TOKEN\n");
-    
+        ast_node_t* id_node = new_ast_node(EXPRESSION_NODE, global_line_number, global_lexeme, NOT_STMT, ID_EXP, NO_TYPE);
+        print_ast(id_node);
+        printf("id lexeme: %s line number: %d\n", id_node->lexeme, id_node->lineno);
+        //add_child($1, id_node);
+        //$$ = $1;
+
+        free_ast(id_node);
     }
     | type_specifier ID_TOKEN LBRACKET_TOKEN NUM_TOKEN RBRACKET_TOKEN SEMICOLON_TOKEN
     {
         //printf("reduced: var_declaration -> type_specifier ID_TOKEN LBRACKET_TOKEN NUM_TOKEN RBRACKET_TOKEN SEMICOLON_TOKEN\n");
-    
+        ast_node_t* id_node = new_ast_node(EXPRESSION_NODE, global_line_number, global_lexeme, NOT_STMT, ID_EXP, NO_TYPE);
+        print_ast(id_node);
+        printf("id lexeme: %s line number: %d\n", id_node->lexeme, id_node->lineno);
+        //add_child($1, id_node);
+        //$$ = $1;
+
+        free_ast(id_node);
     }
     ;
 
     type_specifier : INT_TOKEN
     {
         //printf("reduced: type_specifier -> INT_TOKEN\n");
+        ast_node_t* int_node = new_ast_node(EXPRESSION_NODE, global_line_number, global_lexeme, NOT_STMT, CONST_EXP, INT_TYPE);
+        print_ast(int_node);
+        printf("int lexeme: %s line number: %d\n", int_node->lexeme, int_node->lineno);
 
+        //$$ = int_node;
+
+        free_ast(int_node);
     }
     | VOID_TOKEN
     {
         //printf("reduced: type_specifier -> VOID_TOKEN\n");
+        ast_node_t* void_node = new_ast_node(EXPRESSION_NODE, global_line_number, global_lexeme, NOT_STMT, CONST_EXP, VOID_TYPE);
+        print_ast(void_node);
+        printf("void lexeme: %s line number: %d\n", void_node->lexeme, void_node->lineno);
+       
+       // $$ = void_node;
+
+       free_ast(void_node);
     }
     ;
 
