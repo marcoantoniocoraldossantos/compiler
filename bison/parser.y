@@ -34,31 +34,39 @@
     program : decl_list 
     {
         printf("reduced: program -> decl_list\n");
-        //global_ast_tree = $1;
+        global_ast_tree = $1;
     }
     ;
 
     decl_list : decl_list declaration
     {
         //printf("reduced: decl_list -> decl_list declaration\n");
-
+        if ($1 != NULL) 
+        {
+            add_sibling($1, $2);
+            $$ = $1;
+        }
+        else 
+        {
+            $$ = $2;
+        }
     }
     | declaration
     {
         //printf("reduced: decl_list -> declaration\n");
-
+        $$ = $1;
     }
     ;
 
     declaration : var_declaration
     {
         //printf("reduced: declaration -> var_declaration\n");
-
+        $$ = $1;
     }
     | fun_declaration
     {
         //printf("reduced: declaration -> fun_declaration\n");
-
+        $$ = $1;
     }
     ;
 
