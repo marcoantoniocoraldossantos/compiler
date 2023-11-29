@@ -82,38 +82,57 @@
     | VOID_TOKEN
     {
         //printf("reduced: type_specifier -> VOID_TOKEN\n");
-    
     }
     ;
 
     fun_declaration : type_specifier ID_TOKEN LPAREN_TOKEN params RPAREN_TOKEN compound_decl
     {
         //printf("reduced: fun_declaration -> type_specifier ID_TOKEN LPAREN_TOKEN params RPAREN_TOKEN compound_decl\n");
-    
+        ast_node_t* id_node = new_ast_node(EXPRESSION_NODE, global_line_number, global_lexeme, NOT_STMT, ID_EXP, NO_TYPE);
+        print_ast(id_node);
+        printf("id lexeme: %s line number: %d\n", id_node->lexeme, id_node->lineno);
+        //add_child(id_node, $4);
+        //add_child(id_node, $6);
+        //
+
+        free_ast(id_node);
     }
     ;
 
     params : param_list
     {
         //printf("reduced: params -> param_list\n");
-    
+        $$ = $1;
     }
     | VOID_TOKEN
     {
         //printf("reduced: params -> VOID_TOKEN\n");
-    
+        ast_node_t* void_node = new_ast_node(EXPRESSION_NODE, global_line_number, global_lexeme, NOT_STMT, CONST_EXP, VOID_TYPE);
+        print_ast(void_node);
+        printf("void lexeme: %s line number: %d\n", void_node->lexeme, void_node->lineno);
+        //$$ = void_node;
+
+        free_ast(void_node);
     }
     ;
 
     param_list : param_list COMMA_TOKEN param
     {
         //printf("reduced: param_list -> param_list COMMA_TOKEN param\n");
-    
+        if ($1 != NULL) 
+        {
+            add_sibling($1, $3);
+            $$ = $1;
+        }
+        else 
+        {
+            $$ = $3;
+        }
     }
     | param
     {
         //printf("reduced: param_list -> param\n");
-    
+        $$ = $1;
     }
     ;
 
