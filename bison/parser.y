@@ -74,10 +74,10 @@
     {
         //printf("reduced: var_declaration -> type_specifier ID_TOKEN SEMICOLON_TOKEN\n");
         ast_node_t* id_node = new_ast_node(EXPRESSION_NODE, global_line_number, global_lexeme, NOT_STMT, ID_EXP, NO_TYPE);
-        print_ast(id_node);
-        printf("id lexeme: %s line number: %d\n", id_node->lexeme, id_node->lineno);
-        //add_child($1, id_node);
-        //$$ = $1;
+        //print_ast(id_node);
+        //printf("id lexeme: %s line number: %d\n", id_node->lexeme, id_node->lineno);
+        add_child($1, id_node);
+        $$ = $1;
 
         free_ast(id_node);
     }
@@ -85,8 +85,8 @@
     {
         //printf("reduced: var_declaration -> type_specifier ID_TOKEN LBRACKET_TOKEN NUM_TOKEN RBRACKET_TOKEN SEMICOLON_TOKEN\n");
         ast_node_t* id_node = new_ast_node(EXPRESSION_NODE, global_line_number, global_lexeme, NOT_STMT, ID_EXP, NO_TYPE);
-        print_ast(id_node);
-        printf("id lexeme: %s line number: %d\n", id_node->lexeme, id_node->lineno);
+        //print_ast(id_node);
+        //printf("id lexeme: %s line number: %d\n", id_node->lexeme, id_node->lineno);
         //add_child($1, id_node);
         //$$ = $1;
 
@@ -98,8 +98,8 @@
     {
         //printf("reduced: type_specifier -> INT_TOKEN\n");
         ast_node_t* int_node = new_ast_node(EXPRESSION_NODE, global_line_number, global_lexeme, NOT_STMT, CONST_EXP, INT_TYPE);
-        print_ast(int_node);
-        printf("int lexeme: %s line number: %d\n", int_node->lexeme, int_node->lineno);
+        //print_ast(int_node);
+        //printf("int lexeme: %s line number: %d\n", int_node->lexeme, int_node->lineno);
 
         //$$ = int_node;
 
@@ -109,8 +109,8 @@
     {
         //printf("reduced: type_specifier -> VOID_TOKEN\n");
         ast_node_t* void_node = new_ast_node(EXPRESSION_NODE, global_line_number, global_lexeme, NOT_STMT, CONST_EXP, VOID_TYPE);
-        print_ast(void_node);
-        printf("void lexeme: %s line number: %d\n", void_node->lexeme, void_node->lineno);
+        //print_ast(void_node);
+        //printf("void lexeme: %s line number: %d\n", void_node->lexeme, void_node->lineno);
        
        // $$ = void_node;
 
@@ -122,8 +122,8 @@
     {
         //printf("reduced: fun_declaration -> type_specifier ID_TOKEN LPAREN_TOKEN params RPAREN_TOKEN compound_decl\n");
         ast_node_t* id_node = new_ast_node(EXPRESSION_NODE, global_line_number, global_lexeme, NOT_STMT, ID_EXP, NO_TYPE);
-        print_ast(id_node);
-        printf("id lexeme: %s line number: %d\n", id_node->lexeme, id_node->lineno);
+        //print_ast(id_node);
+        //printf("id lexeme: %s line number: %d\n", id_node->lexeme, id_node->lineno);
         //add_child(id_node, $4);
         //add_child(id_node, $6);
         //
@@ -141,8 +141,8 @@
     {
         //printf("reduced: params -> VOID_TOKEN\n");
         ast_node_t* void_node = new_ast_node(EXPRESSION_NODE, global_line_number, global_lexeme, NOT_STMT, CONST_EXP, VOID_TYPE);
-        print_ast(void_node);
-        printf("void lexeme: %s line number: %d\n", void_node->lexeme, void_node->lineno);
+        //print_ast(void_node);
+        //printf("void lexeme: %s line number: %d\n", void_node->lexeme, void_node->lineno);
         //$$ = void_node;
 
         free_ast(void_node);
@@ -173,8 +173,8 @@
     {
         //printf("reduced: param -> type_specifier ID_TOKEN\n");
         ast_node_t* id_node = new_ast_node(EXPRESSION_NODE, global_line_number, global_lexeme, NOT_STMT, ID_EXP, NO_TYPE);
-        print_ast(id_node);
-        printf("id lexeme: %s line number: %d\n", id_node->lexeme, id_node->lineno);
+        //print_ast(id_node);
+        //printf("id lexeme: %s line number: %d\n", id_node->lexeme, id_node->lineno);
 
         //add_child($1, id_node);
         //$$ = $1;
@@ -185,8 +185,8 @@
     {
         //printf("reduced: param -> type_specifier ID_TOKEN LBRACKET_TOKEN RBRACKET_TOKEN\n");
         ast_node_t* id_node = new_ast_node(EXPRESSION_NODE, global_line_number, global_lexeme, NOT_STMT, ID_EXP, NO_TYPE);
-        print_ast(id_node);
-        printf("id lexeme: %s line number: %d\n", id_node->lexeme, id_node->lineno);
+        //print_ast(id_node);
+        //printf("id lexeme: %s line number: %d\n", id_node->lexeme, id_node->lineno);
         
         //add_child($1, id_node);
         //$$ = $1;
@@ -286,8 +286,8 @@
     {
         //printf("reduced: selection_decl -> IF_TOKEN LPAREN_TOKEN expression RPAREN_TOKEN statement\n");
         ast_node_t* if_node = new_ast_node(STATEMENT_NODE, global_line_number, global_lexeme, IF_STMT, NOT_EXP, NO_TYPE);
-        print_ast(if_node);
-        printf("if lexeme: %s line number: %d\n", if_node->lexeme, if_node->lineno);
+        //print_ast(if_node);
+        //printf("if lexeme: %s line number: %d\n", if_node->lexeme, if_node->lineno);
         //add_child(if_node, $3);
         //add_child(if_node, $5);
         //$$ = if_node;
@@ -298,8 +298,9 @@
     {
         //printf("reduced: selection_decl -> IF_TOKEN LPAREN_TOKEN expression RPAREN_TOKEN statement ELSE_TOKEN statement\n");
         ast_node_t* if_node = new_ast_node(STATEMENT_NODE, global_line_number, global_lexeme, IF_STMT, NOT_EXP, NO_TYPE);
-        print_ast(if_node);
-        printf("if lexeme: %s line number: %d\n", if_node->lexeme, if_node->lineno);
+        //print_ast(if_node);
+        //printf("if lexeme: %s line number: %d\n", if_node->lexeme, if_node->lineno);
+        
         //add_child(if_node, $3);
         //add_child(if_node, $5);
         //add_child(if_node, $7);
@@ -313,8 +314,9 @@
     {
         //printf("reduced: iteration_decl -> WHILE_TOKEN LPAREN_TOKEN expression RPAREN_TOKEN statement\n");
         ast_node_t* while_node = new_ast_node(STATEMENT_NODE, global_line_number, global_lexeme, WHILE_STMT, NOT_EXP, NO_TYPE);
-        print_ast(while_node);
-        printf("while lexeme: %s line number: %d\n", while_node->lexeme, while_node->lineno);
+        //print_ast(while_node);
+        //printf("while lexeme: %s line number: %d\n", while_node->lexeme, while_node->lineno);
+        
         //add_child(while_node, $3);
         //add_child(while_node, $5);
         //$$ = while_node;
@@ -327,8 +329,9 @@
     {
         //printf("reduced: return_decl -> RETURN_TOKEN SEMICOLON_TOKEN\n");
         ast_node_t* return_node = new_ast_node(STATEMENT_NODE, global_line_number, global_lexeme, RETURN_STMT, NOT_EXP, NO_TYPE);
-        print_ast(return_node);
-        printf("return lexeme: %s line number: %d\n", return_node->lexeme, return_node->lineno);
+        //print_ast(return_node);
+        //printf("return lexeme: %s line number: %d\n", return_node->lexeme, return_node->lineno);
+        
         //$$ = return_node;
 
         free_ast(return_node);
@@ -337,8 +340,9 @@
     {
         //printf("reduced: return_decl -> RETURN_TOKEN expression SEMICOLON_TOKEN\n");
         ast_node_t* return_node = new_ast_node(STATEMENT_NODE, global_line_number, global_lexeme, RETURN_STMT, NOT_EXP, NO_TYPE);
-        print_ast(return_node);
-        printf("return lexeme: %s line number: %d\n", return_node->lexeme, return_node->lineno);
+        //print_ast(return_node);
+        //printf("return lexeme: %s line number: %d\n", return_node->lexeme, return_node->lineno);
+        
         //add_child(return_node, $2);
         //$$ = return_node;
 
@@ -350,8 +354,9 @@
     {
         //printf("reduced: expression -> var ASSIGN_TOKEN expression\n");
         ast_node_t* assign_node = new_ast_node(EXPRESSION_NODE, global_line_number, global_lexeme, NOT_STMT, OP_EXP, NO_TYPE);
-        print_ast(assign_node);
-        printf("assign lexeme: %s line number: %d\n", assign_node->lexeme, assign_node->lineno);
+        //print_ast(assign_node);
+        //printf("assign lexeme: %s line number: %d\n", assign_node->lexeme, assign_node->lineno);
+        
         //add_child(assign_node, $1);
         //add_child(assign_node, $3);
         //$$ = assign_node;
@@ -369,8 +374,9 @@
     {
         //printf("reduced: var -> ID_TOKEN\n");
         ast_node_t* id_node = new_ast_node(EXPRESSION_NODE, global_line_number, global_lexeme, NOT_STMT, ID_EXP, NO_TYPE);
-        print_ast(id_node);
-        printf("id lexeme: %s line number: %d\n", id_node->lexeme, id_node->lineno);
+        //print_ast(id_node);
+        //printf("id lexeme: %s line number: %d\n", id_node->lexeme, id_node->lineno);
+        
         //$$ = id_node;
 
         free_ast(id_node);
@@ -379,8 +385,9 @@
     {
         //printf("reduced: var -> ID_TOKEN LBRACKET_TOKEN expression RBRACKET_TOKEN\n");
         ast_node_t* id_node = new_ast_node(EXPRESSION_NODE, global_line_number, global_lexeme, NOT_STMT, ID_EXP, NO_TYPE);
-        print_ast(id_node);
-        printf("id lexeme: %s line number: %d\n", id_node->lexeme, id_node->lineno);
+        //print_ast(id_node);
+        //printf("id lexeme: %s line number: %d\n", id_node->lexeme, id_node->lineno);
+        
         //add_child(id_node, $3);
         //$$ = id_node;
 
@@ -406,8 +413,9 @@
     {
         //printf("reduced: relational -> LT_TOKEN\n");
         ast_node_t* lt_node = new_ast_node(EXPRESSION_NODE, global_line_number, global_lexeme, NOT_STMT, OP_EXP, NO_TYPE);
-        print_ast(lt_node);
-        printf("lt lexeme: %s line number: %d\n", lt_node->lexeme, lt_node->lineno);
+        //print_ast(lt_node);
+        //printf("lt lexeme: %s line number: %d\n", lt_node->lexeme, lt_node->lineno);
+        
         //$$ = lt_node;
 
         free_ast(lt_node);
@@ -416,8 +424,9 @@
     {
         //printf("reduced: relational -> LTE_TOKEN\n");
         ast_node_t* lte_node = new_ast_node(EXPRESSION_NODE, global_line_number, global_lexeme, NOT_STMT, OP_EXP, NO_TYPE);
-        print_ast(lte_node);
-        printf("lte lexeme: %s line number: %d\n", lte_node->lexeme, lte_node->lineno);
+        //print_ast(lte_node);
+        //printf("lte lexeme: %s line number: %d\n", lte_node->lexeme, lte_node->lineno);
+        
         //$$ = lte_node;
 
         free_ast(lte_node);
@@ -426,8 +435,9 @@
     {
         //printf("reduced: relational -> GT_TOKEN\n");
         ast_node_t* gt_node = new_ast_node(EXPRESSION_NODE, global_line_number, global_lexeme, NOT_STMT, OP_EXP, NO_TYPE);
-        print_ast(gt_node);
-        printf("gt lexeme: %s line number: %d\n", gt_node->lexeme, gt_node->lineno);
+        //print_ast(gt_node);
+        //printf("gt lexeme: %s line number: %d\n", gt_node->lexeme, gt_node->lineno);
+        
         //$$ = gt_node;
 
         free_ast(gt_node);
@@ -436,8 +446,9 @@
     {
         //printf("reduced: relational -> GTE_TOKEN\n");
         ast_node_t* gte_node = new_ast_node(EXPRESSION_NODE, global_line_number, global_lexeme, NOT_STMT, OP_EXP, NO_TYPE);
-        print_ast(gte_node);
-        printf("gte lexeme: %s line number: %d\n", gte_node->lexeme, gte_node->lineno);
+        //print_ast(gte_node);
+        //printf("gte lexeme: %s line number: %d\n", gte_node->lexeme, gte_node->lineno);
+        
         //$$ = gte_node;
 
         free_ast(gte_node);
@@ -446,8 +457,9 @@
     {
         //printf("reduced: relational -> EQ_TOKEN\n");
         ast_node_t* eq_node = new_ast_node(EXPRESSION_NODE, global_line_number, global_lexeme, NOT_STMT, OP_EXP, NO_TYPE);
-        print_ast(eq_node);
-        printf("eq lexeme: %s line number: %d\n", eq_node->lexeme, eq_node->lineno);
+        //print_ast(eq_node);
+        //printf("eq lexeme: %s line number: %d\n", eq_node->lexeme, eq_node->lineno);
+        
         //$$ = eq_node;
 
         free_ast(eq_node);
@@ -456,8 +468,8 @@
     {
         //printf("reduced: relational -> NEQ_TOKEN\n");
         ast_node_t* neq_node = new_ast_node(EXPRESSION_NODE, global_line_number, global_lexeme, NOT_STMT, OP_EXP, NO_TYPE);
-        print_ast(neq_node);
-        printf("neq lexeme: %s line number: %d\n", neq_node->lexeme, neq_node->lineno);
+        //print_ast(neq_node);
+        //printf("neq lexeme: %s line number: %d\n", neq_node->lexeme, neq_node->lineno);
         //$$ = neq_node;
 
         free_ast(neq_node);
@@ -482,8 +494,8 @@
     {
         //printf("reduced: sum -> PLUS_TOKEN\n");
         ast_node_t* plus_node = new_ast_node(EXPRESSION_NODE, global_line_number, global_lexeme, NOT_STMT, OP_EXP, NO_TYPE);
-        print_ast(plus_node);
-        printf("plus lexeme: %s line number: %d\n", plus_node->lexeme, plus_node->lineno);
+        //print_ast(plus_node);
+        //printf("plus lexeme: %s line number: %d\n", plus_node->lexeme, plus_node->lineno);
         //$$ = plus_node;
 
         free_ast(plus_node);
@@ -492,8 +504,8 @@
     {
         //printf("reduced: sum -> MINUS_TOKEN\n");
         ast_node_t* minus_node = new_ast_node(EXPRESSION_NODE, global_line_number, global_lexeme, NOT_STMT, OP_EXP, NO_TYPE);
-        print_ast(minus_node);
-        printf("minus lexeme: %s line number: %d\n", minus_node->lexeme, minus_node->lineno);
+        //print_ast(minus_node);
+        //printf("minus lexeme: %s line number: %d\n", minus_node->lexeme, minus_node->lineno);
         //$$ = minus_node;
 
         free_ast(minus_node);
@@ -518,8 +530,8 @@
     {
         //printf("reduced: mult -> MULTIPLY_TOKEN\n");
         ast_node_t* multiply_node = new_ast_node(EXPRESSION_NODE, global_line_number, global_lexeme, NOT_STMT, OP_EXP, NO_TYPE);
-        print_ast(multiply_node);
-        printf("multiply lexeme: %s line number: %d\n", multiply_node->lexeme, multiply_node->lineno);
+        //print_ast(multiply_node);
+        //printf("multiply lexeme: %s line number: %d\n", multiply_node->lexeme, multiply_node->lineno);
         //$$ = multiply_node;
 
         free_ast(multiply_node);
@@ -528,8 +540,8 @@
     {
         //printf("reduced: mult -> DIVIDE_TOKEN\n");
         ast_node_t* divide_node = new_ast_node(EXPRESSION_NODE, global_line_number, global_lexeme, NOT_STMT, OP_EXP, NO_TYPE);
-        print_ast(divide_node);
-        printf("divide lexeme: %s line number: %d\n", divide_node->lexeme, divide_node->lineno);
+        //print_ast(divide_node);
+        //printf("divide lexeme: %s line number: %d\n", divide_node->lexeme, divide_node->lineno);
         //$$ = divide_node;
 
         free_ast(divide_node);
@@ -558,8 +570,8 @@
         //printf("reduced: factor -> NUM_TOKEN\n");
         //create NUM node
         ast_node_t* num_node = new_ast_node(EXPRESSION_NODE, global_line_number, global_lexeme, NOT_STMT, CONST_EXP, NO_TYPE);
-        print_ast(num_node);
-        printf("num lexeme: %s line number: %d\n", num_node->lexeme, num_node->lineno);
+        //print_ast(num_node);
+        //printf("num lexeme: %s line number: %d\n", num_node->lexeme, num_node->lineno);
 
         //$$ = num_node;
         
@@ -572,8 +584,8 @@
         //printf("reduced: activation -> ID_TOKEN LPAREN_TOKEN args RPAREN_TOKEN\n");
         //create ID node
         ast_node_t* id_node = new_ast_node(EXPRESSION_NODE, global_line_number, global_lexeme, NOT_STMT, ID_EXP, NO_TYPE);
-        print_ast(id_node);
-        printf("id lexeme: %s line number: %d\n", id_node->lexeme, id_node->lineno);
+        //print_ast(id_node);
+        //printf("id lexeme: %s line number: %d\n", id_node->lexeme, id_node->lineno);
         
         //add_child(id_node, $3);
         //$$ = id_node;
@@ -613,13 +625,6 @@
     {
         //printf("reduced: arg_list -> expression\n");
         $$ = $1;
-
-        // node_kind_t kind = EXPRESSION_NODE;
-        // ast_node_t* node = create_default_node(kind);
-        // printf("\n\n\ncreated node: %s\n\n\n", node->lexeme);
-        // add_child(global_ast_tree, node);
-        // add_child(node, $1);
-        // print_ast(global_ast_tree);
     }
     ;
 
@@ -635,7 +640,7 @@ void yyerror(char *s)
 int yylex()
 {
     token_t *token = get_next_token();
-    print_token(token);
+    //print_token(token);
     if(token!=NULL) save_token_info(token);
 
 

@@ -569,10 +569,10 @@ static const yytype_int16 yyrline[] =
        0,    34,    34,    41,    54,    61,    66,    73,    84,    97,
      108,   121,   135,   140,   152,   165,   172,   184,   198,   206,
      220,   226,   240,   246,   251,   256,   261,   266,   273,   278,
-     285,   297,   312,   326,   336,   349,   361,   368,   378,   391,
-     398,   405,   415,   425,   435,   445,   455,   467,   474,   481,
-     491,   503,   510,   517,   527,   539,   544,   550,   556,   570,
-     585,   591,   597,   612
+     285,   297,   313,   328,   339,   353,   366,   373,   384,   398,
+     405,   412,   423,   434,   445,   456,   467,   479,   486,   493,
+     503,   515,   522,   529,   539,   551,   556,   562,   568,   582,
+     597,   603,   609,   624
 };
 #endif
 
@@ -1262,10 +1262,10 @@ yyreduce:
     {
         //printf("reduced: var_declaration -> type_specifier ID_TOKEN SEMICOLON_TOKEN\n");
         ast_node_t* id_node = new_ast_node(EXPRESSION_NODE, global_line_number, global_lexeme, NOT_STMT, ID_EXP, NO_TYPE);
-        print_ast(id_node);
-        printf("id lexeme: %s line number: %d\n", id_node->lexeme, id_node->lineno);
-        //add_child($1, id_node);
-        //$$ = $1;
+        //print_ast(id_node);
+        //printf("id lexeme: %s line number: %d\n", id_node->lexeme, id_node->lineno);
+        add_child(yyvsp[-2], id_node);
+        yyval = yyvsp[-2];
 
         free_ast(id_node);
     }
@@ -1277,8 +1277,8 @@ yyreduce:
     {
         //printf("reduced: var_declaration -> type_specifier ID_TOKEN LBRACKET_TOKEN NUM_TOKEN RBRACKET_TOKEN SEMICOLON_TOKEN\n");
         ast_node_t* id_node = new_ast_node(EXPRESSION_NODE, global_line_number, global_lexeme, NOT_STMT, ID_EXP, NO_TYPE);
-        print_ast(id_node);
-        printf("id lexeme: %s line number: %d\n", id_node->lexeme, id_node->lineno);
+        //print_ast(id_node);
+        //printf("id lexeme: %s line number: %d\n", id_node->lexeme, id_node->lineno);
         //add_child($1, id_node);
         //$$ = $1;
 
@@ -1292,8 +1292,8 @@ yyreduce:
     {
         //printf("reduced: type_specifier -> INT_TOKEN\n");
         ast_node_t* int_node = new_ast_node(EXPRESSION_NODE, global_line_number, global_lexeme, NOT_STMT, CONST_EXP, INT_TYPE);
-        print_ast(int_node);
-        printf("int lexeme: %s line number: %d\n", int_node->lexeme, int_node->lineno);
+        //print_ast(int_node);
+        //printf("int lexeme: %s line number: %d\n", int_node->lexeme, int_node->lineno);
 
         //$$ = int_node;
 
@@ -1307,8 +1307,8 @@ yyreduce:
     {
         //printf("reduced: type_specifier -> VOID_TOKEN\n");
         ast_node_t* void_node = new_ast_node(EXPRESSION_NODE, global_line_number, global_lexeme, NOT_STMT, CONST_EXP, VOID_TYPE);
-        print_ast(void_node);
-        printf("void lexeme: %s line number: %d\n", void_node->lexeme, void_node->lineno);
+        //print_ast(void_node);
+        //printf("void lexeme: %s line number: %d\n", void_node->lexeme, void_node->lineno);
        
        // $$ = void_node;
 
@@ -1322,8 +1322,8 @@ yyreduce:
     {
         //printf("reduced: fun_declaration -> type_specifier ID_TOKEN LPAREN_TOKEN params RPAREN_TOKEN compound_decl\n");
         ast_node_t* id_node = new_ast_node(EXPRESSION_NODE, global_line_number, global_lexeme, NOT_STMT, ID_EXP, NO_TYPE);
-        print_ast(id_node);
-        printf("id lexeme: %s line number: %d\n", id_node->lexeme, id_node->lineno);
+        //print_ast(id_node);
+        //printf("id lexeme: %s line number: %d\n", id_node->lexeme, id_node->lineno);
         //add_child(id_node, $4);
         //add_child(id_node, $6);
         //
@@ -1347,8 +1347,8 @@ yyreduce:
     {
         //printf("reduced: params -> VOID_TOKEN\n");
         ast_node_t* void_node = new_ast_node(EXPRESSION_NODE, global_line_number, global_lexeme, NOT_STMT, CONST_EXP, VOID_TYPE);
-        print_ast(void_node);
-        printf("void lexeme: %s line number: %d\n", void_node->lexeme, void_node->lineno);
+        //print_ast(void_node);
+        //printf("void lexeme: %s line number: %d\n", void_node->lexeme, void_node->lineno);
         //$$ = void_node;
 
         free_ast(void_node);
@@ -1387,8 +1387,8 @@ yyreduce:
     {
         //printf("reduced: param -> type_specifier ID_TOKEN\n");
         ast_node_t* id_node = new_ast_node(EXPRESSION_NODE, global_line_number, global_lexeme, NOT_STMT, ID_EXP, NO_TYPE);
-        print_ast(id_node);
-        printf("id lexeme: %s line number: %d\n", id_node->lexeme, id_node->lineno);
+        //print_ast(id_node);
+        //printf("id lexeme: %s line number: %d\n", id_node->lexeme, id_node->lineno);
 
         //add_child($1, id_node);
         //$$ = $1;
@@ -1403,8 +1403,8 @@ yyreduce:
     {
         //printf("reduced: param -> type_specifier ID_TOKEN LBRACKET_TOKEN RBRACKET_TOKEN\n");
         ast_node_t* id_node = new_ast_node(EXPRESSION_NODE, global_line_number, global_lexeme, NOT_STMT, ID_EXP, NO_TYPE);
-        print_ast(id_node);
-        printf("id lexeme: %s line number: %d\n", id_node->lexeme, id_node->lineno);
+        //print_ast(id_node);
+        //printf("id lexeme: %s line number: %d\n", id_node->lexeme, id_node->lineno);
         
         //add_child($1, id_node);
         //$$ = $1;
@@ -1544,8 +1544,8 @@ yyreduce:
     {
         //printf("reduced: selection_decl -> IF_TOKEN LPAREN_TOKEN expression RPAREN_TOKEN statement\n");
         ast_node_t* if_node = new_ast_node(STATEMENT_NODE, global_line_number, global_lexeme, IF_STMT, NOT_EXP, NO_TYPE);
-        print_ast(if_node);
-        printf("if lexeme: %s line number: %d\n", if_node->lexeme, if_node->lineno);
+        //print_ast(if_node);
+        //printf("if lexeme: %s line number: %d\n", if_node->lexeme, if_node->lineno);
         //add_child(if_node, $3);
         //add_child(if_node, $5);
         //$$ = if_node;
@@ -1560,8 +1560,9 @@ yyreduce:
     {
         //printf("reduced: selection_decl -> IF_TOKEN LPAREN_TOKEN expression RPAREN_TOKEN statement ELSE_TOKEN statement\n");
         ast_node_t* if_node = new_ast_node(STATEMENT_NODE, global_line_number, global_lexeme, IF_STMT, NOT_EXP, NO_TYPE);
-        print_ast(if_node);
-        printf("if lexeme: %s line number: %d\n", if_node->lexeme, if_node->lineno);
+        //print_ast(if_node);
+        //printf("if lexeme: %s line number: %d\n", if_node->lexeme, if_node->lineno);
+        
         //add_child(if_node, $3);
         //add_child(if_node, $5);
         //add_child(if_node, $7);
@@ -1569,390 +1570,401 @@ yyreduce:
 
         free_ast(if_node);
     }
-#line 1573 "parser.c"
+#line 1574 "parser.c"
     break;
 
   case 32: /* iteration_decl: WHILE_TOKEN LPAREN_TOKEN expression RPAREN_TOKEN statement  */
-#line 313 "parser.y"
+#line 314 "parser.y"
     {
         //printf("reduced: iteration_decl -> WHILE_TOKEN LPAREN_TOKEN expression RPAREN_TOKEN statement\n");
         ast_node_t* while_node = new_ast_node(STATEMENT_NODE, global_line_number, global_lexeme, WHILE_STMT, NOT_EXP, NO_TYPE);
-        print_ast(while_node);
-        printf("while lexeme: %s line number: %d\n", while_node->lexeme, while_node->lineno);
+        //print_ast(while_node);
+        //printf("while lexeme: %s line number: %d\n", while_node->lexeme, while_node->lineno);
+        
         //add_child(while_node, $3);
         //add_child(while_node, $5);
         //$$ = while_node;
 
         free_ast(while_node);
     }
-#line 1589 "parser.c"
+#line 1591 "parser.c"
     break;
 
   case 33: /* return_decl: RETURN_TOKEN SEMICOLON_TOKEN  */
-#line 327 "parser.y"
+#line 329 "parser.y"
     {
         //printf("reduced: return_decl -> RETURN_TOKEN SEMICOLON_TOKEN\n");
         ast_node_t* return_node = new_ast_node(STATEMENT_NODE, global_line_number, global_lexeme, RETURN_STMT, NOT_EXP, NO_TYPE);
-        print_ast(return_node);
-        printf("return lexeme: %s line number: %d\n", return_node->lexeme, return_node->lineno);
+        //print_ast(return_node);
+        //printf("return lexeme: %s line number: %d\n", return_node->lexeme, return_node->lineno);
+        
         //$$ = return_node;
 
         free_ast(return_node);
     }
-#line 1603 "parser.c"
+#line 1606 "parser.c"
     break;
 
   case 34: /* return_decl: RETURN_TOKEN expression SEMICOLON_TOKEN  */
-#line 337 "parser.y"
+#line 340 "parser.y"
     {
         //printf("reduced: return_decl -> RETURN_TOKEN expression SEMICOLON_TOKEN\n");
         ast_node_t* return_node = new_ast_node(STATEMENT_NODE, global_line_number, global_lexeme, RETURN_STMT, NOT_EXP, NO_TYPE);
-        print_ast(return_node);
-        printf("return lexeme: %s line number: %d\n", return_node->lexeme, return_node->lineno);
+        //print_ast(return_node);
+        //printf("return lexeme: %s line number: %d\n", return_node->lexeme, return_node->lineno);
+        
         //add_child(return_node, $2);
         //$$ = return_node;
 
         free_ast(return_node);
     }
-#line 1618 "parser.c"
+#line 1622 "parser.c"
     break;
 
   case 35: /* expression: var ASSIGN_TOKEN expression  */
-#line 350 "parser.y"
+#line 354 "parser.y"
     {
         //printf("reduced: expression -> var ASSIGN_TOKEN expression\n");
         ast_node_t* assign_node = new_ast_node(EXPRESSION_NODE, global_line_number, global_lexeme, NOT_STMT, OP_EXP, NO_TYPE);
-        print_ast(assign_node);
-        printf("assign lexeme: %s line number: %d\n", assign_node->lexeme, assign_node->lineno);
+        //print_ast(assign_node);
+        //printf("assign lexeme: %s line number: %d\n", assign_node->lexeme, assign_node->lineno);
+        
         //add_child(assign_node, $1);
         //add_child(assign_node, $3);
         //$$ = assign_node;
 
         free_ast(assign_node);
     }
-#line 1634 "parser.c"
+#line 1639 "parser.c"
     break;
 
   case 36: /* expression: simple_expression  */
-#line 362 "parser.y"
+#line 367 "parser.y"
     {
         //printf("reduced: expression -> simple_expression\n");
         yyval = yyvsp[0];
     }
-#line 1643 "parser.c"
+#line 1648 "parser.c"
     break;
 
   case 37: /* var: ID_TOKEN  */
-#line 369 "parser.y"
+#line 374 "parser.y"
     {
         //printf("reduced: var -> ID_TOKEN\n");
         ast_node_t* id_node = new_ast_node(EXPRESSION_NODE, global_line_number, global_lexeme, NOT_STMT, ID_EXP, NO_TYPE);
-        print_ast(id_node);
-        printf("id lexeme: %s line number: %d\n", id_node->lexeme, id_node->lineno);
+        //print_ast(id_node);
+        //printf("id lexeme: %s line number: %d\n", id_node->lexeme, id_node->lineno);
+        
         //$$ = id_node;
 
         free_ast(id_node);
     }
-#line 1657 "parser.c"
+#line 1663 "parser.c"
     break;
 
   case 38: /* var: ID_TOKEN LBRACKET_TOKEN expression RBRACKET_TOKEN  */
-#line 379 "parser.y"
+#line 385 "parser.y"
     {
         //printf("reduced: var -> ID_TOKEN LBRACKET_TOKEN expression RBRACKET_TOKEN\n");
         ast_node_t* id_node = new_ast_node(EXPRESSION_NODE, global_line_number, global_lexeme, NOT_STMT, ID_EXP, NO_TYPE);
-        print_ast(id_node);
-        printf("id lexeme: %s line number: %d\n", id_node->lexeme, id_node->lineno);
+        //print_ast(id_node);
+        //printf("id lexeme: %s line number: %d\n", id_node->lexeme, id_node->lineno);
+        
         //add_child(id_node, $3);
         //$$ = id_node;
 
         free_ast(id_node);
     }
-#line 1672 "parser.c"
+#line 1679 "parser.c"
     break;
 
   case 39: /* simple_expression: sum_expression relational sum_expression  */
-#line 392 "parser.y"
+#line 399 "parser.y"
     {
         //printf("reduced: simple_expression -> sum_expression relational sum_expression\n");
         add_child(yyvsp[-1], yyvsp[-2]);
         add_child(yyvsp[-1], yyvsp[0]);
         yyval = yyvsp[-1];
     }
-#line 1683 "parser.c"
+#line 1690 "parser.c"
     break;
 
   case 40: /* simple_expression: sum_expression  */
-#line 399 "parser.y"
+#line 406 "parser.y"
     {
         //printf("reduced: simple_expression -> sum_expression\n");
         yyval = yyvsp[0];
     }
-#line 1692 "parser.c"
+#line 1699 "parser.c"
     break;
 
   case 41: /* relational: LT_TOKEN  */
-#line 406 "parser.y"
+#line 413 "parser.y"
     {
         //printf("reduced: relational -> LT_TOKEN\n");
         ast_node_t* lt_node = new_ast_node(EXPRESSION_NODE, global_line_number, global_lexeme, NOT_STMT, OP_EXP, NO_TYPE);
-        print_ast(lt_node);
-        printf("lt lexeme: %s line number: %d\n", lt_node->lexeme, lt_node->lineno);
+        //print_ast(lt_node);
+        //printf("lt lexeme: %s line number: %d\n", lt_node->lexeme, lt_node->lineno);
+        
         //$$ = lt_node;
 
         free_ast(lt_node);
     }
-#line 1706 "parser.c"
+#line 1714 "parser.c"
     break;
 
   case 42: /* relational: LTE_TOKEN  */
-#line 416 "parser.y"
+#line 424 "parser.y"
     {
         //printf("reduced: relational -> LTE_TOKEN\n");
         ast_node_t* lte_node = new_ast_node(EXPRESSION_NODE, global_line_number, global_lexeme, NOT_STMT, OP_EXP, NO_TYPE);
-        print_ast(lte_node);
-        printf("lte lexeme: %s line number: %d\n", lte_node->lexeme, lte_node->lineno);
+        //print_ast(lte_node);
+        //printf("lte lexeme: %s line number: %d\n", lte_node->lexeme, lte_node->lineno);
+        
         //$$ = lte_node;
 
         free_ast(lte_node);
     }
-#line 1720 "parser.c"
+#line 1729 "parser.c"
     break;
 
   case 43: /* relational: GT_TOKEN  */
-#line 426 "parser.y"
+#line 435 "parser.y"
     {
         //printf("reduced: relational -> GT_TOKEN\n");
         ast_node_t* gt_node = new_ast_node(EXPRESSION_NODE, global_line_number, global_lexeme, NOT_STMT, OP_EXP, NO_TYPE);
-        print_ast(gt_node);
-        printf("gt lexeme: %s line number: %d\n", gt_node->lexeme, gt_node->lineno);
+        //print_ast(gt_node);
+        //printf("gt lexeme: %s line number: %d\n", gt_node->lexeme, gt_node->lineno);
+        
         //$$ = gt_node;
 
         free_ast(gt_node);
     }
-#line 1734 "parser.c"
+#line 1744 "parser.c"
     break;
 
   case 44: /* relational: GTE_TOKEN  */
-#line 436 "parser.y"
+#line 446 "parser.y"
     {
         //printf("reduced: relational -> GTE_TOKEN\n");
         ast_node_t* gte_node = new_ast_node(EXPRESSION_NODE, global_line_number, global_lexeme, NOT_STMT, OP_EXP, NO_TYPE);
-        print_ast(gte_node);
-        printf("gte lexeme: %s line number: %d\n", gte_node->lexeme, gte_node->lineno);
+        //print_ast(gte_node);
+        //printf("gte lexeme: %s line number: %d\n", gte_node->lexeme, gte_node->lineno);
+        
         //$$ = gte_node;
 
         free_ast(gte_node);
     }
-#line 1748 "parser.c"
+#line 1759 "parser.c"
     break;
 
   case 45: /* relational: EQ_TOKEN  */
-#line 446 "parser.y"
+#line 457 "parser.y"
     {
         //printf("reduced: relational -> EQ_TOKEN\n");
         ast_node_t* eq_node = new_ast_node(EXPRESSION_NODE, global_line_number, global_lexeme, NOT_STMT, OP_EXP, NO_TYPE);
-        print_ast(eq_node);
-        printf("eq lexeme: %s line number: %d\n", eq_node->lexeme, eq_node->lineno);
+        //print_ast(eq_node);
+        //printf("eq lexeme: %s line number: %d\n", eq_node->lexeme, eq_node->lineno);
+        
         //$$ = eq_node;
 
         free_ast(eq_node);
     }
-#line 1762 "parser.c"
+#line 1774 "parser.c"
     break;
 
   case 46: /* relational: NEQ_TOKEN  */
-#line 456 "parser.y"
+#line 468 "parser.y"
     {
         //printf("reduced: relational -> NEQ_TOKEN\n");
         ast_node_t* neq_node = new_ast_node(EXPRESSION_NODE, global_line_number, global_lexeme, NOT_STMT, OP_EXP, NO_TYPE);
-        print_ast(neq_node);
-        printf("neq lexeme: %s line number: %d\n", neq_node->lexeme, neq_node->lineno);
+        //print_ast(neq_node);
+        //printf("neq lexeme: %s line number: %d\n", neq_node->lexeme, neq_node->lineno);
         //$$ = neq_node;
 
         free_ast(neq_node);
     }
-#line 1776 "parser.c"
+#line 1788 "parser.c"
     break;
 
   case 47: /* sum_expression: sum_expression sum term  */
-#line 468 "parser.y"
+#line 480 "parser.y"
     {
         //printf("reduced: sum_expression -> sum_expression sum term\n");
         add_child(yyvsp[-1], yyvsp[-2]);
         add_child(yyvsp[-1], yyvsp[0]);
         yyval = yyvsp[-1];
     }
-#line 1787 "parser.c"
+#line 1799 "parser.c"
     break;
 
   case 48: /* sum_expression: term  */
-#line 475 "parser.y"
+#line 487 "parser.y"
     {
         //printf("reduced: sum_expression -> term\n");
         yyval = yyvsp[0];
     }
-#line 1796 "parser.c"
+#line 1808 "parser.c"
     break;
 
   case 49: /* sum: PLUS_TOKEN  */
-#line 482 "parser.y"
+#line 494 "parser.y"
     {
         //printf("reduced: sum -> PLUS_TOKEN\n");
         ast_node_t* plus_node = new_ast_node(EXPRESSION_NODE, global_line_number, global_lexeme, NOT_STMT, OP_EXP, NO_TYPE);
-        print_ast(plus_node);
-        printf("plus lexeme: %s line number: %d\n", plus_node->lexeme, plus_node->lineno);
+        //print_ast(plus_node);
+        //printf("plus lexeme: %s line number: %d\n", plus_node->lexeme, plus_node->lineno);
         //$$ = plus_node;
 
         free_ast(plus_node);
     }
-#line 1810 "parser.c"
+#line 1822 "parser.c"
     break;
 
   case 50: /* sum: MINUS_TOKEN  */
-#line 492 "parser.y"
+#line 504 "parser.y"
     {
         //printf("reduced: sum -> MINUS_TOKEN\n");
         ast_node_t* minus_node = new_ast_node(EXPRESSION_NODE, global_line_number, global_lexeme, NOT_STMT, OP_EXP, NO_TYPE);
-        print_ast(minus_node);
-        printf("minus lexeme: %s line number: %d\n", minus_node->lexeme, minus_node->lineno);
+        //print_ast(minus_node);
+        //printf("minus lexeme: %s line number: %d\n", minus_node->lexeme, minus_node->lineno);
         //$$ = minus_node;
 
         free_ast(minus_node);
     }
-#line 1824 "parser.c"
+#line 1836 "parser.c"
     break;
 
   case 51: /* term: term mult factor  */
-#line 504 "parser.y"
+#line 516 "parser.y"
     {
         //printf("reduced: term -> term mult factor\n");
         add_child(yyvsp[-1], yyvsp[-2]);
         add_child(yyvsp[-1], yyvsp[0]);
         yyval = yyvsp[-1];
     }
-#line 1835 "parser.c"
+#line 1847 "parser.c"
     break;
 
   case 52: /* term: factor  */
-#line 511 "parser.y"
+#line 523 "parser.y"
     {
         //printf("reduced: term -> factor\n");
         yyval = yyvsp[0];
     }
-#line 1844 "parser.c"
+#line 1856 "parser.c"
     break;
 
   case 53: /* mult: MULTIPLY_TOKEN  */
-#line 518 "parser.y"
+#line 530 "parser.y"
     {
         //printf("reduced: mult -> MULTIPLY_TOKEN\n");
         ast_node_t* multiply_node = new_ast_node(EXPRESSION_NODE, global_line_number, global_lexeme, NOT_STMT, OP_EXP, NO_TYPE);
-        print_ast(multiply_node);
-        printf("multiply lexeme: %s line number: %d\n", multiply_node->lexeme, multiply_node->lineno);
+        //print_ast(multiply_node);
+        //printf("multiply lexeme: %s line number: %d\n", multiply_node->lexeme, multiply_node->lineno);
         //$$ = multiply_node;
 
         free_ast(multiply_node);
     }
-#line 1858 "parser.c"
+#line 1870 "parser.c"
     break;
 
   case 54: /* mult: DIVIDE_TOKEN  */
-#line 528 "parser.y"
+#line 540 "parser.y"
     {
         //printf("reduced: mult -> DIVIDE_TOKEN\n");
         ast_node_t* divide_node = new_ast_node(EXPRESSION_NODE, global_line_number, global_lexeme, NOT_STMT, OP_EXP, NO_TYPE);
-        print_ast(divide_node);
-        printf("divide lexeme: %s line number: %d\n", divide_node->lexeme, divide_node->lineno);
+        //print_ast(divide_node);
+        //printf("divide lexeme: %s line number: %d\n", divide_node->lexeme, divide_node->lineno);
         //$$ = divide_node;
 
         free_ast(divide_node);
     }
-#line 1872 "parser.c"
+#line 1884 "parser.c"
     break;
 
   case 55: /* factor: LPAREN_TOKEN expression RPAREN_TOKEN  */
-#line 540 "parser.y"
+#line 552 "parser.y"
     {
         //printf("reduced: factor -> LPAREN_TOKEN expression RPAREN_TOKEN\n");
         yyval = yyvsp[-1];
     }
-#line 1881 "parser.c"
+#line 1893 "parser.c"
     break;
 
   case 56: /* factor: var  */
-#line 545 "parser.y"
+#line 557 "parser.y"
     {
         //printf("reduced: factor -> var\n");
         yyval = yyvsp[0];
     
     }
-#line 1891 "parser.c"
+#line 1903 "parser.c"
     break;
 
   case 57: /* factor: activation  */
-#line 551 "parser.y"
+#line 563 "parser.y"
     {
         //rintf("reduced: factor -> activation\n");
         yyval = yyvsp[0];
     
     }
-#line 1901 "parser.c"
+#line 1913 "parser.c"
     break;
 
   case 58: /* factor: NUM_TOKEN  */
-#line 557 "parser.y"
+#line 569 "parser.y"
     {
         //printf("reduced: factor -> NUM_TOKEN\n");
         //create NUM node
         ast_node_t* num_node = new_ast_node(EXPRESSION_NODE, global_line_number, global_lexeme, NOT_STMT, CONST_EXP, NO_TYPE);
-        print_ast(num_node);
-        printf("num lexeme: %s line number: %d\n", num_node->lexeme, num_node->lineno);
+        //print_ast(num_node);
+        //printf("num lexeme: %s line number: %d\n", num_node->lexeme, num_node->lineno);
 
         //$$ = num_node;
         
         free_ast(num_node);
     }
-#line 1917 "parser.c"
+#line 1929 "parser.c"
     break;
 
   case 59: /* activation: ID_TOKEN LPAREN_TOKEN args RPAREN_TOKEN  */
-#line 571 "parser.y"
+#line 583 "parser.y"
     {
         //printf("reduced: activation -> ID_TOKEN LPAREN_TOKEN args RPAREN_TOKEN\n");
         //create ID node
         ast_node_t* id_node = new_ast_node(EXPRESSION_NODE, global_line_number, global_lexeme, NOT_STMT, ID_EXP, NO_TYPE);
-        print_ast(id_node);
-        printf("id lexeme: %s line number: %d\n", id_node->lexeme, id_node->lineno);
+        //print_ast(id_node);
+        //printf("id lexeme: %s line number: %d\n", id_node->lexeme, id_node->lineno);
         
         //add_child(id_node, $3);
         //$$ = id_node;
         
         free_ast(id_node);
     }
-#line 1934 "parser.c"
+#line 1946 "parser.c"
     break;
 
   case 60: /* args: arg_list  */
-#line 586 "parser.y"
+#line 598 "parser.y"
     {
         //printf("reduced: args -> arg_list\n");
         yyval = yyvsp[0];
     }
-#line 1943 "parser.c"
+#line 1955 "parser.c"
     break;
 
   case 61: /* args: %empty  */
-#line 591 "parser.y"
+#line 603 "parser.y"
     {
         //printf("reduced: args -> vazio\n");
         yyval = NULL;
     }
-#line 1952 "parser.c"
+#line 1964 "parser.c"
     break;
 
   case 62: /* arg_list: arg_list COMMA_TOKEN expression  */
-#line 598 "parser.y"
+#line 610 "parser.y"
     {
         //printf("reduced: arg_list -> arg_list COMMA_TOKEN expression\n");
         // arg_list have expression as sibling
@@ -1967,27 +1979,20 @@ yyreduce:
         }
 
     }
-#line 1971 "parser.c"
+#line 1983 "parser.c"
     break;
 
   case 63: /* arg_list: expression  */
-#line 613 "parser.y"
+#line 625 "parser.y"
     {
         //printf("reduced: arg_list -> expression\n");
         yyval = yyvsp[0];
-
-        // node_kind_t kind = EXPRESSION_NODE;
-        // ast_node_t* node = create_default_node(kind);
-        // printf("\n\n\ncreated node: %s\n\n\n", node->lexeme);
-        // add_child(global_ast_tree, node);
-        // add_child(node, $1);
-        // print_ast(global_ast_tree);
     }
-#line 1987 "parser.c"
+#line 1992 "parser.c"
     break;
 
 
-#line 1991 "parser.c"
+#line 1996 "parser.c"
 
       default: break;
     }
@@ -2180,7 +2185,7 @@ yyreturnlab:
   return yyresult;
 }
 
-#line 626 "parser.y"
+#line 631 "parser.y"
 
 
 void yyerror(char *s)
@@ -2193,7 +2198,7 @@ void yyerror(char *s)
 int yylex()
 {
     token_t *token = get_next_token();
-    print_token(token);
+    //print_token(token);
     if(token!=NULL) save_token_info(token);
 
 
