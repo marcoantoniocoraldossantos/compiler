@@ -16,6 +16,7 @@ typedef enum
 typedef enum 
 {
     IF_STMT,
+    ELSE_STMT,
     WHILE_STMT,
     RETURN_STMT,
     ASSIGN_STMT,
