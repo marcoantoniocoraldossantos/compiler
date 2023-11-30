@@ -506,7 +506,7 @@ union yyalloc
 /* YYFINAL -- State number of the termination state.  */
 #define YYFINAL  9
 /* YYLAST -- Last index in YYTABLE.  */
-#define YYLAST   98
+#define YYLAST   97
 
 /* YYNTOKENS -- Number of terminals.  */
 #define YYNTOKENS  32
@@ -515,7 +515,7 @@ union yyalloc
 /* YYNRULES -- Number of rules.  */
 #define YYNRULES  65
 /* YYNSTATES -- Number of states.  */
-#define YYNSTATES  105
+#define YYNSTATES  104
 
 /* YYMAXUTOK -- Last valid token kind.  */
 #define YYMAXUTOK   286
@@ -612,7 +612,7 @@ yysymbol_name (yysymbol_kind_t yysymbol)
 }
 #endif
 
-#define YYPACT_NINF (-90)
+#define YYPACT_NINF (-88)
 
 #define yypact_value_is_default(Yyn) \
   ((Yyn) == YYPACT_NINF)
@@ -626,17 +626,17 @@ yysymbol_name (yysymbol_kind_t yysymbol)
    STATE-NUM.  */
 static const yytype_int8 yypact[] =
 {
-      15,   -90,   -90,     4,    15,   -90,   -90,   -21,   -90,   -90,
-     -90,    -5,   -12,   -90,    27,    33,    -8,    10,    39,    45,
-      48,   -90,    50,    47,    46,    15,   -90,    49,   -90,   -90,
-     -90,   -90,    15,   -90,    51,     8,    -5,    53,     3,    55,
-     -90,   -20,   -90,    20,   -90,    56,   -90,   -90,   -90,   -90,
-     -90,   -90,    60,    57,   -90,    36,    54,   -90,   -90,   -20,
-     -90,    61,   -20,    59,   -20,   -20,   -90,   -20,   -90,   -90,
-     -90,   -90,   -90,   -90,   -90,   -90,   -20,   -20,   -90,   -90,
-     -20,    62,   -90,    63,   -90,    58,   -90,    64,    52,   -90,
-     -90,    38,    54,   -90,    35,    35,   -90,   -90,   -20,    81,
-     -90,   -90,    35,   -90,   -90
+      35,   -88,   -88,     1,    35,   -88,   -88,   -24,   -88,   -88,
+     -88,   -15,    -4,   -88,     3,    58,    13,    31,    39,    45,
+      48,   -88,    50,    47,    46,    35,   -88,    49,   -88,   -88,
+     -88,   -88,    35,   -88,    51,     7,   -15,    53,   -12,    54,
+     -88,     2,   -88,    42,   -88,   -88,   -88,   -88,   -88,   -88,
+     -88,    57,    59,   -88,    34,    10,   -88,   -88,     2,   -88,
+      60,     2,    61,     2,     2,   -88,     2,   -88,   -88,   -88,
+     -88,   -88,   -88,   -88,   -88,     2,     2,   -88,   -88,     2,
+      62,   -88,    63,   -88,   -88,    64,    52,    56,   -88,   -88,
+      36,    10,   -88,    33,    33,   -88,     2,   -88,    79,   -88,
+     -88,    33,   -88,   -88
 };
 
 /* YYDEFACT[STATE-NUM] -- Default reduction number in state STATE-NUM.
@@ -648,31 +648,31 @@ static const yytype_int8 yydefact[] =
        3,    12,     0,     7,     0,     0,     0,    10,     0,     0,
       13,    16,     0,    17,     0,     0,     8,     0,    21,    11,
       15,    18,    23,    20,     0,     0,     0,     0,     0,     0,
-      30,     0,    19,    39,    60,     0,    25,    22,    24,    26,
-      27,    28,     0,    58,    38,    42,    50,    54,    59,     0,
-      35,     0,     0,     0,     0,    63,    29,     0,    51,    52,
-      43,    44,    45,    46,    47,    48,     0,     0,    55,    56,
-       0,     0,    36,     0,    57,     0,    65,     0,    62,    37,
-      58,    41,    49,    53,     0,     0,    40,    61,     0,    33,
-      34,    64,     0,    31,    32
+      30,     0,    19,    39,    60,    25,    22,    24,    26,    27,
+      28,     0,    58,    38,    42,    50,    54,    59,     0,    35,
+       0,     0,     0,    63,     0,    29,     0,    51,    52,    43,
+      44,    45,    46,    47,    48,     0,     0,    55,    56,     0,
+       0,    36,     0,    57,    65,     0,    62,     0,    37,    58,
+      41,    49,    53,     0,     0,    61,     0,    40,    33,    34,
+      64,     0,    31,    32
 };
 
 /* YYPGOTO[NTERM-NUM].  */
 static const yytype_int8 yypgoto[] =
 {
-     -90,   -90,   -90,    84,    65,   -14,   -90,    82,   -90,   -90,
-      66,    68,   -90,   -90,   -89,   -90,   -90,   -90,   -90,   -90,
-     -38,   -18,   -90,   -90,    14,   -90,    16,   -90,    18,   -90,
-     -90,   -90
+     -88,   -88,   -88,    84,    65,   -13,   -88,   -88,   -88,   -88,
+      66,    68,   -88,   -88,   -87,   -88,   -88,   -88,   -88,   -88,
+     -38,   -19,   -88,   -88,     8,   -88,    14,   -88,    15,   -88,
+     -88,   -88
 };
 
 /* YYDEFGOTO[NTERM-NUM].  */
 static const yytype_int8 yydefgoto[] =
 {
-       0,     3,     4,     5,     6,     7,     8,    45,    19,    20,
-      21,    46,    32,    35,    47,    48,    49,   103,    50,    51,
-      52,    53,    54,    76,    55,    77,    56,    80,    57,    58,
-      87,    88
+       0,     3,     4,     5,     6,     7,     8,    12,    19,    20,
+      21,    45,    32,    35,    46,    47,    48,   102,    49,    50,
+      51,    52,    53,    75,    54,    76,    55,    79,    56,    57,
+      85,    86
 };
 
 /* YYTABLE[YYPACT[STATE-NUM]] -- What to do in state STATE-NUM.  If
@@ -680,30 +680,30 @@ static const yytype_int8 yydefgoto[] =
    number is the opposite.  If YYTABLE_NINF, syntax error.  */
 static const yytype_int8 yytable[] =
 {
-      61,    18,    41,    63,     9,    99,   100,    11,    43,    44,
-      15,    18,    37,   104,    38,    13,    39,    22,    34,    14,
-       1,    81,     2,    60,    83,    41,    85,    86,    40,    89,
-      41,    43,    44,   -14,    28,    42,    43,    44,     1,    37,
-      17,    38,   -12,    39,    64,    68,    69,    68,    69,    70,
-      71,    72,    73,    74,    75,    40,    16,    41,    90,    90,
-     101,    28,    90,    43,    44,    78,    79,    23,    24,    25,
-      26,    27,    28,    98,    31,    59,    67,    62,    65,    36,
-      66,    82,    84,    96,   102,    94,    95,    97,    10,    12,
-      91,    30,    29,    92,     0,     0,     0,    33,    93
+      60,     9,    18,    62,    11,    13,    98,    99,    59,    14,
+      41,    37,    18,    38,   103,    39,    43,    44,    15,    34,
+      80,    77,    78,    82,    41,    84,    87,    40,    88,    41,
+      43,    44,    16,    28,    42,    43,    44,    37,    22,    38,
+       1,    39,     2,    67,    68,    67,    68,    69,    70,    71,
+      72,    73,    74,    40,   -14,    41,    89,    89,   100,    28,
+      89,    43,    44,     1,    63,    17,    64,    23,    24,    25,
+      26,    27,    28,    96,    31,    58,    61,    65,    66,    36,
+      81,    97,   101,    90,    83,    93,    94,    95,    10,     0,
+      91,    30,    29,     0,    92,     0,     0,    33
 };
 
 static const yytype_int8 yycheck[] =
 {
-      38,    15,    22,    41,     0,    94,    95,    28,    28,    29,
-      22,    25,     4,   102,     6,    20,     8,    25,    32,    24,
-       5,    59,     7,    20,    62,    22,    64,    65,    20,    67,
-      22,    28,    29,    23,    26,    27,    28,    29,     5,     4,
-       7,     6,    22,     8,    24,     9,    10,     9,    10,    13,
-      14,    15,    16,    17,    18,    20,    29,    22,    76,    77,
-      98,    26,    80,    28,    29,    11,    12,    28,    23,    21,
-      20,    24,    26,    21,    25,    22,    19,    22,    22,    28,
-      20,    20,    23,    25,     3,    23,    23,    23,     4,     7,
-      76,    25,    24,    77,    -1,    -1,    -1,    32,    80
+      38,     0,    15,    41,    28,    20,    93,    94,    20,    24,
+      22,     4,    25,     6,   101,     8,    28,    29,    22,    32,
+      58,    11,    12,    61,    22,    63,    64,    20,    66,    22,
+      28,    29,    29,    26,    27,    28,    29,     4,    25,     6,
+       5,     8,     7,     9,    10,     9,    10,    13,    14,    15,
+      16,    17,    18,    20,    23,    22,    75,    76,    96,    26,
+      79,    28,    29,     5,    22,     7,    24,    28,    23,    21,
+      20,    24,    26,    21,    25,    22,    22,    20,    19,    28,
+      20,    25,     3,    75,    23,    23,    23,    23,     4,    -1,
+      76,    25,    24,    -1,    79,    -1,    -1,    32
 };
 
 /* YYSTOS[STATE-NUM] -- The symbol kind of the accessing symbol of
@@ -714,13 +714,13 @@ static const yytype_int8 yystos[] =
       35,    28,    39,    20,    24,    22,    29,     7,    37,    40,
       41,    42,    25,    28,    23,    21,    20,    24,    26,    43,
       42,    25,    44,    36,    37,    45,    28,     4,     6,     8,
-      20,    22,    27,    28,    29,    39,    43,    46,    47,    48,
-      50,    51,    52,    53,    54,    56,    58,    60,    61,    22,
-      20,    52,    22,    52,    24,    22,    20,    19,     9,    10,
-      13,    14,    15,    16,    17,    18,    55,    57,    11,    12,
-      59,    52,    20,    52,    23,    52,    52,    62,    63,    52,
-      53,    56,    58,    60,    23,    23,    25,    23,    21,    46,
-      46,    52,     3,    49,    46
+      20,    22,    27,    28,    29,    43,    46,    47,    48,    50,
+      51,    52,    53,    54,    56,    58,    60,    61,    22,    20,
+      52,    22,    52,    22,    24,    20,    19,     9,    10,    13,
+      14,    15,    16,    17,    18,    55,    57,    11,    12,    59,
+      52,    20,    52,    23,    52,    62,    63,    52,    52,    53,
+      56,    58,    60,    23,    23,    23,    21,    25,    46,    46,
+      52,     3,    49,    46
 };
 
 /* YYR1[RULE-NUM] -- Symbol kind of the left-hand side of rule RULE-NUM.  */
@@ -2204,34 +2204,34 @@ yyreduce:
 #line 2205 "parser.c"
     break;
 
-  case 61: /* activation: fun_id LPAREN_TOKEN args RPAREN_TOKEN  */
+  case 61: /* activation: ID_TOKEN LPAREN_TOKEN args RPAREN_TOKEN  */
 #line 867 "parser.y"
     {
         //printf("reduced: activation -> ID_TOKEN LPAREN_TOKEN args RPAREN_TOKEN\n");
         //create ID node
 
         //find ID lexeme in token list
-        // token_t* token = NULL;
-        // for (int i = token_count-1; i >= 0; i--) 
-        // {
-        //     token_type_t type = token_list[i]->type;
-        //     print_token(token_list[i]);
-        //     if (convert_token(type) == ID_TOKEN) 
-        //     {
-        //         // printf("found token id\n");
-        //         token = token_list[i];
-        //         break;
-        //     }
-        // }
+        token_t* token = NULL;
+        for (int i = token_count-1; i >= 0; i--) 
+        {
+            token_type_t type = token_list[i]->type;
+            // print_token(token_list[i]);
+            if (convert_token(type) == ID_TOKEN) 
+            {
+                // printf("found token id\n");
+                token = token_list[i];
+                break;
+            }
+        }
 
-        // // printf("needed to find token id\n");
-        // // printf("found token: %s\n", token->lexeme);
+        // printf("needed to find token id\n");
+        // printf("found token: %s\n", token->lexeme);
 
-        // ast_node_t* id_node = new_ast_node(EXPRESSION_NODE, global_line_number, token->lexeme, NOT_STMT, ID_EXP, NO_TYPE);
+        ast_node_t* id_node = new_ast_node(EXPRESSION_NODE, global_line_number, token->lexeme, NOT_STMT, ID_EXP, NO_TYPE);
         //print_ast(id_node);
         //printf("id lexeme: %s line number: %d\n", id_node->lexeme, id_node->lineno);
         
-        yyval = yyvsp[-3];
+        yyval = id_node;
         add_child(yyval, yyvsp[-1]);
         
         
