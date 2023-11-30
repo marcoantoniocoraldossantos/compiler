@@ -34,7 +34,6 @@
     {
         //printf("reduced: program -> decl_list\n");
         global_ast_tree = $1;
-        //print_ast($$);
     }
     ;
 
@@ -51,14 +50,12 @@
             $$ = $2;
         }
 
-        // print_ast($$);
     }
     | declaration
     {
         //printf("reduced: decl_list -> declaration\n");
         $$ = $1;
 
-        // print_ast($$);
     }
     ;
 
