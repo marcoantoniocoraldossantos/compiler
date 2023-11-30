@@ -460,7 +460,7 @@
     }
     ;
 
-    selection_decl : IF_TOKEN LPAREN_TOKEN expression RPAREN_TOKEN statement fun_else
+    selection_decl : IF_TOKEN LPAREN_TOKEN expression RPAREN_TOKEN statement
     {
         //printf("reduced: selection_decl -> IF_TOKEN LPAREN_TOKEN expression RPAREN_TOKEN statement\n");
         ast_node_t* if_node = new_ast_node(STATEMENT_NODE, global_line_number, "if", IF_STMT, NOT_EXP, NO_TYPE);
@@ -470,30 +470,28 @@
         $$ = if_node;
         add_child($$, $3);
         add_child($$, $5);
+        
+        // print_ast($$);
 
-        if($6 != NULL) add_child($$, $6);
+        // free_ast(if_node);
+    }
+    | IF_TOKEN LPAREN_TOKEN expression RPAREN_TOKEN statement ELSE_TOKEN statement
+    {
+        //printf("reduced: selection_decl -> IF_TOKEN LPAREN_TOKEN expression RPAREN_TOKEN statement ELSE_TOKEN statement\n");
+        ast_node_t* if_node = new_ast_node(STATEMENT_NODE, global_line_number, "if", IF_STMT, NOT_EXP, NO_TYPE);
+        //ast_node_t* else_node = new_ast_node(STATEMENT_NODE, global_line_number, "else", ELSE_STMT, NOT_EXP, NO_TYPE);
+        //print_ast(if_node);
+        //printf("if lexeme: %s line number: %d\n", if_node->lexeme, if_node->lineno);
+        
+        add_child(if_node, $3);
+        add_child(if_node, $5);
+        add_child(if_node, $7);
+        $$ = if_node;
 
         // print_ast($$);
 
         // free_ast(if_node);
     }
-    // | IF_TOKEN LPAREN_TOKEN expression RPAREN_TOKEN statement ELSE_TOKEN statement
-    // {
-    //     //printf("reduced: selection_decl -> IF_TOKEN LPAREN_TOKEN expression RPAREN_TOKEN statement ELSE_TOKEN statement\n");
-    //     ast_node_t* if_node = new_ast_node(STATEMENT_NODE, global_line_number, "if", IF_STMT, NOT_EXP, NO_TYPE);
-    //     ast_node_t* else_node = new_ast_node(STATEMENT_NODE, global_line_number, "else", ELSE_STMT, NOT_EXP, NO_TYPE);
-    //     //print_ast(if_node);
-    //     //printf("if lexeme: %s line number: %d\n", if_node->lexeme, if_node->lineno);
-        
-    //     add_child(if_node, $3);
-    //     add_child(if_node, $5);
-    //     add_child(if_node, else_node);
-    //     $$ = if_node;
-
-    //     print_ast($$);
-
-    //     // free_ast(if_node);
-    // }
     ;
 
     fun_else: ELSE_TOKEN statement
