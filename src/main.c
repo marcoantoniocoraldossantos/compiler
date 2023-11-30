@@ -40,7 +40,7 @@ int main(int argc, char *argv[])
     //     free_token(token); // free token memory
     // }
 
-    printf("\nsintatic analysis:\n");
+    printf("sintatic analysis...");
     parse();
 
     printf("\n");

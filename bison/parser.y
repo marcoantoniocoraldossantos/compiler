@@ -32,9 +32,9 @@
 
     program : decl_list 
     {
-        printf("reduced: program -> decl_list\n");
+        //printf("reduced: program -> decl_list\n");
         global_ast_tree = $1;
-        print_ast($$);
+        //print_ast($$);
     }
     ;
 
@@ -89,7 +89,7 @@
         for(int i = token_count-1; i >= 0; i--)
         {
             token_type_t type = token_list[i]->type;
-            print_token(token_list[i]);
+            //print_token(token_list[i]);
             if (convert_token(type) == ID_TOKEN) 
             {
                 // printf("found token id\n");
@@ -116,7 +116,7 @@
         for(int i = token_count-1; i >= 0; i--)
         {
             token_type_t type = token_list[i]->type;
-            print_token(token_list[i]);
+            //print_token(token_list[i]);
             if (convert_token(type) == ID_TOKEN) 
             {
                 // printf("found token id\n");
@@ -132,7 +132,7 @@
         for(int i = token_count-1; i >= 0; i--)
         {
             token_type_t type = token_list[i]->type;
-            print_token(token_list[i]);
+            //print_token(token_list[i]);
             if (convert_token(type) == NUM_TOKEN) 
             {
                 token_num = token_list[i];
@@ -223,7 +223,7 @@
         for(int i = token_count-1; i >= 0; i--)
         {
             token_type_t type = token_list[i]->type;
-            print_token(token_list[i]);
+            //print_token(token_list[i]);
             if (convert_token(type) == ID_TOKEN) 
             {
                 token = token_list[i];
@@ -290,7 +290,7 @@
         for(int i = token_count-1; i >= 0; i--)
         {
             token_type_t type = token_list[i]->type;
-            print_token(token_list[i]);
+            //print_token(token_list[i]);
             if (convert_token(type) == ID_TOKEN) 
             {
                 token = token_list[i];
@@ -319,7 +319,7 @@
         for(int i = token_count-1; i >= 0; i--)
         {
             token_type_t type = token_list[i]->type;
-            print_token(token_list[i]);
+            //print_token(token_list[i]);
             if (convert_token(type) == ID_TOKEN) 
             {
                 token = token_list[i];
@@ -403,7 +403,7 @@
         //printf("reduced: statement_list -> vazio\n");
         $$ = NULL;
 
-        print_ast($$);
+        //print_ast($$);
     }
     ;
 
@@ -591,7 +591,7 @@
         for(int i = token_count-1; i >= 0; i--)
         {
             token_type_t type = token_list[i]->type;
-            print_token(token_list[i]);
+            //print_token(token_list[i]);
             if (convert_token(type) == ID_TOKEN) 
             {
                 token = token_list[i];
@@ -617,7 +617,7 @@
         for(int i = token_count-1; i >= 0; i--)
         {
             token_type_t type = token_list[i]->type;
-            print_token(token_list[i]);
+            //print_token(token_list[i]);
             if (convert_token(type) == ID_TOKEN) 
             {
                 token = token_list[i];
@@ -847,7 +847,7 @@
         for(int i = token_count-1; i >= 0; i--)
         {
             token_type_t type = token_list[i]->type;
-            print_token(token_list[i]);
+            //print_token(token_list[i]);
             if (convert_token(type) == NUM_TOKEN) 
             {
                 // printf("found token num\n");
@@ -990,10 +990,10 @@ void parse()
 { 
     yyparse(); 
 
-    for(int i = 0; i < token_count; ++i) 
-    {
-        print_token(token_list[i]);
-    }
+    // for(int i = 0; i < token_count; ++i) 
+    // {
+    //     print_token(token_list[i]);
+    // }
 
     free_tokens();    
 }
