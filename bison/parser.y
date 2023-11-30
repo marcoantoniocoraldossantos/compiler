@@ -494,20 +494,20 @@
     }
     ;
 
-    fun_else: ELSE_TOKEN statement
-    {
-        //create else node
-        //printf("reduced: fun_else -> ELSE_TOKEN statement\n");
-        ast_node_t* else_node = new_ast_node(STATEMENT_NODE, global_line_number, "else", ELSE_STMT, NOT_EXP, NO_TYPE);
-        //print_ast(else_node);
-        //printf("else lexeme: %s line number: %d\n", else_node->lexeme, else_node->lineno);
-        $$ = else_node;
-        add_child($$, $2);
-    }
-    |
-    {
-        $$ = NULL;
-    } 
+    // fun_else: ELSE_TOKEN statement
+    // {
+    //     //create else node
+    //     //printf("reduced: fun_else -> ELSE_TOKEN statement\n");
+    //     ast_node_t* else_node = new_ast_node(STATEMENT_NODE, global_line_number, "else", ELSE_STMT, NOT_EXP, NO_TYPE);
+    //     //print_ast(else_node);
+    //     //printf("else lexeme: %s line number: %d\n", else_node->lexeme, else_node->lineno);
+    //     $$ = else_node;
+    //     add_child($$, $2);
+    // }
+    // |
+    // {
+    //     $$ = NULL;
+    // } 
 
 
     iteration_decl : WHILE_TOKEN LPAREN_TOKEN expression RPAREN_TOKEN statement
