@@ -5,8 +5,8 @@
 
 typedef enum 
 {
-    INT_TYPE,
-    VOID_TYPE,
+    INT_DATA,
+    VOID_DATA,
 } data_type_t;
 
 typedef enum 

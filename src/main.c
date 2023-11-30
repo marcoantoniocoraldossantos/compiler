@@ -44,7 +44,7 @@ int main(int argc, char *argv[])
     parse();
 
     printf("\n");
-    print_ast(global_ast_tree);
+    //print_ast(global_ast_tree);
 
     printf("freeing memory...\n");
     close_file(input_file); // close the file

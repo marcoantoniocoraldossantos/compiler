@@ -17,5 +17,6 @@
 #include "ast.h"
 #include "parser.h"
 #include "globals.h"
+#include "symtab.h"
 
 #endif
