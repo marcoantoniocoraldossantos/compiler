@@ -32,7 +32,8 @@ void print_ast_util(ast_node_t* root, int num)
     }
     printf("%s\n", root->lexeme);
 
-    for (int i = 0; i < 3; i++) {
+    for (int i = 0; i < 3; i++) 
+    {
         print_ast_util(root->child[i], num + 1);
     }
     print_ast_util(root->sibling, num);
@@ -45,9 +46,12 @@ void print_ast(ast_node_t *root)
     print_ast_util(root, 1);
 }
 
-void free_ast(ast_node_t* node) {
-    if (node != NULL) {
-        for (int i = 0; i < MAXCHILDREN; ++i) {
+void free_ast(ast_node_t* node) 
+{
+    if (node != NULL) 
+    {
+        for (int i = 0; i < MAXCHILDREN; ++i) 
+        {
             free_ast(node->child[i]);
         }
         free_ast(node->sibling);

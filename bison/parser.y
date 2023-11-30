@@ -128,6 +128,7 @@
         ast_node_t* void_node = new_ast_node(EXPRESSION_NODE, global_line_number, "void", NOT_STMT, CONST_EXP, VOID_TYPE);
 
         $$ = void_node;
+
     }
     ;
 
@@ -140,23 +141,7 @@
     }
     ;
 
-    fun_id : ID_TOKEN
-    {
-        token_t* token = NULL;
-        for(int i = token_count-1; i >= 0; i--)
-        {
-            token_type_t type = token_list[i]->type;
-            if (convert_token(type) == ID_TOKEN) 
-            {
-                token = token_list[i];
-                break;
-            }
-        }
-
-        ast_node_t* id_node = new_ast_node(EXPRESSION_NODE, global_line_number, token->lexeme, NOT_STMT, ID_EXP, NO_TYPE);
-        
-        $$ = id_node;
-    }
+    
 
     params : param_list
     {
@@ -190,40 +175,40 @@
 
     param : type_specifier id
     {
-        token_t* token = NULL;
-        for(int i = token_count-1; i >= 0; i--)
-        {
-            token_type_t type = token_list[i]->type;
-            //print_token(token_list[i]);
-            if (convert_token(type) == ID_TOKEN) 
-            {
-                token = token_list[i];
-                break;
-            }
-        }
+        // token_t* token = NULL;
+        // for(int i = token_count-1; i >= 0; i--)
+        // {
+        //     token_type_t type = token_list[i]->type;
+        //     //print_token(token_list[i]);
+        //     if (convert_token(type) == ID_TOKEN) 
+        //     {
+        //         token = token_list[i];
+        //         break;
+        //     }
+        // }
 
-        ast_node_t* id_node = new_ast_node(EXPRESSION_NODE, global_line_number, token->lexeme, NOT_STMT, ID_EXP, NO_TYPE);
+        // ast_node_t* id_node = new_ast_node(EXPRESSION_NODE, global_line_number, token->lexeme, NOT_STMT, ID_EXP, NO_TYPE);
 
         $$ = $1;
-        add_child($$, id_node);
+        add_child($$, $2);
     }
     | type_specifier id LBRACKET_TOKEN RBRACKET_TOKEN
     {
-        token_t* token = NULL;
-        for(int i = token_count-1; i >= 0; i--)
-        {
-            token_type_t type = token_list[i]->type;
-            if (convert_token(type) == ID_TOKEN) 
-            {
-                token = token_list[i];
-                break;
-            }
-        }
+        // token_t* token = NULL;
+        // for(int i = token_count-1; i >= 0; i--)
+        // {
+        //     token_type_t type = token_list[i]->type;
+        //     if (convert_token(type) == ID_TOKEN) 
+        //     {
+        //         token = token_list[i];
+        //         break;
+        //     }
+        // }
 
-        ast_node_t* id_node = new_ast_node(EXPRESSION_NODE, global_line_number, token->lexeme, NOT_STMT, ID_EXP, NO_TYPE);
+        // ast_node_t* id_node = new_ast_node(EXPRESSION_NODE, global_line_number, token->lexeme, NOT_STMT, ID_EXP, NO_TYPE);
         
         $$ = $1;
-        add_child($$, id_node);
+        add_child($$, $2);
     }
     ;
 
@@ -539,7 +524,7 @@
     }
     ;
 
-    activation : fun_id LPAREN_TOKEN args RPAREN_TOKEN
+    activation : id LPAREN_TOKEN args RPAREN_TOKEN
     {
         $$ = $1;
         add_child($$, $3);
@@ -574,6 +559,25 @@
     }
     ;
 
+    id : ID_TOKEN
+    {
+        token_t* token = NULL;
+        for(int i = token_count-1; i >= 0; i--)
+        {
+            token_type_t type = token_list[i]->type;
+            if (convert_token(type) == ID_TOKEN) 
+            {
+                token = token_list[i];
+                break;
+            }
+        }
+
+        ast_node_t* id_node = new_ast_node(EXPRESSION_NODE, global_line_number, token->lexeme, NOT_STMT, ID_EXP, NO_TYPE);
+        
+        $$ = id_node;
+    }
+    ;
+
     num : NUM_TOKEN
     {
         token_t* token = NULL;
@@ -588,26 +592,8 @@
         }
 
         ast_node_t* num_node = new_ast_node(EXPRESSION_NODE, global_line_number, token->lexeme, NOT_STMT, CONST_EXP, NO_TYPE);
-
+        
         $$ = num_node;
-    }
-
-    id : ID_TOKEN
-    {
-        token_t* token = NULL;
-        for(int i = token_count-1; i >= 0; i--)
-        {
-            token_type_t type = token_list[i]->type;
-            if (convert_token(type) == ID_TOKEN) 
-            {
-                token = token_list[i];
-                break;
-            }
-        }
-    
-        ast_node_t* id_node = new_ast_node(EXPRESSION_NODE, global_line_number, token->lexeme, NOT_STMT, ID_EXP, NO_TYPE);
-
-        $$ = id_node;
     }
 
 %%
