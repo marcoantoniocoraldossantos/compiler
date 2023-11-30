@@ -203,8 +203,8 @@
         
         $$ = $1;        
         add_child($$, $4);
-        add_child($$, $2);
-        add_child($2, $6);
+        add_child($$, id_node);
+        add_child(id_node, $6);
 
         // print_ast($$);
 
@@ -460,15 +460,18 @@
     selection_decl : IF_TOKEN LPAREN_TOKEN expression RPAREN_TOKEN statement
     {
         //printf("reduced: selection_decl -> IF_TOKEN LPAREN_TOKEN expression RPAREN_TOKEN statement\n");
+        // create if node
+        
+        
         ast_node_t* if_node = new_ast_node(STATEMENT_NODE, global_line_number, "if", IF_STMT, NOT_EXP, NO_TYPE);
         //print_ast(if_node);
         //printf("if lexeme: %s line number: %d\n", if_node->lexeme, if_node->lineno);
         
         $$ = if_node;
-        add_child($$, $3);
-        add_child($$, $5);
+        add_child(if_node, $3);
+        add_child(if_node, $5);
 
-        if($6 != NULL) add_child($$, $6);
+        //if($6 != NULL) add_child($$, $6);
 
         // print_ast($$);
 
@@ -478,16 +481,17 @@
     {
         //printf("reduced: selection_decl -> IF_TOKEN LPAREN_TOKEN expression RPAREN_TOKEN statement ELSE_TOKEN statement\n");
         ast_node_t* if_node = new_ast_node(STATEMENT_NODE, global_line_number, "if", IF_STMT, NOT_EXP, NO_TYPE);
-        ast_node_t* else_node = new_ast_node(STATEMENT_NODE, global_line_number, "else", ELSE_STMT, NOT_EXP, NO_TYPE);
+        //ast_node_t* else_node = new_ast_node(STATEMENT_NODE, global_line_number, "else", ELSE_STMT, NOT_EXP, NO_TYPE);
         //print_ast(if_node);
         //printf("if lexeme: %s line number: %d\n", if_node->lexeme, if_node->lineno);
         
+        $$ = if_node;
         add_child(if_node, $3);
         add_child(if_node, $5);
-        add_child(if_node, else_node);
-        $$ = if_node;
+        add_child(if_node, $7);
+        
 
-        print_ast($$);
+        // print_ast($$);
 
         // free_ast(if_node);
     }
