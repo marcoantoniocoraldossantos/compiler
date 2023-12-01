@@ -15,6 +15,7 @@ typedef enum
     PARAMETER_NODE,
     NULL_NODE,
 } node_kind_t;
+
 typedef enum 
 {
     IF_STMT,
@@ -22,8 +23,11 @@ typedef enum
     RETURN_STMT,
     DECL_STMT,
     PARAM_STMT,
+    COMPOUND_STMT,
+    EXP_STMT,
     NULL_STMT,
 } statement_kind_t;
+
 typedef enum 
 {
     OP_EXP,
@@ -31,18 +35,20 @@ typedef enum
     REL_EXP,
     ID_EXP,
     NOT_EXP,
-    FUNC_EXP,
-    VEC_EXP,
+    FUNCTION_EXP,
+    VECTOR_EXP,
     ATTR_EXP,
     CALL_EXP,
     NULL_EXP,
 } expression_kind_t;
+
 typedef enum 
 {
     INT_TYPE,
     VOID_TYPE,
     NULL_TYPE,
 } expression_type_t;
+
 
 typedef struct ast_node_t 
 {

@@ -467,8 +467,15 @@
             }
         }
 
-        ast_node_t* id_node = new_ast_node(NULL_NODE, global_line_number, token->lexeme, NULL_STMT, NULL_EXP, NULL_TYPE);
-        
+        ast_node_t* id_node = new_ast_node(
+            EXPRESSION_NODE,    // Tipo do nó: Expressão
+            global_line_number,       // Número da linha onde o identificador foi encontrado
+            token->lexeme,     // Valor do identificador em formato de string
+            NULL_STMT,          // Se for um identificador, pode ser NULL_STMT
+            ID_EXP,             // Tipo de expressão: Identificador
+            NULL_TYPE           // Não se aplica o tipo aqui, pode ser NULL_TYPE
+        );
+
         $$ = id_node; 
 
 
@@ -488,8 +495,15 @@
             }
         }
 
-        ast_node_t* num_node = new_ast_node(NULL_NODE, global_line_number, token->lexeme, NULL_STMT, NULL_EXP, NULL_TYPE);
-        
+        ast_node_t* num_node = new_ast_node(
+            EXPRESSION_NODE,        
+            global_line_number,          
+            token->lexeme,        
+            NULL_STMT,              
+            CONST_EXP,              
+            INT_TYPE                
+        );
+
         $$ = num_node; 
     }
 

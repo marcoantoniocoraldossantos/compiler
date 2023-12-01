@@ -573,7 +573,7 @@ static const yytype_int16 yyrline[] =
      232,   240,   251,   261,   267,   276,   284,   290,   294,   301,
      307,   313,   319,   325,   331,   337,   343,   351,   357,   363,
      369,   377,   384,   390,   396,   404,   408,   412,   416,   422,
-     429,   434,   439,   451,   457,   478
+     429,   434,   439,   451,   457,   485
 };
 #endif
 
@@ -1833,17 +1833,24 @@ yyreduce:
             }
         }
 
-        ast_node_t* id_node = new_ast_node(NULL_NODE, global_line_number, token->lexeme, NULL_STMT, NULL_EXP, NULL_TYPE);
-        
+        ast_node_t* id_node = new_ast_node(
+            EXPRESSION_NODE,    // Tipo do nó: Expressão
+            global_line_number,       // Número da linha onde o identificador foi encontrado
+            token->lexeme,     // Valor do identificador em formato de string
+            NULL_STMT,          // Se for um identificador, pode ser NULL_STMT
+            ID_EXP,             // Tipo de expressão: Identificador
+            NULL_TYPE           // Não se aplica o tipo aqui, pode ser NULL_TYPE
+        );
+
         yyval = id_node; 
 
 
     }
-#line 1843 "parser.c"
+#line 1850 "parser.c"
     break;
 
   case 65: /* num: NUM_TOKEN  */
-#line 479 "parser.y"
+#line 486 "parser.y"
     {
         token_t* token = NULL;
         for(int i = token_count-1; i >= 0; i--)
@@ -1856,15 +1863,22 @@ yyreduce:
             }
         }
 
-        ast_node_t* num_node = new_ast_node(NULL_NODE, global_line_number, token->lexeme, NULL_STMT, NULL_EXP, NULL_TYPE);
-        
+        ast_node_t* num_node = new_ast_node(
+            EXPRESSION_NODE,        
+            global_line_number,          
+            token->lexeme,        
+            NULL_STMT,              
+            CONST_EXP,              
+            INT_TYPE                
+        );
+
         yyval = num_node; 
     }
-#line 1864 "parser.c"
+#line 1878 "parser.c"
     break;
 
 
-#line 1868 "parser.c"
+#line 1882 "parser.c"
 
       default: break;
     }
@@ -2057,7 +2071,7 @@ yyreturnlab:
   return yyresult;
 }
 
-#line 496 "parser.y"
+#line 510 "parser.y"
 
 
 void yyerror(char *s)

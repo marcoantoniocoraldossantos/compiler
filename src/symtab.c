@@ -85,10 +85,8 @@ void construct_symtab(ast_node_t* node, hash_table_t* hash_table)
 {
     if (node == NULL) return;
 
-    
-
-
-
+    // ast_node_t* current = node;
+    // ast_node_t* parent = node;
 
     // if (node->type == AST_DECLARATION) 
     // {

@@ -51,7 +51,7 @@ int main(int argc, char *argv[])
     construct_symtab(global_ast_tree, symtab);
     // semantic_analysis(global_ast_tree, symtab);
     
-    print_hash_table(symtab);
+    // print_hash_table(symtab);
 
     printf("freeing memory...\n");
     close_file(input_file); // close the file
