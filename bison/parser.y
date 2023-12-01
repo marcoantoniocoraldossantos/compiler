@@ -312,37 +312,79 @@
 
     relational : LT_TOKEN
     {
-        ast_node_t* lt_node = new_ast_node(NULL_NODE, global_line_number, "<", NULL_STMT, NULL_EXP, NULL_TYPE);
+        ast_node_t* lt_node = new_ast_node(
+            EXPRESSION_NODE,    // Tipo do nó: Expressão
+            global_line_number, // Número da linha onde ocorre a operação de menor que
+            "<",                // Lexema representando a operação de menor que
+            NULL_STMT,          // Operação de menor que não requer um statement específico
+            REL_EXP,            // Tipo de expressão: Relacional
+            NULL_TYPE           // Não se aplica o tipo aqui, pode ser NULL_TYPE
+        );
         
         $$ = lt_node;
     }
     | LTE_TOKEN
     {
-        ast_node_t* lte_node = new_ast_node(NULL_NODE, global_line_number, "<=", NULL_STMT, NULL_EXP, NULL_TYPE);
+        ast_node_t* lte_node = new_ast_node(
+            EXPRESSION_NODE,    // Tipo do nó: Expressão
+            global_line_number, // Número da linha onde ocorre a operação de menor ou igual a
+            "<=",               // Lexema representando a operação de menor ou igual a
+            NULL_STMT,          // Operação de menor ou igual a não requer um statement específico
+            REL_EXP,            // Tipo de expressão: Relacional
+            NULL_TYPE           // Não se aplica o tipo aqui, pode ser NULL_TYPE
+        );
 
         $$ = lte_node;
     }
     | GT_TOKEN
     {
-        ast_node_t* gt_node = new_ast_node(NULL_NODE, global_line_number, ">", NULL_STMT, NULL_EXP, NULL_TYPE);
+        ast_node_t* gt_node = new_ast_node(
+            EXPRESSION_NODE,    // Tipo do nó: Expressão
+            global_line_number, // Número da linha onde ocorre a operação de maior que
+            ">",                // Lexema representando a operação de maior que
+            NULL_STMT,          // Operação de maior que não requer um statement específico
+            REL_EXP,            // Tipo de expressão: Relacional
+            NULL_TYPE           // Não se aplica o tipo aqui, pode ser NULL_TYPE
+        );
 
         $$ = gt_node;
     }
     | GTE_TOKEN
     {
-        ast_node_t* gte_node = new_ast_node(NULL_NODE, global_line_number, ">=", NULL_STMT, NULL_EXP, NULL_TYPE);
+        ast_node_t* gte_node = new_ast_node(
+            EXPRESSION_NODE,    // Tipo do nó: Expressão
+            global_line_number, // Número da linha onde ocorre a operação de maior ou igual a
+            ">=",               // Lexema representando a operação de maior ou igual a
+            NULL_STMT,          // Operação de maior ou igual a não requer um statement específico
+            REL_EXP,            // Tipo de expressão: Relacional
+            NULL_TYPE           // Não se aplica o tipo aqui, pode ser NULL_TYPE
+        );
       
         $$ = gte_node;
     }
     | EQ_TOKEN
     {
-        ast_node_t* eq_node = new_ast_node(NULL_NODE, global_line_number, "=", NULL_STMT, NULL_EXP, NULL_TYPE);
+        ast_node_t* eq_node = new_ast_node(
+            EXPRESSION_NODE,    // Tipo do nó: Expressão
+            global_line_number, // Número da linha onde ocorre a operação de igual a
+            "=",                // Lexema representando a operação de igual a
+            NULL_STMT,          // Operação de igual a não requer um statement específico
+            REL_EXP,            // Tipo de expressão: Relacional
+            NULL_TYPE           // Não se aplica o tipo aqui, pode ser NULL_TYPE
+        );
 
         $$ = eq_node;
     }
     | NEQ_TOKEN
     {
-        ast_node_t* neq_node = new_ast_node(NULL_NODE, global_line_number, "!=", NULL_STMT, NULL_EXP, NULL_TYPE);
+        ast_node_t* neq_node = new_ast_node(
+            EXPRESSION_NODE,    // Tipo do nó: Expressão
+            global_line_number, // Número da linha onde ocorre a operação de diferente de
+            "!=",               // Lexema representando a operação de diferente de
+            NULL_STMT,          // Operação de diferente de não requer um statement específico
+            REL_EXP,            // Tipo de expressão: Relacional
+            NULL_TYPE           // Não se aplica o tipo aqui, pode ser NULL_TYPE
+        );
    
         $$ = neq_node;
     }
@@ -362,13 +404,27 @@
 
     sum : PLUS_TOKEN
     {
-        ast_node_t* plus_node = new_ast_node(NULL_NODE, global_line_number, "+", NULL_STMT, NULL_EXP, NULL_TYPE);
+        ast_node_t* plus_node = new_ast_node(
+            EXPRESSION_NODE,    // Tipo do nó: Expressão
+            global_line_number, // Número da linha onde ocorre a operação de adição
+            "+",                // Lexema representando a operação de adição
+            NULL_STMT,          // Operação de adição não requer um statement específico
+            OP_EXP,             // Tipo de expressão: Operação
+            NULL_TYPE           // Não se aplica o tipo aqui, pode ser NULL_TYPE
+        );
 
         $$ = plus_node;
     }
     | MINUS_TOKEN
     {
-        ast_node_t* minus_node = new_ast_node(NULL_NODE, global_line_number, "-", NULL_STMT, NULL_EXP, NULL_TYPE);
+        ast_node_t* minus_node = new_ast_node(
+            EXPRESSION_NODE,    // Tipo do nó: Expressão
+            global_line_number, // Número da linha onde ocorre a operação de subtração
+            "-",                // Lexema representando a operação de subtração
+            NULL_STMT,          // Operação de subtração não requer um statement específico
+            OP_EXP,             // Tipo de expressão: Operação
+            NULL_TYPE           // Não se aplica o tipo aqui, pode ser NULL_TYPE
+        );
       
         $$ = minus_node;
     }
@@ -491,8 +547,6 @@
         );
 
         $$ = id_node; 
-
-
     }
     ;
 
