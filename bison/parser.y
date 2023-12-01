@@ -68,49 +68,10 @@
     {
         $$ = $1;
 
-        // token_t* token = NULL;
-        // for(int i = token_count-1; i >= 0; i--)
-        // {
-        //     token_type_t type = token_list[i]->type;
-        //     if (convert_token(type) == ID_TOKEN) 
-        //     {
-        //         token = token_list[i];
-        //         break;
-        //     }
-        // }
-
-        // ast_node_t* id_node = new_ast_node(EXPRESSION_NODE, global_line_number, token->lexeme, NOT_STMT, ID_EXP, NO_TYPE);
-
         add_child($$, $2);
     }
     | type_specifier id LBRACKET_TOKEN num RBRACKET_TOKEN SEMICOLON_TOKEN
     {
-        // token_t* token = NULL;
-        // for(int i = token_count-1; i >= 0; i--)
-        // {
-        //     token_type_t type = token_list[i]->type;
-        //     if (convert_token(type) == ID_TOKEN) 
-        //     {
-        //         token = token_list[i];
-        //         break;
-        //     }
-        // }
-
-        // ast_node_t* id_node = new_ast_node(EXPRESSION_NODE, global_line_number, token->lexeme, NOT_STMT, ID_EXP, NO_TYPE);
-
-        // token_t* token_num = NULL;
-        // for(int i = token_count-1; i >= 0; i--)
-        // {
-        //     token_type_t type = token_list[i]->type;
-        //     if (convert_token(type) == NUM_TOKEN) 
-        //     {
-        //         token_num = token_list[i];
-        //         break;
-        //     }
-        // }
-
-        // ast_node_t* num_node = new_ast_node(EXPRESSION_NODE, global_line_number, token_num->lexeme, NOT_STMT, CONST_EXP, NO_TYPE);
-        
         $$ = $1;
         add_child($$, $2);
         add_child($$, $4);
@@ -119,13 +80,13 @@
 
     type_specifier : INT_TOKEN
     {
-        ast_node_t* int_node = new_ast_node(EXPRESSION_NODE, global_line_number, "int", NOT_STMT, CONST_EXP, INT_TYPE);
+        ast_node_t* int_node = new_ast_node(EXPRESSION_NODE, global_line_number, "int", NULL_STMT, CONST_EXP, INT_TYPE);
 
         $$ = int_node;
     }
     | VOID_TOKEN
     {
-        ast_node_t* void_node = new_ast_node(EXPRESSION_NODE, global_line_number, "void", NOT_STMT, CONST_EXP, VOID_TYPE);
+        ast_node_t* void_node = new_ast_node(EXPRESSION_NODE, global_line_number, "void", NULL_STMT, CONST_EXP, VOID_TYPE);
 
         $$ = void_node;
 
@@ -149,7 +110,7 @@
     }
     | VOID_TOKEN
     {
-        ast_node_t* void_node = new_ast_node(EXPRESSION_NODE, global_line_number, "void", NOT_STMT, CONST_EXP, VOID_TYPE);
+        ast_node_t* void_node = new_ast_node(EXPRESSION_NODE, global_line_number, "void", NULL_STMT, CONST_EXP, VOID_TYPE);
 
         $$ = void_node;
     }
@@ -175,38 +136,11 @@
 
     param : type_specifier id
     {
-        // token_t* token = NULL;
-        // for(int i = token_count-1; i >= 0; i--)
-        // {
-        //     token_type_t type = token_list[i]->type;
-        //     //print_token(token_list[i]);
-        //     if (convert_token(type) == ID_TOKEN) 
-        //     {
-        //         token = token_list[i];
-        //         break;
-        //     }
-        // }
-
-        // ast_node_t* id_node = new_ast_node(EXPRESSION_NODE, global_line_number, token->lexeme, NOT_STMT, ID_EXP, NO_TYPE);
-
         $$ = $1;
         add_child($$, $2);
     }
     | type_specifier id LBRACKET_TOKEN RBRACKET_TOKEN
     {
-        // token_t* token = NULL;
-        // for(int i = token_count-1; i >= 0; i--)
-        // {
-        //     token_type_t type = token_list[i]->type;
-        //     if (convert_token(type) == ID_TOKEN) 
-        //     {
-        //         token = token_list[i];
-        //         break;
-        //     }
-        // }
-
-        // ast_node_t* id_node = new_ast_node(EXPRESSION_NODE, global_line_number, token->lexeme, NOT_STMT, ID_EXP, NO_TYPE);
-        
         $$ = $1;
         add_child($$, $2);
     }
@@ -341,7 +275,7 @@
 
     expression : var ASSIGN_TOKEN expression
     {
-        ast_node_t* assign_node = new_ast_node(EXPRESSION_NODE, global_line_number, "==", NOT_STMT, OP_EXP, NO_TYPE);
+        ast_node_t* assign_node = new_ast_node(EXPRESSION_NODE, global_line_number, "==", NULL_STMT, OP_EXP, NO_TYPE);
      
         $$ = assign_node;
         add_child($$, $1);
@@ -355,36 +289,10 @@
 
     var : id
     {
-        // token_t* token = NULL;
-        // for(int i = token_count-1; i >= 0; i--)
-        // {
-        //     token_type_t type = token_list[i]->type;
-        //     if (convert_token(type) == ID_TOKEN) 
-        //     {
-        //         token = token_list[i];
-        //         break;
-        //     }
-        // }
-
-        // ast_node_t* id_node = new_ast_node(EXPRESSION_NODE, global_line_number, token->lexeme, NOT_STMT, ID_EXP, NO_TYPE);
-  
         $$ = $1;
     }
     | id LBRACKET_TOKEN expression RBRACKET_TOKEN
     {
-        // token_t* token = NULL;
-        // for(int i = token_count-1; i >= 0; i--)
-        // {
-        //     token_type_t type = token_list[i]->type;
-        //     if (convert_token(type) == ID_TOKEN) 
-        //     {
-        //         token = token_list[i];
-        //         break;
-        //     }
-        // }
-
-        // ast_node_t* id_node = new_ast_node(EXPRESSION_NODE, global_line_number, token->lexeme, NOT_STMT, ID_EXP, NO_TYPE);
-
         $$ = $1;
         add_child($$, $3);
     }
@@ -404,37 +312,37 @@
 
     relational : LT_TOKEN
     {
-        ast_node_t* lt_node = new_ast_node(EXPRESSION_NODE, global_line_number, "<", NOT_STMT, OP_EXP, NO_TYPE);
+        ast_node_t* lt_node = new_ast_node(EXPRESSION_NODE, global_line_number, "<", NULL_STMT, OP_EXP, NO_TYPE);
         
         $$ = lt_node;
     }
     | LTE_TOKEN
     {
-        ast_node_t* lte_node = new_ast_node(EXPRESSION_NODE, global_line_number, "<=", NOT_STMT, OP_EXP, NO_TYPE);
+        ast_node_t* lte_node = new_ast_node(EXPRESSION_NODE, global_line_number, "<=", NULL_STMT, OP_EXP, NO_TYPE);
 
         $$ = lte_node;
     }
     | GT_TOKEN
     {
-        ast_node_t* gt_node = new_ast_node(EXPRESSION_NODE, global_line_number, ">", NOT_STMT, OP_EXP, NO_TYPE);
+        ast_node_t* gt_node = new_ast_node(EXPRESSION_NODE, global_line_number, ">", NULL_STMT, OP_EXP, NO_TYPE);
 
         $$ = gt_node;
     }
     | GTE_TOKEN
     {
-        ast_node_t* gte_node = new_ast_node(EXPRESSION_NODE, global_line_number, ">=", NOT_STMT, OP_EXP, NO_TYPE);
+        ast_node_t* gte_node = new_ast_node(EXPRESSION_NODE, global_line_number, ">=", NULL_STMT, OP_EXP, NO_TYPE);
       
         $$ = gte_node;
     }
     | EQ_TOKEN
     {
-        ast_node_t* eq_node = new_ast_node(EXPRESSION_NODE, global_line_number, "=", NOT_STMT, OP_EXP, NO_TYPE);
+        ast_node_t* eq_node = new_ast_node(EXPRESSION_NODE, global_line_number, "=", NULL_STMT, OP_EXP, NO_TYPE);
 
         $$ = eq_node;
     }
     | NEQ_TOKEN
     {
-        ast_node_t* neq_node = new_ast_node(EXPRESSION_NODE, global_line_number, "!=", NOT_STMT, OP_EXP, NO_TYPE);
+        ast_node_t* neq_node = new_ast_node(EXPRESSION_NODE, global_line_number, "!=", NULL_STMT, OP_EXP, NO_TYPE);
    
         $$ = neq_node;
     }
@@ -454,13 +362,13 @@
 
     sum : PLUS_TOKEN
     {
-        ast_node_t* plus_node = new_ast_node(EXPRESSION_NODE, global_line_number, "+", NOT_STMT, OP_EXP, NO_TYPE);
+        ast_node_t* plus_node = new_ast_node(EXPRESSION_NODE, global_line_number, "+", NULL_STMT, OP_EXP, NO_TYPE);
 
         $$ = plus_node;
     }
     | MINUS_TOKEN
     {
-        ast_node_t* minus_node = new_ast_node(EXPRESSION_NODE, global_line_number, "-", NOT_STMT, OP_EXP, NO_TYPE);
+        ast_node_t* minus_node = new_ast_node(EXPRESSION_NODE, global_line_number, "-", NULL_STMT, OP_EXP, NO_TYPE);
       
         $$ = minus_node;
     }
@@ -481,13 +389,13 @@
 
     mult : MULTIPLY_TOKEN
     {
-        ast_node_t* multiply_node = new_ast_node(EXPRESSION_NODE, global_line_number, "*", NOT_STMT, OP_EXP, NO_TYPE);
+        ast_node_t* multiply_node = new_ast_node(EXPRESSION_NODE, global_line_number, "*", NULL_STMT, OP_EXP, NO_TYPE);
 
         $$ = multiply_node;
     }
     | DIVIDE_TOKEN
     {
-        ast_node_t* divide_node = new_ast_node(EXPRESSION_NODE, global_line_number, "/", NOT_STMT, OP_EXP, NO_TYPE);
+        ast_node_t* divide_node = new_ast_node(EXPRESSION_NODE, global_line_number, "/", NULL_STMT, OP_EXP, NO_TYPE);
 
         $$ = divide_node;
     }   
@@ -518,7 +426,7 @@
             }
         }
 
-        ast_node_t* num_node = new_ast_node(EXPRESSION_NODE, global_line_number, token->lexeme, NOT_STMT, CONST_EXP, NO_TYPE);
+        ast_node_t* num_node = new_ast_node(EXPRESSION_NODE, global_line_number, token->lexeme, NULL_STMT, CONST_EXP, NO_TYPE);
 
         $$ = num_node;
     }
@@ -572,9 +480,11 @@
             }
         }
 
-        ast_node_t* id_node = new_ast_node(EXPRESSION_NODE, global_line_number, token->lexeme, NOT_STMT, ID_EXP, NO_TYPE);
+        ast_node_t* id_node = new_ast_node(EXPRESSION_NODE, global_line_number, token->lexeme, NULL_STMT, ID_EXP, NO_TYPE);
         
-        $$ = id_node;
+        $$ = id_node; 
+
+
     }
     ;
 
@@ -591,9 +501,9 @@
             }
         }
 
-        ast_node_t* num_node = new_ast_node(EXPRESSION_NODE, global_line_number, token->lexeme, NOT_STMT, CONST_EXP, NO_TYPE);
+        ast_node_t* num_node = new_ast_node(EXPRESSION_NODE, global_line_number, token->lexeme, NULL_STMT, CONST_EXP, NO_TYPE);
         
-        $$ = num_node;
+        $$ = num_node; 
     }
 
 %%
@@ -603,15 +513,12 @@ void yyerror(char *s)
     printf("\n%s: \'%s\' at line %d\n", s, global_lexeme, global_line_number);
     printf("exiting...\n");
 
-    //free_ast(global_ast_tree);
-
     exit(1);
 }
 
 int yylex()
 {
     token_t *token = get_next_token();
-    //print_token(token);
     if(token!=NULL) save_token_info(token);
 
 
@@ -628,14 +535,11 @@ int yylex()
     {
         printf("lexical error: invalid token\n");
         free(token);
-        return ERROR_TOKEN; // 
+        return ERROR_TOKEN; 
     }    
 
-
     token_list[token_count++] = token; 
-    //free_token(token);
 
-    //printf("will return token: %d\n", token_to_return);
     return token_to_return;
 }
 

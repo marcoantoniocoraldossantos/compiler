@@ -1,59 +1,82 @@
 #include "libraries.h"
 
-#define HASH_SIZE 101
+#define TABLE_SIZE 257
 
-// Estrutura para a tabela de hash
-typedef struct HashTable {
-    symtab_entry_t *table[HASH_SIZE];
-} HashTable;
-
-// Variável global para a tabela de símbolos
-HashTable symbol_table;
-
-// Função de hash simples
-unsigned int hash(const char *str) {
-    unsigned int hashval = 0;
-    for (; *str != '\0'; str++) {
-        hashval = *str + (hashval << 5) - hashval;
-    }
-    return hashval % HASH_SIZE;
+hash_entry_t* initialize_symtab()
+{
+    hash_entry_t* symtab = (hash_entry_t*) malloc(sizeof(hash_entry_t));
+    symtab->next = NULL;
+    return symtab;
 }
 
-// Função para inicializar a tabela de símbolos
-void initialize_symtab() {
-    for (int i = 0; i < HASH_SIZE; i++) {
-        symbol_table.table[i] = NULL;
+void free_hash_table(hash_entry_t* symtab)
+{
+    hash_entry_t* aux = symtab;
+    while (aux != NULL)
+    {
+        hash_entry_t* aux2 = aux->next;
+        free(aux);
+        aux = aux2;
     }
 }
 
-// Função para inserir um símbolo na tabela de símbolos
-void insert_symbol(const char *name, data_type_t data_type, id_type_t id_type) {
-    unsigned int index = hash(name);
-    
-    symtab_entry_t *new_entry = (symtab_entry_t *)malloc(sizeof(symtab_entry_t));
-    if (new_entry == NULL) {
-        fprintf(stderr, "Erro ao alocar memória para novo símbolo.\n");
-        exit(EXIT_FAILURE);
+void print_symtab(hash_entry_t* symtab)
+{
+    hash_entry_t* aux = symtab->next;
+    while (aux != NULL)
+    {
+        printf("name: %s, data_type: %d, id_type: %d\n", aux->name, aux->data_type, aux->id_type);
+        aux = aux->next;
     }
-    
-    strncpy(new_entry->name, name, MAX_LEXEME_LENGHT);
-    new_entry->data_type = data_type;
-    new_entry->id_type = id_type;
-    new_entry->line_number = -1; // Pode ser ajustado conforme necessário
-    new_entry->next = symbol_table.table[index];
-    symbol_table.table[index] = new_entry;
 }
 
-// Função para imprimir a tabela de símbolos
-void print_symtab() {
-    printf("=========== Tabela de Símbolos ===========\n");
-    for (int i = 0; i < HASH_SIZE; i++) {
-        symtab_entry_t *current = symbol_table.table[i];
-        while (current != NULL) {
-            printf("Nome: %s, Tipo de Dados: %d, Tipo de Identificador: %d\n",
-                   current->name, current->data_type, current->id_type);
-            current = current->next;
+void semantic_analysis(ast_node_t* ast_tree, hash_entry_t* symtab)
+{
+    if (ast_tree == NULL) return;
+    return;
+}
+
+unsigned int hash(const char* lexeme, int table_size) 
+{
+    unsigned int hash_value = 0;
+    for (int i = 0; lexeme[i] != '\0'; i++) 
+    {
+        hash_value = lexeme[i] + (hash_value << 5) - hash_value;
+    }
+    return hash_value % table_size;
+}
+
+void insert_symbol(hash_entry_t* symtab, ast_node_t* node, int table_size) 
+{
+    unsigned int index = hash(node->lexeme, table_size);
+
+    hash_entry_t* aux = symtab[index].next;
+
+    if (aux == NULL) 
+    {
+        symtab[index].next = (hash_entry_t*)malloc(sizeof(hash_entry_t));
+        aux = symtab[index].next;
+    } 
+    else 
+    {
+        while (aux->next != NULL) 
+        {
+            aux = aux->next;
         }
+        aux->next = (hash_entry_t*)malloc(sizeof(hash_entry_t));
+        aux = aux->next;
     }
-    printf("=========================================\n");
+
+    //verify info about the tree node and save to insert
+    // fill_entry_info(aux, node)
+
+    //default values to insert for testing
+    strcpy(aux->name, node->lexeme);
+    aux->data_type = INT_DATA;
+    aux->id_type = VARIABLE;
+    aux->line_number = node->lineno;
+    strcpy(aux->scope, "global");
+    aux->scope_type = GLOBAL;
+
+    aux->next = NULL;
 }

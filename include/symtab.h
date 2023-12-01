@@ -21,7 +21,7 @@ typedef enum
     LOCAL,
 } scope_t;
 
-typedef struct symtab_entry_t 
+typedef struct hash_entry_t 
 {
     char name[MAX_LEXEME_LENGHT];
     data_type_t data_type;
@@ -29,16 +29,14 @@ typedef struct symtab_entry_t
     int line_number;
     char scope[MAX_LEXEME_LENGHT];
     scope_t scope_type;
-    struct symtab_entry_t* next; // Para encadeamento em caso de colisões (caso use tabela hash)
-} symtab_entry_t;
+    struct hash_entry_t* next; // Para encadeamento em caso de colisões (caso use tabela hash)
+} hash_entry_t;
 
-// Função para inicializar a tabela de símbolos
-void initialize_symtab();
-
-// Função para inserir um símbolo na tabela de símbolos
-void insert_symbol(const char* name, data_type_t data_type, id_type_t id_type);
-
-// Função para imprimir a tabela de símbolos
-void print_symtab();
+hash_entry_t* initialize_symtab();
+void insert_symbol(hash_entry_t* symtab, ast_node_t* node, int table_size);
+void print_symtab(hash_entry_t* symtab);
+void free_hash_table(hash_entry_t* symtab);
+void semantic_analysis(ast_node_t* ast_tree, hash_entry_t* symtab);
+unsigned int hash(const char* lexeme, int table_size);
 
 #endif /* SYMTAB_H */
