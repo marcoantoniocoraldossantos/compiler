@@ -2,6 +2,7 @@
 #define SYMTAB_H
 
 #define MAX_LEXEME_LENGHT 64
+#define TABLE_SIZE 211
 
 typedef enum 
 {
@@ -32,11 +33,14 @@ typedef struct hash_entry_t
     struct hash_entry_t* next; 
 } hash_entry_t;
 
-hash_entry_t* initialize_symtab();
-void insert_symbol(hash_entry_t* symtab, ast_node_t* node, int table_size);
-void print_symtab(hash_entry_t* symtab);
-void free_hash_table(hash_entry_t* symtab);
-void semantic_analysis(ast_node_t* ast_tree, hash_entry_t* symtab);
+typedef struct 
+{
+    hash_entry_t* table[TABLE_SIZE];
+} hash_table_t;
+
+hash_table_t* initialize_hash_table();
+void free_hash_table(hash_table_t* hash_table);
 unsigned int hash(const char* lexeme, int table_size);
+void print_hash_table(hash_table_t* hash_table);
 
 #endif /* SYMTAB_H */

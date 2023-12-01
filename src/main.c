@@ -1,6 +1,5 @@
 // main function
 #include "libraries.h"
-#include "globals.h"
 
 // global variables
 char **global_argv = NULL;
@@ -11,8 +10,6 @@ FILE *global_input_file;
 bst_node_t *global_bst_tree;
 ast_node_t *global_ast_tree;
 
-#define TABLE_SIZE 257
-
 int main(int argc, char *argv[]) 
 {
     verify_arguments(argc, argv); // verify if the code was called correctly with "compiler <input_file>"
@@ -22,8 +19,8 @@ int main(int argc, char *argv[])
     buffer_t buffer = initialize_buffer(256); // initialize the buffer
     bst_node_t *bst_tree = initialize_bst(); // initialize the bst
     ast_node_t *ast_tree = initialize_ast(); // initialize the ast
-    hash_entry_t *symtab = initialize_symtab(); // initialize the symtab
-    token_t *token = NULL; // initialize the token
+    hash_table_t *symtab = initialize_hash_table(); // initialize the symtab
+    //token_t *token = NULL; // initialize the token
 
     save_global_variables(input_file, &buffer, bst_tree); // save the global variables
     global_ast_tree = ast_tree;
@@ -44,14 +41,19 @@ int main(int argc, char *argv[])
     // }
 
     printf("sintatic analysis...");
+
+
     parse();
 
     printf("\n");
     //print_ast(global_ast_tree);
 
-    construct_symtab(global_ast_tree, symtab);
-    semantic_analysis(global_ast_tree, symtab);
-    print_symtab(symtab);
+    // construct_symtab(global_ast_tree, symtab);
+    // semantic_analysis(global_ast_tree, symtab);
+
+    // insert_symbol(symtab, global_ast_tree->child[0], TABLE_SIZE);
+    
+    print_hash_table(symtab);
 
     printf("freeing memory...\n");
     close_file(input_file); // close the file
