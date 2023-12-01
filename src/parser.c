@@ -572,8 +572,8 @@ static const yytype_int16 yyrline[] =
      177,   182,   195,   200,   204,   208,   212,   216,   222,   226,
      232,   240,   251,   261,   267,   276,   284,   290,   294,   301,
      307,   313,   319,   325,   331,   337,   343,   351,   357,   363,
-     369,   377,   384,   390,   396,   404,   408,   412,   416,   422,
-     429,   434,   439,   451,   457,   485
+     369,   377,   384,   390,   403,   418,   422,   426,   430,   436,
+     443,   448,   453,   465,   471,   499
 };
 #endif
 
@@ -1721,82 +1721,96 @@ yyreduce:
   case 53: /* mult: MULTIPLY_TOKEN  */
 #line 391 "parser.y"
     {
-        ast_node_t* multiply_node = new_ast_node(NULL_NODE, global_line_number, "*", NULL_STMT, NULL_EXP, NULL_TYPE);
+        ast_node_t* multiply_node = new_ast_node(
+            EXPRESSION_NODE,    // Tipo do nó: Expressão
+            global_line_number, // Número da linha onde ocorre a operação de multiplicação
+            "*",                // Lexema representando a operação de multiplicação
+            NULL_STMT,          // Operação de multiplicação não requer um statement específico
+            OP_EXP,             // Tipo de expressão: Operação
+            NULL_TYPE           // Não se aplica o tipo aqui, pode ser NULL_TYPE
+        );
 
         yyval = multiply_node;
     }
-#line 1729 "parser.c"
+#line 1736 "parser.c"
     break;
 
   case 54: /* mult: DIVIDE_TOKEN  */
-#line 397 "parser.y"
+#line 404 "parser.y"
     {
-        ast_node_t* divide_node = new_ast_node(NULL_NODE, global_line_number, "/", NULL_STMT, NULL_EXP, NULL_TYPE);
+        ast_node_t* divide_node = new_ast_node(
+            EXPRESSION_NODE,    // Tipo do nó: Expressão
+            global_line_number, // Número da linha onde ocorre a operação de divisão
+            "/",                // Lexema representando a operação de divisão
+            NULL_STMT,          // Operação de divisão não requer um statement específico
+            OP_EXP,             // Tipo de expressão: Operação
+            NULL_TYPE           // Não se aplica o tipo aqui, pode ser NULL_TYPE
+        );
 
         yyval = divide_node;
     }
-#line 1739 "parser.c"
+#line 1753 "parser.c"
     break;
 
   case 55: /* factor: LPAREN_TOKEN expression RPAREN_TOKEN  */
-#line 405 "parser.y"
+#line 419 "parser.y"
     {
         yyval = yyvsp[-1];
     }
-#line 1747 "parser.c"
+#line 1761 "parser.c"
     break;
 
   case 56: /* factor: var  */
-#line 409 "parser.y"
+#line 423 "parser.y"
     {
         yyval = yyvsp[0];
     }
-#line 1755 "parser.c"
+#line 1769 "parser.c"
     break;
 
   case 57: /* factor: activation  */
-#line 413 "parser.y"
+#line 427 "parser.y"
     {
         yyval = yyvsp[0];
     }
-#line 1763 "parser.c"
+#line 1777 "parser.c"
     break;
 
   case 58: /* factor: num  */
-#line 417 "parser.y"
+#line 431 "parser.y"
     {
         yyval = yyvsp[0];
     }
-#line 1771 "parser.c"
+#line 1785 "parser.c"
     break;
 
   case 59: /* activation: id LPAREN_TOKEN args RPAREN_TOKEN  */
-#line 423 "parser.y"
+#line 437 "parser.y"
     {
         yyval = yyvsp[-3];
         add_child(yyval, yyvsp[-1]);
     }
-#line 1780 "parser.c"
+#line 1794 "parser.c"
     break;
 
   case 60: /* args: arg_list  */
-#line 430 "parser.y"
+#line 444 "parser.y"
     {
         yyval = yyvsp[0];
     }
-#line 1788 "parser.c"
+#line 1802 "parser.c"
     break;
 
   case 61: /* args: %empty  */
-#line 434 "parser.y"
+#line 448 "parser.y"
     {
         yyval = NULL;
     }
-#line 1796 "parser.c"
+#line 1810 "parser.c"
     break;
 
   case 62: /* arg_list: arg_list COMMA_TOKEN expression  */
-#line 440 "parser.y"
+#line 454 "parser.y"
     {
         if (yyvsp[-2] != NULL) 
         {
@@ -1808,19 +1822,19 @@ yyreduce:
             yyval = yyvsp[0];
         }
     }
-#line 1812 "parser.c"
+#line 1826 "parser.c"
     break;
 
   case 63: /* arg_list: expression  */
-#line 452 "parser.y"
+#line 466 "parser.y"
     {
         yyval = yyvsp[0];
     }
-#line 1820 "parser.c"
+#line 1834 "parser.c"
     break;
 
   case 64: /* id: ID_TOKEN  */
-#line 458 "parser.y"
+#line 472 "parser.y"
     {
         token_t* token = NULL;
         for(int i = token_count-1; i >= 0; i--)
@@ -1834,23 +1848,23 @@ yyreduce:
         }
 
         ast_node_t* id_node = new_ast_node(
-            EXPRESSION_NODE,    // Tipo do nó: Expressão
-            global_line_number,       // Número da linha onde o identificador foi encontrado
-            token->lexeme,     // Valor do identificador em formato de string
-            NULL_STMT,          // Se for um identificador, pode ser NULL_STMT
-            ID_EXP,             // Tipo de expressão: Identificador
-            NULL_TYPE           // Não se aplica o tipo aqui, pode ser NULL_TYPE
+            EXPRESSION_NODE,         // Tipo do nó: Expressão
+            global_line_number,      // Número da linha onde o identificador foi encontrado
+            token->lexeme,           // Valor do identificador em formato de string
+            NULL_STMT,               // Se for um identificador, pode ser NULL_STMT
+            ID_EXP,                  // Tipo de expressão: Identificador
+            NULL_TYPE                // Não se aplica o tipo aqui, pode ser NULL_TYPE
         );
 
         yyval = id_node; 
 
 
     }
-#line 1850 "parser.c"
+#line 1864 "parser.c"
     break;
 
   case 65: /* num: NUM_TOKEN  */
-#line 486 "parser.y"
+#line 500 "parser.y"
     {
         token_t* token = NULL;
         for(int i = token_count-1; i >= 0; i--)
@@ -1874,11 +1888,11 @@ yyreduce:
 
         yyval = num_node; 
     }
-#line 1878 "parser.c"
+#line 1892 "parser.c"
     break;
 
 
-#line 1882 "parser.c"
+#line 1896 "parser.c"
 
       default: break;
     }
@@ -2071,7 +2085,7 @@ yyreturnlab:
   return yyresult;
 }
 
-#line 510 "parser.y"
+#line 524 "parser.y"
 
 
 void yyerror(char *s)

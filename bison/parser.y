@@ -389,13 +389,27 @@
 
     mult : MULTIPLY_TOKEN
     {
-        ast_node_t* multiply_node = new_ast_node(NULL_NODE, global_line_number, "*", NULL_STMT, NULL_EXP, NULL_TYPE);
+        ast_node_t* multiply_node = new_ast_node(
+            EXPRESSION_NODE,    // Tipo do nó: Expressão
+            global_line_number, // Número da linha onde ocorre a operação de multiplicação
+            "*",                // Lexema representando a operação de multiplicação
+            NULL_STMT,          // Operação de multiplicação não requer um statement específico
+            OP_EXP,             // Tipo de expressão: Operação
+            NULL_TYPE           // Não se aplica o tipo aqui, pode ser NULL_TYPE
+        );
 
         $$ = multiply_node;
     }
     | DIVIDE_TOKEN
     {
-        ast_node_t* divide_node = new_ast_node(NULL_NODE, global_line_number, "/", NULL_STMT, NULL_EXP, NULL_TYPE);
+        ast_node_t* divide_node = new_ast_node(
+            EXPRESSION_NODE,    // Tipo do nó: Expressão
+            global_line_number, // Número da linha onde ocorre a operação de divisão
+            "/",                // Lexema representando a operação de divisão
+            NULL_STMT,          // Operação de divisão não requer um statement específico
+            OP_EXP,             // Tipo de expressão: Operação
+            NULL_TYPE           // Não se aplica o tipo aqui, pode ser NULL_TYPE
+        );
 
         $$ = divide_node;
     }   
@@ -468,12 +482,12 @@
         }
 
         ast_node_t* id_node = new_ast_node(
-            EXPRESSION_NODE,    // Tipo do nó: Expressão
-            global_line_number,       // Número da linha onde o identificador foi encontrado
-            token->lexeme,     // Valor do identificador em formato de string
-            NULL_STMT,          // Se for um identificador, pode ser NULL_STMT
-            ID_EXP,             // Tipo de expressão: Identificador
-            NULL_TYPE           // Não se aplica o tipo aqui, pode ser NULL_TYPE
+            EXPRESSION_NODE,         // Tipo do nó: Expressão
+            global_line_number,      // Número da linha onde o identificador foi encontrado
+            token->lexeme,           // Valor do identificador em formato de string
+            NULL_STMT,               // Se for um identificador, pode ser NULL_STMT
+            ID_EXP,                  // Tipo de expressão: Identificador
+            NULL_TYPE                // Não se aplica o tipo aqui, pode ser NULL_TYPE
         );
 
         $$ = id_node; 
