@@ -72,5 +72,6 @@ void free_ast(ast_node_t *root);
 void add_child(ast_node_t *parent, ast_node_t *child);
 void add_sibling(ast_node_t *node, ast_node_t *sibling);
 ast_node_t* new_ast_node(node_kind_t kind, int line, const char* lexeme, statement_kind_t statement, expression_kind_t expression, expression_type_t type);
+void print_ast_node(ast_node_t *node);
 
 #endif /* AST_H */

@@ -44,6 +44,8 @@ void print_ast(ast_node_t *root)
 {
     printf("abstract syntax tree:\n");
     print_ast_util(root, 1);
+    printf("\nnode of the abstract syntax tree:\n");
+    print_ast_node(root);
 }
 
 void free_ast(ast_node_t* node) 
@@ -118,4 +120,43 @@ ast_node_t* new_ast_node(node_kind_t kind, int line, const char* lexeme, stateme
     }
     
     return new_node;
+}
+
+void print_ast_node(ast_node_t *node) 
+{
+    if (node == NULL) 
+    {
+        return;
+    }
+
+    printf("node: %s\n", node->lexeme);
+    printf("Node Kind: %d\n", node->node_kind);
+    printf("Line: %d\n", node->lineno);
+
+    // Impressão do tipo do nó dependendo do kind (node_kind, statement, expression, etc.)
+    switch (node->node_kind) {
+        case EXPRESSION_NODE:
+            printf("Node Type: Expression\n");
+            printf("Expression Kind: %d\n", node->kind.expression);
+            printf("Expression Type: %d\n", node->kind.type);
+            break;
+        case STATEMENT_NODE:
+            printf("Node Type: Statement\n");
+            printf("Statement Kind: %d\n", node->kind.statement);
+            break;
+        // Adicione outros cases para diferentes tipos de nós, se necessário
+        default:
+            printf("Node Type: Unknown\n");
+            break;
+    }
+
+    printf("\n");
+
+    // Percorre os filhos do nó
+    for (int i = 0; i < MAXCHILDREN; ++i) {
+        print_ast_node(node->child[i]);
+    }
+
+    // Percorre os irmãos do nó
+    print_ast_node(node->sibling);
 }

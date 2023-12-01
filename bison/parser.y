@@ -80,18 +80,32 @@
 
     type_specifier : INT_TOKEN
     {
-        ast_node_t* int_node = new_ast_node(EXPRESSION_NODE, global_line_number, "int", NULL_STMT, CONST_EXP, INT_TYPE);
+        ast_node_t* int_node = new_ast_node(
+            EXPRESSION_NODE,    // Tipo do nó: Expressão
+            global_line_number, // Número da linha onde ocorre o tipo int
+            "int",              // Lexema representando o tipo int
+            NULL_STMT,          // O tipo int não requer um statement específico
+            CONST_EXP,          // Tipo de expressão: Constante
+            INT_TYPE            // Tipo de dado: Inteiro
+        );
 
         $$ = int_node;
     }
     | VOID_TOKEN
     {
-        ast_node_t* void_node = new_ast_node(EXPRESSION_NODE, global_line_number, "void", NULL_STMT, CONST_EXP, VOID_TYPE);
+        ast_node_t* void_node = new_ast_node(
+            EXPRESSION_NODE,    // Tipo do nó: Expressão
+            global_line_number, // Número da linha onde ocorre o tipo void
+            "void",             // Lexema representando o tipo void
+            NULL_STMT,          // O tipo void não requer um statement específico
+            CONST_EXP,          // Tipo de expressão: Constante
+            VOID_TYPE           // Tipo de dado: Void
+        );
 
         $$ = void_node;
-
     }
     ;
+
 
     fun_declaration : type_specifier id LPAREN_TOKEN params RPAREN_TOKEN compound_decl
     {
@@ -231,45 +245,80 @@
 
     selection_decl : IF_TOKEN LPAREN_TOKEN expression RPAREN_TOKEN statement
     {
-        ast_node_t* if_node = new_ast_node(NULL_NODE, global_line_number, "if", NULL_STMT, NULL_EXP, NULL_TYPE);
+        ast_node_t* if_node = new_ast_node(
+            STATEMENT_NODE,      // Tipo do nó: Declaração de seleção (if statement)
+            global_line_number,  // Número da linha onde ocorre a declaração de seleção
+            "if",                // Lexema representando a declaração de seleção
+            IF_STMT,             // Tipo de declaração: If statement
+            NULL_EXP,            // Não se aplica uma expressão a uma declaração if diretamente
+            NULL_TYPE            // Não se aplica o tipo aqui, pode ser NULL_TYPE
+        );
         
         $$ = if_node;
-        add_child($$, $3);
-        add_child($$, $5);
+        add_child($$, $3);      // Adiciona o nó da expressão como filho do nó if
+        add_child($$, $5);      // Adiciona o nó da declaração de bloco como filho do nó if
     }
     | IF_TOKEN LPAREN_TOKEN expression RPAREN_TOKEN statement ELSE_TOKEN statement
     {
-        ast_node_t* if_node = new_ast_node(NULL_NODE, global_line_number, "if", NULL_STMT, NULL_EXP, NULL_TYPE);
+        ast_node_t* if_node = new_ast_node(
+            STATEMENT_NODE,      // Tipo do nó: Declaração de seleção (if statement)
+            global_line_number,  // Número da linha onde ocorre a declaração de seleção
+            "if",                // Lexema representando a declaração de seleção
+            IF_STMT,             // Tipo de declaração: If statement
+            NULL_EXP,            // Não se aplica uma expressão a uma declaração if diretamente
+            NULL_TYPE            // Não se aplica o tipo aqui, pode ser NULL_TYPE
+        );
 
-        add_child(if_node, $3);
-        add_child(if_node, $5);
-        add_child(if_node, $7);
+        add_child(if_node, $3); // Adiciona o nó da expressão como filho do nó if
+        add_child(if_node, $5); // Adiciona o nó da declaração de bloco do if como filho do nó if
+        add_child(if_node, $7); // Adiciona o nó da declaração de bloco do else como filho do nó if
         $$ = if_node;
     }
     ;
 
     iteration_decl : WHILE_TOKEN LPAREN_TOKEN expression RPAREN_TOKEN statement
     {
-        ast_node_t* while_node = new_ast_node(NULL_NODE, global_line_number, "while", NULL_STMT, NULL_EXP, NULL_TYPE);
+        ast_node_t* while_node = new_ast_node(
+            STATEMENT_NODE,      // Tipo do nó: Declaração de iteração (while loop)
+            global_line_number,  // Número da linha onde ocorre a declaração de iteração
+            "while",             // Lexema representando a declaração de iteração
+            WHILE_STMT,          // Tipo de declaração: While statement
+            NULL_EXP,            // Não se aplica uma expressão a uma declaração while diretamente
+            NULL_TYPE            // Não se aplica o tipo aqui, pode ser NULL_TYPE
+        );
 
         $$ = while_node;
-        add_child($$, $3);
-        add_child($$, $5);
+        add_child($$, $3);      // Adiciona o nó da expressão como filho do nó while
+        add_child($$, $5);      // Adiciona o nó da declaração de bloco como filho do nó while
     }
     ;
 
     return_decl : RETURN_TOKEN SEMICOLON_TOKEN
     {
-        ast_node_t* return_node = new_ast_node(NULL_NODE, global_line_number, "return", NULL_STMT, NULL_EXP, NULL_TYPE);
+        ast_node_t* return_node = new_ast_node(
+            STATEMENT_NODE,      // Tipo do nó: Declaração de retorno
+            global_line_number,  // Número da linha onde ocorre a declaração de retorno
+            "return",            // Lexema representando a declaração de retorno
+            RETURN_STMT,         // Tipo de declaração: Return statement
+            NULL_EXP,            // Não se aplica uma expressão a um retorno vazio
+            NULL_TYPE            // Não se aplica o tipo aqui, pode ser NULL_TYPE
+        );
     
         $$ = return_node;
     }
     | RETURN_TOKEN expression SEMICOLON_TOKEN
     {
-        ast_node_t* return_node = new_ast_node(NULL_NODE, global_line_number, "return", NULL_STMT, NULL_EXP, NULL_TYPE);
+        ast_node_t* return_node = new_ast_node(
+            STATEMENT_NODE,      // Tipo do nó: Declaração de retorno
+            global_line_number,  // Número da linha onde ocorre a declaração de retorno
+            "return",            // Lexema representando a declaração de retorno
+            RETURN_STMT,         // Tipo de declaração: Return statement
+            NULL_EXP,            // Não se aplica uma expressão a um retorno vazio
+            NULL_TYPE            // Não se aplica o tipo aqui, pode ser NULL_TYPE
+        );
 
         $$ = return_node;
-        add_child($$, $2);
+        add_child($$, $2);      // Adiciona o nó da expressão como filho do nó de retorno
     }
     ;
 
@@ -283,7 +332,7 @@
             ATTR_EXP,              // Tipo de expressão: Atribuição
             NULL_TYPE              // Não se aplica o tipo aqui, pode ser NULL_TYPE
         );
-        
+
         $$ = assign_node;
         add_child($$, $1);
         add_child($$, $3);

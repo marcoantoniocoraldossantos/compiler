@@ -568,12 +568,12 @@ static const yytype_int8 yytranslate[] =
 static const yytype_int16 yyrline[] =
 {
        0,    33,    33,    39,    51,    57,    61,    67,    73,    81,
-      87,    96,   107,   111,   119,   131,   137,   142,   149,   164,
-     177,   182,   195,   200,   204,   208,   212,   216,   222,   226,
-     232,   240,   251,   261,   267,   276,   284,   290,   294,   301,
-     307,   313,   326,   339,   352,   365,   378,   393,   399,   405,
-     418,   433,   440,   446,   459,   474,   478,   482,   486,   492,
-     499,   504,   509,   521,   527,   553
+      94,   110,   121,   125,   133,   145,   151,   156,   163,   178,
+     191,   196,   209,   214,   218,   222,   226,   230,   236,   240,
+     246,   261,   279,   296,   309,   325,   340,   346,   350,   357,
+     363,   369,   382,   395,   408,   421,   434,   449,   455,   461,
+     474,   489,   496,   502,   515,   530,   534,   538,   542,   548,
+     555,   560,   565,   577,   583,   609
 };
 #endif
 
@@ -1278,55 +1278,68 @@ yyreduce:
   case 9: /* type_specifier: INT_TOKEN  */
 #line 82 "parser.y"
     {
-        ast_node_t* int_node = new_ast_node(EXPRESSION_NODE, global_line_number, "int", NULL_STMT, CONST_EXP, INT_TYPE);
+        ast_node_t* int_node = new_ast_node(
+            EXPRESSION_NODE,    // Tipo do nó: Expressão
+            global_line_number, // Número da linha onde ocorre o tipo int
+            "int",              // Lexema representando o tipo int
+            NULL_STMT,          // O tipo int não requer um statement específico
+            CONST_EXP,          // Tipo de expressão: Constante
+            INT_TYPE            // Tipo de dado: Inteiro
+        );
 
         yyval = int_node;
     }
-#line 1286 "parser.c"
+#line 1293 "parser.c"
     break;
 
   case 10: /* type_specifier: VOID_TOKEN  */
-#line 88 "parser.y"
+#line 95 "parser.y"
     {
-        ast_node_t* void_node = new_ast_node(EXPRESSION_NODE, global_line_number, "void", NULL_STMT, CONST_EXP, VOID_TYPE);
+        ast_node_t* void_node = new_ast_node(
+            EXPRESSION_NODE,    // Tipo do nó: Expressão
+            global_line_number, // Número da linha onde ocorre o tipo void
+            "void",             // Lexema representando o tipo void
+            NULL_STMT,          // O tipo void não requer um statement específico
+            CONST_EXP,          // Tipo de expressão: Constante
+            VOID_TYPE           // Tipo de dado: Void
+        );
 
         yyval = void_node;
-
     }
-#line 1297 "parser.c"
+#line 1310 "parser.c"
     break;
 
   case 11: /* fun_declaration: type_specifier id LPAREN_TOKEN params RPAREN_TOKEN compound_decl  */
-#line 97 "parser.y"
+#line 111 "parser.y"
     {
         yyval = yyvsp[-5];        
         add_child(yyval, yyvsp[-2]);
         add_child(yyval, yyvsp[-4]);
         add_child(yyvsp[-4], yyvsp[0]);
     }
-#line 1308 "parser.c"
+#line 1321 "parser.c"
     break;
 
   case 12: /* params: param_list  */
-#line 108 "parser.y"
+#line 122 "parser.y"
     {
         yyval = yyvsp[0];
     }
-#line 1316 "parser.c"
+#line 1329 "parser.c"
     break;
 
   case 13: /* params: VOID_TOKEN  */
-#line 112 "parser.y"
+#line 126 "parser.y"
     {
         ast_node_t* void_node = new_ast_node(NULL_NODE, global_line_number, "void", NULL_STMT, NULL_EXP, NULL_TYPE);
 
         yyval = void_node;
     }
-#line 1326 "parser.c"
+#line 1339 "parser.c"
     break;
 
   case 14: /* param_list: param_list COMMA_TOKEN param  */
-#line 120 "parser.y"
+#line 134 "parser.y"
     {
         if (yyvsp[-2] != NULL) 
         {
@@ -1338,37 +1351,37 @@ yyreduce:
             yyval = yyvsp[0];
         }
     }
-#line 1342 "parser.c"
+#line 1355 "parser.c"
     break;
 
   case 15: /* param_list: param  */
-#line 132 "parser.y"
+#line 146 "parser.y"
     {
         yyval = yyvsp[0];
     }
-#line 1350 "parser.c"
+#line 1363 "parser.c"
     break;
 
   case 16: /* param: type_specifier id  */
-#line 138 "parser.y"
+#line 152 "parser.y"
     {
         yyval = yyvsp[-1];
         add_child(yyval, yyvsp[0]);
     }
-#line 1359 "parser.c"
+#line 1372 "parser.c"
     break;
 
   case 17: /* param: type_specifier id LBRACKET_TOKEN RBRACKET_TOKEN  */
-#line 143 "parser.y"
+#line 157 "parser.y"
     {
         yyval = yyvsp[-3];
         add_child(yyval, yyvsp[-2]);
     }
-#line 1368 "parser.c"
+#line 1381 "parser.c"
     break;
 
   case 18: /* compound_decl: LBRACE_TOKEN local_declarations statement_list RBRACE_TOKEN  */
-#line 150 "parser.y"
+#line 164 "parser.y"
     {
         if(yyvsp[-2] != NULL) 
         {
@@ -1381,11 +1394,11 @@ yyreduce:
             yyval = yyvsp[-1];
         }
     }
-#line 1385 "parser.c"
+#line 1398 "parser.c"
     break;
 
   case 19: /* local_declarations: local_declarations var_declaration  */
-#line 165 "parser.y"
+#line 179 "parser.y"
     {
         if (yyvsp[-1] != NULL) 
         {
@@ -1397,19 +1410,19 @@ yyreduce:
             yyval = yyvsp[0];
         }
     }
-#line 1401 "parser.c"
+#line 1414 "parser.c"
     break;
 
   case 20: /* local_declarations: %empty  */
-#line 177 "parser.y"
+#line 191 "parser.y"
     {
         yyval = NULL;
     }
-#line 1409 "parser.c"
+#line 1422 "parser.c"
     break;
 
   case 21: /* statement_list: statement_list statement  */
-#line 183 "parser.y"
+#line 197 "parser.y"
     {
         if (yyvsp[-1] != NULL) 
         {
@@ -1421,188 +1434,230 @@ yyreduce:
             yyval = yyvsp[0];
         }
     }
-#line 1425 "parser.c"
+#line 1438 "parser.c"
     break;
 
   case 22: /* statement_list: %empty  */
-#line 195 "parser.y"
+#line 209 "parser.y"
     {
         yyval = NULL;
     }
-#line 1433 "parser.c"
+#line 1446 "parser.c"
     break;
 
   case 23: /* statement: expression_decl  */
-#line 201 "parser.y"
+#line 215 "parser.y"
     {
         yyval = yyvsp[0];
     }
-#line 1441 "parser.c"
+#line 1454 "parser.c"
     break;
 
   case 24: /* statement: compound_decl  */
-#line 205 "parser.y"
+#line 219 "parser.y"
     {
         yyval = yyvsp[0];
     }
-#line 1449 "parser.c"
+#line 1462 "parser.c"
     break;
 
   case 25: /* statement: selection_decl  */
-#line 209 "parser.y"
+#line 223 "parser.y"
     {
         yyval = yyvsp[0];
     }
-#line 1457 "parser.c"
+#line 1470 "parser.c"
     break;
 
   case 26: /* statement: iteration_decl  */
-#line 213 "parser.y"
+#line 227 "parser.y"
     {
         yyval = yyvsp[0];
     }
-#line 1465 "parser.c"
+#line 1478 "parser.c"
     break;
 
   case 27: /* statement: return_decl  */
-#line 217 "parser.y"
+#line 231 "parser.y"
     {
         yyval = yyvsp[0];
     }
-#line 1473 "parser.c"
+#line 1486 "parser.c"
     break;
 
   case 28: /* expression_decl: expression SEMICOLON_TOKEN  */
-#line 223 "parser.y"
+#line 237 "parser.y"
     {
         yyval = yyvsp[-1];
     }
-#line 1481 "parser.c"
+#line 1494 "parser.c"
     break;
 
   case 29: /* expression_decl: SEMICOLON_TOKEN  */
-#line 227 "parser.y"
+#line 241 "parser.y"
     {
         yyval = NULL;
     }
-#line 1489 "parser.c"
+#line 1502 "parser.c"
     break;
 
   case 30: /* selection_decl: IF_TOKEN LPAREN_TOKEN expression RPAREN_TOKEN statement  */
-#line 233 "parser.y"
+#line 247 "parser.y"
     {
-        ast_node_t* if_node = new_ast_node(NULL_NODE, global_line_number, "if", NULL_STMT, NULL_EXP, NULL_TYPE);
+        ast_node_t* if_node = new_ast_node(
+            STATEMENT_NODE,      // Tipo do nó: Declaração de seleção (if statement)
+            global_line_number,  // Número da linha onde ocorre a declaração de seleção
+            "if",                // Lexema representando a declaração de seleção
+            IF_STMT,             // Tipo de declaração: If statement
+            NULL_EXP,            // Não se aplica uma expressão a uma declaração if diretamente
+            NULL_TYPE            // Não se aplica o tipo aqui, pode ser NULL_TYPE
+        );
         
         yyval = if_node;
-        add_child(yyval, yyvsp[-2]);
-        add_child(yyval, yyvsp[0]);
+        add_child(yyval, yyvsp[-2]);      // Adiciona o nó da expressão como filho do nó if
+        add_child(yyval, yyvsp[0]);      // Adiciona o nó da declaração de bloco como filho do nó if
     }
-#line 1501 "parser.c"
+#line 1521 "parser.c"
     break;
 
   case 31: /* selection_decl: IF_TOKEN LPAREN_TOKEN expression RPAREN_TOKEN statement ELSE_TOKEN statement  */
-#line 241 "parser.y"
+#line 262 "parser.y"
     {
-        ast_node_t* if_node = new_ast_node(NULL_NODE, global_line_number, "if", NULL_STMT, NULL_EXP, NULL_TYPE);
+        ast_node_t* if_node = new_ast_node(
+            STATEMENT_NODE,      // Tipo do nó: Declaração de seleção (if statement)
+            global_line_number,  // Número da linha onde ocorre a declaração de seleção
+            "if",                // Lexema representando a declaração de seleção
+            IF_STMT,             // Tipo de declaração: If statement
+            NULL_EXP,            // Não se aplica uma expressão a uma declaração if diretamente
+            NULL_TYPE            // Não se aplica o tipo aqui, pode ser NULL_TYPE
+        );
 
-        add_child(if_node, yyvsp[-4]);
-        add_child(if_node, yyvsp[-2]);
-        add_child(if_node, yyvsp[0]);
+        add_child(if_node, yyvsp[-4]); // Adiciona o nó da expressão como filho do nó if
+        add_child(if_node, yyvsp[-2]); // Adiciona o nó da declaração de bloco do if como filho do nó if
+        add_child(if_node, yyvsp[0]); // Adiciona o nó da declaração de bloco do else como filho do nó if
         yyval = if_node;
     }
-#line 1514 "parser.c"
+#line 1541 "parser.c"
     break;
 
   case 32: /* iteration_decl: WHILE_TOKEN LPAREN_TOKEN expression RPAREN_TOKEN statement  */
-#line 252 "parser.y"
+#line 280 "parser.y"
     {
-        ast_node_t* while_node = new_ast_node(NULL_NODE, global_line_number, "while", NULL_STMT, NULL_EXP, NULL_TYPE);
+        ast_node_t* while_node = new_ast_node(
+            STATEMENT_NODE,      // Tipo do nó: Declaração de iteração (while loop)
+            global_line_number,  // Número da linha onde ocorre a declaração de iteração
+            "while",             // Lexema representando a declaração de iteração
+            WHILE_STMT,          // Tipo de declaração: While statement
+            NULL_EXP,            // Não se aplica uma expressão a uma declaração while diretamente
+            NULL_TYPE            // Não se aplica o tipo aqui, pode ser NULL_TYPE
+        );
 
         yyval = while_node;
-        add_child(yyval, yyvsp[-2]);
-        add_child(yyval, yyvsp[0]);
+        add_child(yyval, yyvsp[-2]);      // Adiciona o nó da expressão como filho do nó while
+        add_child(yyval, yyvsp[0]);      // Adiciona o nó da declaração de bloco como filho do nó while
     }
-#line 1526 "parser.c"
+#line 1560 "parser.c"
     break;
 
   case 33: /* return_decl: RETURN_TOKEN SEMICOLON_TOKEN  */
-#line 262 "parser.y"
+#line 297 "parser.y"
     {
-        ast_node_t* return_node = new_ast_node(NULL_NODE, global_line_number, "return", NULL_STMT, NULL_EXP, NULL_TYPE);
+        ast_node_t* return_node = new_ast_node(
+            STATEMENT_NODE,      // Tipo do nó: Declaração de retorno
+            global_line_number,  // Número da linha onde ocorre a declaração de retorno
+            "return",            // Lexema representando a declaração de retorno
+            RETURN_STMT,         // Tipo de declaração: Return statement
+            NULL_EXP,            // Não se aplica uma expressão a um retorno vazio
+            NULL_TYPE            // Não se aplica o tipo aqui, pode ser NULL_TYPE
+        );
     
         yyval = return_node;
     }
-#line 1536 "parser.c"
+#line 1577 "parser.c"
     break;
 
   case 34: /* return_decl: RETURN_TOKEN expression SEMICOLON_TOKEN  */
-#line 268 "parser.y"
+#line 310 "parser.y"
     {
-        ast_node_t* return_node = new_ast_node(NULL_NODE, global_line_number, "return", NULL_STMT, NULL_EXP, NULL_TYPE);
+        ast_node_t* return_node = new_ast_node(
+            STATEMENT_NODE,      // Tipo do nó: Declaração de retorno
+            global_line_number,  // Número da linha onde ocorre a declaração de retorno
+            "return",            // Lexema representando a declaração de retorno
+            RETURN_STMT,         // Tipo de declaração: Return statement
+            NULL_EXP,            // Não se aplica uma expressão a um retorno vazio
+            NULL_TYPE            // Não se aplica o tipo aqui, pode ser NULL_TYPE
+        );
 
         yyval = return_node;
-        add_child(yyval, yyvsp[-1]);
+        add_child(yyval, yyvsp[-1]);      // Adiciona o nó da expressão como filho do nó de retorno
     }
-#line 1547 "parser.c"
+#line 1595 "parser.c"
     break;
 
   case 35: /* expression: var ASSIGN_TOKEN expression  */
-#line 277 "parser.y"
+#line 326 "parser.y"
     {
-        ast_node_t* assign_node = new_ast_node(NULL_NODE, global_line_number, "==", NULL_STMT, NULL_EXP, NULL_TYPE);
-     
+        ast_node_t* assign_node = new_ast_node(
+            EXPRESSION_NODE,       // Tipo do nó: Expressão
+            global_line_number,    // Número da linha onde ocorre a atribuição
+            "=",                   // Lexema representando a operação de atribuição
+            NULL_STMT,             // A atribuição não requer um statement específico
+            ATTR_EXP,              // Tipo de expressão: Atribuição
+            NULL_TYPE              // Não se aplica o tipo aqui, pode ser NULL_TYPE
+        );
+
         yyval = assign_node;
         add_child(yyval, yyvsp[-2]);
         add_child(yyval, yyvsp[0]);
     }
-#line 1559 "parser.c"
+#line 1614 "parser.c"
     break;
 
   case 36: /* expression: simple_expression  */
-#line 285 "parser.y"
+#line 341 "parser.y"
     {
         yyval = yyvsp[0];
     }
-#line 1567 "parser.c"
+#line 1622 "parser.c"
     break;
 
   case 37: /* var: id  */
-#line 291 "parser.y"
+#line 347 "parser.y"
     {
         yyval = yyvsp[0];
     }
-#line 1575 "parser.c"
+#line 1630 "parser.c"
     break;
 
   case 38: /* var: id LBRACKET_TOKEN expression RBRACKET_TOKEN  */
-#line 295 "parser.y"
+#line 351 "parser.y"
     {
         yyval = yyvsp[-3];
         add_child(yyval, yyvsp[-1]);
     }
-#line 1584 "parser.c"
+#line 1639 "parser.c"
     break;
 
   case 39: /* simple_expression: sum_expression relational sum_expression  */
-#line 302 "parser.y"
+#line 358 "parser.y"
     {
         yyval = yyvsp[-1];
         add_child(yyval, yyvsp[-2]);
         add_child(yyval, yyvsp[0]);
     }
-#line 1594 "parser.c"
+#line 1649 "parser.c"
     break;
 
   case 40: /* simple_expression: sum_expression  */
-#line 308 "parser.y"
+#line 364 "parser.y"
     {
         yyval = yyvsp[0];
     }
-#line 1602 "parser.c"
+#line 1657 "parser.c"
     break;
 
   case 41: /* relational: LT_TOKEN  */
-#line 314 "parser.y"
+#line 370 "parser.y"
     {
         ast_node_t* lt_node = new_ast_node(
             EXPRESSION_NODE,    // Tipo do nó: Expressão
@@ -1615,11 +1670,11 @@ yyreduce:
         
         yyval = lt_node;
     }
-#line 1619 "parser.c"
+#line 1674 "parser.c"
     break;
 
   case 42: /* relational: LTE_TOKEN  */
-#line 327 "parser.y"
+#line 383 "parser.y"
     {
         ast_node_t* lte_node = new_ast_node(
             EXPRESSION_NODE,    // Tipo do nó: Expressão
@@ -1632,11 +1687,11 @@ yyreduce:
 
         yyval = lte_node;
     }
-#line 1636 "parser.c"
+#line 1691 "parser.c"
     break;
 
   case 43: /* relational: GT_TOKEN  */
-#line 340 "parser.y"
+#line 396 "parser.y"
     {
         ast_node_t* gt_node = new_ast_node(
             EXPRESSION_NODE,    // Tipo do nó: Expressão
@@ -1649,11 +1704,11 @@ yyreduce:
 
         yyval = gt_node;
     }
-#line 1653 "parser.c"
+#line 1708 "parser.c"
     break;
 
   case 44: /* relational: GTE_TOKEN  */
-#line 353 "parser.y"
+#line 409 "parser.y"
     {
         ast_node_t* gte_node = new_ast_node(
             EXPRESSION_NODE,    // Tipo do nó: Expressão
@@ -1666,11 +1721,11 @@ yyreduce:
       
         yyval = gte_node;
     }
-#line 1670 "parser.c"
+#line 1725 "parser.c"
     break;
 
   case 45: /* relational: EQ_TOKEN  */
-#line 366 "parser.y"
+#line 422 "parser.y"
     {
         ast_node_t* eq_node = new_ast_node(
             EXPRESSION_NODE,    // Tipo do nó: Expressão
@@ -1683,11 +1738,11 @@ yyreduce:
 
         yyval = eq_node;
     }
-#line 1687 "parser.c"
+#line 1742 "parser.c"
     break;
 
   case 46: /* relational: NEQ_TOKEN  */
-#line 379 "parser.y"
+#line 435 "parser.y"
     {
         ast_node_t* neq_node = new_ast_node(
             EXPRESSION_NODE,    // Tipo do nó: Expressão
@@ -1700,29 +1755,29 @@ yyreduce:
    
         yyval = neq_node;
     }
-#line 1704 "parser.c"
+#line 1759 "parser.c"
     break;
 
   case 47: /* sum_expression: sum_expression sum term  */
-#line 394 "parser.y"
+#line 450 "parser.y"
     {        
         yyval = yyvsp[-1];
         add_child(yyval, yyvsp[-2]);
         add_child(yyval, yyvsp[0]);
     }
-#line 1714 "parser.c"
+#line 1769 "parser.c"
     break;
 
   case 48: /* sum_expression: term  */
-#line 400 "parser.y"
+#line 456 "parser.y"
     {
         yyval = yyvsp[0];
     }
-#line 1722 "parser.c"
+#line 1777 "parser.c"
     break;
 
   case 49: /* sum: PLUS_TOKEN  */
-#line 406 "parser.y"
+#line 462 "parser.y"
     {
         ast_node_t* plus_node = new_ast_node(
             EXPRESSION_NODE,    // Tipo do nó: Expressão
@@ -1735,11 +1790,11 @@ yyreduce:
 
         yyval = plus_node;
     }
-#line 1739 "parser.c"
+#line 1794 "parser.c"
     break;
 
   case 50: /* sum: MINUS_TOKEN  */
-#line 419 "parser.y"
+#line 475 "parser.y"
     {
         ast_node_t* minus_node = new_ast_node(
             EXPRESSION_NODE,    // Tipo do nó: Expressão
@@ -1752,30 +1807,30 @@ yyreduce:
       
         yyval = minus_node;
     }
-#line 1756 "parser.c"
+#line 1811 "parser.c"
     break;
 
   case 51: /* term: term mult factor  */
-#line 434 "parser.y"
+#line 490 "parser.y"
     {
         yyval = yyvsp[-1];
         add_child(yyval, yyvsp[-2]);
         add_child(yyval, yyvsp[0]);
         
     }
-#line 1767 "parser.c"
+#line 1822 "parser.c"
     break;
 
   case 52: /* term: factor  */
-#line 441 "parser.y"
+#line 497 "parser.y"
     {
         yyval = yyvsp[0];
     }
-#line 1775 "parser.c"
+#line 1830 "parser.c"
     break;
 
   case 53: /* mult: MULTIPLY_TOKEN  */
-#line 447 "parser.y"
+#line 503 "parser.y"
     {
         ast_node_t* multiply_node = new_ast_node(
             EXPRESSION_NODE,    // Tipo do nó: Expressão
@@ -1788,11 +1843,11 @@ yyreduce:
 
         yyval = multiply_node;
     }
-#line 1792 "parser.c"
+#line 1847 "parser.c"
     break;
 
   case 54: /* mult: DIVIDE_TOKEN  */
-#line 460 "parser.y"
+#line 516 "parser.y"
     {
         ast_node_t* divide_node = new_ast_node(
             EXPRESSION_NODE,    // Tipo do nó: Expressão
@@ -1805,68 +1860,68 @@ yyreduce:
 
         yyval = divide_node;
     }
-#line 1809 "parser.c"
+#line 1864 "parser.c"
     break;
 
   case 55: /* factor: LPAREN_TOKEN expression RPAREN_TOKEN  */
-#line 475 "parser.y"
+#line 531 "parser.y"
     {
         yyval = yyvsp[-1];
     }
-#line 1817 "parser.c"
+#line 1872 "parser.c"
     break;
 
   case 56: /* factor: var  */
-#line 479 "parser.y"
+#line 535 "parser.y"
     {
         yyval = yyvsp[0];
     }
-#line 1825 "parser.c"
+#line 1880 "parser.c"
     break;
 
   case 57: /* factor: activation  */
-#line 483 "parser.y"
+#line 539 "parser.y"
     {
         yyval = yyvsp[0];
     }
-#line 1833 "parser.c"
+#line 1888 "parser.c"
     break;
 
   case 58: /* factor: num  */
-#line 487 "parser.y"
+#line 543 "parser.y"
     {
         yyval = yyvsp[0];
     }
-#line 1841 "parser.c"
+#line 1896 "parser.c"
     break;
 
   case 59: /* activation: id LPAREN_TOKEN args RPAREN_TOKEN  */
-#line 493 "parser.y"
+#line 549 "parser.y"
     {
         yyval = yyvsp[-3];
         add_child(yyval, yyvsp[-1]);
     }
-#line 1850 "parser.c"
+#line 1905 "parser.c"
     break;
 
   case 60: /* args: arg_list  */
-#line 500 "parser.y"
+#line 556 "parser.y"
     {
         yyval = yyvsp[0];
     }
-#line 1858 "parser.c"
+#line 1913 "parser.c"
     break;
 
   case 61: /* args: %empty  */
-#line 504 "parser.y"
+#line 560 "parser.y"
     {
         yyval = NULL;
     }
-#line 1866 "parser.c"
+#line 1921 "parser.c"
     break;
 
   case 62: /* arg_list: arg_list COMMA_TOKEN expression  */
-#line 510 "parser.y"
+#line 566 "parser.y"
     {
         if (yyvsp[-2] != NULL) 
         {
@@ -1878,19 +1933,19 @@ yyreduce:
             yyval = yyvsp[0];
         }
     }
-#line 1882 "parser.c"
+#line 1937 "parser.c"
     break;
 
   case 63: /* arg_list: expression  */
-#line 522 "parser.y"
+#line 578 "parser.y"
     {
         yyval = yyvsp[0];
     }
-#line 1890 "parser.c"
+#line 1945 "parser.c"
     break;
 
   case 64: /* id: ID_TOKEN  */
-#line 528 "parser.y"
+#line 584 "parser.y"
     {
         token_t* token = NULL;
         for(int i = token_count-1; i >= 0; i--)
@@ -1914,11 +1969,11 @@ yyreduce:
 
         yyval = id_node; 
     }
-#line 1918 "parser.c"
+#line 1973 "parser.c"
     break;
 
   case 65: /* num: NUM_TOKEN  */
-#line 554 "parser.y"
+#line 610 "parser.y"
     {
         token_t* token = NULL;
         for(int i = token_count-1; i >= 0; i--)
@@ -1942,11 +1997,11 @@ yyreduce:
 
         yyval = num_node; 
     }
-#line 1946 "parser.c"
+#line 2001 "parser.c"
     break;
 
 
-#line 1950 "parser.c"
+#line 2005 "parser.c"
 
       default: break;
     }
@@ -2139,7 +2194,7 @@ yyreturnlab:
   return yyresult;
 }
 
-#line 578 "parser.y"
+#line 634 "parser.y"
 
 
 void yyerror(char *s)
