@@ -110,7 +110,7 @@
     }
     | VOID_TOKEN
     {
-        ast_node_t* void_node = new_ast_node(EXPRESSION_NODE, global_line_number, "void", NULL_STMT, CONST_EXP, VOID_TYPE);
+        ast_node_t* void_node = new_ast_node(NULL_NODE, global_line_number, "void", NULL_STMT, NULL_EXP, NULL_TYPE);
 
         $$ = void_node;
     }
@@ -231,7 +231,7 @@
 
     selection_decl : IF_TOKEN LPAREN_TOKEN expression RPAREN_TOKEN statement
     {
-        ast_node_t* if_node = new_ast_node(STATEMENT_NODE, global_line_number, "if", IF_STMT, NOT_EXP, NO_TYPE);
+        ast_node_t* if_node = new_ast_node(NULL_NODE, global_line_number, "if", NULL_STMT, NULL_EXP, NULL_TYPE);
         
         $$ = if_node;
         add_child($$, $3);
@@ -239,7 +239,7 @@
     }
     | IF_TOKEN LPAREN_TOKEN expression RPAREN_TOKEN statement ELSE_TOKEN statement
     {
-        ast_node_t* if_node = new_ast_node(STATEMENT_NODE, global_line_number, "if", IF_STMT, NOT_EXP, NO_TYPE);
+        ast_node_t* if_node = new_ast_node(NULL_NODE, global_line_number, "if", NULL_STMT, NULL_EXP, NULL_TYPE);
 
         add_child(if_node, $3);
         add_child(if_node, $5);
@@ -250,7 +250,7 @@
 
     iteration_decl : WHILE_TOKEN LPAREN_TOKEN expression RPAREN_TOKEN statement
     {
-        ast_node_t* while_node = new_ast_node(STATEMENT_NODE, global_line_number, "while", WHILE_STMT, NOT_EXP, NO_TYPE);
+        ast_node_t* while_node = new_ast_node(NULL_NODE, global_line_number, "while", NULL_STMT, NULL_EXP, NULL_TYPE);
 
         $$ = while_node;
         add_child($$, $3);
@@ -260,13 +260,13 @@
 
     return_decl : RETURN_TOKEN SEMICOLON_TOKEN
     {
-        ast_node_t* return_node = new_ast_node(STATEMENT_NODE, global_line_number, "return", RETURN_STMT, NOT_EXP, NO_TYPE);
+        ast_node_t* return_node = new_ast_node(NULL_NODE, global_line_number, "return", NULL_STMT, NULL_EXP, NULL_TYPE);
     
         $$ = return_node;
     }
     | RETURN_TOKEN expression SEMICOLON_TOKEN
     {
-        ast_node_t* return_node = new_ast_node(STATEMENT_NODE, global_line_number, "return", RETURN_STMT, NOT_EXP, NO_TYPE);
+        ast_node_t* return_node = new_ast_node(NULL_NODE, global_line_number, "return", NULL_STMT, NULL_EXP, NULL_TYPE);
 
         $$ = return_node;
         add_child($$, $2);
@@ -275,7 +275,7 @@
 
     expression : var ASSIGN_TOKEN expression
     {
-        ast_node_t* assign_node = new_ast_node(EXPRESSION_NODE, global_line_number, "==", NULL_STMT, OP_EXP, NO_TYPE);
+        ast_node_t* assign_node = new_ast_node(NULL_NODE, global_line_number, "==", NULL_STMT, NULL_EXP, NULL_TYPE);
      
         $$ = assign_node;
         add_child($$, $1);
@@ -312,37 +312,37 @@
 
     relational : LT_TOKEN
     {
-        ast_node_t* lt_node = new_ast_node(EXPRESSION_NODE, global_line_number, "<", NULL_STMT, OP_EXP, NO_TYPE);
+        ast_node_t* lt_node = new_ast_node(NULL_NODE, global_line_number, "<", NULL_STMT, NULL_EXP, NULL_TYPE);
         
         $$ = lt_node;
     }
     | LTE_TOKEN
     {
-        ast_node_t* lte_node = new_ast_node(EXPRESSION_NODE, global_line_number, "<=", NULL_STMT, OP_EXP, NO_TYPE);
+        ast_node_t* lte_node = new_ast_node(NULL_NODE, global_line_number, "<=", NULL_STMT, NULL_EXP, NULL_TYPE);
 
         $$ = lte_node;
     }
     | GT_TOKEN
     {
-        ast_node_t* gt_node = new_ast_node(EXPRESSION_NODE, global_line_number, ">", NULL_STMT, OP_EXP, NO_TYPE);
+        ast_node_t* gt_node = new_ast_node(NULL_NODE, global_line_number, ">", NULL_STMT, NULL_EXP, NULL_TYPE);
 
         $$ = gt_node;
     }
     | GTE_TOKEN
     {
-        ast_node_t* gte_node = new_ast_node(EXPRESSION_NODE, global_line_number, ">=", NULL_STMT, OP_EXP, NO_TYPE);
+        ast_node_t* gte_node = new_ast_node(NULL_NODE, global_line_number, ">=", NULL_STMT, NULL_EXP, NULL_TYPE);
       
         $$ = gte_node;
     }
     | EQ_TOKEN
     {
-        ast_node_t* eq_node = new_ast_node(EXPRESSION_NODE, global_line_number, "=", NULL_STMT, OP_EXP, NO_TYPE);
+        ast_node_t* eq_node = new_ast_node(NULL_NODE, global_line_number, "=", NULL_STMT, NULL_EXP, NULL_TYPE);
 
         $$ = eq_node;
     }
     | NEQ_TOKEN
     {
-        ast_node_t* neq_node = new_ast_node(EXPRESSION_NODE, global_line_number, "!=", NULL_STMT, OP_EXP, NO_TYPE);
+        ast_node_t* neq_node = new_ast_node(NULL_NODE, global_line_number, "!=", NULL_STMT, NULL_EXP, NULL_TYPE);
    
         $$ = neq_node;
     }
@@ -362,13 +362,13 @@
 
     sum : PLUS_TOKEN
     {
-        ast_node_t* plus_node = new_ast_node(EXPRESSION_NODE, global_line_number, "+", NULL_STMT, OP_EXP, NO_TYPE);
+        ast_node_t* plus_node = new_ast_node(NULL_NODE, global_line_number, "+", NULL_STMT, NULL_EXP, NULL_TYPE);
 
         $$ = plus_node;
     }
     | MINUS_TOKEN
     {
-        ast_node_t* minus_node = new_ast_node(EXPRESSION_NODE, global_line_number, "-", NULL_STMT, OP_EXP, NO_TYPE);
+        ast_node_t* minus_node = new_ast_node(NULL_NODE, global_line_number, "-", NULL_STMT, NULL_EXP, NULL_TYPE);
       
         $$ = minus_node;
     }
@@ -389,13 +389,13 @@
 
     mult : MULTIPLY_TOKEN
     {
-        ast_node_t* multiply_node = new_ast_node(EXPRESSION_NODE, global_line_number, "*", NULL_STMT, OP_EXP, NO_TYPE);
+        ast_node_t* multiply_node = new_ast_node(NULL_NODE, global_line_number, "*", NULL_STMT, NULL_EXP, NULL_TYPE);
 
         $$ = multiply_node;
     }
     | DIVIDE_TOKEN
     {
-        ast_node_t* divide_node = new_ast_node(EXPRESSION_NODE, global_line_number, "/", NULL_STMT, OP_EXP, NO_TYPE);
+        ast_node_t* divide_node = new_ast_node(NULL_NODE, global_line_number, "/", NULL_STMT, NULL_EXP, NULL_TYPE);
 
         $$ = divide_node;
     }   
@@ -413,22 +413,9 @@
     {
         $$ = $1;
     }
-    | NUM_TOKEN
+    | num
     {
-        token_t* token = NULL;
-        for(int i = token_count-1; i >= 0; i--)
-        {
-            token_type_t type = token_list[i]->type;
-            if (convert_token(type) == NUM_TOKEN) 
-            {
-                token = token_list[i];
-                break;
-            }
-        }
-
-        ast_node_t* num_node = new_ast_node(EXPRESSION_NODE, global_line_number, token->lexeme, NULL_STMT, CONST_EXP, NO_TYPE);
-
-        $$ = num_node;
+        $$ = $1;
     }
     ;
 
@@ -480,7 +467,7 @@
             }
         }
 
-        ast_node_t* id_node = new_ast_node(EXPRESSION_NODE, global_line_number, token->lexeme, NULL_STMT, ID_EXP, NO_TYPE);
+        ast_node_t* id_node = new_ast_node(NULL_NODE, global_line_number, token->lexeme, NULL_STMT, NULL_EXP, NULL_TYPE);
         
         $$ = id_node; 
 
@@ -501,7 +488,7 @@
             }
         }
 
-        ast_node_t* num_node = new_ast_node(EXPRESSION_NODE, global_line_number, token->lexeme, NULL_STMT, CONST_EXP, NO_TYPE);
+        ast_node_t* num_node = new_ast_node(NULL_NODE, global_line_number, token->lexeme, NULL_STMT, NULL_EXP, NULL_TYPE);
         
         $$ = num_node; 
     }

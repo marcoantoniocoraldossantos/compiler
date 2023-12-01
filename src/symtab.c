@@ -80,3 +80,25 @@ void insert_symbol(hash_table_t* hash_table, ast_node_t* node, int table_size)
         hash_table->table[hash_value] = new_entry;
     }
 }
+
+void construct_symtab(ast_node_t* node, hash_table_t* hash_table) 
+{
+    if (node == NULL) return;
+
+    
+
+
+
+
+    // if (node->type == AST_DECLARATION) 
+    // {
+    //     insert_symbol(hash_table, node->child[1], TABLE_SIZE);
+    // }
+
+    // for (int i = 0; i < MAX_CHILDREN; i++) 
+    // {
+    //     construct_symtab(node->child[i], hash_table);
+    // }
+
+    // construct_symtab(node->sibling, hash_table);
+}

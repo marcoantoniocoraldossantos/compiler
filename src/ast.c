@@ -106,16 +106,12 @@ ast_node_t* new_ast_node(node_kind_t kind, int line, const char* lexeme, stateme
     {
         new_node->node_kind = kind;
         new_node->lineno = line;
-
         strcpy(new_node->lexeme, lexeme);
-
         new_node->sibling = NULL;
-
         for (int i = 0; i < MAXCHILDREN; ++i) 
         {
             new_node->child[i] = NULL;
         }
-
         new_node->kind.statement = statement;
         new_node->kind.expression = expression;
         new_node->kind.type = type;

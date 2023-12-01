@@ -10,7 +10,10 @@ typedef enum
 {
     PROGRAM_NODE,
     STATEMENT_NODE,
-    EXPRESSION_NODE
+    EXPRESSION_NODE,
+    DECLARATION_NODE,
+    PARAMETER_NODE,
+    NULL_NODE,
 } node_kind_t;
 typedef enum 
 {
@@ -38,7 +41,7 @@ typedef enum
 {
     INT_TYPE,
     VOID_TYPE,
-    NO_TYPE,
+    NULL_TYPE,
 } expression_type_t;
 
 typedef struct ast_node_t 
