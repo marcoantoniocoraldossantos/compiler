@@ -275,8 +275,15 @@
 
     expression : var ASSIGN_TOKEN expression
     {
-        ast_node_t* assign_node = new_ast_node(NULL_NODE, global_line_number, "==", NULL_STMT, NULL_EXP, NULL_TYPE);
-     
+        ast_node_t* assign_node = new_ast_node(
+            EXPRESSION_NODE,       // Tipo do nó: Expressão
+            global_line_number,    // Número da linha onde ocorre a atribuição
+            "=",                   // Lexema representando a operação de atribuição
+            NULL_STMT,             // A atribuição não requer um statement específico
+            ATTR_EXP,              // Tipo de expressão: Atribuição
+            NULL_TYPE              // Não se aplica o tipo aqui, pode ser NULL_TYPE
+        );
+        
         $$ = assign_node;
         add_child($$, $1);
         add_child($$, $3);
