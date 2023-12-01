@@ -52,6 +52,9 @@ int main(int argc, char *argv[])
     // semantic_analysis(global_ast_tree, symtab);
 
     // insert_symbol(symtab, global_ast_tree->child[0], TABLE_SIZE);
+    // insert_symbol(symtab, global_ast_tree->child[1], TABLE_SIZE);
+    // insert_symbol(symtab, global_ast_tree->child[1]->sibling, TABLE_SIZE);
+    // insert_symbol(symtab, global_ast_tree->child[0]->sibling->sibling, TABLE_SIZE);
     
     print_hash_table(symtab);
 

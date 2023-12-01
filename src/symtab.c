@@ -31,16 +31,6 @@ void free_hash_table(hash_table_t* hash_table)
     }
 }
 
-unsigned int hash(const char* lexeme, int table_size) 
-{
-    unsigned int hash_value = 0;
-    for (int i = 0; lexeme[i] != '\0'; i++) 
-    {
-        hash_value = lexeme[i] + (hash_value << 5) - hash_value;
-    }
-    return hash_value % table_size;
-}
-
 void print_hash_table(hash_table_t* hash_table) 
 {
     printf("Hash Table Contents:\n");
@@ -54,5 +44,39 @@ void print_hash_table(hash_table_t* hash_table)
             current = current->next;
         }
         printf("NULL\n");
+    }
+}
+
+unsigned int hash(const char* lexeme, int table_size) 
+{
+    unsigned int hash_value = 0;
+    for (int i = 0; lexeme[i] != '\0'; i++) 
+    {
+        hash_value = lexeme[i] + (hash_value << 5) - hash_value;
+    }
+    return hash_value % table_size;
+}
+
+
+void insert_symbol(hash_table_t* hash_table, ast_node_t* node, int table_size) 
+{
+    if (node == NULL) return;
+
+    int hash_value = hash(node->lexeme, table_size);
+
+    while (hash_table->table[hash_value] != NULL) 
+    {
+        hash_value = (hash_value + 1) % table_size;
+    }
+
+    hash_entry_t* new_entry = (hash_entry_t*)malloc(sizeof(hash_entry_t));
+    if (new_entry != NULL) 
+    {
+        strncpy(new_entry->name, node->lexeme, MAX_LEXEME_LENGHT);
+        new_entry->data_type = INT_DATA;//node->data_type;
+        new_entry->id_type = VARIABLE;//node->id_type;
+        new_entry->line_number = node->lineno;
+
+        hash_table->table[hash_value] = new_entry;
     }
 }

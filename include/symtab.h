@@ -42,5 +42,6 @@ hash_table_t* initialize_hash_table();
 void free_hash_table(hash_table_t* hash_table);
 unsigned int hash(const char* lexeme, int table_size);
 void print_hash_table(hash_table_t* hash_table);
+void insert_symbol(hash_table_t* hash_table, ast_node_t* node, int table_size);
 
 #endif /* SYMTAB_H */
