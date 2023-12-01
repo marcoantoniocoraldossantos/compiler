@@ -11,6 +11,8 @@ FILE *global_input_file;
 bst_node_t *global_bst_tree;
 ast_node_t *global_ast_tree;
 
+#define TABLE_SIZE 257
+
 int main(int argc, char *argv[]) 
 {
     verify_arguments(argc, argv); // verify if the code was called correctly with "compiler <input_file>"
@@ -47,9 +49,9 @@ int main(int argc, char *argv[])
     printf("\n");
     //print_ast(global_ast_tree);
 
+    construct_symtab(global_ast_tree, symtab);
     semantic_analysis(global_ast_tree, symtab);
     print_symtab(symtab);
-
 
     printf("freeing memory...\n");
     close_file(input_file); // close the file

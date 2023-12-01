@@ -29,7 +29,7 @@ typedef struct hash_entry_t
     int line_number;
     char scope[MAX_LEXEME_LENGHT];
     scope_t scope_type;
-    struct hash_entry_t* next; // Para encadeamento em caso de colisões (caso use tabela hash)
+    struct hash_entry_t* next; 
 } hash_entry_t;
 
 hash_entry_t* initialize_symtab();

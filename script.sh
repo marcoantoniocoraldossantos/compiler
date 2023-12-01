@@ -29,5 +29,4 @@ make -s
 
 echo "compiled successfully!"
 
-./compiler test/example1.txt
-#valgrind --leak-check=full --show-leak-kinds=all 
+valgrind --leak-check=full --show-leak-kinds=all ./compiler test/example1.txt

@@ -22,6 +22,7 @@ void free_hash_table(hash_entry_t* symtab)
 
 void print_symtab(hash_entry_t* symtab)
 {
+    printf("printing symtab...\n");
     hash_entry_t* aux = symtab->next;
     while (aux != NULL)
     {
@@ -34,6 +35,22 @@ void semantic_analysis(ast_node_t* ast_tree, hash_entry_t* symtab)
 {
     if (ast_tree == NULL) return;
     return;
+}
+
+void construct_symtab(ast_node_t* ast_tree, hash_entry_t* symtab)
+{
+    // if (ast_tree == NULL) return;
+    // if (ast_tree->node_kind == STATEMENT_NODE)
+    // {
+    //     if (ast_tree->kind.statement == DECL_STMT)
+    //     {
+    //         insert_symbol(symtab, ast_tree->child[0], TABLE_SIZE);
+    //     }
+    // }
+    // construct_symtab(ast_tree->child[0], symtab);
+    // construct_symtab(ast_tree->child[1], symtab);
+    // construct_symtab(ast_tree->child[2], symtab);
+    // construct_symtab(ast_tree->sibling, symtab);
 }
 
 unsigned int hash(const char* lexeme, int table_size) 
@@ -79,4 +96,11 @@ void insert_symbol(hash_entry_t* symtab, ast_node_t* node, int table_size)
     aux->scope_type = GLOBAL;
 
     aux->next = NULL;
+
+    printf("\n\ninserted %s\n", aux->name);
+    printf("data_type: %d\n", aux->data_type);
+    printf("id_type: %d\n", aux->id_type);
+    printf("line_number: %d\n", aux->line_number);
+    printf("scope: %s\n", aux->scope);
 }
+
