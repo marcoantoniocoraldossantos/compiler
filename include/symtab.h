@@ -23,7 +23,7 @@ typedef struct hash_entry_t
     id_type_t id_type;
     int line_number;
     char scope[MAX_LEXEME_LENGHT];
-    struct hash_entry_t* next; 
+    //struct hash_entry_t* next; 
 } hash_entry_t;
 
 typedef struct 

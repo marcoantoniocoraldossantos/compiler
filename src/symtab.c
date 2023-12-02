@@ -2,42 +2,48 @@
 
 #include <stdlib.h>
 
-hash_table_t* initialize_hash_table() {
+hash_table_t* initialize_hash_table() 
+{
     hash_table_t* hash_table = (hash_table_t*)malloc(sizeof(hash_table_t));
-    if (hash_table == NULL) {
-        // Tratamento de erro, se a alocação de memória falhar
+    if (hash_table == NULL) 
+    {
         return NULL;
     }
 
     hash_table->size = TABLE_SIZE;
     hash_table->table = (hash_entry_t**)malloc(TABLE_SIZE * sizeof(hash_entry_t*));
-    if (hash_table->table == NULL) {
-        // Tratamento de erro, se a alocação de memória falhar
-        free(hash_table); // Libera a memória alocada para a tabela hash
+    if (hash_table->table == NULL) 
+    {
+        free(hash_table); 
         return NULL;
     }
 
-    // Inicializa cada entrada na tabela com NULL (tabela vazia)
-    for (int i = 0; i < TABLE_SIZE; i++) {
+    for (int i = 0; i < TABLE_SIZE; i++) 
+    {
         hash_table->table[i] = NULL;
     }
 
     return hash_table;
 }
 
-void free_hash_table(hash_table_t* hash_table) {
-    if (hash_table == NULL) {
-        return; // Verifica se a tabela já é nula
+void free_hash_table(hash_table_t* hash_table) 
+{
+    if (hash_table == NULL) 
+    {
+        return;
     }
 
-    // Libera cada lista encadeada em cada entrada da tabela
-    for (int i = 0; i < hash_table->size; i++) {
+    for (int i = 0; i < hash_table->size; i++) 
+    {
         hash_entry_t* entry = hash_table->table[i];
-        while (entry != NULL) {
-            hash_entry_t* temp = entry;
-            entry = entry->next;
-            free(temp); // Libera cada entrada na lista encadeada
-        }
+        // while (entry != NULL) 
+        // {
+        //     hash_entry_t* temp = entry;
+        //     entry = entry->next;
+        //     free(temp); // Libera cada entrada na lista encadeada
+        // }
+
+        free(entry); 
     }
 
     free(hash_table->table); // Libera a matriz de ponteiros
@@ -66,11 +72,11 @@ void print_hash_table(hash_table_t* hash_table)
         } 
         else 
         {
-            while (entry != NULL) 
-            {
-                printf(" name \'%-8s\' | scope %-8s | data_type %-4d | id_type %-4d | line_number %d \n", entry->name, entry->scope, entry->data_type, entry->id_type, entry->line_number);
-                entry = entry->next;
-            }
+            // while (entry != NULL) 
+            // {
+            //     entry = entry->next;
+            // }
+            printf(" name \'%-8s\' | scope %-8s | data_type %-4d | id_type %-4d | line_number %d \n", entry->name, entry->scope, entry->data_type, entry->id_type, entry->line_number);
             // printf("\n");
         }
     }
@@ -106,7 +112,7 @@ void insert_symbol(hash_table_t* hash_table, char* lexema, data_type_t data_type
     new_symbol->id_type = id_type;
     new_symbol->line_number = line_number;
     strncpy(new_symbol->scope, scope, MAX_LEXEME_LENGHT);
-    new_symbol->next = NULL;
+    //new_symbol->next = NULL;
 
     hash_table->table[index] = new_symbol;
 }
