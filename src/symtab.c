@@ -221,12 +221,22 @@ void semantic_analysis(ast_node_t* node, hash_table_t* symbol_table, char* scope
         return;
     }
 
-    printf("\nscope: %s\n", scope);
-    
-    
-    
-
-
+    //printf("\nscope: %s\n", scope);
+    switch(node->node_kind)
+    {
+        case PROGRAM_NODE:
+            break;
+        case STATEMENT_NODE:
+            break;
+        case EXPRESSION_NODE:
+            break;
+        case DECLARATION_NODE:
+            break;
+        case PARAMETER_NODE:
+            break;
+        case NULL_NODE:
+            break;
+    }
 
     for (int i = 0; i < MAXCHILDREN; ++i) 
     {
