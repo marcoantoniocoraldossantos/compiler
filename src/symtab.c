@@ -1,6 +1,7 @@
 #include "libraries.h"
 
 int flag_semantic_error = 0;
+char scope[MAX_LEXEME_LENGHT];
 
 hash_table_t* initialize_hash_table() 
 {
@@ -158,15 +159,14 @@ void construct_symtab(ast_node_t* node, hash_table_t* hash_table)
 {
     if (node == NULL) return;
 
-    //if(ast_node_is_identifier(node)) 
-    //{   
-    //    if(!seach_in_hash_table(hash_table, node->lexeme))
-    //        insert_symbol(hash_table, node->lexeme, node->kind.type, node->kind.type, node->lineno, "global");
-    //    else
-    //        add_apparition(hash_table, node->lexeme, node->lineno);
-    //}
+    if(ast_node_is_identifier(node)) 
+    {   
+        if(!search_in_hash_table(hash_table, node->lexeme, "global"))
+            insert_symbol(hash_table, node->lexeme, node->kind.type, node->kind.type, node->lineno, "global");
+        else
+            add_apparition(hash_table, node->lexeme, node->lineno);
+    }
    
-
     // Percorre os filhos do nó atual
     for (int i = 0; i < MAXCHILDREN; i++) 
     {
@@ -216,7 +216,12 @@ void add_apparition(hash_table_t* hash_table, char* lexema, int line_number)
     return;
 }
 
-void semantic_analysis(ast_node_t* node, hash_table_t* symbol_table, char* scope) 
+void semantic_analysis(ast_node_t* node, hash_table_t* hash_table)
+{
+    
+}
+
+void go_through_tree(ast_node_t* node, hash_table_t* symbol_table, char* scope) 
 {
     if (node == NULL) 
     {
@@ -225,6 +230,12 @@ void semantic_analysis(ast_node_t* node, hash_table_t* symbol_table, char* scope
 
     if(flag_semantic_error)
         return;
+
+    data_type_t data_type;
+    id_type_t id_type;
+
+    char new_scope[MAX_LEXEME_LENGHT];
+    strncpy(new_scope, scope, MAX_LEXEME_LENGHT);
 
     //printf("\nscope: %s\n", scope);
     switch(node->node_kind)
@@ -247,10 +258,10 @@ void semantic_analysis(ast_node_t* node, hash_table_t* symbol_table, char* scope
 
     for (int i = 0; i < MAXCHILDREN; ++i) 
     {
-        semantic_analysis(node->child[i], symbol_table, scope);
+        go_through_tree(node->child[i], symbol_table, new_scope);
     }
 
-    semantic_analysis(node->sibling, symbol_table, scope);
+    go_through_tree(node->sibling, symbol_table, new_scope);
 }
 
 void process_expression(ast_node_t* node, hash_table_t* symbol_table, char* scope)
@@ -274,19 +285,25 @@ void process_expression(ast_node_t* node, hash_table_t* symbol_table, char* scop
 
 void verify_declaration_of_identifier(hash_table_t* symbol_table, ast_node_t* node, char* scope)
 {
-    
+
 }
 
 void process_declaration(ast_node_t* node, hash_table_t* symbol_table, char* scope)
 {
+    char new_scope[MAX_LEXEME_LENGHT];
+    strncpy(new_scope, scope, MAX_LEXEME_LENGHT);
+
+    data_type_t data_type;
+    id_type_t id_type;
+
     switch(node->extended_type)
     {
         case EXT_VARIABLE_DECL:
-            verify_if_variable_already_exists(symbol_table, node, scope);
-            break;
         case EXT_VECTOR_DECL:
+            verify_if_variable_already_exists(symbol_table, node, new_scope);
             break;
         case EXT_FUNCTION_DECL:
+            verify_function_declaration(symbol_table, node, scope);
             break;
         default:
             break;
@@ -310,5 +327,38 @@ void verify_if_variable_already_exists(hash_table_t* symbol_table, ast_node_t* n
         if(ast_node_is_identifier(node->child[0]))
             insert_symbol(symbol_table, node->child[0]->lexeme, INT_DATA, VARIABLE, node->child[0]->lineno, scope);
     }
+}
+
+void verify_function_declaration(hash_table_t* symbol_table, ast_node_t* node, char* scope)
+{
+    data_type_t data_type;
+    if(strcmp(node->child[0]->lexeme, "int") == 0)
+        data_type = INT_DATA;
+    else
+        data_type = VOID_DATA;
+
+    char new_scope[MAX_LEXEME_LENGHT];
+    strncpy(new_scope, node->child[1]->lexeme, MAX_LEXEME_LENGHT);
+
+    if(search_for_function_declaration(symbol_table, node->child[1]->lexeme, scope))
+    {
+
+    }
+}
+
+bool search_for_function_declaration(hash_table_t* symbol_table, char* lexeme, char* scope)
+{
+    int index = hash(symbol_table, lexeme);
+
+    while (symbol_table->table[index] != NULL) 
+    {
+        if(strcmp(symbol_table->table[index]->name, lexeme) == 0 && strcmp(symbol_table->table[index]->scope, scope) == 0) 
+        {
+            return true;
+        }
+        index = (index + 1) % TABLE_SIZE; 
+    }
+
+    return false;
 }
 

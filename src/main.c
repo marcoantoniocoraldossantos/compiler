@@ -9,6 +9,7 @@ buffer_t *global_buffer = NULL;
 FILE *global_input_file;
 bst_node_t *global_bst_tree;
 ast_node_t *global_ast_tree;
+char global_scope[64];
 
 int main(int argc, char *argv[]) 
 {
@@ -20,6 +21,7 @@ int main(int argc, char *argv[])
     bst_node_t *bst_tree = initialize_bst(); // initialize the bst
     ast_node_t *ast_tree = initialize_ast(); // initialize the ast
     hash_entry_t *symtab = initialize_hash_table(); // initialize the symtab
+    strcpy(global_scope, "global");
     //token_t *token = NULL; // initialize the token
 
     save_global_variables(input_file, &buffer, bst_tree); // save the global variables
@@ -42,17 +44,20 @@ int main(int argc, char *argv[])
 
     //printf("sintatic analysis...");
 
-
     parse();
 
-    printf("\n");
+    //printf("\n");
     //print_ast(global_ast_tree);
 
-    construct_symtab(global_ast_tree, symtab);
-    semantic_analysis(global_ast_tree, symtab, "global");
+    //construct_symtab(global_ast_tree, symtab);
+    //go_through_tree(global_ast_tree, symtab, "global");
     
-    if(!flag_semantic_error)
-        print_hash_table(symtab);
+    semantic_analysis(global_ast_tree, symtab);
+
+    //print_hash_table(symtab);
+
+    //if(!flag_semantic_error)
+    //    print_hash_table(symtab);
 
     //printf("freeing memory...\n");
     close_file(input_file); // close the file

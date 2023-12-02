@@ -29,6 +29,7 @@ typedef enum
     EXT_IDENTIFIER,
     EXT_NULL,
 } extended_type_t;
+
 typedef enum 
 {
     PROGRAM_NODE,
@@ -71,7 +72,6 @@ typedef enum
     VOID_TYPE,
     NULL_TYPE,
 } expression_type_t;
-
 
 typedef struct ast_node_t 
 {
