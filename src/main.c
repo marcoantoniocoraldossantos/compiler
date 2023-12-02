@@ -19,7 +19,7 @@ int main(int argc, char *argv[])
     buffer_t buffer = initialize_buffer(256); // initialize the buffer
     bst_node_t *bst_tree = initialize_bst(); // initialize the bst
     ast_node_t *ast_tree = initialize_ast(); // initialize the ast
-    hash_table_t *symtab = initialize_hash_table(); // initialize the symtab
+    hash_entry_t *symtab = initialize_hash_table(); // initialize the symtab
     //token_t *token = NULL; // initialize the token
 
     save_global_variables(input_file, &buffer, bst_tree); // save the global variables
@@ -46,12 +46,12 @@ int main(int argc, char *argv[])
     parse();
 
     printf("\n");
-    print_ast(global_ast_tree);
+    // print_ast(global_ast_tree);
 
     construct_symtab(global_ast_tree, symtab);
     // semantic_analysis(global_ast_tree, symtab);
     
-    // print_hash_table(symtab);
+    print_hash_table(symtab);
 
     printf("freeing memory...\n");
     close_file(input_file); // close the file

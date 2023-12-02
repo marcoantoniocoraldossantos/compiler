@@ -16,12 +16,6 @@ typedef enum
     FUNCTION,
 } id_type_t;
 
-typedef enum 
-{
-    GLOBAL,
-    LOCAL,
-} scope_t;
-
 typedef struct hash_entry_t 
 {
     char name[MAX_LEXEME_LENGHT];
@@ -29,20 +23,19 @@ typedef struct hash_entry_t
     id_type_t id_type;
     int line_number;
     char scope[MAX_LEXEME_LENGHT];
-    scope_t scope_type;
     struct hash_entry_t* next; 
 } hash_entry_t;
 
 typedef struct 
 {
-    hash_entry_t* table[TABLE_SIZE];
+    hash_entry_t** table;
+    int size;
 } hash_table_t;
 
 hash_table_t* initialize_hash_table();
 void free_hash_table(hash_table_t* hash_table);
-unsigned int hash(const char* lexeme, int table_size);
 void print_hash_table(hash_table_t* hash_table);
-void insert_symbol(hash_table_t* hash_table, ast_node_t* node, int table_size);
+void insert_symbol(hash_table_t* hash_table, char* lexema, data_type_t data_type, id_type_t id_type, int line_number, char* scope);
 void construct_symtab(ast_node_t* node, hash_table_t* hash_table);
 
 #endif /* SYMTAB_H */
