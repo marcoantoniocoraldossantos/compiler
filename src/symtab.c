@@ -98,12 +98,14 @@ void insert_symbol(hash_table_t* hash_table, char* lexema, data_type_t data_type
     int index = hash(hash_table, lexema);
 
     // Verifica se a posição está ocupada
-    while (hash_table->table[index] != NULL) {
+    while (hash_table->table[index] != NULL) 
+    {
         index = (index + 1) % TABLE_SIZE; // Sondagem linear
     }
 
     hash_entry_t* new_symbol = (hash_entry_t*)malloc(sizeof(hash_entry_t));
-    if (new_symbol == NULL) {
+    if (new_symbol == NULL) 
+    {
         return;
     }
 
@@ -133,21 +135,226 @@ void construct_symtab(ast_node_t* node, hash_table_t* hash_table)
     construct_symtab(node->sibling, hash_table);
 }
 
-void semantic_analysis(ast_node_t* node, hash_table_t* hash_table) 
+void semantic_analysis(ast_node_t* node, hash_table_t* symbol_table) 
 {
-    // if (node == NULL) return;
+    if (node == NULL) 
+    {
+        return;
+    }
 
-    // for (int i = 0; i < MAXCHILDREN; i++)
-    // {
-    //     semantic_analysis(node->child[i], hash_table);
-    // }
+    switch(node->node_kind)
+    {
+        case PROGRAM_NODE:
+            program_node(node, symbol_table);
+            break;
+        case STATEMENT_NODE:
+            statement_node(node, symbol_table);
+            break;
+        case EXPRESSION_NODE:
+            expression_node(node, symbol_table);
+            break;
+        case DECLARATION_NODE:
+            declaration_node(node, symbol_table);
+            break;
+        case PARAMETER_NODE:
+            parameter_node(node, symbol_table);
+            break;
+        case NULL_NODE:
+            null_node(node, symbol_table);
+            break;
+    }
 
-    // semantic_analysis(node->sibling, hash_table);
+    for (int i = 0; i < MAXCHILDREN; ++i) 
+    {
+        semantic_analysis(node->child[i], symbol_table);
+    }
+
+    semantic_analysis(node->sibling, symbol_table);
 }
 
+void program_node(ast_node_t* node, hash_table_t* symbol_table) 
+{
+    if (node == NULL) 
+    {
+        return;
+    }
 
+    switch(node->kind.statement)
+    {
+        case IF_STMT:
+            break;
+        case WHILE_STMT:
+            break;
+        case RETURN_STMT:
+            break;
+        case DECL_STMT:
+            break;
+        case PARAM_STMT:
+            break;
+        case COMPOUND_STMT:
+            break;
+        case EXP_STMT:
+            break;
+        case NULL_STMT:
+            break;
+    }
+}
 
+void statement_node(ast_node_t* node, hash_table_t* symbol_table) 
+{
+    if (node == NULL) 
+    {
+        return;
+    }
 
+    switch(node->kind.statement)
+    {
+        case IF_STMT:
+            break;
+        case WHILE_STMT:
+            break;
+        case RETURN_STMT:
+            break;
+        case DECL_STMT:
+            break;
+        case PARAM_STMT:
+            break;
+        case COMPOUND_STMT:
+            break;
+        case EXP_STMT:
+            break;
+        case NULL_STMT:
+            break;
+    }
+}
+
+void expression_node(ast_node_t* node, hash_table_t* symbol_table) 
+{
+    if (node == NULL) 
+    {
+        return;
+    }
+
+    switch(node->kind.expression)
+    {
+        case OP_EXP:
+            break;
+        case CONST_EXP:
+            break;
+        case REL_EXP:
+            break;
+        case ID_EXP:
+            break;
+        case NOT_EXP:
+            break;
+        case FUNCTION_EXP:
+            break;
+        case VECTOR_EXP:
+            break;
+        case ATTR_EXP:
+            break;
+        case CALL_EXP:
+            break;
+        case NULL_EXP:
+            break;
+    }
+}
+
+void declaration_node(ast_node_t* node, hash_table_t* symbol_table) 
+{
+    if (node == NULL) 
+    {
+        return;
+    }
+
+    switch(node->kind.expression)
+    {
+        case OP_EXP:
+            break;
+        case CONST_EXP:
+            break;
+        case REL_EXP:
+            break;
+        case ID_EXP:
+            break;
+        case NOT_EXP:
+            break;
+        case FUNCTION_EXP:
+            break;
+        case VECTOR_EXP:
+            break;
+        case ATTR_EXP:
+            break;
+        case CALL_EXP:
+            break;
+        case NULL_EXP:
+            break;
+    }
+}
+
+void parameter_node(ast_node_t* node, hash_table_t* symbol_table) 
+{
+    if (node == NULL) 
+    {
+        return;
+    }
+
+    switch(node->kind.expression)
+    {
+        case OP_EXP:
+            break;
+        case CONST_EXP:
+            break;
+        case REL_EXP:
+            break;
+        case ID_EXP:
+            break;
+        case NOT_EXP:
+            break;
+        case FUNCTION_EXP:
+            break;
+        case VECTOR_EXP:
+            break;
+        case ATTR_EXP:
+            break;
+        case CALL_EXP:
+            break;
+        case NULL_EXP:
+            break;
+    }
+}
+
+void null_node(ast_node_t* node, hash_table_t* symbol_table) 
+{
+    if (node == NULL) 
+    {
+        return;
+    }
+
+    switch(node->kind.expression)
+    {
+        case OP_EXP:
+            break;
+        case CONST_EXP:
+            break;
+        case REL_EXP:
+            break;
+        case ID_EXP:
+            break;
+        case NOT_EXP:
+            break;
+        case FUNCTION_EXP:
+            break;
+        case VECTOR_EXP:
+            break;
+        case ATTR_EXP:
+            break;
+        case CALL_EXP:
+            break;
+        case NULL_EXP:
+            break;
+    }
+}
 
 
 

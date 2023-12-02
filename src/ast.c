@@ -130,7 +130,7 @@ void print_ast_node(ast_node_t *node)
     }
 
     printf("node: %s\n", node->lexeme);
-    printf("lind: %d\n", node->node_kind);
+    printf("kind: %d\n", node->node_kind);
     printf("line: %d\n", node->lineno);
 
     // Impressão do tipo do nó dependendo do kind (node_kind, statement, expression, etc.)

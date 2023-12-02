@@ -63,6 +63,8 @@ typedef struct ast_node_t
         expression_kind_t expression;
         expression_type_t type;
     } kind;
+    // struct ast_node_t* next;
+    // struct ast_node_t* previous;
 } ast_node_t;
 
 ast_node_t *initialize_ast();

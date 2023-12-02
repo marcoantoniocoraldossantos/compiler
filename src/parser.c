@@ -1279,12 +1279,12 @@ yyreduce:
 #line 82 "parser.y"
     {
         ast_node_t* int_node = new_ast_node(
-            EXPRESSION_NODE,    // Tipo do nó: Expressão
-            global_line_number, // Número da linha onde ocorre o tipo int
-            "int",              // Lexema representando o tipo int
-            NULL_STMT,          // O tipo int não requer um statement específico
-            CONST_EXP,          // Tipo de expressão: Constante
-            INT_TYPE            // Tipo de dado: Inteiro
+            EXPRESSION_NODE,    // node_kind
+            global_line_number, // lineno
+            "int",              // lexeme
+            NULL_STMT,          // stmt_kind
+            CONST_EXP,          // 
+            INT_TYPE            // type
         );
 
         yyval = int_node;
