@@ -74,43 +74,39 @@ void print_hash_table(hash_table_t* hash_table)
 int hash(hash_table_t* hash_table, char* lexema) 
 {
     // Lógica de uma função de hash simples
-    int indice = 0;
+    int index = 0;
     for (int i = 0; lexema[i] != '\0'; i++) 
     {
-        indice += lexema[i];
+        index += lexema[i];
     }
-    return indice % hash_table->size;
+    return index % hash_table->size;
 }
 
-// Função para inserir um novo elemento na tabela hash usando o lexema como chave
 void insert_symbol(hash_table_t* hash_table, char* lexema, data_type_t data_type, id_type_t id_type, int line_number, char* scope) 
 {
-    int indice = hash(hash_table, lexema);
+    int index = hash(hash_table, lexema);
 
-    hash_entry_t* novo_elemento = (hash_entry_t*)malloc(sizeof(hash_entry_t));
-    if (novo_elemento == NULL) 
+    hash_entry_t* new_symbol = (hash_entry_t*)malloc(sizeof(hash_entry_t));
+    if (new_symbol == NULL) 
     {
-        // Tratamento de erro se a alocação de memória falhar
         return;
     }
 
-    strncpy(novo_elemento->name, lexema, MAX_LEXEME_LENGHT);
-    novo_elemento->data_type = data_type;
-    novo_elemento->id_type = id_type;
-    novo_elemento->line_number = line_number;
-    strncpy(novo_elemento->scope, scope, MAX_LEXEME_LENGHT);
-    novo_elemento->next = NULL;
+    strncpy(new_symbol->name, lexema, MAX_LEXEME_LENGHT);
+    new_symbol->data_type = data_type;
+    new_symbol->id_type = id_type;
+    new_symbol->line_number = line_number;
+    strncpy(new_symbol->scope, scope, MAX_LEXEME_LENGHT);
+    new_symbol->next = NULL;
 
-    // Verifica se a posição na tabela está vazia
-    if (hash_table->table[indice] == NULL) 
+    if (hash_table->table[index] == NULL) 
     {
-        hash_table->table[indice] = novo_elemento;
+        hash_table->table[index] = new_symbol;
     } 
     else 
     {
-        // Caso contrário, há uma colisão, insira no início da lista encadeada
-        novo_elemento->next = hash_table->table[indice];
-        hash_table->table[indice] = novo_elemento;
+        new_symbol->next = hash_table->table[index];
+        hash_table->table[index] = new_symbol;
     }
 }
 
@@ -145,36 +141,3 @@ void construct_symtab(ast_node_t* node, hash_table_t* hash_table)
 
 
 
-// unsigned int hash(const char* lexeme, int table_size) 
-// {
-//     unsigned int hash_value = 0;
-//     for (int i = 0; lexeme[i] != '\0'; i++) 
-//     {
-//         hash_value = lexeme[i] + (hash_value << 5) - hash_value;
-//     }
-//     return hash_value % table_size;
-// }
-
-
-// void insert_symbol(hash_table_t* hash_table, ast_node_t* node, int table_size) 
-// {
-//     if (node == NULL) return;
-
-//     int hash_value = hash(node->lexeme, table_size);
-
-//     while (hash_table->table[hash_value] != NULL) 
-//     {
-//         hash_value = (hash_value + 1) % table_size;
-//     }
-
-//     hash_entry_t* new_entry = (hash_entry_t*)malloc(sizeof(hash_entry_t));
-//     if (new_entry != NULL) 
-//     {
-//         strncpy(new_entry->name, node->lexeme, MAX_LEXEME_LENGHT);
-//         new_entry->data_type = INT_DATA;//node->data_type;
-//         new_entry->id_type = VARIABLE;//node->id_type;
-//         new_entry->line_number = node->lineno;
-
-//         hash_table->table[hash_value] = new_entry;
-//     }
-// }
