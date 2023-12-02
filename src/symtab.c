@@ -218,8 +218,86 @@ void add_apparition(hash_table_t* hash_table, char* lexema, int line_number)
 
 void semantic_analysis(ast_node_t* node, hash_table_t* hash_table)
 {
-    
+    if (node == NULL) return;
+
+    switch(node->extended_type)
+    {
+        case EXT_VARIABLE_DECL:
+            if(variable_already_exists(hash_table, node->child[0]->lexeme, global_scope))
+            {
+                printf("semantic error: variable %s already declared in scope %s\n", node->child[0]->lexeme, global_scope);
+                flag_semantic_error = 1;
+            }
+            else
+                insert_symbol(hash_table, node->child[0]->lexeme, node->kind.type, node->kind.type, node->lineno, global_scope);
+            break;
+        case EXT_VECTOR_DECL:
+            break;
+        case EXT_VARIABLE:
+            break;
+        case EXT_VECTOR:
+            break;
+        case EXT_FUNCTION_DECL:
+            strcpy(global_scope, node->child[1]->lexeme);
+            break;
+        case EXT_FUNCTION_CALL:
+            break;
+        case EXT_RETURN_INT:
+            break;
+        case EXT_RETURN_VOID:
+            break;
+        case EXT_VARIABLE_PARAMETER:
+            break;
+        case EXT_VECTOR_PARAMETER:
+            break;
+        case EXT_VOID_PARAMETER:
+            break;
+        case EXT_IF:
+            break;
+        case EXT_IF_ELSE:
+            break;
+        case EXT_WHILE:
+            break;
+        case EXT_ASSIGN:
+            break;
+        case EXT_OPERATOR:
+            break;
+        case EXT_RELATIONAL:
+            break;
+        case EXT_CONSTANT:
+            break;
+        case EXT_IDENTIFIER:
+            break;
+        case EXT_NULL:
+            break;
+        default:
+            break;
+    }
+
+    for (int i = 0; i < MAXCHILDREN; i++) 
+    {
+        semantic_analysis(node->child[i], hash_table);
+    }
+
+    semantic_analysis(node->sibling, hash_table);
 }
+
+bool variable_already_exists(hash_table_t* hash_table, char* lexema, char* scope) 
+{
+    int index = hash(hash_table, lexema);
+
+    while (hash_table->table[index] != NULL) 
+    {
+        if(strcmp(hash_table->table[index]->name, lexema) == 0 && strcmp(hash_table->table[index]->scope, scope) == 0) 
+        {
+            return true;
+        }
+        index = (index + 1) % TABLE_SIZE; 
+    }
+
+    return false;
+}
+
 
 void go_through_tree(ast_node_t* node, hash_table_t* symbol_table, char* scope) 
 {
@@ -361,4 +439,5 @@ bool search_for_function_declaration(hash_table_t* symbol_table, char* lexeme, c
 
     return false;
 }
+
 
