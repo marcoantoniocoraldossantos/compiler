@@ -10,6 +10,7 @@
 #include "arguments.h"
 #include "lexer.h"
 #include "token.h"
+#include "symtab.h"
 
 // arguments functions
 void verify_arguments(int argc, char *argv[]);
@@ -37,5 +38,6 @@ char *token_type_to_string(token_type_t token_type);
 token_type_t reserved_word_token_type(const char *word);
 int convert_token(token_type_t token_type);
 bool ast_node_is_identifier(ast_node_t *node);
+bool verify_if_line_number_already_exists(hash_entry_t* entry, int line_number);
 
 #endif

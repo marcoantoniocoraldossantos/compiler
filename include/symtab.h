@@ -21,7 +21,8 @@ typedef struct hash_entry_t
     char name[MAX_LEXEME_LENGHT];
     data_type_t data_type;
     id_type_t id_type;
-    int line_number;
+    int line_number[10];
+    int number_of_appearances;
     char scope[MAX_LEXEME_LENGHT];
     //struct hash_entry_t* next; 
 } hash_entry_t;
@@ -37,17 +38,10 @@ void free_hash_table(hash_table_t* hash_table);
 void print_hash_table(hash_table_t* hash_table);
 void insert_symbol(hash_table_t* hash_table, char* lexema, data_type_t data_type, id_type_t id_type, int line_number, char* scope);
 void construct_symtab(ast_node_t* node, hash_table_t* hash_table);
-void semantic_analysis(ast_node_t* node, hash_table_t* hash_table);
+void semantic_analysis(ast_node_t* node, hash_table_t* hash_table, char *scope);
 int hash(hash_table_t* hash_table, char* lexema);
-
 bool seach_in_hash_table(hash_table_t* hash_table, char* lexema);
 
-void program_node(ast_node_t* node, hash_table_t* hash_table);
-void statement_node(ast_node_t* node, hash_table_t* symbol_table);
-void expression_node(ast_node_t* node, hash_table_t* symbol_table);
-void declaration_node(ast_node_t* node, hash_table_t* symbol_table);
-void parameter_node(ast_node_t* node, hash_table_t* symbol_table);
-void null_node(ast_node_t* node, hash_table_t* symbol_table);
 
 
 

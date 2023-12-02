@@ -49,7 +49,7 @@ int main(int argc, char *argv[])
     //print_ast(global_ast_tree);
 
     construct_symtab(global_ast_tree, symtab);
-    //semantic_analysis(global_ast_tree, symtab);
+    semantic_analysis(global_ast_tree, symtab, "global");
     
     print_hash_table(symtab);
 

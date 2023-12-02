@@ -648,3 +648,27 @@ bool ast_node_is_identifier(ast_node_t *node)
         return true;
     }
 }
+
+bool verify_if_line_number_already_exists(hash_entry_t* entry, int line_number) 
+{
+    if (entry == NULL)
+    {
+        return false;
+    }
+
+    for (int i = 0; i < entry->number_of_appearances; i++) 
+    {
+        if (entry->line_number[i] == line_number) 
+        {
+            return true;
+        }
+    }
+
+    return false;   //new line number appeared
+}
+
+void remove_duplicate_line_numbers(hash_entry_t* entry)
+{
+    // consider static array
+
+}
