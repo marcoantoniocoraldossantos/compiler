@@ -221,38 +221,16 @@ void semantic_analysis(ast_node_t* node, hash_table_t* symbol_table, char* scope
         return;
     }
 
-    switch(node->node_kind)
-    {
-        case PROGRAM_NODE:
-            //printf("\nprogram node\n");
-            program_node(node, symbol_table);
-            break;
-        case STATEMENT_NODE:
-            //printf("\nstatement node\n");
-            statement_node(node, symbol_table);
-            break;
-        case EXPRESSION_NODE:
-            //printf("\nexpression node\n");
-            expression_node(node, symbol_table);
-            break;
-        case DECLARATION_NODE:
-            //printf("\ndeclaration node\n");
-            declaration_node(node, symbol_table);
-            break;
-        case PARAMETER_NODE:
-            //printf("\nparameter node\n");
-            parameter_node(node, symbol_table);
-            break;
-        case NULL_NODE:
-            //printf("\nnull node\n");
-            null_node(node, symbol_table);
-            break;
-    }
+    
+    
+    
+
+
 
     for (int i = 0; i < MAXCHILDREN; ++i) 
     {
-        semantic_analysis(node->child[i], symbol_table);
+        semantic_analysis(node->child[i], symbol_table, scope);
     }
 
-    semantic_analysis(node->sibling, symbol_table);
+    semantic_analysis(node->sibling, symbol_table, scope);
 }
