@@ -40,7 +40,7 @@ int main(int argc, char *argv[])
     //     free_token(token); // free token memory
     // }
 
-    printf("sintatic analysis...");
+    //printf("sintatic analysis...");
 
 
     parse();
@@ -51,9 +51,10 @@ int main(int argc, char *argv[])
     construct_symtab(global_ast_tree, symtab);
     semantic_analysis(global_ast_tree, symtab, "global");
     
-    print_hash_table(symtab);
+    if(!flag_semantic_error)
+        print_hash_table(symtab);
 
-    printf("freeing memory...\n");
+    //printf("freeing memory...\n");
     close_file(input_file); // close the file
     deallocate_buffer(&buffer); // deallocate the buffer
     free_bst(bst_tree); // deallocate the bst

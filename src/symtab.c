@@ -1,5 +1,7 @@
 #include "libraries.h"
 
+int flag_semantic_error = 0;
+
 hash_table_t* initialize_hash_table() 
 {
     hash_table_t* hash_table = (hash_table_t*)malloc(sizeof(hash_table_t));
@@ -221,6 +223,9 @@ void semantic_analysis(ast_node_t* node, hash_table_t* symbol_table, char* scope
         return;
     }
 
+    if(flag_semantic_error)
+        return;
+
     //printf("\nscope: %s\n", scope);
     switch(node->node_kind)
     {
@@ -288,14 +293,17 @@ void process_declaration(ast_node_t* node, hash_table_t* symbol_table, char* sco
     }
 }
 
+// double declaration of variable
 void verify_if_variable_already_exists(hash_table_t* symbol_table, ast_node_t* node, char* scope)
 {
     //printf("\nlexeme %s line %d\n", node->lexeme, node->lineno);
     //printf("\nchild lexeme %s line %d\n", node->child[0]->lexeme, node->child[0]->lineno);
-    if(search_in_hash_table(symbol_table, node->lexeme, scope))
+    if(search_in_hash_table(symbol_table, node->child[0]->lexeme, scope))
     {
-        //printf("Semantic error: variable %s already declared in scope %s\n", node->lexeme, scope);
+        printf("semantic error: variable %s already declared in scope %s\n", node->child[0]->lexeme, scope);
         //exit(1);
+        flag_semantic_error = 1;
+        return;
     }
     else
     {

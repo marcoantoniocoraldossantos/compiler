@@ -16,5 +16,6 @@ extern buffer_t *global_buffer;
 extern int global_line_number;
 extern char global_lexeme[64];
 extern token_type_t global_token_type;
+extern int flag_semantic_error;
 
 #endif // GLOBALS_H
