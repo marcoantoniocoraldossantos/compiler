@@ -69,6 +69,7 @@
         $$ = $1;
         $$->extended_type = EXT_VARIABLE_DECL;
         $$->lineno = global_line_number;
+        $$->node_kind = DECLARATION_NODE;
 
         add_child($$, $2);
     }
@@ -77,6 +78,7 @@
         $$ = $1;
         $$->extended_type = EXT_VECTOR_DECL;
         $$->lineno = global_line_number;
+        $$->node_kind = DECLARATION_NODE;
 
         add_child($$, $2);
         add_child($$, $4);
@@ -116,6 +118,7 @@
     {
         $$ = $1;        
         $$->extended_type = EXT_FUNCTION_DECL;
+        $$->node_kind = DECLARATION_NODE;
 
         add_child($$, $4);
         add_child($$, $2);
@@ -135,6 +138,7 @@
 
         $$ = void_node;
         $$->extended_type = EXT_VOID_PARAMETER;
+        $$->node_kind = DECLARATION_NODE;
     }
     ;
 
@@ -159,16 +163,16 @@
     param : type_specifier id
     {
         $$ = $1;
-
         $$->extended_type = EXT_VARIABLE_PARAMETER;
+        $$->node_kind = DECLARATION_NODE;
 
         add_child($$, $2);
     }
     | type_specifier id LBRACKET_TOKEN RBRACKET_TOKEN
     {
         $$ = $1;
-
         $$->extended_type = EXT_VECTOR_PARAMETER;
+        $$->node_kind = DECLARATION_NODE;
 
         add_child($$, $2);
     }
@@ -271,6 +275,7 @@
         $$ = if_node;
 
         $$->extended_type = EXT_IF;
+        $$->node_kind = DECLARATION_NODE;
 
         add_child($$, $3);      // Adiciona o nó da expressão como filho do nó if
         add_child($$, $5);      // Adiciona o nó da declaração de bloco como filho do nó if
@@ -291,6 +296,7 @@
         add_child(if_node, $7); // Adiciona o nó da declaração de bloco do else como filho do nó if
         $$ = if_node;
         $$->extended_type = EXT_IF_ELSE;
+        $$->node_kind = DECLARATION_NODE;
     }
     ;
 
@@ -307,6 +313,7 @@
 
         $$ = while_node;
         $$->extended_type = EXT_WHILE;
+        $$->node_kind = DECLARATION_NODE;
 
         add_child($$, $3);      // Adiciona o nó da expressão como filho do nó while
         add_child($$, $5);      // Adiciona o nó da declaração de bloco como filho do nó while
@@ -326,6 +333,7 @@
     
         $$ = return_node;
         $$->extended_type = EXT_RETURN_VOID;
+        $$->node_kind = DECLARATION_NODE;
     }
     | RETURN_TOKEN expression SEMICOLON_TOKEN
     {
@@ -340,6 +348,7 @@
 
         $$ = return_node;
         $$->extended_type = EXT_RETURN_INT;
+        $$->node_kind = DECLARATION_NODE;
 
         add_child($$, $2);      // Adiciona o nó da expressão como filho do nó de retorno
     }
@@ -358,6 +367,7 @@
 
         $$ = assign_node;
         $$->extended_type = EXT_ASSIGN;
+        $$->node_kind = EXPRESSION_NODE;
 
         add_child($$, $1);
         add_child($$, $3);
@@ -372,11 +382,13 @@
     {
         $$ = $1;
         $$->extended_type = EXT_IDENTIFIER;
+        $$->node_kind = EXPRESSION_NODE;
     }
     | id LBRACKET_TOKEN expression RBRACKET_TOKEN
     {
         $$ = $1;
         $$->extended_type = EXT_VECTOR;
+        $$->node_kind = EXPRESSION_NODE;
 
         add_child($$, $3);
     }
@@ -386,6 +398,7 @@
     {
         $$ = $2;
         $$->extended_type = EXT_RELATIONAL;
+        $$->node_kind = EXPRESSION_NODE;
 
         add_child($$, $1);
         add_child($$, $3);
@@ -480,6 +493,7 @@
     {        
         $$ = $2;
         $$->extended_type = EXT_OPERATOR;
+        $$->node_kind = EXPRESSION_NODE;
 
         add_child($$, $1);
         add_child($$, $3);
@@ -522,6 +536,7 @@
     {
         $$ = $2;
         $$->extended_type = EXT_OPERATOR;
+        $$->node_kind = EXPRESSION_NODE;
 
         add_child($$, $1);
         add_child($$, $3);
@@ -577,6 +592,7 @@
     {
         $$ = $1;
         $$->extended_type = EXT_CONSTANT;
+        $$->node_kind = EXPRESSION_NODE;
     }
     ;
 
@@ -584,6 +600,7 @@
     {
         $$ = $1;
         $$->extended_type = EXT_FUNCTION_CALL;
+        $$->node_kind = EXPRESSION_NODE;
 
         add_child($$, $3);
     }
@@ -641,6 +658,7 @@
 
         $$ = id_node; 
         $$->extended_type = EXT_IDENTIFIER;
+        $$->node_kind = EXPRESSION_NODE;
     }
     ;
 

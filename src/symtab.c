@@ -221,6 +221,7 @@ void semantic_analysis(ast_node_t* node, hash_table_t* symbol_table, char* scope
         return;
     }
 
+    printf("\nscope: %s\n", scope);
     
     
     
