@@ -110,26 +110,18 @@ void insert_symbol(hash_table_t* hash_table, char* lexema, data_type_t data_type
     }
 }
 
-void construct_symtab(ast_node_t* node, hash_table_t* hash_table) 
-{
+void construct_symtab(ast_node_t* node, hash_table_t* hash_table) {
     if (node == NULL) return;
 
-    insert_symbol(hash_table, node->lexeme, node->kind.type, node->kind.type, node->lineno, "nao sei");
+    insert_symbol(hash_table, node->lexeme, node->kind.type, node->kind.type, node->lineno, "global");
 
-    // ast_node_t* current = node;
-    // ast_node_t* parent = node;
+    // Percorre os filhos do nó atual
+    for (int i = 0; i < MAXCHILDREN; i++) {
+        construct_symtab(node->child[i], hash_table);
+    }
 
-    // if (node->type == AST_DECLARATION) 
-    // {
-    //     insert_symbol(hash_table, node->child[1], TABLE_SIZE);
-    // }
-
-    // for (int i = 0; i < MAX_CHILDREN; i++) 
-    // {
-    //     construct_symtab(node->child[i], hash_table);
-    // }
-
-    // construct_symtab(node->sibling, hash_table);
+    // Percorre os irmãos (próximo nó)
+    construct_symtab(node->sibling, hash_table);
 }
 
 
