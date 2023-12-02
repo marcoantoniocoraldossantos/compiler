@@ -57,15 +57,21 @@ void print_hash_table(hash_table_t* hash_table)
     for (int i = 0; i < hash_table->size; i++) 
     {
         hash_entry_t* entry = hash_table->table[i];
+
         printf("[%d]: ", i);
-        if (entry == NULL) {
+
+        if (entry == NULL) 
+        {
             printf("NULL\n");
-        } else {
-            while (entry != NULL) {
-                printf(" -> Name: %s, DataType: %d, IdType: %d, LineNumber: %d, Scope: %s", entry->name, entry->data_type, entry->id_type, entry->line_number, entry->scope);
+        } 
+        else 
+        {
+            while (entry != NULL) 
+            {
+                printf(" name \'%-8s\' | scope %-8s | data_type %-4d | id_type %-4d | line_number %d \n", entry->name, entry->scope, entry->data_type, entry->id_type, entry->line_number);
                 entry = entry->next;
             }
-            printf("\n");
+            // printf("\n");
         }
     }
 }
@@ -82,13 +88,16 @@ int hash(hash_table_t* hash_table, char* lexema)
     return index % hash_table->size;
 }
 
-void insert_symbol(hash_table_t* hash_table, char* lexema, data_type_t data_type, id_type_t id_type, int line_number, char* scope) 
-{
+void insert_symbol(hash_table_t* hash_table, char* lexema, data_type_t data_type, id_type_t id_type, int line_number, char* scope) {
     int index = hash(hash_table, lexema);
 
+    // Verifica se a posição está ocupada
+    while (hash_table->table[index] != NULL) {
+        index = (index + 1) % TABLE_SIZE; // Sondagem linear
+    }
+
     hash_entry_t* new_symbol = (hash_entry_t*)malloc(sizeof(hash_entry_t));
-    if (new_symbol == NULL) 
-    {
+    if (new_symbol == NULL) {
         return;
     }
 
@@ -99,18 +108,12 @@ void insert_symbol(hash_table_t* hash_table, char* lexema, data_type_t data_type
     strncpy(new_symbol->scope, scope, MAX_LEXEME_LENGHT);
     new_symbol->next = NULL;
 
-    if (hash_table->table[index] == NULL) 
-    {
-        hash_table->table[index] = new_symbol;
-    } 
-    else 
-    {
-        new_symbol->next = hash_table->table[index];
-        hash_table->table[index] = new_symbol;
-    }
+    hash_table->table[index] = new_symbol;
 }
 
-void construct_symtab(ast_node_t* node, hash_table_t* hash_table) {
+
+void construct_symtab(ast_node_t* node, hash_table_t* hash_table) 
+{
     if (node == NULL) return;
 
     insert_symbol(hash_table, node->lexeme, node->kind.type, node->kind.type, node->lineno, "global");
@@ -124,8 +127,17 @@ void construct_symtab(ast_node_t* node, hash_table_t* hash_table) {
     construct_symtab(node->sibling, hash_table);
 }
 
+void semantic_analysis(ast_node_t* node, hash_table_t* hash_table) 
+{
+    // if (node == NULL) return;
 
+    // for (int i = 0; i < MAXCHILDREN; i++)
+    // {
+    //     semantic_analysis(node->child[i], hash_table);
+    // }
 
+    // semantic_analysis(node->sibling, hash_table);
+}
 
 
 

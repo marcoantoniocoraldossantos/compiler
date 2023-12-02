@@ -130,23 +130,23 @@ void print_ast_node(ast_node_t *node)
     }
 
     printf("node: %s\n", node->lexeme);
-    printf("Node Kind: %d\n", node->node_kind);
-    printf("Line: %d\n", node->lineno);
+    printf("lind: %d\n", node->node_kind);
+    printf("line: %d\n", node->lineno);
 
     // Impressão do tipo do nó dependendo do kind (node_kind, statement, expression, etc.)
     switch (node->node_kind) {
         case EXPRESSION_NODE:
-            printf("Node Type: Expression\n");
-            printf("Expression Kind: %d\n", node->kind.expression);
-            printf("Expression Type: %d\n", node->kind.type);
+            printf("expression\n");
+            printf("kind: %d\n", node->kind.expression);
+            printf("type: %d\n", node->kind.type);
             break;
         case STATEMENT_NODE:
-            printf("Node Type: Statement\n");
-            printf("Statement Kind: %d\n", node->kind.statement);
+            printf("statement\n");
+            printf("kind: %d\n", node->kind.statement);
             break;
         // Adicione outros cases para diferentes tipos de nós, se necessário
         default:
-            printf("Node Type: Unknown\n");
+            printf("unknown\n");
             break;
     }
 

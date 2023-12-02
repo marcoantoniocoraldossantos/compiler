@@ -37,5 +37,6 @@ void free_hash_table(hash_table_t* hash_table);
 void print_hash_table(hash_table_t* hash_table);
 void insert_symbol(hash_table_t* hash_table, char* lexema, data_type_t data_type, id_type_t id_type, int line_number, char* scope);
 void construct_symtab(ast_node_t* node, hash_table_t* hash_table);
+void semantic_analysis(ast_node_t* node, hash_table_t* hash_table);
 
 #endif /* SYMTAB_H */
