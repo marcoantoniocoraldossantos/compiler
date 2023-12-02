@@ -672,3 +672,32 @@ void remove_duplicate_line_numbers(hash_entry_t* entry)
     // consider static array
 
 }
+
+char *data_type_to_string(data_type_t data_type)
+{
+    switch (data_type)
+    {
+        case INT_TYPE:
+            return "INT_TYPE";
+        case VOID_TYPE:
+            return "VOID_TYPE";
+        default:
+            return "UNKNOWN_TYPE";
+    }
+}
+
+char *id_type_to_string(id_type_t id_type)
+{
+    //printf("id_type: %d\n", id_type);
+    switch (id_type)
+    {
+        case VARIABLE:
+            return "VARIABLE";
+        //case VECTOR:
+        //    return "VECTOR";
+        case FUNCTION:
+            return "FUNCTION";
+        default:
+            return "UNKNOWN_TYPE";
+    }
+}

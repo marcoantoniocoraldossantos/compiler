@@ -76,7 +76,7 @@ void print_hash_table(hash_table_t* hash_table)
             if(i < 10)
             {
                 printf("  [%d]: ", i);
-                printf(" %-10s | %-8s |  %-4d | %-4d | ", entry->name,entry->scope, entry->data_type, entry->id_type);
+                printf(" %-10s | %-8s |  %-4s | %-4s | ", entry->name, entry->scope, data_type_to_string(entry->data_type), id_type_to_string(entry->id_type));
                 for(int j = 0; j < entry->number_of_appearances; j++)
                 {
                     printf(" %d", entry->line_number[j]);
@@ -88,7 +88,7 @@ void print_hash_table(hash_table_t* hash_table)
                 //printf("\nnumber of app %d\n", entry->number_of_appearances);
 
                 printf(" [%d]: ", i);
-                printf(" %-10s | %-8s |  %-4d | %-4d | ", entry->name,entry->scope, entry->data_type, entry->id_type);                
+                printf(" %-10s | %-8s |  %-4s | %-4s | ", entry->name, entry->scope, data_type_to_string(entry->data_type), id_type_to_string(entry->id_type));                
                 
                 for(int j = 0; j < entry->number_of_appearances; j++)
                 {
@@ -101,7 +101,7 @@ void print_hash_table(hash_table_t* hash_table)
                 //printf("\nnumber of app %d\n", entry->number_of_appearances);
 
                 printf("[%d]: ", i);
-                printf(" %-10s | %-8s |  %-4d | %-4d | ", entry->name,entry->scope, entry->data_type, entry->id_type);                
+                printf(" %-10s | %-8s |  %-4s | %-4s | ", entry->name, entry->scope, data_type_to_string(entry->data_type), id_type_to_string(entry->id_type));                
 
                 for(int j = 0; j < entry->number_of_appearances; j++)
                 {
@@ -290,6 +290,8 @@ void process_declaration(ast_node_t* node, hash_table_t* symbol_table, char* sco
 
 void verify_if_variable_already_exists(hash_table_t* symbol_table, ast_node_t* node, char* scope)
 {
+    //printf("\nlexeme %s line %d\n", node->lexeme, node->lineno);
+    //printf("\nchild lexeme %s line %d\n", node->child[0]->lexeme, node->child[0]->lineno);
     if(search_in_hash_table(symbol_table, node->lexeme, scope))
     {
         //printf("Semantic error: variable %s already declared in scope %s\n", node->lexeme, scope);
@@ -297,8 +299,8 @@ void verify_if_variable_already_exists(hash_table_t* symbol_table, ast_node_t* n
     }
     else
     {
-        if(ast_node_is_identifier(node))
-            insert_symbol(symbol_table, node->lexeme, node->kind.type, node->kind.type, node->lineno, scope);
+        if(ast_node_is_identifier(node->child[0]))
+            insert_symbol(symbol_table, node->child[0]->lexeme, INT_DATA, VARIABLE, node->child[0]->lineno, scope);
     }
 }
 
