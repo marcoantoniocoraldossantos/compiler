@@ -1283,7 +1283,7 @@ yyreduce:
             global_line_number, // lineno
             "int",              // lexeme
             NULL_STMT,          // stmt_kind
-            CONST_EXP,          // 
+            CONST_EXP,          // exp_kind
             INT_TYPE            // type
         );
 

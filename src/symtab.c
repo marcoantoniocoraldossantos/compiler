@@ -240,6 +240,17 @@ void expression_node(ast_node_t* node, hash_table_t* symbol_table)
         case OP_EXP:
             break;
         case CONST_EXP:
+            if (node->kind.type == INT_TYPE) 
+            {
+                ast_node_t* child = node->child[0];
+
+                if(child == NULL) 
+                {
+                    return;
+                }
+                //if(seach_in_hash_table(symbol_table, node->lexeme))
+                //insert_symbol(symbol_table, node->lexeme, node->kind.type, node->kind.type, node->lineno, "global");
+            }
             break;
         case REL_EXP:
             break;
