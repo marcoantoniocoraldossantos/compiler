@@ -52,7 +52,7 @@ int main(int argc, char *argv[])
     //construct_symtab(global_ast_tree, symtab);
     //go_through_tree(global_ast_tree, symtab, "global");
     
-    //semantic_analysis(global_ast_tree, symtab);
+    semantic_analysis(global_ast_tree, symtab);
 
     //print_hash_table(symtab);
 
