@@ -606,3 +606,45 @@ int convert_token(token_type_t token_type)
     }
 }
 
+bool ast_node_is_identifier(ast_node_t *node)
+{
+    if (isdigit(node->lexeme[0]))
+    {
+        return false;
+    }
+
+    char special_characters[] = "+-*/<>=";
+    if (strchr(special_characters, node->lexeme[0]) != NULL)
+    {
+        return false;
+    }
+    else if(strcmp(node->lexeme, "else") == 0)
+    {
+        return false;
+    }
+    else if(strcmp(node->lexeme, "if") == 0)
+    {
+        return false;
+    }
+    else if(strcmp(node->lexeme, "int") == 0)
+    {
+        return false;
+    }
+    else if(strcmp(node->lexeme, "return") == 0)
+    {
+        return false;
+    }
+    else if(strcmp(node->lexeme, "void") == 0)
+    {
+        return false;
+    }
+    else if(strcmp(node->lexeme, "while") == 0)
+    {
+        return false;
+    }
+    else
+    {
+        //printf("\nlexeme: \'%s\' is identifier\n", node->lexeme);
+        return true;
+    }
+}

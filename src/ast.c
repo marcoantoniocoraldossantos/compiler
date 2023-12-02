@@ -87,16 +87,16 @@ void add_sibling(ast_node_t *node, ast_node_t *sibling)
 
     if (node->sibling == NULL) 
     {
-        node->sibling = sibling;  // If there's no sibling, make the new one the sibling
+        node->sibling = sibling;  
     } 
     else 
     {
         ast_node_t *currentSibling = node->sibling;
         while (currentSibling->sibling != NULL) 
         {
-            currentSibling = currentSibling->sibling; // Traverse to the last sibling
+            currentSibling = currentSibling->sibling;
         }
-        currentSibling->sibling = sibling; // Append the new sibling to the last one
+        currentSibling->sibling = sibling; 
     }
 }
 
@@ -118,6 +118,7 @@ ast_node_t* new_ast_node(node_kind_t kind, int line, const char* lexeme, stateme
         new_node->kind.expression = expression;
         new_node->kind.type = type;
     }
+    new_node->extended_type = EXT_NULL;
     
     return new_node;
 }
@@ -133,8 +134,8 @@ void print_ast_node(ast_node_t *node)
     printf("kind: %d\n", node->node_kind);
     printf("line: %d\n", node->lineno);
 
-    // Impressão do tipo do nó dependendo do kind (node_kind, statement, expression, etc.)
-    switch (node->node_kind) {
+    switch (node->node_kind) 
+    {
         case EXPRESSION_NODE:
             printf("expression\n");
             printf("kind: %d\n", node->kind.expression);

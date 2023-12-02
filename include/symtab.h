@@ -39,12 +39,16 @@ void insert_symbol(hash_table_t* hash_table, char* lexema, data_type_t data_type
 void construct_symtab(ast_node_t* node, hash_table_t* hash_table);
 void semantic_analysis(ast_node_t* node, hash_table_t* hash_table);
 int hash(hash_table_t* hash_table, char* lexema);
+
+bool seach_in_hash_table(hash_table_t* hash_table, char* lexema);
+
 void program_node(ast_node_t* node, hash_table_t* hash_table);
-void statement_node(ast_node_t* node, hash_table_t* hash_table);
-void expression_node(ast_node_t* node, hash_table_t* hash_table);
-void declaration_node(ast_node_t* node, hash_table_t* hash_table);
-void parameter_node(ast_node_t* node, hash_table_t* hash_table);
-void null_node(ast_node_t* node, hash_table_t* hash_table);
+void statement_node(ast_node_t* node, hash_table_t* symbol_table);
+void expression_node(ast_node_t* node, hash_table_t* symbol_table);
+void declaration_node(ast_node_t* node, hash_table_t* symbol_table);
+void parameter_node(ast_node_t* node, hash_table_t* symbol_table);
+void null_node(ast_node_t* node, hash_table_t* symbol_table);
+
 
 
 #endif /* SYMTAB_H */

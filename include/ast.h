@@ -6,6 +6,29 @@
 #define MAXCHILDREN 3
 #define MAXTOKENLEN 64
 
+typedef enum
+{
+    EXT_VARIABLE_DECL,
+    EXT_VECTOR_DECL,
+    EXT_VARIABLE,
+    EXT_VECTOR,
+    EXT_FUNCTION_DECL,
+    EXT_FUNCTION_CALL,
+    EXT_RETURN_INT,
+    EXT_RETURN_VOID,
+    EXT_VARIABLE_PARAMETER,
+    EXT_VECTOR_PARAMETER,
+    EXT_VOID_PARAMETER,
+    EXT_IF,
+    EXT_IF_ELSE,
+    EXT_WHILE,
+    EXT_ASSIGN,
+    EXT_OPERATOR,
+    EXT_RELATIONAL,
+    EXT_CONSTANT,
+    EXT_IDENTIFIER,
+    EXT_NULL,
+} extended_type_t;
 typedef enum 
 {
     PROGRAM_NODE,
@@ -65,6 +88,7 @@ typedef struct ast_node_t
     } kind;
     // struct ast_node_t* next;
     // struct ast_node_t* previous;
+    extended_type_t extended_type;
 } ast_node_t;
 
 ast_node_t *initialize_ast();

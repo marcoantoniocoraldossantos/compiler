@@ -67,12 +67,17 @@
     var_declaration : type_specifier id SEMICOLON_TOKEN
     {
         $$ = $1;
+        $$->extended_type = EXT_VARIABLE_DECL;
+        $$->lineno = global_line_number;
 
         add_child($$, $2);
     }
     | type_specifier id LBRACKET_TOKEN num RBRACKET_TOKEN SEMICOLON_TOKEN
     {
         $$ = $1;
+        $$->extended_type = EXT_VECTOR_DECL;
+        $$->lineno = global_line_number;
+
         add_child($$, $2);
         add_child($$, $4);
     }
@@ -86,7 +91,7 @@
             "int",              // lexeme
             NULL_STMT,          // stmt_kind
             CONST_EXP,          // exp_kind
-            INT_TYPE            // type
+            INT_TYPE            // exp_type
         );
 
         $$ = int_node;
@@ -94,12 +99,12 @@
     | VOID_TOKEN
     {
         ast_node_t* void_node = new_ast_node(
-            EXPRESSION_NODE,    // Tipo do nó: Expressão
-            global_line_number, // Número da linha onde ocorre o tipo void
-            "void",             // Lexema representando o tipo void
-            NULL_STMT,          // O tipo void não requer um statement específico
-            CONST_EXP,          // Tipo de expressão: Constante
-            VOID_TYPE           // Tipo de dado: Void
+            EXPRESSION_NODE,    
+            global_line_number, 
+            "void",             
+            NULL_STMT,          
+            CONST_EXP,          
+            VOID_TYPE           
         );
 
         $$ = void_node;
@@ -110,6 +115,8 @@
     fun_declaration : type_specifier id LPAREN_TOKEN params RPAREN_TOKEN compound_decl
     {
         $$ = $1;        
+        $$->extended_type = EXT_FUNCTION_DECL;
+
         add_child($$, $4);
         add_child($$, $2);
         add_child($2, $6);
@@ -127,6 +134,7 @@
         ast_node_t* void_node = new_ast_node(NULL_NODE, global_line_number, "void", NULL_STMT, NULL_EXP, NULL_TYPE);
 
         $$ = void_node;
+        $$->extended_type = EXT_VOID_PARAMETER;
     }
     ;
 
@@ -151,11 +159,17 @@
     param : type_specifier id
     {
         $$ = $1;
+
+        $$->extended_type = EXT_VARIABLE_PARAMETER;
+
         add_child($$, $2);
     }
     | type_specifier id LBRACKET_TOKEN RBRACKET_TOKEN
     {
         $$ = $1;
+
+        $$->extended_type = EXT_VECTOR_PARAMETER;
+
         add_child($$, $2);
     }
     ;
@@ -255,6 +269,9 @@
         );
         
         $$ = if_node;
+
+        $$->extended_type = EXT_IF;
+
         add_child($$, $3);      // Adiciona o nó da expressão como filho do nó if
         add_child($$, $5);      // Adiciona o nó da declaração de bloco como filho do nó if
     }
@@ -273,6 +290,7 @@
         add_child(if_node, $5); // Adiciona o nó da declaração de bloco do if como filho do nó if
         add_child(if_node, $7); // Adiciona o nó da declaração de bloco do else como filho do nó if
         $$ = if_node;
+        $$->extended_type = EXT_IF_ELSE;
     }
     ;
 
@@ -288,6 +306,8 @@
         );
 
         $$ = while_node;
+        $$->extended_type = EXT_WHILE;
+
         add_child($$, $3);      // Adiciona o nó da expressão como filho do nó while
         add_child($$, $5);      // Adiciona o nó da declaração de bloco como filho do nó while
     }
@@ -305,6 +325,7 @@
         );
     
         $$ = return_node;
+        $$->extended_type = EXT_RETURN_VOID;
     }
     | RETURN_TOKEN expression SEMICOLON_TOKEN
     {
@@ -318,6 +339,8 @@
         );
 
         $$ = return_node;
+        $$->extended_type = EXT_RETURN_INT;
+
         add_child($$, $2);      // Adiciona o nó da expressão como filho do nó de retorno
     }
     ;
@@ -334,6 +357,8 @@
         );
 
         $$ = assign_node;
+        $$->extended_type = EXT_ASSIGN;
+
         add_child($$, $1);
         add_child($$, $3);
     }
@@ -346,10 +371,13 @@
     var : id
     {
         $$ = $1;
+        $$->extended_type = EXT_IDENTIFIER;
     }
     | id LBRACKET_TOKEN expression RBRACKET_TOKEN
     {
         $$ = $1;
+        $$->extended_type = EXT_VECTOR;
+
         add_child($$, $3);
     }
     ;
@@ -357,6 +385,8 @@
     simple_expression : sum_expression relational sum_expression
     {
         $$ = $2;
+        $$->extended_type = EXT_RELATIONAL;
+
         add_child($$, $1);
         add_child($$, $3);
     }
@@ -449,6 +479,8 @@
     sum_expression : sum_expression sum term
     {        
         $$ = $2;
+        $$->extended_type = EXT_OPERATOR;
+
         add_child($$, $1);
         add_child($$, $3);
     }
@@ -489,6 +521,8 @@
     term : term mult factor
     {
         $$ = $2;
+        $$->extended_type = EXT_OPERATOR;
+
         add_child($$, $1);
         add_child($$, $3);
         
@@ -542,12 +576,15 @@
     | num
     {
         $$ = $1;
+        $$->extended_type = EXT_CONSTANT;
     }
     ;
 
     activation : id LPAREN_TOKEN args RPAREN_TOKEN
     {
         $$ = $1;
+        $$->extended_type = EXT_FUNCTION_CALL;
+
         add_child($$, $3);
     }
     ;
@@ -603,6 +640,7 @@
         );
 
         $$ = id_node; 
+        $$->extended_type = EXT_IDENTIFIER;
     }
     ;
 

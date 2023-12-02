@@ -46,10 +46,10 @@ int main(int argc, char *argv[])
     parse();
 
     printf("\n");
-    print_ast(global_ast_tree);
+    //print_ast(global_ast_tree);
 
     construct_symtab(global_ast_tree, symtab);
-    // semantic_analysis(global_ast_tree, symtab);
+    //semantic_analysis(global_ast_tree, symtab);
     
     print_hash_table(symtab);
 
