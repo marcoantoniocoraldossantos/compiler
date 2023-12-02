@@ -175,13 +175,13 @@ void construct_symtab(ast_node_t* node, hash_table_t* hash_table)
     construct_symtab(node->sibling, hash_table);
 }
 
-bool seach_in_hash_table(hash_table_t* hash_table, char* lexema) 
+bool search_in_hash_table(hash_table_t* hash_table, char* lexema, char* scope) 
 {
     int index = hash(hash_table, lexema);
 
     while (hash_table->table[index] != NULL) 
     {
-        if(strcmp(hash_table->table[index]->name, lexema) == 0) 
+        if(strcmp(hash_table->table[index]->name, lexema) == 0 && strcmp(hash_table->table[index]->scope, scope) == 0) 
         {
             return true;
         }
@@ -209,7 +209,7 @@ void add_apparition(hash_table_t* hash_table, char* lexema, int line_number)
         index = (index + 1) % TABLE_SIZE; 
     }
 
-    remove_duplicate_line_numbers(hash_table->table[index]);
+    //remove_duplicate_line_numbers(hash_table->table[index]);
 
     return;
 }
@@ -229,8 +229,10 @@ void semantic_analysis(ast_node_t* node, hash_table_t* symbol_table, char* scope
         case STATEMENT_NODE:
             break;
         case EXPRESSION_NODE:
+            process_expression(node, symbol_table, scope);
             break;
         case DECLARATION_NODE:
+            process_declaration(node, symbol_table, scope);
             break;
         case PARAMETER_NODE:
             break;
@@ -245,3 +247,58 @@ void semantic_analysis(ast_node_t* node, hash_table_t* symbol_table, char* scope
 
     semantic_analysis(node->sibling, symbol_table, scope);
 }
+
+void process_expression(ast_node_t* node, hash_table_t* symbol_table, char* scope)
+{
+    switch (node->extended_type)
+    {
+    case EXT_IDENTIFIER:
+        verify_declaration_of_identifier(symbol_table, node, scope);
+        break;
+    case EXT_VECTOR:
+        break;
+    case EXT_FUNCTION_CALL:
+        break;
+    case EXT_ASSIGN:
+        break;
+
+    default:
+        break;
+    }
+}
+
+void verify_declaration_of_identifier(hash_table_t* symbol_table, ast_node_t* node, char* scope)
+{
+    
+}
+
+void process_declaration(ast_node_t* node, hash_table_t* symbol_table, char* scope)
+{
+    switch(node->extended_type)
+    {
+        case EXT_VARIABLE_DECL:
+            verify_if_variable_already_exists(symbol_table, node, scope);
+            break;
+        case EXT_VECTOR_DECL:
+            break;
+        case EXT_FUNCTION_DECL:
+            break;
+        default:
+            break;
+    }
+}
+
+void verify_if_variable_already_exists(hash_table_t* symbol_table, ast_node_t* node, char* scope)
+{
+    if(search_in_hash_table(symbol_table, node->lexeme, scope))
+    {
+        //printf("Semantic error: variable %s already declared in scope %s\n", node->lexeme, scope);
+        //exit(1);
+    }
+    else
+    {
+        if(ast_node_is_identifier(node))
+            insert_symbol(symbol_table, node->lexeme, node->kind.type, node->kind.type, node->lineno, scope);
+    }
+}
+
