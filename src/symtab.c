@@ -59,6 +59,8 @@ void print_hash_table(hash_table_t* hash_table) {
         return;
     }
 
+    printf("\n\n");
+
     printf("index   | name    | scope  | data_type   | id_type   | variable_type | line_number\n");
 
     for (int i = 0; i < hash_table->size; i++) {
@@ -199,11 +201,22 @@ void semantic_analysis(ast_node_t* node, hash_table_t* hash_table)
     if(flag_semantic_error)
         return;
 
-    printf("\ncurrent node: %s type %d line %d\n", node->lexeme, node->extended_type, node->lineno);
+    printf("\n\ncurrent node: \'%s\' type %d line %d", node->lexeme, node->extended_type, node->lineno);
 
     switch(node->extended_type)
     {
         case EXT_VARIABLE_DECL:
+            printf("\next_variable_decl\n");
+
+            //printf("\nlexeme \'%s\'\n", node->lexeme);
+            if(strcmp(node->lexeme, "void") == 0)
+            {
+                printf("semantic error: variable %s cannot be void\n", node->child[0]->lexeme);
+                //exit(1);
+                flag_semantic_error = 1;
+                return;
+            }
+
             //printf("\n variable declaration %s line %d\n", node->child[0]->lexeme, node->child[0]->lineno);
             if(seach_if_variable_already_exists(hash_table, node->child[0]->lexeme, global_scope))
             {
@@ -218,6 +231,7 @@ void semantic_analysis(ast_node_t* node, hash_table_t* hash_table)
             }
             break;
         case EXT_VECTOR_DECL:
+            printf("\next_vector_decl\n");
             //printf("\n vector declaration %s line %d\n", node->child[0]->lexeme, node->child[0]->lineno);
             if(seach_if_variable_already_exists(hash_table, node->child[0]->lexeme, global_scope))
             {
@@ -232,12 +246,15 @@ void semantic_analysis(ast_node_t* node, hash_table_t* hash_table)
             }
             break;
         case EXT_VARIABLE:
+            printf("\next_variable\n");
             //printf("\n variable %s line %d\n", node->child[0]->lexeme, node->child[0]->lineno);
             break;
         case EXT_VECTOR:
+            printf("\next_vector\n");
             //printf("\n vector %s line %d\n", node->child[0]->lexeme, node->child[0]->lineno);
             break;
         case EXT_FUNCTION_DECL:
+            printf("\next_function_decl\n");
             //printf("\n function declaration %s line %d\n", node->child[1]->lexeme, node->child[1]->lineno);
 
             data_type_t data_type;
@@ -279,6 +296,7 @@ void semantic_analysis(ast_node_t* node, hash_table_t* hash_table)
             
             break;
         case EXT_FUNCTION_CALL:
+            printf("\next_function_call\n");
             //printf("\n function call %s line %d\n", node->lexeme, node->lineno);
             if(!search_for_function_declaration(hash_table, node->lexeme))
             {
@@ -288,6 +306,7 @@ void semantic_analysis(ast_node_t* node, hash_table_t* hash_table)
             }
             break;
         case EXT_RETURN_INT:
+            printf("\next_return_int\n");
             //printf(("\nis going to return int %s line %d\n"), node->child[0]->lexeme, node->child[0]->lineno);
             //todo verify if variable is declared and scope type
             // check if its going to return a function
@@ -339,22 +358,28 @@ void semantic_analysis(ast_node_t* node, hash_table_t* hash_table)
             }
             break;
         case EXT_RETURN_VOID:
+            printf("\next_return_void\n");
             break;
         case EXT_VARIABLE_PARAMETER:
+            printf("\next_variable_parameter\n");
             //printf("\nvariable parameter %s line %d\n", node->child[0]->lexeme, node->child[0]->lineno);
             //insert in hash table
             insert_symbol(hash_table, node->child[0]->lexeme, INT_DATA, VARIABLE, node->child[0]->lineno, global_scope, VARIABLE_TYPE);
             break;
         case EXT_VECTOR_PARAMETER:
+            printf("\next_vector_parameter\n");
             break;
         case EXT_VOID_PARAMETER:
+            printf("\next_void_parameter\n");
             break;
         case EXT_IF:
+            printf("\next_if\n");
             printf("\nif %s line %d\n", node->lexeme, node->lineno);
             printf("\ncondition %s line %d\n", node->child[0]->lexeme, node->child[0]->lineno);
 
             break;
         case EXT_IF_ELSE:
+            printf("\next_if_else\n");
             printf("\nif else %s line %d\n", node->lexeme, node->lineno);
             printf("\ncondition %s line %d\n", node->child[0]->lexeme, node->child[0]->lineno);
             if(if_condition_is_valid(hash_table, node))
@@ -364,15 +389,22 @@ void semantic_analysis(ast_node_t* node, hash_table_t* hash_table)
 
             break;
         case EXT_WHILE:
+            printf("\next_while\n");
+
             break;
         case EXT_ASSIGN:
+            printf("\next_assign\n");
 
             break;
         case EXT_OPERATOR:
+            //printf("\ntype %d\n", node->child[0]->kind.type);
             
             break;
         case EXT_RELATIONAL:
+            printf("\next_relational\n");
             //printf("\ntype %d\n", node->child[1]->kind.type);
+            //printf("\nrelational %s line %d\n", node->lexeme, node->lineno);
+            //print_hash_table(hash_table);
             if(function_is_void_type(hash_table, node->child[1]->lexeme))
             {
                 printf("semantic error: function %s is void type\n", node->child[1]->lexeme);
@@ -381,10 +413,12 @@ void semantic_analysis(ast_node_t* node, hash_table_t* hash_table)
             }
             break;
         case EXT_CONSTANT:
+            printf("\next_constant\n");
+
             break;
         case EXT_IDENTIFIER:
-            //printf("\nutilized variable %s line %d\n", node->lexeme, node->lineno);
-            //print_hash_table(hash_table);
+            printf("\next_identifier\n");
+
             if(strcmp(node->lexeme, global_scope) != 0)
             {
                 //printf("\nlexeme %s global scope %s\n", node->lexeme, global_scope);
@@ -404,6 +438,7 @@ void semantic_analysis(ast_node_t* node, hash_table_t* hash_table)
 
             break;
         case EXT_NULL:
+            printf("\next_null\n");
             break;
         default:
             break;
@@ -486,6 +521,22 @@ bool function_is_void_type(hash_table_t* symbol_table, char* lexeme)
                 return true;
             else
                 return false;
+        }
+        index = (index + 1) % TABLE_SIZE; 
+    }
+
+    return false;
+}
+
+bool is_variable(hash_table_t* symbol_table, char* lexeme)
+{
+    int index = hash(symbol_table, lexeme);
+
+    while (symbol_table->table[index] != NULL) 
+    {
+        if(strcmp(symbol_table->table[index]->name, lexeme) == 0 && symbol_table->table[index]->id_type == VARIABLE) 
+        {
+            return true;
         }
         index = (index + 1) % TABLE_SIZE; 
     }
