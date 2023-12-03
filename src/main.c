@@ -10,6 +10,9 @@ FILE *global_input_file;
 bst_node_t *global_bst_tree;
 ast_node_t *global_ast_tree;
 char global_scope[64];
+int flag_sintatic_error = 0;
+int flag_semantic_error = 0;
+int flag_lexical_error = 0;
 
 int main(int argc, char *argv[]) 
 {
@@ -17,6 +20,16 @@ int main(int argc, char *argv[])
     save_arguments(argc, argv); // save the arguments in the global_argv and global_argc variables
 
     FILE *input_file = open_file(argv[1], "r"); // open the file in read mode
+
+    if(file_is_empty(input_file)) // verify if the file is empty
+    {
+        printf("error: file is empty\n");
+        free_argv(global_argv, global_argc); // free the argv memory
+        fclose(input_file); // close the file,
+        
+        exit(1);
+    }
+
     buffer_t buffer = initialize_buffer(256); // initialize the buffer
     bst_node_t *bst_tree = initialize_bst(); // initialize the bst
     ast_node_t *ast_tree = initialize_ast(); // initialize the ast
@@ -44,10 +57,11 @@ int main(int argc, char *argv[])
 
     //printf("sintatic analysis...");
 
-    parse();
+    flag_sintatic_error = parse();
 
     //printf("\n");
-    //print_ast(global_ast_tree);
+    if(!flag_sintatic_error)
+        //print_ast(global_ast_tree);
 
     construct_symtab(global_ast_tree, symtab);
     //go_through_tree(global_ast_tree, symtab, "global");

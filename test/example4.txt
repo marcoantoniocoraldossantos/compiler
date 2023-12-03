@@ -1,8 +1,12 @@
-else if int
-return void while
+int gcd(int u, int v)
+{ 
+    if (v==0) return u;
+    else return gcd(v, u-u/v*v);
+}
 
-+ - * / < <= > >= = != == ; , ( ) { } [ ] 
-id
-123
-
-/* comentario /* dentro do comentario */ */
+void main(void)
+{ 
+    int x; int;
+    x = input(); y = input();
+    output(gcd(x,y));
+}

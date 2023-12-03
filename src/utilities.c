@@ -733,3 +733,17 @@ bool id_is_variable(hash_table_t* symbol_table, char* lexeme)
 
     return false;
 }
+
+bool file_is_empty(FILE *file)
+{
+    fseek(file, 0, SEEK_END);
+    int size = ftell(file);
+    if (size == 0)
+    {
+        return true;
+    }
+    else
+    {
+        return false;
+    }
+}

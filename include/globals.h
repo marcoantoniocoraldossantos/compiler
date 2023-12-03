@@ -17,6 +17,8 @@ extern int global_line_number;
 extern char global_lexeme[64];
 extern token_type_t global_token_type;
 extern int flag_semantic_error;
+extern int flag_syntax_error;
+extern int flag_lexical_error;
 extern char global_scope[64];
 
 #endif // GLOBALS_H
