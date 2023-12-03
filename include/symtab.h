@@ -28,7 +28,7 @@ typedef struct hash_entry_t
     char name[MAX_LEXEME_LENGHT];
     data_type_t data_type;
     id_type_t id_type;
-    int line_number[10];
+    int line_number[20];
     int number_of_appearances;
     char scope[MAX_LEXEME_LENGHT];
     //struct hash_entry_t* next; 
@@ -59,5 +59,6 @@ bool function_returns_int(hash_table_t* symbol_table, char* lexeme);
 bool if_condition_is_valid(hash_table_t* symbol_table, ast_node_t* node);
 bool function_is_void_type(hash_table_t* symbol_table, char* lexeme);
 bool is_variable(hash_table_t* symbol_table, char* lexeme);
+void add_apparition(hash_table_t* hash_table, char* lexema, int line_number, char* scope);
 
 #endif /* SYMTAB_H */
