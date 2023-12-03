@@ -45,7 +45,9 @@ int main(int argc, char *argv[])
     {
         if(!search_in_hash_table(global_symtab, "main", "global"))
         {
-            printf("semantic error: main function not found\n");
+            fprintf(stderr, "\x1b[1m%s:\x1b[0m\n", global_argv[1]);
+            fprintf(stderr, "\x1b[31msemantic error: \x1b[0m");
+            fprintf(stderr, "function \x1b[1m'%s'\x1b[0m not found\n", "main");
             flag_semantic_error = 1;
         }
     }

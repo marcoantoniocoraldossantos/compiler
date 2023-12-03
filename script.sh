@@ -34,11 +34,19 @@ make -s
 #valgrind --track-origins=yes --leak-check=full --show-leak-kinds=all ./compiler test/example2.txt
 #valgrind --track-origins=yes --leak-check=full --show-leak-kinds=all 
 
-echo "testing with lexical error..."
+#echo "testing with lexical error..."
 ./compiler test-lexical/example1.txt
 
-echo "testing with sintatic error..."
+#echo "testing with sintatic error..."
 ./compiler test-sintatic/example1.txt
 
-echo "testing with semantic error..."
+#echo "testing with semantic error..."
 ./compiler test-semantic/example1.txt
+./compiler test-semantic/example2.txt
+./compiler test-semantic/example3.txt
+./compiler test-semantic/example4.txt
+./compiler test-semantic/example5.txt
+./compiler test-semantic/example6.txt
+./compiler test-semantic/example7.txt
+./compiler test-semantic/example8.txt
+

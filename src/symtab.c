@@ -146,7 +146,9 @@ void process_variable_declaration(hash_table_t* hash_table, ast_node_t* node)
 
     if(seach_if_variable_already_exists(hash_table, node->child[0]->lexeme, global_scope))
     {
-        printf("semantic error: variable %s already declared in scope %s\n", node->child[0]->lexeme, global_scope);
+        fprintf(stderr, "\x1b[1m%s:\x1b[0m in line \x1b[1m%d:\x1b[0m\n", global_argv[1], node->child[0]->lineno);
+        fprintf(stderr, "\x1b[31msemantic error: \x1b[0m");
+        fprintf(stderr, "variable \x1b[1m'%s'\x1b[0m already declared in scope \x1b[1m'%s'\x1b[0m\n", node->child[0]->lexeme, global_scope);
         flag_semantic_error = 1;
     }
     else
@@ -162,14 +164,18 @@ void process_vector_declaration(hash_table_t* hash_table, ast_node_t* node)
 {
     if(strcmp(node->lexeme, "void") == 0)
     {
-        printf("semantic error: vector %s cannot be void\n", node->child[0]->lexeme);
+        fprintf(stderr, "\x1b[1m%s:\x1b[0m in line \x1b[1m%d:\x1b[0m\n", global_argv[1], node->child[0]->lineno);
+        fprintf(stderr, "\x1b[31msemantic error: \x1b[0m");
+        fprintf(stderr, "array \x1b[1m'%s'\x1b[0m cannot be void\n", node->child[0]->lexeme);
         flag_semantic_error = 1;
         return;
     }
 
     if(seach_if_variable_already_exists(hash_table, node->child[0]->lexeme, global_scope))
     {
-        printf("semantic error: vector %s already declared in scope %s\n", node->child[0]->lexeme, global_scope);
+        fprintf(stderr, "\x1b[1m%s:\x1b[0m in line \x1b[1m%d:\x1b[0m\n", global_argv[1], node->child[0]->lineno);
+        fprintf(stderr, "\x1b[31msemantic error: \x1b[0m");
+        fprintf(stderr, "array \x1b[1m'%s'\x1b[0m already declared in scope \x1b[1m'%s'\x1b[0m\n", node->child[0]->lexeme, global_scope);
         flag_semantic_error = 1;
     }
     else
@@ -185,14 +191,18 @@ void process_variable(hash_table_t* hash_table, ast_node_t* node)
 {
     if(strcmp(node->lexeme, "void") == 0)
     {
-        printf("semantic error: variable %s cannot be void\n", node->child[0]->lexeme);
+        fprintf(stderr, "\x1b[1m%s:\x1b[0m in line \x1b[1m%d:\x1b[0m\n", global_argv[1], node->child[0]->lineno);
+        fprintf(stderr, "\x1b[31msemantic error: \x1b[0m");
+        fprintf(stderr, "variable \x1b[1m'%s'\x1b[0m cannot be void\n", node->child[0]->lexeme);
         flag_semantic_error = 1;
         return;
     }
 
     if(seach_if_variable_already_exists(hash_table, node->child[0]->lexeme, global_scope))
     {
-        printf("semantic error: variable %s already declared in scope %s\n", node->child[0]->lexeme, global_scope);
+        fprintf(stderr, "\x1b[1m%s:\x1b[0m in line \x1b[1m%d:\x1b[0m\n", global_argv[1], node->child[0]->lineno);
+        fprintf(stderr, "\x1b[31msemantic error: \x1b[0m");
+        fprintf(stderr, "variable \x1b[1m'%s'\x1b[0m already declared in scope \x1b[1m'%s'\x1b[0m\n", node->child[0]->lexeme, global_scope);
         flag_semantic_error = 1;
     }
     else
@@ -212,7 +222,9 @@ void process_vector(hash_table_t* hash_table, ast_node_t* node)
     }
     else if(!search_in_hash_table(hash_table, node->lexeme, global_scope))
     {
-        printf("semantic error: variable %s not declared in scope %s\n", node->lexeme, global_scope);
+        fprintf(stderr, "\x1b[1m%s:\x1b[0m in line \x1b[1m%d:\x1b[0m\n", global_argv[1], node->lineno);
+        fprintf(stderr, "\x1b[31msemantic error: \x1b[0m");
+        fprintf(stderr, "variable \x1b[1m'%s'\x1b[0m already declared in scope \x1b[1m'%s'\x1b[0m\n", node->lexeme, global_scope);
         flag_semantic_error = 1;
     }
     else
@@ -220,7 +232,6 @@ void process_vector(hash_table_t* hash_table, ast_node_t* node)
         add_apparition(hash_table, node->lexeme, node->lineno, global_scope);
     }
 
-    
     if(search_in_hash_table(hash_table, node->child[0]->lexeme, "global"))
     {
         add_apparition(hash_table, node->child[0]->lexeme, node->child[0]->lineno, global_scope);
@@ -230,7 +241,9 @@ void process_vector(hash_table_t* hash_table, ast_node_t* node)
     {
         if(!search_in_hash_table(hash_table, node->child[0]->lexeme, global_scope))
         {
-            printf("semantic error: variable %s not declared in scope %s\n", node->child[0]->lexeme, global_scope);
+            fprintf(stderr, "\x1b[1m%s:\x1b[0m in line \x1b[1m%d:\x1b[0m\n", global_argv[1], node->child[0]->lineno);
+            fprintf(stderr, "\x1b[31msemantic error: \x1b[0m");
+            fprintf(stderr, "variable \x1b[1m'%s'\x1b[0m not declared in scope \x1b[1m'%s'\x1b[0m\n", node->child[0]->lexeme, global_scope);
             flag_semantic_error = 1;
         }
         else
@@ -261,7 +274,9 @@ void process_function_declaration(hash_table_t* hash_table, ast_node_t* node)
         }
         else
         {
-            printf("semantic error: function %s already declared in scope %s\n", node->child[1]->lexeme, global_scope);
+            fprintf(stderr, "\x1b[1m%s:\x1b[0m in line \x1b[1m%d:\x1b[0m\n", global_argv[1], node->child[1]->lineno);
+            fprintf(stderr, "\x1b[31msemantic error: \x1b[0m");
+            fprintf(stderr, "variable \x1b[1m'%s'\x1b[0m already declared in scope \x1b[1m'%s'\x1b[0m\n", node->child[1]->lexeme, global_scope);
             flag_semantic_error = 1;
         }
         strcpy(global_scope, node->child[1]->lexeme);
@@ -274,7 +289,9 @@ void process_function_declaration(hash_table_t* hash_table, ast_node_t* node)
         }
         else
         {
-            printf("semantic error: function %s already declared in scope %s\n", node->child[0]->lexeme, global_scope);
+            fprintf(stderr, "\x1b[1m%s:\x1b[0m in line \x1b[1m%d:\x1b[0m\n", global_argv[1], node->child[0]->lineno);
+            fprintf(stderr, "\x1b[31msemantic error: \x1b[0m");
+            fprintf(stderr, "function \x1b[1m'%s'\x1b[0m already declared in scope \x1b[1m'%s'\x1b[0m\n", node->child[0]->lexeme, global_scope);
             flag_semantic_error = 1;
         }
         
@@ -286,7 +303,9 @@ void process_function_call(hash_table_t* hash_table, ast_node_t* node)
 {
     if(!search_in_hash_table(hash_table, node->lexeme, "global"))
     {
-        printf("semantic error: function %s not declared\n", node->lexeme);
+        fprintf(stderr, "\x1b[1m%s:\x1b[0m in line \x1b[1m%d:\x1b[0m\n", global_argv[1], node->lineno);
+        fprintf(stderr, "\x1b[31msemantic error: \x1b[0m");
+        fprintf(stderr, "function \x1b[1m'%s'\x1b[0m not declared\n", node->lexeme);
         flag_semantic_error = 1;
     }
     else
@@ -312,13 +331,17 @@ void process_return_int(hash_table_t* hash_table, ast_node_t* node)
     {
         if(flag_not_found == 1)
         {
-            printf("semantic error: variable %s not declared in scope %s\n", node->child[0]->lexeme, global_scope);
+            fprintf(stderr, "\x1b[1m%s:\x1b[0m in line \x1b[1m%d:\x1b[0m\n", global_argv[1], node->child[0]->lineno);
+            fprintf(stderr, "\x1b[31msemantic error: \x1b[0m");
+            fprintf(stderr, "variable \x1b[1m'%s'\x1b[0m not declared in scope \x1b[1m'%s'\x1b[0m\n", node->child[0]->lexeme, global_scope);
             flag_semantic_error = 1;
             return;
         }
         if(!search_in_hash_table(hash_table, node->child[0]->lexeme, global_scope))
         {
-            printf("semantic error: variable %s not declared in scope %s\n", node->child[0]->lexeme, global_scope);
+            fprintf(stderr, "\x1b[1m%s:\x1b[0m in line \x1b[1m%d:\x1b[0m\n", global_argv[1], node->child[0]->lineno);
+            fprintf(stderr, "\x1b[31msemantic error: \x1b[0m");
+            fprintf(stderr, "variable \x1b[1m'%s'\x1b[0m not declared in scope \x1b[1m'%s'\x1b[0m\n", node->child[0]->lexeme, global_scope);
             flag_semantic_error = 1;
             return;
         }
@@ -327,11 +350,15 @@ void process_return_int(hash_table_t* hash_table, ast_node_t* node)
     {
         if(flag_not_found == 1)
         {
-            printf("semantic error: function %s not declared\n", node->child[0]->lexeme);
+            fprintf(stderr, "\x1b[1m%s:\x1b[0m in line \x1b[1m%d:\x1b[0m\n", global_argv[1], node->child[0]->lineno);
+            fprintf(stderr, "\x1b[31msemantic error: \x1b[0m");
+            fprintf(stderr, "function \x1b[1m'%s'\x1b[0m not declared in scope \x1b[1m'%s'\x1b[0m\n", node->child[0]->lexeme, global_scope);
             flag_semantic_error = 1;
             return;
         }
-        printf("semantic error: function %s not declared\n", node->child[0]->lexeme);
+        fprintf(stderr, "\x1b[1m%s:\x1b[0m in line \x1b[1m%d:\x1b[0m\n", global_argv[1], node->child[0]->lineno);
+        fprintf(stderr, "\x1b[31msemantic error: \x1b[0m");
+        fprintf(stderr, "function \x1b[1m'%s'\x1b[0m not declared in scope \x1b[1m'%s'\x1b[0m\n", node->child[0]->lexeme, global_scope);
         flag_semantic_error = 1;
         return;
     }
@@ -393,7 +420,9 @@ void process_relational(hash_table_t* hash_table, ast_node_t* node)
     
     if(function_is_void_type(hash_table, node->child[1]->lexeme))
     {
-        printf("semantic error: function %s is void type\n", node->child[1]->lexeme);
+        fprintf(stderr, "\x1b[1m%s:\x1b[0m in line \x1b[1m%d:\x1b[0m\n", global_argv[1], node->child[1]->lineno);
+        fprintf(stderr, "\x1b[31msemantic error: \x1b[0m");
+        fprintf(stderr, "function \x1b[1m'%s'\x1b[0m is void type\n", node->child[1]->lexeme);
         flag_semantic_error = 1;
     } 
 }
@@ -411,7 +440,9 @@ void process_identifier(hash_table_t* hash_table, ast_node_t* node)
         {
             if(search_for_function_declaration(hash_table, node->lexeme))
             {
-                printf("semantic error: %s already declared as function\n", node->lexeme);
+                fprintf(stderr, "\x1b[1m%s:\x1b[0m in line \x1b[1m%d:\x1b[0m\n", global_argv[1], node->lineno);
+                fprintf(stderr, "\x1b[31msemantic error: \x1b[0m");
+                fprintf(stderr, "variable \x1b[1m'%s'\x1b[0m declared as function\n", node->lexeme);
                 flag_semantic_error = 1;
                 return;
             }
@@ -420,7 +451,9 @@ void process_identifier(hash_table_t* hash_table, ast_node_t* node)
         }
         if(!search_in_hash_table(hash_table, node->lexeme, global_scope))
         {
-            printf("semantic error: variable %s not declared in scope %s\n", node->lexeme, global_scope);
+            fprintf(stderr, "\x1b[1m%s:\x1b[0m in line \x1b[1m%d:\x1b[0m\n", global_argv[1], node->lineno);
+            fprintf(stderr, "\x1b[31msemantic error: \x1b[0m");
+            fprintf(stderr, "variable \x1b[1m'%s'\x1b[0m not declared in scope \x1b[1m'%s'\x1b[0m\n", node->lexeme, global_scope);
             flag_semantic_error = 1;
         }
         else
@@ -430,7 +463,9 @@ void process_identifier(hash_table_t* hash_table, ast_node_t* node)
     }
     else if(!search_for_function_declaration(hash_table, node->lexeme))
     {
-        printf("semantic error: function %s not declared\n", node->lexeme);
+        fprintf(stderr, "\x1b[1m%s:\x1b[0m in line \x1b[1m%d:\x1b[0m\n", global_argv[1], node->lineno);
+        fprintf(stderr, "\x1b[31msemantic error: \x1b[0m");
+        fprintf(stderr, "function \x1b[1m'%s'\x1b[0m not declared\n", node->lexeme);
         flag_semantic_error = 1;
     }
 }
