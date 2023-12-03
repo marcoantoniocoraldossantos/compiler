@@ -52,66 +52,34 @@ void free_hash_table(hash_table_t* hash_table)
 }
 
 
-void print_hash_table(hash_table_t* hash_table) 
-{
-    if (hash_table == NULL) 
-    {
+void print_hash_table(hash_table_t* hash_table) {
+    if (hash_table == NULL) {
         printf("hash table not initialized\n");
         return;
     }
 
-    printf("hash table:\n");
-    printf("index   | name    | scope  | data_type   | id_type   | line_number\n");
-    for (int i = 0; i < hash_table->size; i++) 
-    {
+    printf("index   | name    | scope  | data_type   | id_type   | variable_type | line_number\n");
+
+    for (int i = 0; i < hash_table->size; i++) {
         hash_entry_t* entry = hash_table->table[i];
 
-        if (entry == NULL) 
-        {
-            //printf("NULL\n");
-        } 
-        else 
-        {
-            // while (entry != NULL) 
-            // {
-            //     entry = entry->next;
-            // }
-            if(i < 10)
-            {
+        if (entry == NULL) {
+            // printf("NULL\n");
+        } else {
+            if (i < 10) {
                 printf("  [%d]: ", i);
-                printf(" %-10s | %-8s |  %-4s | %-4s | ", entry->name, entry->scope, data_type_to_string(entry->data_type), id_type_to_string(entry->id_type));
-                for(int j = 0; j < entry->number_of_appearances; j++)
-                {
-                    printf(" %d", entry->line_number[j]);
-                }
-                printf("\n");
-            }
-            else if(i < 100)
-            {                
-                //printf("\nnumber of app %d\n", entry->number_of_appearances);
-
+            } else if (i < 100) {
                 printf(" [%d]: ", i);
-                printf(" %-10s | %-8s |  %-4s | %-4s | ", entry->name, entry->scope, data_type_to_string(entry->data_type), id_type_to_string(entry->id_type));                
-                
-                for(int j = 0; j < entry->number_of_appearances; j++)
-                {
-                    printf(" %d", entry->line_number[j]);
-                }
-                printf("\n");
-            }
-            else
-            {
-                //printf("\nnumber of app %d\n", entry->number_of_appearances);
-
+            } else {
                 printf("[%d]: ", i);
-                printf(" %-10s | %-8s |  %-4s | %-4s | ", entry->name, entry->scope, data_type_to_string(entry->data_type), id_type_to_string(entry->id_type));                
-
-                for(int j = 0; j < entry->number_of_appearances; j++)
-                {
-                    printf(" %d", entry->line_number[j]);
-                }
-                printf("\n");
             }
+
+            printf(" %-10s | %-8s |  %-4s | %-4s | %-6s | ", entry->name, entry->scope, data_type_to_string(entry->data_type), id_type_to_string(entry->id_type), variable_type_to_string(entry->variable_type));
+
+            for (int j = 0; j < entry->number_of_appearances; j++) {
+                printf(" %d", entry->line_number[j]);
+            }
+            printf("\n");
         }
     }
 }
@@ -128,7 +96,7 @@ int hash(hash_table_t* hash_table, char* lexema)
     return index % hash_table->size;
 }
 
-void insert_symbol(hash_table_t* hash_table, char* lexema, data_type_t data_type, id_type_t id_type, int line_number, char* scope) 
+void insert_symbol(hash_table_t* hash_table, char* lexema, data_type_t data_type, id_type_t id_type, int line_number, char* scope, variable_type_t variable_type) 
 {
     int index = hash(hash_table, lexema);
 
@@ -151,6 +119,7 @@ void insert_symbol(hash_table_t* hash_table, char* lexema, data_type_t data_type
     new_symbol->number_of_appearances = 1;
     strncpy(new_symbol->scope, scope, MAX_LEXEME_LENGHT);
     //new_symbol->next = NULL;
+    new_symbol->variable_type = variable_type;
 
     hash_table->table[index] = new_symbol;
 }
@@ -162,7 +131,7 @@ void construct_symtab(ast_node_t* node, hash_table_t* hash_table)
     if(ast_node_is_identifier(node)) 
     {   
         if(!search_in_hash_table(hash_table, node->lexeme, "global"))
-            insert_symbol(hash_table, node->lexeme, node->kind.type, node->kind.type, node->lineno, "global");
+            insert_symbol(hash_table, node->lexeme, node->kind.type, node->kind.type, node->lineno, "global", VARIABLE_TYPE);
         else
             add_apparition(hash_table, node->lexeme, node->lineno);
     }
@@ -218,7 +187,103 @@ void add_apparition(hash_table_t* hash_table, char* lexema, int line_number)
 
 void semantic_analysis(ast_node_t* node, hash_table_t* hash_table)
 {
-    
+    if (node == NULL)
+        return;
+
+    switch(node->extended_type)
+    {
+        case EXT_VARIABLE_DECL:
+            //printf("\n variable declaration %s line %d\n", node->child[0]->lexeme, node->child[0]->lineno);
+            if(seach_if_variable_already_exists(hash_table, node->child[0]->lexeme, global_scope))
+            {
+                printf("semantic error: variable %s already declared in scope %s\n", node->child[0]->lexeme, global_scope);
+                //exit(1);
+                flag_semantic_error = 1;
+            }
+            else
+            {
+                if(ast_node_is_identifier(node->child[0]))
+                    insert_symbol(hash_table, node->child[0]->lexeme, INT_DATA, VARIABLE, node->child[0]->lineno, global_scope, VARIABLE_TYPE);
+            }
+            break;
+        case EXT_VECTOR_DECL:
+            //printf("\n vector declaration %s line %d\n", node->child[0]->lexeme, node->child[0]->lineno);
+            if(seach_if_variable_already_exists(hash_table, node->child[0]->lexeme, global_scope))
+            {
+                printf("semantic error: variable %s already declared in scope %s\n", node->child[0]->lexeme, global_scope);
+                //exit(1);
+                flag_semantic_error = 1;
+            }
+            else
+            {
+                if(ast_node_is_identifier(node->child[0]))
+                    insert_symbol(hash_table, node->child[0]->lexeme, INT_DATA, VARIABLE, node->child[0]->lineno, global_scope, ARRAY_TYPE);
+            }
+            break;
+        case EXT_VARIABLE:
+            break;
+        case EXT_VECTOR:
+            break;
+        case EXT_FUNCTION_DECL:
+            //printf("\n function declaration %s line %d\n", node->child[1]->lexeme, node->child[1]->lineno);
+            strcpy(global_scope, node->child[1]->lexeme);
+            break;
+        case EXT_FUNCTION_CALL:
+            break;
+        case EXT_RETURN_INT:
+            break;
+        case EXT_RETURN_VOID:
+            break;
+        case EXT_VARIABLE_PARAMETER:
+            break;
+        case EXT_VECTOR_PARAMETER:
+            break;
+        case EXT_VOID_PARAMETER:
+            break;
+        case EXT_IF:
+            break;
+        case EXT_IF_ELSE:
+            break;
+        case EXT_WHILE:
+            break;
+        case EXT_ASSIGN:
+            break;
+        case EXT_OPERATOR:
+            break;
+        case EXT_RELATIONAL:
+            break;
+        case EXT_CONSTANT:
+            break;
+        case EXT_IDENTIFIER:
+            break;
+        case EXT_NULL:
+            break;
+        default:
+            break;
+    }
+
+    for (int i = 0; i < MAXCHILDREN; ++i) 
+    {
+        semantic_analysis(node->child[i], hash_table);
+    }
+
+    semantic_analysis(node->sibling, hash_table);
+}
+
+bool seach_if_variable_already_exists(hash_table_t* hash_table, char* lexema, char* scope)
+{
+    int index = hash(hash_table, lexema);
+
+    while (hash_table->table[index] != NULL) 
+    {
+        if(strcmp(hash_table->table[index]->name, lexema) == 0 && strcmp(hash_table->table[index]->scope, scope) == 0) 
+        {
+            return true;
+        }
+        index = (index + 1) % TABLE_SIZE; 
+    }
+
+    return false;
 }
 
 void go_through_tree(ast_node_t* node, hash_table_t* symbol_table, char* scope) 
@@ -325,7 +390,7 @@ void verify_if_variable_already_exists(hash_table_t* symbol_table, ast_node_t* n
     else
     {
         if(ast_node_is_identifier(node->child[0]))
-            insert_symbol(symbol_table, node->child[0]->lexeme, INT_DATA, VARIABLE, node->child[0]->lineno, scope);
+            insert_symbol(symbol_table, node->child[0]->lexeme, INT_DATA, VARIABLE, node->child[0]->lineno, scope, VARIABLE_TYPE);
     }
 }
 

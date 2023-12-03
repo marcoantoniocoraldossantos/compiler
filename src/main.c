@@ -56,8 +56,8 @@ int main(int argc, char *argv[])
 
     //print_hash_table(symtab);
 
-    //if(!flag_semantic_error)
-    //    print_hash_table(symtab);
+    if(!flag_semantic_error)
+        print_hash_table(symtab);
 
     //printf("freeing memory...\n");
     close_file(input_file); // close the file

@@ -701,3 +701,18 @@ char *id_type_to_string(id_type_t id_type)
             return "UNKNOWN_TYPE";
     }
 }
+
+char* variable_type_to_string(variable_type_t id_type) 
+{
+    switch(id_type) 
+    {
+        case VARIABLE_TYPE:
+            return "NOT VECTOR";
+        case ARRAY_TYPE:
+            return "VECTOR";
+        case NOT_VARIABLE_TYPE:
+            return "FUNCTION";
+        default:
+            return "UNKNOWN_TYPE";
+    }
+}
