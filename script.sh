@@ -34,4 +34,4 @@ echo "compiled successfully!"
 #valgrind --track-origins=yes --leak-check=full --show-leak-kinds=all ./compiler test/example1.txt
 #valgrind --track-origins=yes --leak-check=full --show-leak-kinds=all ./compiler test/example2.txt
 
-valgrind --track-origins=yes --leak-check=full --show-leak-kinds=all ./compiler test-semantic/example8.txt
+valgrind --track-origins=yes --leak-check=full --show-leak-kinds=all ./compiler test/example1.txt
