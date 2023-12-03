@@ -71,12 +71,8 @@ void semantic_analysis(ast_node_t* node, hash_table_t* hash_table)
             break;
         case EXT_VECTOR_PARAMETER:
             //printf("\next_vector_parameter\n");
+            process_vector_parameter(hash_table, node);
 
-
-            if(!search_in_hash_table(hash_table, node->child[0]->lexeme, global_scope))
-            {
-                insert_symbol(hash_table, node->child[0]->lexeme, INT_DATA, VARIABLE, node->child[0]->lineno, global_scope, ARRAY_TYPE);
-            }
             break;
         case EXT_VOID_PARAMETER:
             //printf("\next_void_parameter\n");
@@ -399,5 +395,11 @@ void process_variable_parameter(hash_table_t* hash_table, ast_node_t* node)
     }
 }
 
-
+void process_vector_parameter(hash_table_t* hash_table, ast_node_t* node)
+{
+    if(!search_in_hash_table(hash_table, node->child[0]->lexeme, global_scope))
+    {
+        insert_symbol(hash_table, node->child[0]->lexeme, INT_DATA, VARIABLE, node->child[0]->lineno, global_scope, ARRAY_TYPE);
+    }
+}
 
