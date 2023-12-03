@@ -49,7 +49,7 @@ int main(int argc, char *argv[])
     //printf("\n");
     //print_ast(global_ast_tree);
 
-    //construct_symtab(global_ast_tree, symtab);
+    construct_symtab(global_ast_tree, symtab);
     //go_through_tree(global_ast_tree, symtab, "global");
     
     semantic_analysis(global_ast_tree, symtab);
