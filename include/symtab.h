@@ -57,5 +57,6 @@ bool search_for_function_declaration(hash_table_t* symbol_table, char* lexeme);
 bool seach_if_variable_already_exists(hash_table_t* hash_table, char* lexema, char* scope);
 bool function_returns_int(hash_table_t* symbol_table, char* lexeme);
 bool if_condition_is_valid(hash_table_t* symbol_table, ast_node_t* node);
+bool function_is_void_type(hash_table_t* symbol_table, char* lexeme);
 
 #endif /* SYMTAB_H */

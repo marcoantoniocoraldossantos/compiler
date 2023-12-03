@@ -1,5 +1,10 @@
-void exemplo(int j, int k)
+void exemplo()
 {
-if (j == k) break;
-else continue;
+
+}
+
+void main(void)
+{
+    int a;
+    a = exemplo();
 }

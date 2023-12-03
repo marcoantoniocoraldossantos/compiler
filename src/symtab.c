@@ -199,7 +199,7 @@ void semantic_analysis(ast_node_t* node, hash_table_t* hash_table)
     if(flag_semantic_error)
         return;
 
-    printf("\ncurrent node: %s\n", node->lexeme);
+    printf("\ncurrent node: %s type %d line %d\n", node->lexeme, node->extended_type, node->lineno);
 
     switch(node->extended_type)
     {
@@ -240,11 +240,18 @@ void semantic_analysis(ast_node_t* node, hash_table_t* hash_table)
         case EXT_FUNCTION_DECL:
             //printf("\n function declaration %s line %d\n", node->child[1]->lexeme, node->child[1]->lineno);
 
+            data_type_t data_type;
+            //printf("\nlexeme %s\n", node->child[0]->lexeme);
+            if(node->child[0]->kind.type == INT_TYPE)
+                data_type = INT_DATA;
+            else
+                data_type = VOID_DATA;
+
             if(node->child[1] != NULL)
             {
                 if(!search_in_hash_table(hash_table, node->child[1]->lexeme, global_scope))
                 {
-                    insert_symbol(hash_table, node->child[1]->lexeme, INT_DATA, FUNCTION, node->child[1]->lineno, "global", FUNCTION_TYPE);
+                    insert_symbol(hash_table, node->child[1]->lexeme, data_type, FUNCTION, node->child[1]->lineno, "global", FUNCTION_TYPE);
                 }
                 else
                 {
@@ -258,7 +265,7 @@ void semantic_analysis(ast_node_t* node, hash_table_t* hash_table)
             {
                 if(!search_in_hash_table(hash_table, node->child[0]->lexeme, global_scope))
                 {
-                    insert_symbol(hash_table, node->child[0]->lexeme, INT_DATA, FUNCTION, node->child[0]->lineno, "global", FUNCTION_TYPE);
+                    insert_symbol(hash_table, node->child[0]->lexeme, data_type, FUNCTION, node->child[0]->lineno, "global", FUNCTION_TYPE);
                 }
                 else
                 {
@@ -359,10 +366,19 @@ void semantic_analysis(ast_node_t* node, hash_table_t* hash_table)
         case EXT_WHILE:
             break;
         case EXT_ASSIGN:
+
             break;
         case EXT_OPERATOR:
+            
             break;
         case EXT_RELATIONAL:
+            //printf("\ntype %d\n", node->child[1]->kind.type);
+            if(function_is_void_type(hash_table, node->child[1]->lexeme))
+            {
+                printf("semantic error: function %s is void type\n", node->child[1]->lexeme);
+                //exit(1);
+                flag_semantic_error = 1;
+            }
             break;
         case EXT_CONSTANT:
             break;
@@ -371,7 +387,7 @@ void semantic_analysis(ast_node_t* node, hash_table_t* hash_table)
             //print_hash_table(hash_table);
             if(strcmp(node->lexeme, global_scope) != 0)
             {
-                printf("\nlexeme %s global scope %s\n", node->lexeme, global_scope);
+                //printf("\nlexeme %s global scope %s\n", node->lexeme, global_scope);
                 if(!search_in_hash_table(hash_table, node->lexeme, global_scope))
                 {
                     printf("semantic error: variable %s not declared in scope %s\n", node->lexeme, global_scope);
@@ -456,4 +472,23 @@ bool if_condition_is_valid(hash_table_t* symbol_table, ast_node_t* node)
         }
     }
     return true;
+}
+
+bool function_is_void_type(hash_table_t* symbol_table, char* lexeme)
+{
+    int index = hash(symbol_table, lexeme);
+
+    while (symbol_table->table[index] != NULL) 
+    {
+        if(strcmp(symbol_table->table[index]->name, lexeme) == 0 && symbol_table->table[index]->id_type == FUNCTION) 
+        {
+            if(symbol_table->table[index]->data_type == VOID_DATA)
+                return true;
+            else
+                return false;
+        }
+        index = (index + 1) % TABLE_SIZE; 
+    }
+
+    return false;
 }
