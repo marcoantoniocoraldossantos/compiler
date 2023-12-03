@@ -41,6 +41,6 @@ bool ast_node_is_identifier(ast_node_t *node);
 bool verify_if_line_number_already_exists(hash_entry_t* entry, int line_number);
 char* variable_type_to_string(variable_type_t id_type);
 bool id_is_variable(hash_table_t* symbol_table, char* lexeme);
-bool file_is_empty(FILE *file)
+bool file_is_empty(FILE *file);
 
 #endif

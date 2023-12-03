@@ -1,8 +1,8 @@
 #include "libraries.h"
 
-//int flag_semantic_error = 0;
+int flag_semantic_error = 0;
 
-//char scope[MAX_LEXEME_LENGHT];
+char scope[MAX_LEXEME_LENGHT];
 
 hash_table_t* initialize_hash_table() 
 {
