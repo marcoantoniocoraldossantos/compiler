@@ -25,7 +25,8 @@ cd "$INITIAL_DIR" || exit
 
 # compiling all .c files in src folder
 echo "calling makefile..."
-make -s
+#make -s
+make -s clean
 
 echo "compiled successfully!"
 

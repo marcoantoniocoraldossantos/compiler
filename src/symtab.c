@@ -81,15 +81,17 @@ void semantic_analysis(ast_node_t* node, hash_table_t* hash_table)
             break;
         case EXT_IF:
             //printf("\next_if\n");
-
+            process_if(hash_table, node);
 
             break;
         case EXT_IF_ELSE:
             //printf("\next_if_else\n");
+            process_if_else(hash_table, node);
             
             break;
         case EXT_WHILE:
             //printf("\next_while\n");
+            process_while(hash_table, node);
 
             break;
         case EXT_ASSIGN:
@@ -408,3 +410,17 @@ void process_void_parameter(hash_table_t* hash_table, ast_node_t* node)
     // 
 }
 
+void process_if(hash_table_t* hash_table, ast_node_t* node)
+{
+    // 
+}
+
+void process_if_else(hash_table_t* hash_table, ast_node_t* node)
+{
+    // 
+}
+
+void process_while(hash_table_t* hash_table, ast_node_t* node)
+{
+    // 
+}
