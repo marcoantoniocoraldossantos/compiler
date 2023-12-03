@@ -18,5 +18,6 @@
 #include "parser.h"
 #include "globals.h"
 #include "symtab.h"
+#include "hash.h"
 
 #endif
