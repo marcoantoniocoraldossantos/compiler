@@ -234,6 +234,13 @@ void semantic_analysis(ast_node_t* node, hash_table_t* hash_table)
             printf("\next_vector_decl\n");
             //printf("\n vector declaration %s line %d\n", node->child[0]->lexeme, node->child[0]->lineno);
             
+            if(strcmp(node->lexeme, "void") == 0)
+            {
+                printf("semantic error: variable %s cannot be void\n", node->child[0]->lexeme);
+                //exit(1);
+                flag_semantic_error = 1;
+                return;
+            }
             if(seach_if_variable_already_exists(hash_table, node->child[0]->lexeme, global_scope))
             {
                 printf("semantic error: variable %s already declared in scope %s\n", node->child[0]->lexeme, global_scope);
@@ -477,15 +484,23 @@ void semantic_analysis(ast_node_t* node, hash_table_t* hash_table)
 
             //print_hash_table(hash_table);
 
-            printf("\nlexeme %s", node->lexeme);
+            //printf("\nlexeme %s", node->lexeme);
             //print_hash_table(hash_table);
 
             if(strcmp(node->lexeme, global_scope) != 0) // if its not a function call
             {
-                printf("\nlexeme %s global scope %s", node->lexeme, global_scope);
+                //printf("\nlexeme %s global scope %s", node->lexeme, global_scope);
                 if(search_in_hash_table(hash_table, node->lexeme, "global"))
                 {
                     //add apparition
+                    if(search_for_function_declaration(hash_table, node->lexeme))
+                    {
+                        //printf("\nis function %s line %d\n", node->lexeme, node->lineno);
+                        printf("semantic error: %s already declared as function\n", node->lexeme);
+                        //exit(1);
+                        flag_semantic_error = 1;
+                        return;
+                    }
                     add_apparition(hash_table, node->lexeme, node->lineno, global_scope);
                     return;
                 }
@@ -503,11 +518,14 @@ void semantic_analysis(ast_node_t* node, hash_table_t* hash_table)
             }
             else if(!search_for_function_declaration(hash_table, node->lexeme))
             {
-                printf("\nis function %s line %d\n", node->lexeme, node->lineno);
+                //printf("\nis function %s line %d\n", node->lexeme, node->lineno);
                 printf("semantic error: function %s not declared\n", node->lexeme);
                 //exit(1);
                 flag_semantic_error = 1;
             }
+
+            //printf("\n-------------------");
+            //print_hash_table(hash_table);
 
             break;
         case EXT_NULL:

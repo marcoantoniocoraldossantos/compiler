@@ -1,0 +1,7 @@
+int min() {}
+
+void main(void)
+{
+    int a;
+    a = max();
+}

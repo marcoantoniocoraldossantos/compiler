@@ -1,0 +1,5 @@
+int main(void)
+{
+    void x[10];
+    return;
+}

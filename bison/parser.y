@@ -710,7 +710,7 @@ int yylex()
 {
     token_t *token = get_next_token();
     if(token!=NULL) save_token_info(token);
-
+    print_token(token);
 
     if (token == NULL) 
     {

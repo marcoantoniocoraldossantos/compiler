@@ -1,0 +1,4 @@
+int array[100];
+
+int min() { }
+int max() { }

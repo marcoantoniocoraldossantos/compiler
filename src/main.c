@@ -57,6 +57,14 @@ int main(int argc, char *argv[])
 
     //print_hash_table(symtab);
 
+    if(!search_in_hash_table(symtab, "main", "global"))
+    {
+        printf("semantic error: main function not found\n");
+        flag_semantic_error = 1;
+    }
+
+    //print_hash_table(symtab);
+
     if(!flag_semantic_error)
         print_hash_table(symtab);
 

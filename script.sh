@@ -30,5 +30,8 @@ make -s
 echo "compiled successfully!"
 
 #valgrind --track-origins=yes --leak-check=full --show-leak-kinds=all
-#valgrind --track-origins=yes --leak-check=full --show-leak-kinds=all ./compiler test-semantic/example3.txt
-valgrind --track-origins=yes --leak-check=full --show-leak-kinds=all ./compiler test-semantic/example3.txt
+
+#valgrind --track-origins=yes --leak-check=full --show-leak-kinds=all ./compiler test/example1.txt
+#valgrind --track-origins=yes --leak-check=full --show-leak-kinds=all ./compiler test/example2.txt
+
+valgrind --track-origins=yes --leak-check=full --show-leak-kinds=all ./compiler test-semantic/example8.txt
