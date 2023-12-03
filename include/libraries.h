@@ -7,6 +7,7 @@
 #include <ctype.h>
 #include <stdbool.h>
 
+// headers
 #include "arguments.h"
 #include "utilities.h"
 #include "lexer.h"
