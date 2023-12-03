@@ -11,7 +11,6 @@ void construct_symtab(ast_node_t* node, hash_table_t* hash_table)
     insert_symbol(hash_table, "output", VOID_DATA, FUNCTION, 0, "global", FUNCTION_TYPE);
 }
 
-
 void semantic_analysis(ast_node_t* node, hash_table_t* hash_table)
 {
     if (node == NULL)
@@ -20,7 +19,7 @@ void semantic_analysis(ast_node_t* node, hash_table_t* hash_table)
     if(flag_semantic_error)
         return;
 
-    printf("\n\ncurrent node: \'%s\' type %d line %d", node->lexeme, node->extended_type, node->lineno);
+    //printf("\n\ncurrent node: \'%s\' type %d line %d", node->lexeme, node->extended_type, node->lineno);
 
     switch(node->extended_type)
     {
@@ -96,78 +95,32 @@ void semantic_analysis(ast_node_t* node, hash_table_t* hash_table)
             break;
         case EXT_ASSIGN:
             //printf("\next_assign\n");
+            process_assign(hash_table, node);
 
             break;
         case EXT_OPERATOR:
             //printf("\next_operator\n");
+            process_operator(hash_table, node);
             
             break;
         case EXT_RELATIONAL:
             //printf("\next_relational\n");
+            process_relational(hash_table, node);
             
-
-            if(function_is_void_type(hash_table, node->child[1]->lexeme))
-            {
-                printf("semantic error: function %s is void type\n", node->child[1]->lexeme);
-                //exit(1);
-                flag_semantic_error = 1;
-            }
             break;
         case EXT_CONSTANT:
-            printf("\next_constant\n");
+            //printf("\next_constant\n");
+            process_constant(hash_table, node);
 
             break;
         case EXT_IDENTIFIER:
-            printf("\next_identifier\n");
-
-            //print_hash_table(hash_table);
-
-            //printf("\nlexeme %s", node->lexeme);
-            //print_hash_table(hash_table);
-
-            if(strcmp(node->lexeme, global_scope) != 0) // if its not a function call
-            {
-                //printf("\nlexeme %s global scope %s", node->lexeme, global_scope);
-                if(search_in_hash_table(hash_table, node->lexeme, "global"))
-                {
-                    //add apparition
-                    if(search_for_function_declaration(hash_table, node->lexeme))
-                    {
-                        //printf("\nis function %s line %d\n", node->lexeme, node->lineno);
-                        printf("semantic error: %s already declared as function\n", node->lexeme);
-                        //exit(1);
-                        flag_semantic_error = 1;
-                        return;
-                    }
-                    add_apparition(hash_table, node->lexeme, node->lineno, global_scope);
-                    return;
-                }
-                if(!search_in_hash_table(hash_table, node->lexeme, global_scope))
-                {
-                    printf("semantic error: variable %s not declared in scope %s\n", node->lexeme, global_scope);
-                    //exit(1);
-                    flag_semantic_error = 1;
-                }
-                else
-                {
-                    //add apparition
-                    add_apparition(hash_table, node->lexeme, node->lineno, global_scope);
-                }
-            }
-            else if(!search_for_function_declaration(hash_table, node->lexeme))
-            {
-                //printf("\nis function %s line %d\n", node->lexeme, node->lineno);
-                printf("semantic error: function %s not declared\n", node->lexeme);
-                //exit(1);
-                flag_semantic_error = 1;
-            }
-
-            //printf("\n-------------------");
-            //print_hash_table(hash_table);
+            //printf("\next_identifier\n");
+            process_identifier(hash_table, node);
 
             break;
         case EXT_NULL:
-            printf("\next_null\n");
+            //printf("\next_null\n");
+            process_null(hash_table, node);
             break;
         default:
             break;
@@ -421,6 +374,68 @@ void process_if_else(hash_table_t* hash_table, ast_node_t* node)
 }
 
 void process_while(hash_table_t* hash_table, ast_node_t* node)
+{
+    // 
+}
+
+void process_assign(hash_table_t* hash_table, ast_node_t* node)
+{
+    // 
+}
+
+void process_operator(hash_table_t* hash_table, ast_node_t* node)
+{
+    // 
+}
+
+void process_relational(hash_table_t* hash_table, ast_node_t* node)
+{
+    
+    if(function_is_void_type(hash_table, node->child[1]->lexeme))
+    {
+        printf("semantic error: function %s is void type\n", node->child[1]->lexeme);
+        flag_semantic_error = 1;
+    } 
+}
+
+void process_constant(hash_table_t* hash_table, ast_node_t* node)
+{
+    // 
+}
+
+void process_identifier(hash_table_t* hash_table, ast_node_t* node)
+{
+    if(strcmp(node->lexeme, global_scope) != 0) // if its not a function call
+    {
+        if(search_in_hash_table(hash_table, node->lexeme, "global"))
+        {
+            if(search_for_function_declaration(hash_table, node->lexeme))
+            {
+                printf("semantic error: %s already declared as function\n", node->lexeme);
+                flag_semantic_error = 1;
+                return;
+            }
+            add_apparition(hash_table, node->lexeme, node->lineno, global_scope);
+            return;
+        }
+        if(!search_in_hash_table(hash_table, node->lexeme, global_scope))
+        {
+            printf("semantic error: variable %s not declared in scope %s\n", node->lexeme, global_scope);
+            flag_semantic_error = 1;
+        }
+        else
+        {
+            add_apparition(hash_table, node->lexeme, node->lineno, global_scope);
+        }
+    }
+    else if(!search_for_function_declaration(hash_table, node->lexeme))
+    {
+        printf("semantic error: function %s not declared\n", node->lexeme);
+        flag_semantic_error = 1;
+    }
+}
+
+void process_null(hash_table_t* hash_table, ast_node_t* node)
 {
     // 
 }

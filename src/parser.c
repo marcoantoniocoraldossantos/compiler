@@ -1541,12 +1541,12 @@ yyreduce:
 #line 273 "parser.y"
     {
         ast_node_t* if_node = new_ast_node(
-            STATEMENT_NODE,      // Tipo do nó: Declaração de seleção (if statement)
-            global_line_number,  // Número da linha onde ocorre a declaração de seleção
-            "if",                // Lexema representando a declaração de seleção
-            IF_STMT,             // Tipo de declaração: If statement
-            NULL_EXP,            // Não se aplica uma expressão a uma declaração if diretamente
-            NULL_TYPE            // Não se aplica o tipo aqui, pode ser NULL_TYPE
+            STATEMENT_NODE,      
+            global_line_number,  
+            "if",                
+            IF_STMT,             
+            NULL_EXP,            
+            NULL_TYPE            
         );
         
         yyval = if_node;
@@ -1554,8 +1554,8 @@ yyreduce:
         yyval->extended_type = EXT_IF;
         yyval->node_kind = DECLARATION_NODE;
 
-        add_child(yyval, yyvsp[-2]);      // Adiciona o nó da expressão como filho do nó if
-        add_child(yyval, yyvsp[0]);      // Adiciona o nó da declaração de bloco como filho do nó if
+        add_child(yyval, yyvsp[-2]);     
+        add_child(yyval, yyvsp[0]);     
     }
 #line 1561 "parser.c"
     break;
@@ -1564,17 +1564,17 @@ yyreduce:
 #line 292 "parser.y"
     {
         ast_node_t* if_node = new_ast_node(
-            STATEMENT_NODE,      // Tipo do nó: Declaração de seleção (if statement)
-            global_line_number,  // Número da linha onde ocorre a declaração de seleção
-            "if",                // Lexema representando a declaração de seleção
-            IF_STMT,             // Tipo de declaração: If statement
-            NULL_EXP,            // Não se aplica uma expressão a uma declaração if diretamente
-            NULL_TYPE            // Não se aplica o tipo aqui, pode ser NULL_TYPE
+            STATEMENT_NODE,      
+            global_line_number,  
+            "if",               
+            IF_STMT,            
+            NULL_EXP,            
+            NULL_TYPE           
         );
 
-        add_child(if_node, yyvsp[-4]); // Adiciona o nó da expressão como filho do nó if
-        add_child(if_node, yyvsp[-2]); // Adiciona o nó da declaração de bloco do if como filho do nó if
-        add_child(if_node, yyvsp[0]); // Adiciona o nó da declaração de bloco do else como filho do nó if
+        add_child(if_node, yyvsp[-4]); 
+        add_child(if_node, yyvsp[-2]); 
+        add_child(if_node, yyvsp[0]); 
         yyval = if_node;
         yyval->extended_type = EXT_IF_ELSE;
         yyval->node_kind = DECLARATION_NODE;
@@ -1586,20 +1586,20 @@ yyreduce:
 #line 312 "parser.y"
     {
         ast_node_t* while_node = new_ast_node(
-            STATEMENT_NODE,      // Tipo do nó: Declaração de iteração (while loop)
-            global_line_number,  // Número da linha onde ocorre a declaração de iteração
-            "while",             // Lexema representando a declaração de iteração
-            WHILE_STMT,          // Tipo de declaração: While statement
-            NULL_EXP,            // Não se aplica uma expressão a uma declaração while diretamente
-            NULL_TYPE            // Não se aplica o tipo aqui, pode ser NULL_TYPE
+            STATEMENT_NODE,     
+            global_line_number, 
+            "while",            
+            WHILE_STMT,       
+            NULL_EXP,          
+            NULL_TYPE         
         );
 
         yyval = while_node;
         yyval->extended_type = EXT_WHILE;
         yyval->node_kind = DECLARATION_NODE;
 
-        add_child(yyval, yyvsp[-2]);      // Adiciona o nó da expressão como filho do nó while
-        add_child(yyval, yyvsp[0]);      // Adiciona o nó da declaração de bloco como filho do nó while
+        add_child(yyval, yyvsp[-2]);      
+        add_child(yyval, yyvsp[0]);     
     }
 #line 1605 "parser.c"
     break;
@@ -1608,12 +1608,12 @@ yyreduce:
 #line 332 "parser.y"
     {
         ast_node_t* return_node = new_ast_node(
-            STATEMENT_NODE,      // Tipo do nó: Declaração de retorno
-            global_line_number,  // Número da linha onde ocorre a declaração de retorno
-            "return",            // Lexema representando a declaração de retorno
-            RETURN_STMT,         // Tipo de declaração: Return statement
-            NULL_EXP,            // Não se aplica uma expressão a um retorno vazio
-            NULL_TYPE            // Não se aplica o tipo aqui, pode ser NULL_TYPE
+            STATEMENT_NODE,      
+            global_line_number,  
+            "return",            
+            RETURN_STMT,         
+            NULL_EXP,           
+            NULL_TYPE           
         );
     
         yyval = return_node;
@@ -1627,19 +1627,19 @@ yyreduce:
 #line 347 "parser.y"
     {
         ast_node_t* return_node = new_ast_node(
-            STATEMENT_NODE,      // Tipo do nó: Declaração de retorno
-            global_line_number,  // Número da linha onde ocorre a declaração de retorno
-            "return",            // Lexema representando a declaração de retorno
-            RETURN_STMT,         // Tipo de declaração: Return statement
-            NULL_EXP,            // Não se aplica uma expressão a um retorno vazio
-            NULL_TYPE            // Não se aplica o tipo aqui, pode ser NULL_TYPE
+            STATEMENT_NODE,     
+            global_line_number,  
+            "return",            
+            RETURN_STMT,        
+            NULL_EXP,            
+            NULL_TYPE           
         );
 
         yyval = return_node;
         yyval->extended_type = EXT_RETURN_INT;
         yyval->node_kind = DECLARATION_NODE;
 
-        add_child(yyval, yyvsp[-1]);      // Adiciona o nó da expressão como filho do nó de retorno
+        add_child(yyval, yyvsp[-1]);     
     }
 #line 1645 "parser.c"
     break;
@@ -1648,12 +1648,12 @@ yyreduce:
 #line 366 "parser.y"
     {
         ast_node_t* assign_node = new_ast_node(
-            EXPRESSION_NODE,       // Tipo do nó: Expressão
-            global_line_number,    // Número da linha onde ocorre a atribuição
-            "==",                   // Lexema representando a operação de atribuição
-            NULL_STMT,             // A atribuição não requer um statement específico
-            ATTR_EXP,              // Tipo de expressão: Atribuição
-            NULL_TYPE              // Não se aplica o tipo aqui, pode ser NULL_TYPE
+            EXPRESSION_NODE,       
+            global_line_number,   
+            "==",                  
+            NULL_STMT,             
+            ATTR_EXP,              
+            NULL_TYPE             
         );
 
         yyval = assign_node;
@@ -1721,12 +1721,12 @@ yyreduce:
 #line 421 "parser.y"
     {
         ast_node_t* lt_node = new_ast_node(
-            EXPRESSION_NODE,    // Tipo do nó: Expressão
-            global_line_number, // Número da linha onde ocorre a operação de menor que
-            "<",                // Lexema representando a operação de menor que
-            NULL_STMT,          // Operação de menor que não requer um statement específico
-            REL_EXP,            // Tipo de expressão: Relacional
-            NULL_TYPE           // Não se aplica o tipo aqui, pode ser NULL_TYPE
+            EXPRESSION_NODE,    
+            global_line_number, 
+            "<",                
+            NULL_STMT,         
+            REL_EXP,           
+            NULL_TYPE           
         );
         
         yyval = lt_node;
@@ -1738,12 +1738,12 @@ yyreduce:
 #line 434 "parser.y"
     {
         ast_node_t* lte_node = new_ast_node(
-            EXPRESSION_NODE,    // Tipo do nó: Expressão
-            global_line_number, // Número da linha onde ocorre a operação de menor ou igual a
-            "<=",               // Lexema representando a operação de menor ou igual a
-            NULL_STMT,          // Operação de menor ou igual a não requer um statement específico
-            REL_EXP,            // Tipo de expressão: Relacional
-            NULL_TYPE           // Não se aplica o tipo aqui, pode ser NULL_TYPE
+            EXPRESSION_NODE,    
+            global_line_number, 
+            "<=",               
+            NULL_STMT,         
+            REL_EXP,            
+            NULL_TYPE          
         );
 
         yyval = lte_node;
@@ -1755,12 +1755,12 @@ yyreduce:
 #line 447 "parser.y"
     {
         ast_node_t* gt_node = new_ast_node(
-            EXPRESSION_NODE,    // Tipo do nó: Expressão
-            global_line_number, // Número da linha onde ocorre a operação de maior que
-            ">",                // Lexema representando a operação de maior que
-            NULL_STMT,          // Operação de maior que não requer um statement específico
-            REL_EXP,            // Tipo de expressão: Relacional
-            NULL_TYPE           // Não se aplica o tipo aqui, pode ser NULL_TYPE
+            EXPRESSION_NODE,   
+            global_line_number, 
+            ">",                
+            NULL_STMT,          
+            REL_EXP,            
+            NULL_TYPE          
         );
 
         yyval = gt_node;
@@ -1772,12 +1772,12 @@ yyreduce:
 #line 460 "parser.y"
     {
         ast_node_t* gte_node = new_ast_node(
-            EXPRESSION_NODE,    // Tipo do nó: Expressão
-            global_line_number, // Número da linha onde ocorre a operação de maior ou igual a
-            ">=",               // Lexema representando a operação de maior ou igual a
-            NULL_STMT,          // Operação de maior ou igual a não requer um statement específico
-            REL_EXP,            // Tipo de expressão: Relacional
-            NULL_TYPE           // Não se aplica o tipo aqui, pode ser NULL_TYPE
+            EXPRESSION_NODE,    
+            global_line_number, 
+            ">=",               
+            NULL_STMT,         
+            REL_EXP,          
+            NULL_TYPE          
         );
       
         yyval = gte_node;
@@ -1789,12 +1789,12 @@ yyreduce:
 #line 473 "parser.y"
     {   
         ast_node_t* eq_node = new_ast_node(
-            EXPRESSION_NODE,    // Tipo do nó: Expressão
-            global_line_number, // Número da linha onde ocorre a operação de igual a
-            "=",                // Lexema representando a operação de igual a
-            NULL_STMT,          // Operação de igual a não requer um statement específico
-            REL_EXP,            // Tipo de expressão: Relacional
-            NULL_TYPE           // Não se aplica o tipo aqui, pode ser NULL_TYPE
+            EXPRESSION_NODE,    
+            global_line_number, 
+            "=",                
+            NULL_STMT,         
+            REL_EXP,           
+            NULL_TYPE         
         );
 
         yyval = eq_node;
@@ -1807,12 +1807,12 @@ yyreduce:
 #line 487 "parser.y"
     {
         ast_node_t* neq_node = new_ast_node(
-            EXPRESSION_NODE,    // Tipo do nó: Expressão
-            global_line_number, // Número da linha onde ocorre a operação de diferente de
-            "!=",               // Lexema representando a operação de diferente de
-            NULL_STMT,          // Operação de diferente de não requer um statement específico
-            REL_EXP,            // Tipo de expressão: Relacional
-            NULL_TYPE           // Não se aplica o tipo aqui, pode ser NULL_TYPE
+            EXPRESSION_NODE,   
+            global_line_number, 
+            "!=",               
+            NULL_STMT,          
+            REL_EXP,            
+            NULL_TYPE          
         );
    
         yyval = neq_node;
@@ -1845,12 +1845,12 @@ yyreduce:
 #line 517 "parser.y"
     {
         ast_node_t* plus_node = new_ast_node(
-            EXPRESSION_NODE,    // Tipo do nó: Expressão
-            global_line_number, // Número da linha onde ocorre a operação de adição
-            "+",                // Lexema representando a operação de adição
-            NULL_STMT,          // Operação de adição não requer um statement específico
-            OP_EXP,             // Tipo de expressão: Operação
-            NULL_TYPE           // Não se aplica o tipo aqui, pode ser NULL_TYPE
+            EXPRESSION_NODE,    
+            global_line_number, 
+            "+",               
+            NULL_STMT,         
+            OP_EXP,            
+            NULL_TYPE          
         );
 
         yyval = plus_node;
@@ -1862,12 +1862,12 @@ yyreduce:
 #line 530 "parser.y"
     {
         ast_node_t* minus_node = new_ast_node(
-            EXPRESSION_NODE,    // Tipo do nó: Expressão
-            global_line_number, // Número da linha onde ocorre a operação de subtração
-            "-",                // Lexema representando a operação de subtração
-            NULL_STMT,          // Operação de subtração não requer um statement específico
-            OP_EXP,             // Tipo de expressão: Operação
-            NULL_TYPE           // Não se aplica o tipo aqui, pode ser NULL_TYPE
+            EXPRESSION_NODE,    
+            global_line_number, 
+            "-",               
+            NULL_STMT,         
+            OP_EXP,            
+            NULL_TYPE          
         );
       
         yyval = minus_node;
@@ -1901,12 +1901,12 @@ yyreduce:
 #line 561 "parser.y"
     {
         ast_node_t* multiply_node = new_ast_node(
-            EXPRESSION_NODE,    // Tipo do nó: Expressão
-            global_line_number, // Número da linha onde ocorre a operação de multiplicação
-            "*",                // Lexema representando a operação de multiplicação
-            NULL_STMT,          // Operação de multiplicação não requer um statement específico
-            OP_EXP,             // Tipo de expressão: Operação
-            NULL_TYPE           // Não se aplica o tipo aqui, pode ser NULL_TYPE
+            EXPRESSION_NODE,    
+            global_line_number, 
+            "*",              
+            NULL_STMT,          
+            OP_EXP,           
+            NULL_TYPE         
         );
 
         yyval = multiply_node;
@@ -1918,12 +1918,12 @@ yyreduce:
 #line 574 "parser.y"
     {
         ast_node_t* divide_node = new_ast_node(
-            EXPRESSION_NODE,    // Tipo do nó: Expressão
-            global_line_number, // Número da linha onde ocorre a operação de divisão
-            "/",                // Lexema representando a operação de divisão
-            NULL_STMT,          // Operação de divisão não requer um statement específico
-            OP_EXP,             // Tipo de expressão: Operação
-            NULL_TYPE           // Não se aplica o tipo aqui, pode ser NULL_TYPE
+            EXPRESSION_NODE,    
+            global_line_number, 
+            "/",               
+            NULL_STMT,         
+            OP_EXP,            
+            NULL_TYPE          
         );
 
         yyval = divide_node;
@@ -2032,12 +2032,12 @@ yyreduce:
         }
 
         ast_node_t* id_node = new_ast_node(
-            EXPRESSION_NODE,         // Tipo do nó: Expressão
-            global_line_number,      // Número da linha onde o identificador foi encontrado
-            token->lexeme,           // Valor do identificador em formato de string
-            NULL_STMT,               // Se for um identificador, pode ser NULL_STMT
-            ID_EXP,                  // Tipo de expressão: Identificador
-            NULL_TYPE                // Não se aplica o tipo aqui, pode ser NULL_TYPE
+            EXPRESSION_NODE,         
+            global_line_number,      
+            token->lexeme,           
+            NULL_STMT,              
+            ID_EXP,                
+            NULL_TYPE                
         );
 
         yyval = id_node; 
@@ -2274,17 +2274,26 @@ yyreturnlab:
 
 void yyerror(char *s)
 {
-    printf("\n%s: \'%s\' at line %d\n", s, global_lexeme, global_line_number);
-    printf("exiting...\n");
-
+    fprintf(stderr, "\x1b[1m%s:\x1b[0m in line \x1b[1m%d:\x1b[0m\n", global_argv[1], global_line_number);
+    printf("\x1b[31m%s:\x1b[0m symbol \x1b[1m'%s'\x1b[0m not expected\n", s, global_lexeme);
     exit(1);
+    
 }
 
 int yylex()
 {
     token_t *token = get_next_token();
-    if(token!=NULL) save_token_info(token);
-    print_token(token);
+    if(flag_lexical_error == 1)
+    {
+        //printf("lexical error: invalid token\n");
+        free(token);
+        return ERROR_TOKEN;
+    }
+    if(token!=NULL) 
+    {
+        save_token_info(token);
+    }
+    //print_token(token);
 
     if (token == NULL) 
     {
@@ -2297,8 +2306,9 @@ int yylex()
     
     if (flag != 1) 
     {
-        printf("lexical error: invalid token\n");
+        //printf("lexical error: invalid token\n");
         free(token);
+        exit(1);
         return ERROR_TOKEN; 
     }    
 
@@ -2323,6 +2333,7 @@ void parse()
     // {
     //     print_token(token_list[i]);
     // }
+
 
     free_tokens();    
 }

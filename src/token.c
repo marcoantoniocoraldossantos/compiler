@@ -81,6 +81,7 @@ int process_token(token_t *token)
     else if (token->type == ERROR) 
     {
         lex_error(token, global_buffer, token->line, global_buffer->position);
+        flag_lexical_error = 1;
         return 0;
         // TODO: implement other types of errors
     }
@@ -125,3 +126,53 @@ void save_token_info(token_t *token)
     global_token_type = token->type;
 }
 
+token_list_t* initialize_token_list() 
+{
+    token_list_t *list = (token_list_t*)malloc(sizeof(token_list_t));
+    if (list) 
+    {
+        list->head = NULL;
+        list->tail = NULL;
+        list->size = 0;
+    }
+    return list;
+}
+
+void add_token(token_list_t *list, token_t *token) 
+{
+    if (!list) return;
+
+    token_node_t *new_node = (token_node_t*)malloc(sizeof(token_node_t));
+    if (!new_node) return;
+
+    new_node->token = token;
+    new_node->next = NULL;
+
+    if (list->head == NULL) 
+    {
+        list->head = new_node;
+        list->tail = new_node;
+    } 
+    else 
+    {
+        list->tail->next = new_node;
+        list->tail = new_node;
+    }
+    list->size++;
+}
+
+void free_token_list(token_list_t *list) 
+{
+    if (!list) return;
+
+    token_node_t *current = list->head;
+    while (current != NULL) 
+    {
+        token_node_t *temp = current;
+        current = current->next;
+        free_token(temp->token); 
+        free(temp);
+    }
+
+    free(list);
+}

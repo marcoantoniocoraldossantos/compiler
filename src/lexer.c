@@ -1,5 +1,7 @@
 #include "libraries.h"
 
+int flag_lexical_error = 0;
+
 // state_t table to indicate the next state given the current state and the current character class
 state_t transition_table[NUM_STATES][NUM_CHAR_CLASSES] = 
 {   //space, letter,  digit,      +,      -,      *,      /,      <,      >,      =,      !,      ;,      ,,      (,      ),      [,      ],      {,      },  other
