@@ -723,7 +723,7 @@ bool id_is_variable(hash_table_t* symbol_table, char* lexeme)
 
     while (symbol_table->table[index] != NULL) 
     {
-        //printf("\ncompare %s with %s\n", symbol_table->table[index]->name, lexeme);
+        printf("\ncompare %s with %s\n", symbol_table->table[index]->name, lexeme);
         if(strcmp(symbol_table->table[index]->name, lexeme) == 0 && symbol_table->table[index]->id_type == VARIABLE) 
         {
             return true;

@@ -48,7 +48,7 @@ int main(int argc, char *argv[])
     parse();
 
     //printf("\n");
-    //print_ast(global_ast_tree);
+    print_ast(global_ast_tree);
 
     construct_symtab(global_ast_tree, symtab);
     //go_through_tree(global_ast_tree, symtab, "global");

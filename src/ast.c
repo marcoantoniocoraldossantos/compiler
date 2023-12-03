@@ -44,8 +44,8 @@ void print_ast(ast_node_t *root)
 {
     printf("abstract syntax tree:\n");
     print_ast_util(root, 1);
-    printf("\nnode of the abstract syntax tree:\n");
-    print_ast_node(root);
+    //printf("\nnode of the abstract syntax tree:\n");
+    //print_ast_node(root);
 }
 
 void free_ast(ast_node_t* node) 

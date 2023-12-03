@@ -113,8 +113,7 @@
     }
     ;
 
-
-    fun_declaration : type_specifier id LPAREN_TOKEN params RPAREN_TOKEN compound_decl
+    fun_declaration : type_specifier id LPAREN_TOKEN params_opt RPAREN_TOKEN compound_decl
     {
         $$ = $1;        
         $$->extended_type = EXT_FUNCTION_DECL;
@@ -126,7 +125,15 @@
     }
     ;
 
-    
+    params_opt : params
+    {
+        $$ = $1;
+    }
+    | /* vazio */
+    {
+        $$ = NULL;
+    }
+    ;
 
     params : param_list
     {
@@ -134,6 +141,7 @@
     }
     | VOID_TOKEN
     {
+        // Criação de um nó para representar parâmetros vazios
         ast_node_t* void_node = new_ast_node(NULL_NODE, global_line_number, "void", NULL_STMT, NULL_EXP, NULL_TYPE);
 
         $$ = void_node;
@@ -359,14 +367,14 @@
         ast_node_t* assign_node = new_ast_node(
             EXPRESSION_NODE,       // Tipo do nó: Expressão
             global_line_number,    // Número da linha onde ocorre a atribuição
-            "=",                   // Lexema representando a operação de atribuição
+            "==",                   // Lexema representando a operação de atribuição
             NULL_STMT,             // A atribuição não requer um statement específico
             ATTR_EXP,              // Tipo de expressão: Atribuição
             NULL_TYPE              // Não se aplica o tipo aqui, pode ser NULL_TYPE
         );
 
         $$ = assign_node;
-        $$->extended_type = EXT_ASSIGN;
+        $$->extended_type = EXT_OPERATOR;
         $$->node_kind = EXPRESSION_NODE;
 
         add_child($$, $1);
@@ -462,7 +470,7 @@
         $$ = gte_node;
     }
     | EQ_TOKEN
-    {
+    {   
         ast_node_t* eq_node = new_ast_node(
             EXPRESSION_NODE,    // Tipo do nó: Expressão
             global_line_number, // Número da linha onde ocorre a operação de igual a
@@ -473,6 +481,7 @@
         );
 
         $$ = eq_node;
+        $$->extended_type = EXT_ASSIGN;
     }
     | NEQ_TOKEN
     {

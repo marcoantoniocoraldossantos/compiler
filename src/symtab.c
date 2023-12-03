@@ -199,6 +199,8 @@ void semantic_analysis(ast_node_t* node, hash_table_t* hash_table)
     if(flag_semantic_error)
         return;
 
+    printf("\ncurrent node: %s\n", node->lexeme);
+
     switch(node->extended_type)
     {
         case EXT_VARIABLE_DECL:
@@ -237,15 +239,37 @@ void semantic_analysis(ast_node_t* node, hash_table_t* hash_table)
             break;
         case EXT_FUNCTION_DECL:
             //printf("\n function declaration %s line %d\n", node->child[1]->lexeme, node->child[1]->lineno);
-            if(!search_in_hash_table(hash_table, node->child[1]->lexeme, global_scope))
-                insert_symbol(hash_table, node->child[1]->lexeme, INT_DATA, FUNCTION, node->child[1]->lineno, "global", FUNCTION_TYPE);
+
+            if(node->child[1] != NULL)
+            {
+                if(!search_in_hash_table(hash_table, node->child[1]->lexeme, global_scope))
+                {
+                    insert_symbol(hash_table, node->child[1]->lexeme, INT_DATA, FUNCTION, node->child[1]->lineno, "global", FUNCTION_TYPE);
+                }
+                else
+                {
+                    printf("semantic error: function %s already declared in scope %s\n", node->child[1]->lexeme, global_scope);
+                    //exit(1);
+                    flag_semantic_error = 1;
+                }
+                strcpy(global_scope, node->child[1]->lexeme);
+            }
             else
             {
-                printf("semantic error: function %s already declared in scope %s\n", node->child[1]->lexeme, global_scope);
-                //exit(1);
-                flag_semantic_error = 1;
+                if(!search_in_hash_table(hash_table, node->child[0]->lexeme, global_scope))
+                {
+                    insert_symbol(hash_table, node->child[0]->lexeme, INT_DATA, FUNCTION, node->child[0]->lineno, "global", FUNCTION_TYPE);
+                }
+                else
+                {
+                    printf("semantic error: function %s already declared in scope %s\n", node->child[0]->lexeme, global_scope);
+                    //exit(1);
+                    flag_semantic_error = 1;
+                }
+                
+                strcpy(global_scope, node->child[0]->lexeme);
             }
-            strcpy(global_scope, node->child[1]->lexeme);
+            
             break;
         case EXT_FUNCTION_CALL:
             //printf("\n function call %s line %d\n", node->lexeme, node->lineno);
@@ -261,6 +285,12 @@ void semantic_analysis(ast_node_t* node, hash_table_t* hash_table)
             //todo verify if variable is declared and scope type
             // check if its going to return a function
             //print_hash_table(hash_table);
+
+            if(isdigit(node->child[0]->lexeme[0]))
+            {
+                return;
+            }
+
             int flag_not_found = 0;
             if(!search_in_hash_table(hash_table, node->child[0]->lexeme, global_scope))
             {
@@ -313,8 +343,18 @@ void semantic_analysis(ast_node_t* node, hash_table_t* hash_table)
         case EXT_VOID_PARAMETER:
             break;
         case EXT_IF:
+            printf("\nif %s line %d\n", node->lexeme, node->lineno);
+            printf("\ncondition %s line %d\n", node->child[0]->lexeme, node->child[0]->lineno);
+
             break;
         case EXT_IF_ELSE:
+            printf("\nif else %s line %d\n", node->lexeme, node->lineno);
+            printf("\ncondition %s line %d\n", node->child[0]->lexeme, node->child[0]->lineno);
+            if(if_condition_is_valid(hash_table, node))
+            {
+                
+            }
+
             break;
         case EXT_WHILE:
             break;
@@ -328,6 +368,24 @@ void semantic_analysis(ast_node_t* node, hash_table_t* hash_table)
             break;
         case EXT_IDENTIFIER:
             //printf("\nutilized variable %s line %d\n", node->lexeme, node->lineno);
+            //print_hash_table(hash_table);
+            if(strcmp(node->lexeme, global_scope) != 0)
+            {
+                printf("\nlexeme %s global scope %s\n", node->lexeme, global_scope);
+                if(!search_in_hash_table(hash_table, node->lexeme, global_scope))
+                {
+                    printf("semantic error: variable %s not declared in scope %s\n", node->lexeme, global_scope);
+                    //exit(1);
+                    flag_semantic_error = 1;
+                }
+            }
+            else if(!search_for_function_declaration(hash_table, node->lexeme))
+            {
+                printf("semantic error: function %s not declared\n", node->lexeme);
+                //exit(1);
+                flag_semantic_error = 1;
+            }
+
             break;
         case EXT_NULL:
             break;
@@ -359,126 +417,6 @@ bool seach_if_variable_already_exists(hash_table_t* hash_table, char* lexema, ch
     return false;
 }
 
-void go_through_tree(ast_node_t* node, hash_table_t* symbol_table, char* scope) 
-{
-    if (node == NULL) 
-    {
-        return;
-    }
-
-    if(flag_semantic_error)
-        return;
-
-    data_type_t data_type;
-    id_type_t id_type;
-
-    char new_scope[MAX_LEXEME_LENGHT];
-    strncpy(new_scope, scope, MAX_LEXEME_LENGHT);
-
-    //printf("\nscope: %s\n", scope);
-    switch(node->node_kind)
-    {
-        case PROGRAM_NODE:
-            break;
-        case STATEMENT_NODE:
-            break;
-        case EXPRESSION_NODE:
-            process_expression(node, symbol_table, scope);
-            break;
-        case DECLARATION_NODE:
-            process_declaration(node, symbol_table, scope);
-            break;
-        case PARAMETER_NODE:
-            break;
-        case NULL_NODE:
-            break;
-    }
-
-    for (int i = 0; i < MAXCHILDREN; ++i) 
-    {
-        go_through_tree(node->child[i], symbol_table, new_scope);
-    }
-
-    go_through_tree(node->sibling, symbol_table, new_scope);
-}
-
-void process_expression(ast_node_t* node, hash_table_t* symbol_table, char* scope)
-{
-    switch (node->extended_type)
-    {
-    case EXT_IDENTIFIER:
-        verify_declaration_of_identifier(symbol_table, node, scope);
-        break;
-    case EXT_VECTOR:
-        break;
-    case EXT_FUNCTION_CALL:
-        break;
-    case EXT_ASSIGN:
-        break;
-
-    default:
-        break;
-    }
-}
-
-void verify_declaration_of_identifier(hash_table_t* symbol_table, ast_node_t* node, char* scope)
-{
-
-}
-
-void process_declaration(ast_node_t* node, hash_table_t* symbol_table, char* scope)
-{
-    char new_scope[MAX_LEXEME_LENGHT];
-    strncpy(new_scope, scope, MAX_LEXEME_LENGHT);
-
-    data_type_t data_type;
-    id_type_t id_type;
-
-    switch(node->extended_type)
-    {
-        case EXT_VARIABLE_DECL:
-        case EXT_VECTOR_DECL:
-            verify_if_variable_already_exists(symbol_table, node, new_scope);
-            break;
-        case EXT_FUNCTION_DECL:
-            verify_function_declaration(symbol_table, node, scope);
-            break;
-        default:
-            break;
-    }
-}
-
-// double declaration of variable
-void verify_if_variable_already_exists(hash_table_t* symbol_table, ast_node_t* node, char* scope)
-{
-    //printf("\nlexeme %s line %d\n", node->lexeme, node->lineno);
-    //printf("\nchild lexeme %s line %d\n", node->child[0]->lexeme, node->child[0]->lineno);
-    if(search_in_hash_table(symbol_table, node->child[0]->lexeme, scope))
-    {
-        printf("semantic error: variable %s already declared in scope %s\n", node->child[0]->lexeme, scope);
-        //exit(1);
-        flag_semantic_error = 1;
-        return;
-    }
-    else
-    {
-        if(ast_node_is_identifier(node->child[0]))
-            insert_symbol(symbol_table, node->child[0]->lexeme, INT_DATA, VARIABLE, node->child[0]->lineno, scope, VARIABLE_TYPE);
-    }
-}
-
-void verify_function_declaration(hash_table_t* symbol_table, ast_node_t* node, char* scope)
-{
-    data_type_t data_type;
-    if(strcmp(node->child[0]->lexeme, "int") == 0)
-        data_type = INT_DATA;
-    else
-        data_type = VOID_DATA;
-
-    char new_scope[MAX_LEXEME_LENGHT];
-    strncpy(new_scope, node->child[1]->lexeme, MAX_LEXEME_LENGHT);
-}
-
 bool search_for_function_declaration(hash_table_t* symbol_table, char* lexeme)
 {
     int index = hash(symbol_table, lexeme);
@@ -496,5 +434,26 @@ bool search_for_function_declaration(hash_table_t* symbol_table, char* lexeme)
     return false;
 }
 
-
-
+bool if_condition_is_valid(hash_table_t* symbol_table, ast_node_t* node)
+{
+    printf("\ncondition %s line %d\n", node->child[0]->lexeme, node->child[0]->lineno);
+    printf("\nextended type %d %d %d", node->child[0]->extended_type, EXT_OPERATOR, EXT_RELATIONAL);
+    if(node->child[0]->extended_type == EXT_OPERATOR || node->child[0]->extended_type == EXT_RELATIONAL)
+    {
+        if(!search_in_hash_table(symbol_table, node->child[0]->child[0]->lexeme, global_scope))
+        {
+            printf("semantic error: variable %s not declared in scope %s\n", node->child[0]->child[0]->lexeme, global_scope);
+            //exit(1);
+            flag_semantic_error = 1;
+            return false;
+        }
+        if(!search_in_hash_table(symbol_table, node->child[0]->child[1]->lexeme, global_scope))
+        {
+            printf("semantic error: variable %s not declared in scope %s\n", node->child[0]->child[1]->lexeme, global_scope);
+            //exit(1);
+            flag_semantic_error = 1;
+            return false;
+        }
+    }
+    return true;
+}

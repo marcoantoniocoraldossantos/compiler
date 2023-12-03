@@ -1,0 +1,5 @@
+void exemplo(int j, int k)
+{
+if (j == k) break;
+else continue;
+}
