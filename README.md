@@ -28,7 +28,8 @@ Before you start, make sure you have the following installed on your system:
 3. Build the compiler by running:
    
    ```bash
-   make
+   chmod +x ./script.sh
+   ./script.sh
 
 This will compile the source code and create an executable file named "compiler."
 
