@@ -304,6 +304,11 @@ void semantic_analysis(ast_node_t* node, hash_table_t* hash_table)
                 //exit(1);
                 flag_semantic_error = 1;
             }
+            else
+            {
+                //add apparition
+                add_apparition(hash_table, node->lexeme, node->lineno);
+            }
             break;
         case EXT_RETURN_INT:
             printf("\next_return_int\n");
@@ -374,14 +379,16 @@ void semantic_analysis(ast_node_t* node, hash_table_t* hash_table)
             break;
         case EXT_IF:
             printf("\next_if\n");
-            printf("\nif %s line %d\n", node->lexeme, node->lineno);
-            printf("\ncondition %s line %d\n", node->child[0]->lexeme, node->child[0]->lineno);
+            
+            //printf("\nif %s line %d\n", node->lexeme, node->lineno);
+            //printf("\ncondition %s line %d\n", node->child[0]->lexeme, node->child[0]->lineno);
 
             break;
         case EXT_IF_ELSE:
             printf("\next_if_else\n");
-            printf("\nif else %s line %d\n", node->lexeme, node->lineno);
-            printf("\ncondition %s line %d\n", node->child[0]->lexeme, node->child[0]->lineno);
+            
+            //printf("\nif else %s line %d\n", node->lexeme, node->lineno);
+            //printf("\ncondition %s line %d\n", node->child[0]->lexeme, node->child[0]->lineno);
             if(if_condition_is_valid(hash_table, node))
             {
                 
@@ -397,7 +404,7 @@ void semantic_analysis(ast_node_t* node, hash_table_t* hash_table)
 
             break;
         case EXT_OPERATOR:
-            //printf("\ntype %d\n", node->child[0]->kind.type);
+            printf("\next_operator\n");
             
             break;
         case EXT_RELATIONAL:
@@ -419,7 +426,7 @@ void semantic_analysis(ast_node_t* node, hash_table_t* hash_table)
         case EXT_IDENTIFIER:
             printf("\next_identifier\n");
 
-            if(strcmp(node->lexeme, global_scope) != 0)
+            if(strcmp(node->lexeme, global_scope) != 0) // if its not a function call
             {
                 //printf("\nlexeme %s global scope %s\n", node->lexeme, global_scope);
                 if(!search_in_hash_table(hash_table, node->lexeme, global_scope))
@@ -428,9 +435,15 @@ void semantic_analysis(ast_node_t* node, hash_table_t* hash_table)
                     //exit(1);
                     flag_semantic_error = 1;
                 }
+                else
+                {
+                    //add apparition
+                    add_apparition(hash_table, node->lexeme, node->lineno);
+                }
             }
             else if(!search_for_function_declaration(hash_table, node->lexeme))
             {
+                printf("\nis function %s line %d\n", node->lexeme, node->lineno);
                 printf("semantic error: function %s not declared\n", node->lexeme);
                 //exit(1);
                 flag_semantic_error = 1;
@@ -487,26 +500,7 @@ bool search_for_function_declaration(hash_table_t* symbol_table, char* lexeme)
 
 bool if_condition_is_valid(hash_table_t* symbol_table, ast_node_t* node)
 {
-    printf("\ncondition %s line %d\n", node->child[0]->lexeme, node->child[0]->lineno);
-    printf("\nextended type %d %d %d", node->child[0]->extended_type, EXT_OPERATOR, EXT_RELATIONAL);
-    if(node->child[0]->extended_type == EXT_OPERATOR || node->child[0]->extended_type == EXT_RELATIONAL)
-    {
-        if(!search_in_hash_table(symbol_table, node->child[0]->child[0]->lexeme, global_scope))
-        {
-            printf("semantic error: variable %s not declared in scope %s\n", node->child[0]->child[0]->lexeme, global_scope);
-            //exit(1);
-            flag_semantic_error = 1;
-            return false;
-        }
-        if(!search_in_hash_table(symbol_table, node->child[0]->child[1]->lexeme, global_scope))
-        {
-            printf("semantic error: variable %s not declared in scope %s\n", node->child[0]->child[1]->lexeme, global_scope);
-            //exit(1);
-            flag_semantic_error = 1;
-            return false;
-        }
-    }
-    return true;
+
 }
 
 bool function_is_void_type(hash_table_t* symbol_table, char* lexeme)
