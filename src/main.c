@@ -33,6 +33,7 @@ int main(int argc, char *argv[])
 
     parse();
 
+    //print_ast(global_ast_tree);
     //printf("\n");
 
     construct_symtab(global_ast_tree, global_symtab);
