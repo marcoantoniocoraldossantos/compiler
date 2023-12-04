@@ -49,7 +49,7 @@ void print_hash_table(hash_table_t* hash_table) {
 
     printf("\n\n");
 
-    printf("index   | name    | scope  | data_type   | id_type   | variable_type | line_number\n");
+    printf("%-3s | %-15s | %-15s |  %-15s | %-15s | %-15s | %-15s\n", "entry", "name", "scope", "type", "id", "variable", "line");
 
     for (int i = 0; i < hash_table->size; i++) {
         hash_entry_t* entry = hash_table->table[i];
@@ -58,18 +58,21 @@ void print_hash_table(hash_table_t* hash_table) {
             // printf("NULL\n");
         } else {
             if (i < 10) {
-                printf("  [%d]: ", i);
+                printf("  [%d] |", i);
             } else if (i < 100) {
-                printf(" [%d]: ", i);
+                printf(" [%d] |", i);
             } else {
-                printf("[%d]: ", i);
+                printf("[%d] |", i);
             }
 
-            printf(" %-10s | %-8s |  %-4s | %-4s | %-6s | ", entry->name, entry->scope, data_type_to_string(entry->data_type), id_type_to_string(entry->id_type), variable_type_to_string(entry->variable_type));
+            printf(" %-15s | %-15s |  %-15s | %-15s | %-15s |", 
+                entry->name, entry->scope, data_type_to_string(entry->data_type), id_type_to_string(entry->id_type), variable_type_to_string(entry->variable_type));
 
-            for (int j = 0; j < entry->number_of_appearances; j++) {
+            for (int j = 0; j < entry->number_of_appearances; j++) 
+            {
                 printf(" %d", entry->line_number[j]);
             }
+
             printf("\n");
         }
     }
