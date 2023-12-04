@@ -55,8 +55,8 @@ int main(int argc, char *argv[])
 
     //print_hash_table(symtab);
 
-    if(!flag_semantic_error)
-        print_hash_table(global_symtab);
+    // if(!flag_semantic_error)
+    //     print_hash_table(global_symtab);
 
     //printf("freeing memory...\n");
     close_file(input_file); // close the file
@@ -65,6 +65,9 @@ int main(int argc, char *argv[])
     //free_ast(ast_tree); // deallocate the ast
     free_ast(global_ast_tree); // deallocate the ast
     free_hash_table(global_symtab); // deallocate the symtab
+
+    if(!flag_semantic_error)
+        printf("\n\x1b[32mcompilation successful!\x1b[0m\n\n");
 
     return 0;
 }
