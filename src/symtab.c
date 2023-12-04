@@ -139,7 +139,9 @@ void process_variable_declaration(hash_table_t* hash_table, ast_node_t* node)
 {
     if(strcmp(node->lexeme, "void") == 0)
     {
-        printf("semantic error: variable %s cannot be void\n", node->child[0]->lexeme);
+        fprintf(stderr, "\x1b[1m%s:\x1b[0m in line \x1b[1m%d:\x1b[0m\n", global_argv[1], node->child[0]->lineno);
+        fprintf(stderr, "\x1b[31msemantic error: \x1b[0m");
+        fprintf(stderr, "variable \x1b[1m'%s'\x1b[0m cannot be void\n", node->child[0]->lexeme);
         flag_semantic_error = 1;
         return;
     }
