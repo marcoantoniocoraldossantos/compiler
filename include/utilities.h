@@ -41,6 +41,7 @@ bool ast_node_is_identifier(ast_node_t *node);
 char* variable_type_to_string(variable_type_t id_type);
 bool id_is_variable(hash_table_t* symbol_table, char* lexeme);
 bool file_is_empty(FILE *file);
-
+char *data_type_to_string(data_type_t data_type);
+char *id_type_to_string(id_type_t id_type);
 
 #endif

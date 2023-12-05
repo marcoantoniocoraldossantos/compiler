@@ -1,6 +1,7 @@
 #ifndef BST_H
 #define BST_H
 
+
 #include "token.h"
 
 char *find_optimal_root();

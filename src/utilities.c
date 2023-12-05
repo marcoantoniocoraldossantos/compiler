@@ -1,5 +1,6 @@
 #include "libraries.h"
 
+
 // arguments functions
 void verify_arguments(int argc, char *argv[]) 
 {
@@ -653,10 +654,11 @@ char *data_type_to_string(data_type_t data_type)
 {
     switch (data_type)
     {
-        case INT_TYPE:
-            return "INT_TYPE";
         case VOID_TYPE:
             return "VOID_TYPE";
+        case INT_TYPE:
+            return "INT_TYPE";
+
         default:
             return "UNKNOWN_TYPE";
     }

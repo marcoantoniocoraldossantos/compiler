@@ -1,5 +1,6 @@
 #include "libraries.h"
 
+
 // function to initialize the token
 token_t *initialize_token() 
 {
@@ -147,8 +148,9 @@ void add_token(token_list_t *list, token_t *token)
     token_node_t *new_node = (token_node_t*)malloc(sizeof(token_node_t));
     if (!new_node) return;
 
-    new_node->token = token;
     new_node->next = NULL;
+    new_node->token = token;
+
 
     if (list->head == NULL) 
     {
@@ -176,5 +178,6 @@ void free_token_list(token_list_t *list)
         free(temp);
     }
 
+    // free(list->head);
     free(list);
 }

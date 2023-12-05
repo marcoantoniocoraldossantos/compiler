@@ -2,6 +2,7 @@
 
 int flag_lexical_error = 0;
 
+
 // state_t table to indicate the next state given the current state and the current character class
 state_t transition_table[NUM_STATES][NUM_CHAR_CLASSES] = 
 {   //space, letter,  digit,      +,      -,      *,      /,      <,      >,      =,      !,      ;,      ,,      (,      ),      [,      ],      {,      },  other
@@ -173,7 +174,7 @@ token_t* lexical_analyzer(FILE *source_code_file, buffer_t *buffer, bst_node_t *
             {
                 
                 current_token->type = identify_lexeme(bst_root, current_token->lexeme);
-                if(strlen(current_token->lexeme) > 0)
+                if(strlen(current_token->lexeme) >= 1)
                 {
                     return current_token;
                 }                
@@ -196,14 +197,14 @@ token_t* lexical_analyzer(FILE *source_code_file, buffer_t *buffer, bst_node_t *
             }
             
             lexeme_count = 0;
+            lexeme_count = 0;
         }
 
         //test leak
         //advance_input_buffer(buffer);
 
-    } while (current_char != '\n' && current_char != '\0');
+    } while ((current_char != '\n') && (current_char != '\0'));
 
-    //test leak
     current_token->type = UNKNOWN;
 
     // if the token is unknown

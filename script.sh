@@ -44,3 +44,6 @@ make -s
 ./compiler test-semantic/example9.txt
 ./compiler
 
+
+
+

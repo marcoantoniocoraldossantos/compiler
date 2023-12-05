@@ -35,14 +35,11 @@ int main(int argc, char *argv[])
     parse();
 
     //print_ast(global_ast_tree);
-    //printf("\n");
 
     construct_symtab(global_ast_tree, global_symtab);
-    //go_through_tree(global_ast_tree, symtab, "global");
     
     semantic_analysis(global_ast_tree, global_symtab);
 
-    //print_hash_table(symtab);
     if(flag_semantic_error == 0)
     {
         if(!search_in_hash_table(global_symtab, "main", "global"))
@@ -54,16 +51,12 @@ int main(int argc, char *argv[])
         }
     }
 
-    //print_hash_table(symtab);
+    // if(!flag_semantic_error)
+    //     print_hash_table(global_symtab);
 
-    if(!flag_semantic_error)
-        print_hash_table(global_symtab);
-
-    //printf("freeing memory...\n");
     close_file(input_file); // close the file
     deallocate_buffer(&global_buffer); // deallocate the global_buffer
     free_bst(global_bst_tree); // deallocate the bst
-    //free_ast(ast_tree); // deallocate the ast
     free_ast(global_ast_tree); // deallocate the ast
     free_hash_table(global_symtab); // deallocate the symtab
 

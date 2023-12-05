@@ -1,6 +1,5 @@
 void exemplo()
 {
-
 }
 
 void main(void)

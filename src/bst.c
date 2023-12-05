@@ -14,6 +14,7 @@ char *find_optimal_root()
         return NULL; //if there are no reserved words
     }
 
+    printf("\n");
     int num_words = 0;
     int sum_ascii = 0;
 

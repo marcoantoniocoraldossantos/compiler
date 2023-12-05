@@ -82,7 +82,8 @@ extern int yydebug;
     ID_TOKEN = 283,                /* ID_TOKEN  */
     NUM_TOKEN = 284,               /* NUM_TOKEN  */
     UNKNOW_TOKEN = 285,            /* UNKNOW_TOKEN  */
-    ERROR_TOKEN = 286              /* ERROR_TOKEN  */
+    ERROR_TOKEN = 286,             /* ERROR_TOKEN  */
+    NULL_TOKEN = 287               /* NULL_TOKEN  */
   };
   typedef enum yytokentype yytoken_kind_t;
 #endif

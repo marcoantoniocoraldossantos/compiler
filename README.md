@@ -53,3 +53,4 @@ Here's an example of how to run the compiler with one of the provided test files
 
 ### Author
 Marco Antonio Coral dos Santos - marcoantoniocoraldossantos@gmail.com
+

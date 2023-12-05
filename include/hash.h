@@ -31,7 +31,6 @@ typedef struct hash_entry_t
     int line_number[20];
     int number_of_appearances;
     char scope[MAX_LEXEME_LENGHT];
-    //struct hash_entry_t* next; 
     variable_type_t variable_type;
 } hash_entry_t;
 
@@ -39,6 +38,7 @@ typedef struct
 {
     hash_entry_t** table;
     int size;
+
 } hash_table_t;
 
 hash_table_t* initialize_hash_table();
@@ -55,5 +55,6 @@ bool function_returns_int(hash_table_t* symbol_table, char* lexeme);
 bool function_is_void_type(hash_table_t* symbol_table, char* lexeme);
 bool is_variable(hash_table_t* symbol_table, char* lexeme);
 void add_apparition(hash_table_t* hash_table, char* lexema, int line_number, char* scope);
+
 
 #endif /* HASH_H */

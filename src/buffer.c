@@ -12,13 +12,15 @@ buffer_t initialize_buffer(int size)
     }
 
     buffer.size = size;
-    buffer.line = 0;
     buffer.position = 0;
+    buffer.line = 0;
+
 
     for (int i = 0; i < size; i++) 
     {
         buffer.data[i] = '\0';
     }
+
 
     return buffer;
 }
@@ -65,5 +67,5 @@ void print_buffer(buffer_t *buffer)
 // function to advance the position of the buffer
 void advance_input_buffer(buffer_t *buffer)
 {
-    buffer->position++;
+    buffer->position = buffer->position + 1;
 }

@@ -91,6 +91,7 @@ typedef struct ast_node_t
     extended_type_t extended_type;
 } ast_node_t;
 
+
 ast_node_t *initialize_ast();
 void print_ast(ast_node_t *root);
 void print_ast_util(ast_node_t *node, int level);

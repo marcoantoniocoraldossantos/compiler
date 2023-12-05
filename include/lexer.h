@@ -50,6 +50,7 @@ typedef enum
     ST_END // end state
 } state_t;
 
+
 // reserved words for the lexer
 extern char* reserved_words[];
 

@@ -41,7 +41,8 @@ void free_hash_table(hash_table_t* hash_table)
     free(hash_table);
 }
 
-void print_hash_table(hash_table_t* hash_table) {
+void print_hash_table(hash_table_t* hash_table) 
+{
     if (hash_table == NULL) {
         printf("hash table not initialized\n");
         return;
@@ -54,7 +55,8 @@ void print_hash_table(hash_table_t* hash_table) {
     for (int i = 0; i < hash_table->size; i++) {
         hash_entry_t* entry = hash_table->table[i];
 
-        if (entry == NULL) {
+        if (entry == NULL) 
+        {
             // printf("NULL\n");
         } else {
             if (i < 10) {
@@ -216,7 +218,7 @@ bool is_variable(hash_table_t* symbol_table, char* lexeme)
         {
             return true;
         }
-        index = (index + 1) % TABLE_SIZE; 
+        index = (index + 1)  % TABLE_SIZE; 
     }
 
     return false;

@@ -476,3 +476,4 @@ void process_null(hash_table_t* hash_table, ast_node_t* node)
 {
     // 
 }
+

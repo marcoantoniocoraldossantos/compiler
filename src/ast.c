@@ -130,9 +130,9 @@ void print_ast_node(ast_node_t *node)
         return;
     }
 
-    printf("node: %s\n", node->lexeme);
-    printf("kind: %d\n", node->node_kind);
-    printf("line: %d\n", node->lineno);
+    // printf("node: %s\n", node->lexeme);
+    // printf("kind: %d\n", node->node_kind);
+    // printf("line: %d\n", node->lineno);
 
     switch (node->node_kind) 
     {
