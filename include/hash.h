@@ -48,7 +48,6 @@ void insert_symbol(hash_table_t* hash_table, char* lexema, data_type_t data_type
 int hash(hash_table_t* hash_table, char* lexema);
 bool search_in_hash_table(hash_table_t* hash_table, char* lexema, char* scope);
 void verify_declaration_of_identifier(hash_table_t* symbol_table, ast_node_t* node, char* scope);
-void process_declaration(ast_node_t* node, hash_table_t* symbol_table, char* scope);
 void verify_if_variable_already_exists(hash_table_t* symbol_table, ast_node_t* node, char* scope);
 bool search_for_function_declaration(hash_table_t* symbol_table, char* lexeme);
 bool seach_if_variable_already_exists(hash_table_t* hash_table, char* lexema, char* scope);
