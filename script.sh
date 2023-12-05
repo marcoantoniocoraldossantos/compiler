@@ -41,5 +41,6 @@ make -s
 ./compiler test-semantic/example5.txt
 ./compiler test-semantic/example6.txt
 ./compiler test-semantic/example7.txt
-./compiler test-semantic/example8.txt
+./compiler test-semantic/example9.txt
+./compiler
 

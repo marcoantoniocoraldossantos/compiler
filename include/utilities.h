@@ -42,4 +42,5 @@ char* variable_type_to_string(variable_type_t id_type);
 bool id_is_variable(hash_table_t* symbol_table, char* lexeme);
 bool file_is_empty(FILE *file);
 
+
 #endif

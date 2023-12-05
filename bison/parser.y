@@ -3,6 +3,7 @@
 
     #include "libraries.h"
 
+
     int global_line_number;
     char global_lexeme[64];
     token_type_t global_token_type;
@@ -12,6 +13,14 @@
     int token_count = 0;
 
     void parse();
+    void free_tokens();
+    void free_ast(ast_node_t* node);
+    void free_hash_table(hash_table_t* hash_table);
+    void free_bst(bst_node_t* bst);
+    void deallocate_buffer(buffer_t* buffer);
+    // // free_hash_table(global_symtab);
+    // // free_bst(global_bst_tree);
+    // // deallocate_buffer(global_buffer);
 
     int yylex();
     int yyparse();
@@ -702,6 +711,15 @@ void yyerror(char *s)
 {
     fprintf(stderr, "\x1b[1m%s:\x1b[0m in line \x1b[1m%d:\x1b[0m\n", global_argv[1], global_line_number);
     printf("\x1b[31m%s:\x1b[0m symbol \x1b[1m'%s'\x1b[0m not expected\n", s, global_lexeme);
+
+
+    free_ast(global_ast_tree);
+    free_hash_table(global_symtab);
+    free_bst(global_bst_tree);
+    deallocate_buffer(global_buffer);
+    free_tokens();
+
+
     exit(1);
     
 }
@@ -724,6 +742,7 @@ int yylex()
     if (token == NULL) 
     {
         // EOF
+        free_token(token);
         return YYEOF;
     }
 

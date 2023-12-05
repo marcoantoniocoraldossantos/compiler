@@ -709,3 +709,4 @@ bool id_is_variable(hash_table_t* symbol_table, char* lexeme)
 
     return false;
 }
+

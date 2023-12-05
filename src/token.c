@@ -82,6 +82,8 @@ int process_token(token_t *token)
     {
         lex_error(token, global_buffer, token->line, global_buffer->position);
         flag_lexical_error = 1;
+
+
         return 0;
         // TODO: implement other types of errors
     }

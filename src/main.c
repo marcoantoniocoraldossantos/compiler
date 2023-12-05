@@ -9,14 +9,15 @@ buffer_t *global_buffer = NULL;
 FILE *global_input_file;
 bst_node_t *global_bst_tree;
 ast_node_t *global_ast_tree;
-hash_entry_t *global_symtab;
+hash_table_t *global_symtab;
 char global_scope[64];
+
+void parse(void);
 
 int main(int argc, char *argv[]) 
 {
     verify_arguments(argc, argv); // verify if the code was called correctly with "compiler <input_file>"
     save_arguments(argc, argv); // save the arguments in the global_argv and global_argc variables
-
     FILE *input_file = open_file(argv[1], "r"); // open the file in read mode
     buffer_t global_buffer = initialize_buffer(256); // initialize the global_buffer
     global_bst_tree = initialize_bst(); // initialize the bst

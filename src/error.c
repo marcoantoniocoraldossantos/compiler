@@ -62,7 +62,7 @@ void lex_error(token_t *token, buffer_t *buffer, int line, int column)
 // function to handle memory allocation errors
 void memory_alocation_error(char *caller) 
 {
-    fprintf(stderr, "error: unable to allocate memory (%s).\n", caller);
+    fprintf(stderr, "\x1b[31merror: \x1b[0munable to allocate memory (%s).\n", caller);
     //...
     exit(EXIT_FAILURE);
 }
@@ -70,7 +70,7 @@ void memory_alocation_error(char *caller)
 // function to handle file open errors
 void file_open_error(char *file_name) 
 {
-    fprintf(stderr, "error: unable to open file '%s'.\n", file_name);
+    fprintf(stderr, "\x1b[31merror: \x1b[0munable to open file '%s'.\n", file_name);
     //...
     exit(EXIT_FAILURE);
 }
@@ -78,8 +78,8 @@ void file_open_error(char *file_name)
 // function to handle argument errors when running the program
 void argument_error(char *program_name) 
 {
-    fprintf(stderr, "error: invalid arguments\n");
-    fprintf(stderr, "usage: %s <input_file>\n", program_name);
+    fprintf(stderr, "\x1b[31merror: \x1b[0minvalid arguments | ");
+    fprintf(stderr, "\x1b[1musage:\x1b[0m %s <input_file>\n", program_name);
     //...
     exit(EXIT_FAILURE);
 }
